@@ -1,0 +1,34 @@
+@import './themes/vars.less';
+
+html {
+  font-size: @font-size-base;
+  font-style: normal;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  .ant-layout {
+    height: 100%;
+  }
+}
+
+body {
+  margin: 0;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+ol,
+ul,
+li {
+  list-style: none;
+}
+
+.clearfix {
+  display: block;
+  zoom: 1;
+}
