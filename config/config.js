@@ -15,7 +15,7 @@ export default {
   ignoreMomentLocale: true,
   targets: { ie: 11 },
   base: `${base}/`,
-  publicPath: './',
+  publicPath: '/sei-basic-web/',
   mountElementId: name,
   plugins: [
     ['@umijs/plugin-qiankun'],
