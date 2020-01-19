@@ -11,10 +11,10 @@
     "lint-staged": "lint-staged",
     "lint": "eslint --ext .js src mock tests",
     "lint-fix": "npm run lint-fix:script && npm run lint-fix:style",
-    "lint-fix:script": "npm run lint:script -- --fix",
-    "lint-fix:style": "npm run lint:style -- --fix",
+    "lint-fix:script": "npm run lint:script --fix",
+    "lint-fix:style": "npm run lint:style --fix",
     "lint:script": "eslint ./src --ext \".js,.jsx,.ts,.tsx\"",
-    "lint:style": "stylelint 'src/**/*.less' --syntax less",
+    "lint:style": "stylelint ./src/**/*.less --syntax less",
     "prettier": "prettier -c --write **/*"
   },
   "dependencies": {
