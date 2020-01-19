@@ -11,12 +11,12 @@ const { SubMenu } = Menu;
 const menuData = [
   {
     id: '10',
-    name: 'moduleName',
+    name: '后台配置',
     children: [
       {
         id: '100',
-        name: 'menuName',
-        path: '/moduleName/demo',
+        name: '业务模块',
+        path: '/backConfig/appModule',
       },
     ],
   },

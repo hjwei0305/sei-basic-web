@@ -5,7 +5,7 @@
   "scripts": {
     "analyze": "cross-env ANALYZE=1 umi build",
     "start": "umi dev",
-    "start:no-ui": "cross-env UMI_UI=none umi dev",
+    "start:no-mock":"cross-env MOCK_SERVER=none umi dev",
     "build": "umi build",
     "test": "umi test",
     "lint-staged": "lint-staged",
@@ -13,17 +13,19 @@
     "lint-fix": "npm run lint-fix:script && npm run lint-fix:style",
     "lint-fix:script": "npm run lint:script -- --fix",
     "lint-fix:style": "npm run lint:style -- --fix",
-    "lint:script": "eslint . --ext \".js,.jsx,.ts,.tsx\"",
-    "lint:style": "stylelint '{src,components}/**/*.less' --syntax less"
+    "lint:script": "eslint ./src --ext \".js,.jsx,.ts,.tsx\"",
+    "lint:style": "stylelint 'src/**/*.less' --syntax less",
+    "prettier": "prettier -c --write **/*"
   },
   "dependencies": {
     "@umijs/plugin-qiankun": "^1.3.4",
     "antd": "^3.19.5",
     "classnames": "^2.2.6",
     "dva": "^2.6.0-beta.6",
+    "md5": "^2.2.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "seid": "^1.1.24"
+    "seid": "^1.1.33"
   },
   "devDependencies": {
     "babel-eslint": "^9.0.0",

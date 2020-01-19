@@ -15,7 +15,7 @@ export default {
   ignoreMomentLocale: true,
   targets: { ie: 11 },
   base: `${base}/`,
-  publicPath: './',
+  publicPath: `${base}/`,
   mountElementId: name,
   plugins: [
     ['@umijs/plugin-qiankun'],
@@ -30,7 +30,7 @@ export default {
           webpackChunkName: true,
           loadingComponent: './components/Loader',
         },
-        title: '应用的标题',
+        title: '基础应用',
         dll: {
           include: ['dva', 'dva/router', 'dva/saga', 'dva/fetch', 'antd/es'],
           exclude: ['@umijs/plugin-qiankun'],
@@ -58,11 +58,9 @@ export default {
   theme: themeConfig(),
   alias: {
     '@': resolve(__dirname, './src'),
-    components: resolve(__dirname, './src/components'),
-    models: resolve(__dirname, './src/models'),
-    utils: resolve(__dirname, './src/utils'),
-    themes: resolve(__dirname, './src/themes'),
-    services: resolve(__dirname, './src/services'),
+  },
+  define: {
+    "process.env.MOCK_SERVER": process.env.MOCK_SERVER,
   },
   extraBabelPlugins: [
     [
