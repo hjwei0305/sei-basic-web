@@ -1,11 +1,11 @@
 export default [
   {
-    path: "/user",
-    component: "../layouts/LoginLayout",
+    path: '/user',
+    component: '../layouts/LoginLayout',
     routes: [
-      { path: "/user", redirect: "/user/login" },
-      { path: "/user/login", component: "./Login" }
-    ]
+      { path: '/user', redirect: '/user/login' },
+      { path: '/user/login', component: './Login' },
+    ],
   },
   {
     path: '/',
@@ -14,13 +14,10 @@ export default [
       { path: '/', redirect: '/dashboard' },
       { path: '/dashboard', component: './Dashboard' },
       {
-        path: "/backConfig",
-        name: "backConfig",
-        routes: [
-          { path: "/backConfig/appModule", component: "./BackConfig/AppModule" },
-        ]
-      }
+        path: '/backConfig',
+        name: 'backConfig',
+        routes: [{ path: '/backConfig/appModule', component: './BackConfig/AppModule' }],
+      },
     ],
   },
 ];
-

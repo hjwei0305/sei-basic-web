@@ -38,11 +38,11 @@ export default {
         pwa:
           process.env.NODE_ENV === 'production'
             ? {
-              workboxPluginMode: 'InjectManifest',
-              workboxOptions: {
-                importWorkboxFrom: 'local',
-              },
-            }
+                workboxPluginMode: 'InjectManifest',
+                workboxOptions: {
+                  importWorkboxFrom: 'local',
+                },
+              }
             : false,
         locale: {
           enable: true,
@@ -60,7 +60,7 @@ export default {
     '@': resolve(__dirname, './src'),
   },
   define: {
-    "process.env.MOCK_SERVER": process.env.MOCK_SERVER,
+    'process.env.MOCK_SERVER': process.env.MOCK_SERVER,
   },
   extraBabelPlugins: [
     [

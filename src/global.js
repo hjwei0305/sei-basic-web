@@ -10,7 +10,7 @@ if (process.env.NODE_ENV === 'production') {
   });
 
   // Pop up a prompt on the page asking the user if they want to use the latest version
-  window.addEventListener('sw.updated', (event) => {
+  window.addEventListener('sw.updated', event => {
     const e = event;
     const reloadSW = async () => {
       // Check if there is sw whose state is waiting in ServiceWorkerRegistration
@@ -52,8 +52,7 @@ if (process.env.NODE_ENV === 'production') {
       description: formatMessage({ id: 'app.pwa.serviceworker.updated.hint' }),
       btn,
       key,
-      onClose: async () => {
-      },
+      onClose: async () => {},
     });
   });
 } else if ('serviceWorker' in navigator) {

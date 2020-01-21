@@ -11,4 +11,4 @@ export default {
     secure: false,
     pathRewrite: { '^/service.api': '' },
   },
-}
+};
