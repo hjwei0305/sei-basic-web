@@ -1,5 +1,5 @@
 import { utils } from 'seid';
-import {constants} from '../../../utils';
+import { constants } from '../../../utils';
 
 const { request } = utils;
 
@@ -11,17 +11,17 @@ export async function getList(params) {
   return request({
     url,
     method: "GET",
-    data: params
+    params,
   });
 }
 
 /** 业务模保存 */
-export async function save(params) {
+export async function save(data) {
   const url = `${SERVER_PATH}/sei-basic/appModule/save`;
   return request({
     url,
     method: "POST",
-    data: { ...params.data }
+    data,
   });
 }
 
@@ -31,9 +31,6 @@ export async function del(params) {
   return request({
     url,
     method: "DELETE",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    data: params.id
+    params,
   });
 }

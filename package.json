@@ -1,5 +1,6 @@
 {
   "name": "sei-basic-web",
+  "title": "SEI-基础应用",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -23,7 +24,7 @@
     "md5": "^2.2.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "seid": "^1.1.33"
+    "seid": "^1.1.39"
   },
   "devDependencies": {
     "babel-eslint": "^9.0.0",

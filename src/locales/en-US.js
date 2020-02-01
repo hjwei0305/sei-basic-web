@@ -1,17 +1,22 @@
 import pwa from './en-US/pwa';
+import login from './en-US/login'
 import appModule from './en-US/appModule'
 
 export default {
   "app.request.error": "Interface request exception",
+  "app.request.401": "Session exception",
+  "app.request.401。message": "The current session timed out or failed, Please log in again",
   ...pwa,
   ...appModule,
+  ...login,
+  "global.tenant.required": "Please t!",
   "global.operation": "Action",
   "global.code": "Code",
   "global.code.required": "Code is required",
   "global.name": "Name",
   "global.name.required": "Name is required",
-  "global.description": "Description",
-  "global.description.required": "Description is required",
+  "global.remark": "Remark",
+  "global.remark.required": "Remark is required",
   "global.frozen": "Frozen",
   "global.freezing": "Freezing",
   "global.add": "New",

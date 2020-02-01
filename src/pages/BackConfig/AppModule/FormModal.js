@@ -69,9 +69,9 @@ class FormModal extends PureComponent {
               }]
             })(<Input />)}
           </FormItem>
-          <FormItem label={formatMessage({ id: "global.description", defaultMessage: "描述" })}>
-            {getFieldDecorator("description", {
-              initialValue: rowData ? rowData.description : ""
+          <FormItem label={formatMessage({ id: "global.remark", defaultMessage: "说明" })}>
+            {getFieldDecorator("remark", {
+              initialValue: rowData ? rowData.remark : ""
             })(<Input />)}
           </FormItem>
           <FormItem label={formatMessage({ id: "appModule.webBaseAddress", defaultMessage: "WEB基地址" })}>

@@ -7,7 +7,7 @@ import themeConfig from './theme.config';
 const appConfigPath = path.join(__dirname, '../public/app.config.json');
 const pkg = path.join(__dirname, '../package.json');
 const { base } = require(appConfigPath);
-const { name } = require(pkg);
+const { name, title } = require(pkg);
 
 export default {
   history: 'hash',
@@ -30,7 +30,7 @@ export default {
           webpackChunkName: true,
           loadingComponent: './components/Loader',
         },
-        title: '基础应用',
+        title,
         dll: {
           include: ['dva', 'dva/router', 'dva/saga', 'dva/fetch', 'antd/es'],
           exclude: ['@umijs/plugin-qiankun'],
@@ -38,11 +38,11 @@ export default {
         pwa:
           process.env.NODE_ENV === 'production'
             ? {
-                workboxPluginMode: 'InjectManifest',
-                workboxOptions: {
-                  importWorkboxFrom: 'local',
-                },
-              }
+              workboxPluginMode: 'InjectManifest',
+              workboxOptions: {
+                importWorkboxFrom: 'local',
+              },
+            }
             : false,
         locale: {
           enable: true,

@@ -2,10 +2,10 @@ import React, { Component, Fragment } from "react";
 import withRouter from "umi/withRouter";
 import { connect } from "dva";
 import cls from "classnames";
-import { Button, Popconfirm, Tag } from "antd";
+import { Button, Popconfirm } from "antd";
 import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
 import isEqual from "react-fast-compare";
-import { ResizeMe, ExtTable, utils, ExtIcon } from 'seid'
+import { ExtTable, utils, ExtIcon } from 'seid'
 import { constants } from "@/utils";
 import FormModal from "./FormModal";
 import styles from "./index.less";
@@ -15,14 +15,14 @@ const { authAction } = utils;
 
 
 @withRouter
-@ResizeMe()
 @connect(({ appModule, loading }) => ({ appModule, loading }))
 class AppModule extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      delRowId: null
+      delRowId: null,
+      list: [],
     };
   }
 
@@ -68,7 +68,7 @@ class AppModule extends Component {
     dispatch({
       type: "appModule/save",
       payload: {
-        data
+        ...data
       },
       callback: res => {
         if (res.success) {
@@ -117,9 +117,18 @@ class AppModule extends Component {
     });
   };
 
+  renderDelBtn = (row) => {
+    const { loading } = this.props;
+    const { delRowId } = this.state;
+    if (loading.effects["appModule/del"] && delRowId === row.id) {
+      return <ExtIcon className="del-loading" type="loading" antd />
+    }
+    return <ExtIcon className="del" type="delete" antd />;
+  };
+
   render() {
     const { appModule, loading } = this.props;
-    const { delRowId, list } = this.state;
+    const { list } = this.state;
     const { showModal, rowData } = appModule;
     const columns = [
       {
@@ -144,53 +153,41 @@ class AppModule extends Component {
                 />
               )
             }
-            {
-              authAction(
-                <Popconfirm
-                  key={APP_MODULE_BTN_KEY.DELETE}
-                  placement="topLeft"
-                  ignore='true'
-                  title={formatMessage({ id: "global.delete.confirm", defaultMessage: "确定要删除吗？提示：删除后不可恢复" })}
-                  onConfirm={_ => this.del(record)}
-                >
-                  {
-                    loading.effects["appModule/del"] && delRowId === record.id
-                      ? <ExtIcon className="del-loading" type="loading" antd />
-                      : <ExtIcon className="del" type="delete" antd />
-                  }
-                </Popconfirm>
-              )
-            }
+            <Popconfirm
+              key={APP_MODULE_BTN_KEY.DELETE}
+              placement="topLeft"
+              title={formatMessage({ id: "global.delete.confirm", defaultMessage: "确定要删除吗？提示：删除后不可恢复" })}
+              onConfirm={_ => this.del(record)}
+            >
+              {
+                this.renderDelBtn(record)
+              }
+            </Popconfirm>
           </span>
         )
       },
       {
+        title: formatMessage({ id: "global.rank", defaultMessage: "序号" }),
+        dataIndex: "rank",
+        width: 80,
+      },
+      {
         title: formatMessage({ id: "global.code", defaultMessage: "代码" }),
-        key: "code",
         dataIndex: "code",
         width: 120,
         required: true,
       },
       {
         title: formatMessage({ id: "global.name", defaultMessage: "名称" }),
-        key: "name",
         dataIndex: "name",
         width: 220,
         required: true,
       },
       {
-        title: formatMessage({ id: "global.frozen", defaultMessage: "冻结" }),
-        key: "frozen",
-        dataIndex: "frozen",
-        className: "frozen",
-        width: 80,
-        optional: true,
-        render: (text, record) => {
-          if (record.frozen) {
-            return <Tag color="red"><FormattedMessage id="global.freezing" defaultMessage="已冻结" /></Tag>;
-          }
-        }
-      }
+        title: formatMessage({ id: "global.remark", defaultMessage: "说明" }),
+        dataIndex: "remark",
+        width: 320,
+      },
     ];
     const formModalProps = {
       save: this.save,
