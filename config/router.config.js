@@ -29,6 +29,14 @@ export default [
           component: 'orgStructure/PositionCategory',
         }],
       },
+      {
+        path: '/regionManagement',
+        name: 'regionManagement',
+        routes: [{
+          path: '/regionManagement/country',
+          component: 'regionManagement/Country'
+        }],
+      },
     ],
   },
 ];
