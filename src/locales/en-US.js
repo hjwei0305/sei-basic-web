@@ -20,6 +20,7 @@ export default {
   "global.frozen": "Frozen",
   "global.freezing": "Freezing",
   "global.add": "New",
+  "global.edit": "Edit",
   "global.save": "Save",
   "global.ok": "OK",
   "global.rank": "Rank",
