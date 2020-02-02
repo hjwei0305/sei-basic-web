@@ -18,6 +18,17 @@ export default [
         name: 'backConfig',
         routes: [{ path: '/backConfig/appModule', component: './BackConfig/AppModule' }],
       },
+      {
+        path: '/orgStructure',
+        name: 'orgStructure',
+        routes: [{
+          path: '/orgStructure/corporation',
+          component: 'orgStructure/Corporation'
+        }, {
+          path: '/orgStructure/positionCategory',
+          component: 'orgStructure/PositionCategory',
+        }],
+      },
     ],
   },
 ];
