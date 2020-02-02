@@ -343,7 +343,7 @@ class AppMenu extends Component {
         };
         return (
             <div className={cls(styles["container-box"])} >
-                <Row gutter={8}>
+                <Row gutter={4}>
                     <Col span={8}>
                         <Card
                             title="应用菜单"
