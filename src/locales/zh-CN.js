@@ -23,6 +23,7 @@ export default {
   "global.rank": "序号",
   "global.rank.required": "序号不能为空",
   "global.add": "新建",
+  "global.edit": "编辑",
   "global.save": "保存",
   "global.ok": "确定",
   "global.search": "输入关键字查询",

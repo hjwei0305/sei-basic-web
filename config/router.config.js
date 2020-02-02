@@ -21,6 +21,25 @@ export default [
           { path: '/backConfig/appMenu', component: './BackConfig/AppMenu' },
         ],
       },
+      {
+        path: '/orgStructure',
+        name: 'orgStructure',
+        routes: [{
+          path: '/orgStructure/corporation',
+          component: 'orgStructure/Corporation'
+        }, {
+          path: '/orgStructure/positionCategory',
+          component: 'orgStructure/PositionCategory',
+        }],
+      },
+      {
+        path: '/regionManagement',
+        name: 'regionManagement',
+        routes: [{
+          path: '/regionManagement/country',
+          component: 'regionManagement/Country'
+        }],
+      },
     ],
   },
 ];
