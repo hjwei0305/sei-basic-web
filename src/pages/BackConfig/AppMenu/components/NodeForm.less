@@ -1,0 +1,66 @@
+@import '../../../../themes/vars.less';
+.node-form {
+  flex: 1 1;
+  padding: 0;
+  background-color: @white;
+  height: 100vh;
+  :global {
+    .base-view-body {
+      .header {
+        height: 60px;
+        line-height: 60px;
+        font-size: 16px;
+        padding: 0 24px;
+        color: fade(@black, 85%);
+        font-weight: 700;
+      }
+      .tool-bar-box {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 16px;
+        height: 60px;
+        position: relative;
+        background-color: @white;
+        border-bottom: 1px solid #eee;
+        .tool-action-box {
+          button {
+            margin-left: 8px;
+          }
+        }
+        .tool-right-box {
+          display: flex;
+          align-items: center;
+          .all-in-one-search {
+            width: 220px;
+          }
+          &>span,
+          &>.ant-select {
+            margin-left: 16px;
+          }
+          &>.ant-dropdown-trigger {
+            cursor: pointer;
+          }
+          button {
+            margin-left: 8px;
+          }
+        }
+      }
+      .form-box {
+        height: calc(~"100vh - 120px");
+        background-color: fade(@black, 1%);
+        display: flex;
+        justify-content: flex-start;
+        .form-body {
+          padding: 24px 0;
+          width: 480px;
+        }
+      }
+    }
+  }
+}
+
+.pop-confirm-box {
+  z-index: 1050;
+}

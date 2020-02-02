@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from "react";
-import withRouter from "umi/withRouter";
 import { connect } from "dva";
 import cls from "classnames";
 import { Button, Popconfirm } from "antd";
@@ -14,7 +13,6 @@ const { APP_MODULE_BTN_KEY } = constants;
 const { authAction } = utils;
 
 
-@withRouter
 @connect(({ appModule, loading }) => ({ appModule, loading }))
 class AppModule extends Component {
 

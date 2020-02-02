@@ -31,6 +31,13 @@ const APP_MODULE_BTN_KEY = {
   "DELETE": `${APP_PREFIX}_DELETE`
 };
 
+/** 应用菜单功能项*/
+const APP_MENU_BTN_KEY = {
+  "CREATE": `${APP_PREFIX}_CREATE`,
+  "EDIT": `${APP_PREFIX}_EDIT`,
+  "DELETE": `${APP_PREFIX}_DELETE`
+};
+
 const LOGIN_STATUS = {
   "SUCCESS": "success",
   "MULTI_TENANT": "multiTenant",
@@ -46,4 +53,5 @@ export default {
   SERVER_PATH,
   APP_MODULE_BTN_KEY,
   LOGIN_STATUS,
+  APP_MENU_BTN_KEY,
 };

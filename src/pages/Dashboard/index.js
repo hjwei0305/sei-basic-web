@@ -18,6 +18,11 @@ const menuData = [
         name: '业务模块',
         path: '/backConfig/appModule',
       },
+      {
+        id: '101',
+        name: '应用菜单',
+        path: '/backConfig/appMenu',
+      },
     ],
   },
 ];

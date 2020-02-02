@@ -16,7 +16,10 @@ export default [
       {
         path: '/backConfig',
         name: 'backConfig',
-        routes: [{ path: '/backConfig/appModule', component: './BackConfig/AppModule' }],
+        routes: [
+          { path: '/backConfig/appModule', component: './BackConfig/AppModule' },
+          { path: '/backConfig/appMenu', component: './BackConfig/AppMenu' },
+        ],
       },
     ],
   },
