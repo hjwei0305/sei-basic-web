@@ -183,10 +183,6 @@ class FeaturePage extends Component {
             },
         ];
         const toolBarProps = {
-            layout: {
-                leftSpan: 10,
-                rightSpan: 14,
-            },
             left: (
                 <Fragment>
                     <Button
