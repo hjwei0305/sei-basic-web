@@ -1,4 +1,4 @@
-import { del, getMenuList, save, move } from "./service";
+import { delFeatureGroup, getFeatureGroupList, saveFeatureGroup } from "../service";
 import { message } from "antd";
 import { formatMessage } from "umi-plugin-react/locale";
 import { utils } from 'seid';
@@ -7,47 +7,46 @@ const { pathMatchRegexp, dvaModel } = utils;
 const { modelExtend, model } = dvaModel;
 
 export default modelExtend(model, {
-  namespace: "appMenu",
+  namespace: "featureGroup",
 
   state: {
-    treeData: [],
-    currentNode: null,
-    showMove: false,
+    listData: [],
+    currentFeatureGroup: null,
   },
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen(location => {
-        if (pathMatchRegexp("/backConfig/appMenu", location.pathname)) {
+        if (pathMatchRegexp("/backConfig/feature", location.pathname)) {
           dispatch({
-            type: "getMenuList"
+            type: "queryFeatureGroupList"
           });
         }
       });
     }
   },
   effects: {
-    * getMenuList({ payload }, { call, put }) {
-      const re = yield call(getMenuList, payload);
+    * queryFeatureGroupList({ payload }, { call, put }) {
+      const re = yield call(getFeatureGroupList, payload);
       if (re.success) {
         yield put({
           type: "updateState",
           payload: {
-            treeData: re.data
+            listData: re.data
           }
         });
       } else {
         message.error(re.message);
       }
     },
-    * save({ payload, callback }, { call, put }) {
-      const re = yield call(save, payload);
+    * saveFeatureGroup({ payload, callback }, { call, put }) {
+      const re = yield call(saveFeatureGroup, payload);
       message.destroy();
       if (re.success) {
         message.success(formatMessage({ id: "global.save-success", defaultMessage: "保存成功" }));
         yield put({
           type: "updateState",
           payload: {
-            currentNode: re.data,
+            currentFeatureGroup: re.data
           }
         });
       } else {
@@ -57,15 +56,15 @@ export default modelExtend(model, {
         callback(re);
       }
     },
-    * del({ payload, callback }, { call, put }) {
-      const re = yield call(del, payload);
+    * delFeatureGroup({ payload, callback }, { call, put }) {
+      const re = yield call(delFeatureGroup, payload);
       message.destroy();
       if (re.success) {
         message.success(formatMessage({ id: "global.delete-success", defaultMessage: "删除成功" }));
         yield put({
           type: "updateState",
           payload: {
-            currentNode: null,
+            currentFeatureGroup: null
           }
         });
       } else {
@@ -74,24 +73,6 @@ export default modelExtend(model, {
       if (callback && callback instanceof Function) {
         callback(re);
       }
-    },
-    * move({ payload, callback }, { call, put }) {
-      const re = yield call(move, payload);
-      message.destroy();
-      if (re.success) {
-        message.success(formatMessage({ id: "menu.move-success", defaultMessage: "菜单移动成功" }));
-        yield put({
-          type: "updateState",
-          payload: {
-            showMove: false,
-          }
-        });
-      } else {
-        message.error(re.message);
-      }
-      if (callback && callback instanceof Function) {
-        callback(re);
-      }
-    },
+    }
   }
 });

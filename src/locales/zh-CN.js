@@ -1,7 +1,8 @@
 import pwa from './zh-CN/pwa';
 import login from './zh-CN/login'
 import appModule from './zh-CN/appModule';
-import menu from './zh-CN/menu'
+import menu from './zh-CN/menu';
+import feature from './zh-CN/feature'
 
 export default {
   "app.request.error": "接口请求异常",
@@ -11,6 +12,7 @@ export default {
   ...appModule,
   ...login,
   ...menu,
+  ...feature,
   "global.operation": "操作",
   "global.code": "代码",
   "global.code.required": "代码不能为空",

@@ -15,11 +15,16 @@ const menuData = [
     children: [
       {
         id: '100',
-        name: '业务模块',
+        name: '应用模块',
         path: '/backConfig/appModule',
       },
       {
         id: '101',
+        name: '功能项',
+        path: '/backConfig/feature',
+      },
+      {
+        id: '102',
         name: '应用菜单',
         path: '/backConfig/appMenu',
       },

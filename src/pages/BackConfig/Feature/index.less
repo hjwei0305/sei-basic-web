@@ -1,0 +1,126 @@
+@import '../../../themes/vars.less';
+.container-box {
+    height: 100vh;
+    padding: 0;
+    overflow: hidden;
+    background-color: @page-background-color;
+    :global {
+        .left-content {
+            position: relative;
+            .ant-card-body {
+                height: calc(~"100vh - 64px");
+                padding: 0;
+                .list-body {
+                    width: 100%;
+                    height: calc(~"100vh - 108px");
+                    overflow: hidden;
+                    .scrollbar-container {
+                        width: 100%;
+                    }
+                    .ant-list-item {
+                        padding: 12px 8px 20px 8px;
+                        cursor: pointer;
+                        position: relative;
+                        .tool-action {
+                            position: absolute;
+                            right: 20px;
+                            bottom: 2px;
+                            .action-item {
+                                visibility: hidden;
+                                &.ant-popover-open {
+                                    visibility: visible;
+                                    i {
+                                        color: @primary-color;
+                                        background-color: fade(@black, 5%);
+                                    }
+                                }
+                            }
+                            i {
+                                display: inline-block;
+                                width: 32px;
+                                height: 32px;
+                                line-height: 34px;
+                                border-radius: 4px;
+                                cursor: pointer;
+                                transition: all ease-in 0.2s;
+                                &.ant-dropdown-open,
+                                &:hover {
+                                    color: @primary-color;
+                                    background-color: fade(@black, 5%);
+                                }
+                                &.del:hover {
+                                    color: @error-color;
+                                    background-color: fade(@error-color, 15%);
+                                }
+                                &.ant-popover-open:hover,
+                                &.ant-popover-open {
+                                    color: @error-color;
+                                    background-color: fade(@error-color, 15%);
+                                }
+                            }
+                        }
+                        &:hover {
+                            background-color: fade(@item-hover-bg, 45%);
+                            .tool-action {
+                                .action-item {
+                                    visibility: visible;
+                                }
+                            }
+                        }
+                        .desc {
+                            margin-right: 8px;
+                        }
+                        .arrow-box {
+                            font-size: 10px;
+                            color: fade(@black, 45%);
+                        }
+                    }
+                }
+                .list-page-bar {
+                    position: relative;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 100%;
+                    height: 42px;
+                    background-color: #fff;
+                    box-shadow: -2px 0px 2px rgba(0, 0, 0, 0.15);
+                }
+            }
+            .header-tool-box {
+                display: flex;
+                align-items: center;
+                position: relative;
+                button {
+                    margin-left: 8px;
+                }
+            }
+        }
+        .main-content {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            .blank-empty {
+                display: flex;
+                position: relative;
+                width: 100%;
+                justify-content: center;
+                align-items: center;
+                background-color: @white;
+                height: 100vh;
+                .ant-empty-image {
+                    height: 220px;
+                    img {
+                        height: 220px;
+                        width: 220px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.row-selected {
+    background-color: @item-hover-bg !important;
+}

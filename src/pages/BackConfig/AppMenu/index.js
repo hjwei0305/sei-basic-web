@@ -170,7 +170,7 @@ class AppMenu extends Component {
         });
     };
 
-    filterNodes = (filterName, valueKey, treeData, expandedKeys) => {
+    filterNodes = (valueKey, treeData, expandedKeys) => {
         const newArr = [];
         treeData.forEach(treeNode => {
             const nodeChildren = treeNode[childFieldKey];
@@ -179,7 +179,7 @@ class AppMenu extends Component {
                 newArr.push(treeNode);
                 expandedKeys.push(treeNode.id);
             } else if (nodeChildren && nodeChildren.length > 0) {
-                const ab = this.filterNodes(filterName, valueKey, nodeChildren, expandedKeys);
+                const ab = this.filterNodes(valueKey, nodeChildren, expandedKeys);
                 const obj = {
                     ...treeNode,
                     [childFieldKey]: ab,
@@ -194,16 +194,11 @@ class AppMenu extends Component {
 
     getLocalFilterData = () => {
         const { expandedKeys: expKeys, treeData } = this.state;
-        const { reader, name } = this.props;
         let newData = [...treeData];
         const expandedKeys = [...expKeys];
         const searchValue = this.allValue;
         if (searchValue) {
-            let filterName = name;
-            if (reader && reader.name) {
-                filterName = reader.name;
-            }
-            newData = this.filterNodes(filterName, searchValue.toLowerCase(), newData, expandedKeys);
+            newData = this.filterNodes(searchValue.toLowerCase(), newData, expandedKeys);
         }
         return { treeData: newData, expandedKeys };
     };
@@ -363,7 +358,7 @@ class AppMenu extends Component {
                                         icon="plus"
                                         onClick={e => this.addParent(e)}
                                     >
-                                        新建根菜单
+                                        根菜单
                                     </Button>
                                 </div>
                             }

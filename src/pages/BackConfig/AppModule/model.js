@@ -27,16 +27,16 @@ export default modelExtend(model, {
   },
   effects: {
     * queryList({ payload }, { call, put }) {
-      const ds = yield call(getList, payload);
-      if (ds.success) {
+      const re = yield call(getList, payload);
+      if (re.success) {
         yield put({
           type: "updateState",
           payload: {
-            list: ds.data
+            list: re.data
           }
         });
       } else {
-        throw ds;
+        message.error(re.message);
       }
     },
     * save({ payload, callback }, { call }) {

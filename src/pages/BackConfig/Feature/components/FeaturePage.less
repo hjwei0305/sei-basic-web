@@ -1,0 +1,32 @@
+@import '../../../../themes/vars.less';
+.feature-page-box {
+    height: 100vh;
+    width: 100%;
+    padding: 0;
+    overflow: hidden;
+    background-color: @page-background-color;
+    position: relative;
+    :global {
+        .ant-table-bordered.ant-table-empty .ant-table-placeholder {
+            border-right-color: transparent;
+            border-left-color: transparent;
+        }
+        .ant-card-head {
+            background-color: @white;
+        }
+        .ant-card-body {
+            padding: 0;
+            height: calc(100vh - 57px);
+            .panel-body {
+                height: calc(100vh - 57px) !important;
+                max-height: calc(100vh - 57px) !important;
+                width: 100%;
+            }
+            .seid-tool-bar {
+                button {
+                    margin-right: 8px;
+                }
+            }
+        }
+    }
+}

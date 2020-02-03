@@ -1,7 +1,8 @@
 import pwa from './en-US/pwa';
 import login from './en-US/login'
 import appModule from './en-US/appModule'
-import menu from './en-US/menu'
+import menu from './en-US/menu';
+import feature from './en-US/feature'
 
 export default {
   "app.request.error": "Interface request exception",
@@ -11,6 +12,7 @@ export default {
   ...appModule,
   ...login,
   ...menu,
+  ...feature,
   "global.tenant.required": "Please t!",
   "global.operation": "Action",
   "global.code": "Code",
