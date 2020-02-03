@@ -27,10 +27,10 @@ export default [
         name: 'orgStructure',
         routes: [{
           path: '/orgStructure/corporation',
-          component: 'orgStructure/Corporation'
+          component: 'OrgStructure/Corporation'
         }, {
           path: '/orgStructure/positionCategory',
-          component: 'orgStructure/PositionCategory',
+          component: 'OrgStructure/PositionCategory',
         }],
       },
       {
@@ -38,7 +38,7 @@ export default [
         name: 'regionManagement',
         routes: [{
           path: '/regionManagement/country',
-          component: 'regionManagement/Country'
+          component: 'RegionManagement/Country'
         }],
       },
     ],
