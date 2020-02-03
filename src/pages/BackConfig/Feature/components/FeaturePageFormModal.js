@@ -42,10 +42,10 @@ class FormModal extends PureComponent {
     const { getFieldDecorator } = form;
     const title = currentPageRow
       ? formatMessage({
-        id: "feature.edit",
+        id: "feature.page.edit",
         defaultMessage: "修改菜单项"
       })
-      : formatMessage({ id: "feature.add", defaultMessage: "新建菜单项" });
+      : formatMessage({ id: "feature.page.add", defaultMessage: "新建菜单项" });
     return (
       <ExtModal
         destroyOnClose

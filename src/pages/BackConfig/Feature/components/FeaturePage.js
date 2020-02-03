@@ -5,12 +5,13 @@ import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
 import { Popconfirm, Button, Card } from 'antd'
 import { ExtTable, ExtIcon } from 'seid';
 import { constants } from '@/utils';
-import FeaturePageFormModal from './FeaturePageFormModal'
+import FeaturePageFormModal from './FeaturePageFormModal';
+import FeatureItem from './FeatureItem';
 import styles from './FeaturePage.less';
 
 const { SERVER_PATH } = constants;
 
-@connect(({ featurePage, featureGroup, loading }) => ({ featurePage, featureGroup, loading }))
+@connect(({ feature, featureGroup, loading }) => ({ feature, featureGroup, loading }))
 class FeaturePage extends Component {
 
     constructor(props) {
@@ -31,7 +32,7 @@ class FeaturePage extends Component {
     add = _ => {
         const { dispatch } = this.props;
         dispatch({
-            type: "featurePage/updateState",
+            type: "feature/updateState",
             payload: {
                 showFormModal: true,
                 currentPageRow: null
@@ -42,9 +43,20 @@ class FeaturePage extends Component {
     edit = currentPageRow => {
         const { dispatch } = this.props;
         dispatch({
-            type: "featurePage/updateState",
+            type: "feature/updateState",
             payload: {
                 showFormModal: true,
+                currentPageRow,
+            }
+        });
+    };
+
+    showFeatureItem = currentPageRow => {
+        const { dispatch } = this.props;
+        dispatch({
+            type: "feature/updateState",
+            payload: {
+                showFeatureItem: true,
                 currentPageRow,
             }
         });
@@ -53,14 +65,14 @@ class FeaturePage extends Component {
     save = data => {
         const { dispatch } = this.props;
         dispatch({
-            type: "featurePage/saveFeature",
+            type: "feature/saveFeature",
             payload: {
                 ...data
             },
             callback: res => {
                 if (res.success) {
                     dispatch({
-                        type: "featurePage/updateState",
+                        type: "feature/updateState",
                         payload: {
                             showFormModal: false
                         }
@@ -77,7 +89,7 @@ class FeaturePage extends Component {
             delRowId: record.id
         }, _ => {
             dispatch({
-                type: "featurePage/delFeature",
+                type: "feature/delFeature",
                 payload: {
                     id: record.id
                 },
@@ -93,10 +105,21 @@ class FeaturePage extends Component {
         });
     };
 
+    add = _ => {
+        const { dispatch } = this.props;
+        dispatch({
+            type: "feature/updateState",
+            payload: {
+                showFormModal: true,
+                currentPageRow: null
+            }
+        });
+    };
+
     closePageFormModal = _ => {
         const { dispatch } = this.props;
         dispatch({
-            type: "featurePage/updateState",
+            type: "feature/updateState",
             payload: {
                 showFormModal: false,
                 currentPageRow: null
@@ -107,16 +130,16 @@ class FeaturePage extends Component {
     renderDelBtn = (row) => {
         const { loading } = this.props;
         const { delRowId } = this.state;
-        if (loading.effects["featurePage/delFeature"] && delRowId === row.id) {
+        if (loading.effects["feature/delFeature"] && delRowId === row.id) {
             return <ExtIcon className="del-loading" type="loading" antd />
         }
         return <ExtIcon className="del" type="delete" antd />;
     };
 
     render() {
-        const { loading, featureGroup, featurePage } = this.props;
+        const { loading, featureGroup, feature } = this.props;
         const { currentFeatureGroup } = featureGroup;
-        const { showFormModal, currentPageRow } = featurePage;
+        const { showFormModal, currentPageRow, showFeatureItem } = feature;
         const columns = [
             {
                 title: formatMessage({ id: "global.operation", defaultMessage: "操作" }),
@@ -145,7 +168,7 @@ class FeaturePage extends Component {
                         </Popconfirm>
                         <ExtIcon
                             className="edit"
-                            onClick={_ => this.edit(record)}
+                            onClick={_ => this.showFeatureItem(record)}
                             type="safety"
                             tooltip={{ title: '页面功能项' }}
                             antd
@@ -188,7 +211,6 @@ class FeaturePage extends Component {
                     <Button
                         type="primary"
                         onClick={this.add}
-                        ignore='true'
                     >
                         <FormattedMessage id="global.add" defaultMessage="新建" />
                     </Button>
@@ -214,20 +236,24 @@ class FeaturePage extends Component {
             showFormModal,
             currentFeatureGroup,
             closePageFormModal: this.closePageFormModal,
-            saving: loading.effects["featurePage/saveFeature"]
+            saving: loading.effects["feature/saveFeature"]
+        };
+        const featureItemProps = {
+            showFeatureItem,
+            currentPageRow,
+            currentFeatureGroup,
         };
         return (
-            <>
+            <div className={cls(styles['feature-page-box'])}>
                 <Card
                     title="菜单项管理"
                     bordered={false}
-                    className={cls(styles['feature-page-box'])}
                 >
                     <ExtTable {...extTableProps} />
-
                 </Card>
                 <FeaturePageFormModal {...formModalProps} />
-            </>
+                <FeatureItem {...featureItemProps} />
+            </div>
         )
     }
 }

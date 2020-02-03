@@ -54,3 +54,13 @@ export async function delFeature(params) {
     params,
   });
 }
+
+/** 获取功能项列表 */
+export async function getFeatureItemList(params) {
+  const url = `${SERVER_PATH}/sei-basic/feature/findChildByFeatureId`;
+  return request({
+    url,
+    method: "GET",
+    params,
+  });
+}

@@ -1,4 +1,4 @@
-import { delFeature, saveFeature } from "../service";
+import { delFeature, saveFeature, getFeatureItemList } from "../service";
 import { message } from "antd";
 import { formatMessage } from "umi-plugin-react/locale";
 import { utils } from 'seid';
@@ -7,14 +7,28 @@ const { dvaModel } = utils;
 const { modelExtend, model } = dvaModel;
 
 export default modelExtend(model, {
-  namespace: "featurePage",
+  namespace: "feature",
 
   state: {
     listData: [],
     currentPageRow: null,
     showFormModal: false,
+    showFeatureItem: false,
   },
   effects: {
+    * getFeatureItemList({ payload }, { call, put }) {
+      const re = yield call(getFeatureItemList, payload);
+      if (re.success) {
+        yield put({
+          type: "updateState",
+          payload: {
+            listData: re.data
+          }
+        });
+      } else {
+        message.error(re.message);
+      }
+    },
     * saveFeature({ payload, callback }, { call }) {
       const re = yield call(saveFeature, payload);
       message.destroy();
