@@ -4,7 +4,7 @@ import { cloneDeep, get } from "lodash";
 import isEqual from "react-fast-compare";
 import { formatMessage } from "umi-plugin-react/locale";
 import { Button, Form, Input, Popconfirm, InputNumber } from "antd";
-import { ScrollBar, ExtIcon } from 'seid';
+import { ScrollBar, ExtIcon, ComboGrid } from 'seid';
 import { constants } from '@/utils';
 import styles from "./NodeForm.less";
 
@@ -162,6 +162,7 @@ class NodeForm extends Component {
 
     getFormTitle = () => {
         const { editData } = this.props;
+        console.log(editData);
         let title = '';
         if (editData) {
             if (editData.parentId) {
@@ -174,9 +175,51 @@ class NodeForm extends Component {
     };
 
     render() {
-        const { form, loading } = this.props;
+        const { form, loading, editData } = this.props;
         const { getFieldDecorator } = form;
         const title = this.getFormTitle();
+        getFieldDecorator("featureId", { initialValue: this.getInitValueByFields("appModufeatureIdleId") });
+        getFieldDecorator("featureCode", { initialValue: this.getInitValueByFields("featureCode") });
+        const featureProps = {
+            form,
+            remotePaging: true,
+            name: 'featureName',
+            field: ['featureId', 'featureCode'],
+            searchPlaceHolder: "输入关键字查询",
+            searchProperties: ["name", "code"],
+            width: 420,
+            columns: [{
+                title: "代码",
+                width: 120,
+                dataIndex: "code",
+            }, {
+                title: "名称",
+                width: 220,
+                dataIndex: "name",
+            }, {
+                title: "所属应用模块",
+                width: 180,
+                dataIndex: 'appModuleName'
+            }],
+            store: {
+                type: 'POST',
+                url: `${SERVER_PATH}/sei-basic/feature/findByPage`,
+                params: {
+                    filters: [
+                        {
+                            fieldName: 'canMenu',
+                            fieldType: 'bool',
+                            operator: 'EQ',
+                            value: true
+                        }
+                    ],
+                }
+            },
+            reader: {
+                name: "name",
+                field: ["id", 'code']
+            }
+        };
         return (
             <div key="node-form" className={cls(styles["node-form"])}>
                 <div className="base-view-body">
@@ -228,6 +271,21 @@ class NodeForm extends Component {
                                         }]
                                     })(<InputNumber precision={0} style={{ width: '100%' }} />)}
                                 </FormItem>
+                                {
+                                    editData.children && editData.children.length === 0
+                                        ? <FormItem label='菜单项'>
+                                            {
+                                                getFieldDecorator("featureName", {
+                                                    initialValue: this.getInitValueByFields("featureName"),
+                                                    rules: [{
+                                                        required: true,
+                                                        message: "菜单项不能为空"
+                                                    }]
+                                                })(<ComboGrid {...featureProps} />)
+                                            }
+                                        </FormItem>
+                                        : null
+                                }
                             </Form>
                         </ScrollBar>
                     </div>
