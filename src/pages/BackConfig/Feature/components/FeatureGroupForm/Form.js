@@ -92,7 +92,7 @@ class FeatureGroupForm extends PureComponent {
                   message: formatMessage({ id: "global.code.required", defaultMessage: "代码不能为空" })
                 }]
               })(
-                <Input placeholder={formatMessage({ id: "global.code.tip", defaultMessage: "规则:名称各汉字首字母大写" })} />
+                <Input maxLength={30} placeholder={formatMessage({ id: "global.code.tip", defaultMessage: "规则:名称各汉字首字母大写" })} />
               )}
             </FormItem>
             <FormItem label="所属应用模块">
