@@ -1,14 +1,15 @@
 @import '../../../themes/vars.less';
 .container-box {
-    height: 100vh;
+    height: 100%;
     padding: 0;
     overflow: hidden;
     background-color: @page-background-color;
     :global {
         .left-content {
             position: relative;
+            height: 100%;
             .ant-card-body {
-                height: calc(~"100vh - 64px");
+                height: calc(100% - 65px);
                 padding: 8px 8px 0 8px;
                 .account-node {
                     display: flex;
@@ -28,7 +29,7 @@
             }
         }
         .main-content {
-            height: 100vh;
+            height: 100%;
             position: relative;
             display: flex;
             justify-content: center;
@@ -39,7 +40,7 @@
                 justify-content: center;
                 align-items: center;
                 background-color: @white;
-                height: 100vh;
+                height: 100%;
                 .ant-empty-image {
                     height: 220px;
                     img {

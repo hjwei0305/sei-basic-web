@@ -3,10 +3,11 @@
   flex: 1 1;
   padding: 0;
   background-color: @white;
-  height: 100vh;
+  height: 100%;
   :global {
     .base-view-body {
       background-color: @white;
+      height: 100%;
       .header {
         height: 60px;
         line-height: 60px;
@@ -49,7 +50,7 @@
         }
       }
       .form-box {
-        height: calc(~"100vh - 120px");
+        height: calc(100% - 120px);
         background-color: fade(@black, 1%);
         display: flex;
         justify-content: flex-start;
