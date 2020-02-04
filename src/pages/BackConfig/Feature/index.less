@@ -8,12 +8,15 @@
         .left-content {
             position: relative;
             height: 100%;
+            .ant-card-head {
+                border-color: transparent;
+            }
             .ant-card-body {
-                height: calc(100% - 64px);
+                height: calc(100% - 57px);
                 padding: 0;
                 .list-body {
                     width: 100%;
-                    height: calc(100% - 48px);
+                    height: calc(100% - 90px);
                     overflow: hidden;
                     .scrollbar-container {
                         width: 100%;
@@ -91,10 +94,12 @@
             .header-tool-box {
                 display: flex;
                 align-items: center;
+                height: 42px;
+                line-height: 42px;
+                justify-content: space-between;
                 position: relative;
-                button {
-                    margin-left: 8px;
-                }
+                padding: 0 8px;
+                border-bottom: 1px solid @border-color;
             }
         }
         .main-content {
@@ -109,7 +114,7 @@
                 justify-content: center;
                 align-items: center;
                 background-color: @white;
-                height: 100vh;
+                height: 100%;
                 .ant-empty-image {
                     height: 220px;
                     img {

@@ -171,26 +171,24 @@ class Feature extends Component {
                 <Row gutter={4} className='auto-height'>
                     <Col span={6} className='auto-height'>
                         <Card
-                            title="功能项组"
+                            title="功能组"
                             bordered={false}
                             className="left-content"
-                            extra={
-                                <div className="header-tool-box">
-                                    <Search
-                                        placeholder="输入名称关键字查询"
-                                        defaultValue={allValue}
-                                        onChange={e => this.handlerSearchChange(e.target.value)}
-                                        onSearch={this.handlerSearch}
-                                        onPressEnter={this.handlerSearch}
-                                        style={{ width: 172 }}
-                                    />
-                                    <GroupAdd
-                                        saving={saving}
-                                        saveFeatureGroup={this.saveFeatureGroup}
-                                    />
-                                </div>
-                            }
                         >
+                            <div className="header-tool-box">
+                                <GroupAdd
+                                    saving={saving}
+                                    saveFeatureGroup={this.saveFeatureGroup}
+                                />
+                                <Search
+                                    placeholder="输入名称关键字查询"
+                                    defaultValue={allValue}
+                                    onChange={e => this.handlerSearchChange(e.target.value)}
+                                    onSearch={this.handlerSearch}
+                                    onPressEnter={this.handlerSearch}
+                                    style={{ width: 172 }}
+                                />
+                            </div>
                             <div className="list-body">
                                 <ScrollBar>
                                     <List
