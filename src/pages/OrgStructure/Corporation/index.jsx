@@ -2,8 +2,7 @@ import React, { Component, Fragment, } from 'react';
 import withRouter from 'umi/withRouter';
 import { connect } from 'dva';
 import cls from 'classnames';
-// import { isEqual, } from 'lodash';
-import { Button, Popconfirm, Checkbox } from "antd";
+import { Button, Popconfirm, Tag } from "antd";
 import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
 import { ExtTable, utils, ExtIcon } from 'seid'
 import { constants } from "@/utils";
@@ -161,6 +160,11 @@ class Corporation extends Component {
         )
       },
       {
+        title: formatMessage({ id: "global.rank", defaultMessage: "序号" }),
+        dataIndex: "rank",
+        width: 80,
+      },
+      {
         title: formatMessage({ id: "global.code", defaultMessage: "代码" }),
         dataIndex: "code",
         width: 120,
@@ -182,44 +186,40 @@ class Corporation extends Component {
         title: formatMessage({ id: "corporation.erpCode", defaultMessage: "ERP公司代码" }),
         dataIndex: "erpCode",
         width: 80,
-        required: true,
+        optional: true,
       },
       {
         title: formatMessage({ id: "corporation.baseCurrencyName", defaultMessage: "本位币货币名称" }),
         dataIndex: "baseCurrencyName",
         width: 80,
-        required: true,
+        optional: true,
       },
       {
         title: formatMessage({ id: "corporation.baseCurrencyCode", defaultMessage: "本位币货币代码" }),
         dataIndex: "baseCurrencyCode",
         width: 80,
-        required: true,
+        optional: true,
       },
       {
         title: formatMessage({ id: "corporation.defaultTradePartner", defaultMessage: "默认贸易伙伴代码" }),
         dataIndex: "defaultTradePartner",
         width: 120,
-        required: true,
+        optional: true,
       },
       {
         title: formatMessage({ id: "corporation.relatedTradePartner", defaultMessage: "关联交易贸易伙伴" }),
         dataIndex: "relatedTradePartner",
         width: 120,
-        required: true,
-      },
-      {
-        title: formatMessage({ id: "global.rank", defaultMessage: "序号" }),
-        dataIndex: "rank",
-        width: 80,
+        optional: true,
       },
       {
         title: formatMessage({ id: "corporation.frozen", defaultMessage: "冻结" }),
         dataIndex: "frozen",
         width: 80,
-        required: true,
-        render: (text) => {
-          return (<Checkbox checked={!!text}/>)
+        render: (_text, row) => {
+          if (row.frozen) {
+            return <Tag color='red'>已冻结</Tag>
+          }
         }
       },
     ];
