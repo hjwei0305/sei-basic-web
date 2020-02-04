@@ -2,7 +2,7 @@ import React, { Component, Fragment, } from 'react';
 import withRouter from 'umi/withRouter';
 import { connect } from 'dva';
 import cls from 'classnames';
-import { isEqual, } from 'lodash';
+// import { isEqual, } from 'lodash';
 import { Button, Popconfirm, Checkbox } from "antd";
 import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
 import { ExtTable, utils, ExtIcon } from 'seid'
@@ -21,14 +21,14 @@ class Corporation extends Component {
     list: [],
   }
 
-  componentDidUpdate(_prevProps, prevState) {
-    const { list, } = this.props.corporation;
-    if (!isEqual(prevState.list, list)) {
-      this.setState({
-        list,
-      });
-    }
-  }
+  // componentDidUpdate(_prevProps, prevState) {
+  //   const { list, } = this.props.corporation;
+  //   if (!isEqual(prevState.list, list)) {
+  //     this.setState({
+  //       list,
+  //     });
+  //   }
+  // }
 
   reloadData = _ => {
     const { dispatch } = this.props;
@@ -121,7 +121,8 @@ class Corporation extends Component {
   };
 
   getExtableProps = () => {
-    const { list } = this.state;
+    // const { list } = this.state;
+    const { list, } = this.props.corporation;
     const { loading } = this.props;
     const columns = [
       {
