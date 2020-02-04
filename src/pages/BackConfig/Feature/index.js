@@ -33,9 +33,9 @@ class Feature extends Component {
     static allValue = '';
     static data = [];
 
-    componentDidUpdate(prevProps) {
+    componentDidUpdate() {
         const { featureGroup } = this.props;
-        if (!isEqual(prevProps.featureGroup.listData, featureGroup.listData)) {
+        if (!isEqual(this.state.listData, featureGroup.listData)) {
             const { pagination } = this.state;
             const { listData } = featureGroup;
             this.data = [...listData];
