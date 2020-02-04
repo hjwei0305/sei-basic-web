@@ -32,9 +32,6 @@ export default [
           path: '/orgStructure/positionCategory',
           component: 'OrgStructure/PositionCategory',
         }, {
-          path: '/orgStructure/position',
-          component: 'OrgStructure/Position',
-        }, {
           path: '/orgStructure/organization',
           component: 'OrgStructure/Organization',
         }],
