@@ -19,7 +19,7 @@ class Organization extends Component {
     return (
       <Row className={cls(styles['container-box'])}>
         <Spin spinning={loading.global} wrapperClassName={cls("spin-wrapper")}>
-          <Col className={cls('content-panel')} span={8}>
+          <Col className={cls('content-panel')} span={10}>
             <header className={cls('content-panel-title')}>
               <span>组织机构</span>
             </header>
@@ -27,7 +27,7 @@ class Organization extends Component {
               <TreePanel />
             </div>
           </Col>
-          <Col className={cls('content-panel','right-panel')} span={16}>
+          <Col className={cls('content-panel','right-panel')} span={14}>
             <header className={cls('content-panel-title')}>
               <span>{selectedTreeNode && selectedTreeNode.name}</span>
             </header>
