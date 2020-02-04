@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'dva';
 import { Input, Tree, Empty, Popconfirm, Button, message, } from 'antd';
 import { formatMessage, } from "umi-plugin-react/locale";
@@ -188,7 +188,7 @@ class TreePanel extends Component {
 
   getToolBarProps = () => {
     return {
-      left: (<>
+      left: (<Fragment>
         <Button style={{ marginRight: 8}} type="primary" onClick={this.handleCreate}>创建节点</Button>
         <Popconfirm
           // key={APP_MODULE_BTN_KEY.DELETE}
@@ -196,9 +196,9 @@ class TreePanel extends Component {
           title={formatMessage({ id: "global.delete.confirm", defaultMessage: "确定要删除吗？提示：删除后不可恢复" })}
           onConfirm={_ => this.handleDel()}
         >
-          <Button>删除</Button>
+          <Button type="danger">删除</Button>
         </Popconfirm>
-      </>),
+      </Fragment>),
       right: (<Search
         allowClear
         placeholder="请输入名称搜索"
