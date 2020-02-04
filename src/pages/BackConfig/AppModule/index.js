@@ -218,6 +218,7 @@ class AppModule extends Component {
     return (
       <div className={cls(styles["container-box"])} >
         < ExtTable
+          bordered={false}
           loading={loading.effects["appModule/queryList"]}
           toolBar={toolBarProps}
           columns={columns}
