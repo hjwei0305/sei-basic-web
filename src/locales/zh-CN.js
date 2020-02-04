@@ -15,6 +15,7 @@ export default {
   ...feature,
   "global.operation": "操作",
   "global.code": "代码",
+  "global.code.tip": "规则:名称各汉字首字母大写",
   "global.code.required": "代码不能为空",
   "global.name": "名称",
   "global.name.required": "名称不能为空",

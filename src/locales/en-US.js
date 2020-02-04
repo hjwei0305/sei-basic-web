@@ -16,6 +16,7 @@ export default {
   "global.tenant.required": "Please t!",
   "global.operation": "Action",
   "global.code": "Code",
+  "global.code.tip": "Rule: capitalize the initial of each character",
   "global.code.required": "Code is required",
   "global.name": "Name",
   "global.name.required": "Name is required",

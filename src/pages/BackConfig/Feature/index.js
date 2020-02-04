@@ -148,6 +148,13 @@ class Feature extends Component {
                 currentFeatureGroup
             }
         });
+        dispatch({
+            type: "feature/updateState",
+            payload: {
+                showFeatureItem: false,
+                currentPageRow: null
+            }
+        });
     };
 
     render() {
@@ -161,8 +168,8 @@ class Feature extends Component {
         };
         return (
             <div className={cls(styles["container-box"])} >
-                <Row gutter={4}>
-                    <Col span={6}>
+                <Row gutter={4} className='auto-height'>
+                    <Col span={6} className='auto-height'>
                         <Card
                             title="功能项组"
                             bordered={false}

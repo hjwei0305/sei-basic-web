@@ -179,8 +179,8 @@ class FeaturePage extends Component {
             {
                 title: formatMessage({ id: "global.code", defaultMessage: "代码" }),
                 dataIndex: "code",
-                width: 120,
-                required: true,
+                width: 200,
+                optional: true,
             },
             {
                 title: formatMessage({ id: "global.name", defaultMessage: "名称" }),

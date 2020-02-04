@@ -1,7 +1,8 @@
 import React, { PureComponent } from "react";
+import { toUpper, trim } from 'lodash'
 import { Button, Form, Input, InputNumber } from "antd";
 import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
-import {ExtModal} from 'seid'
+import { ExtModal } from 'seid'
 
 const FormItem = Form.Item;
 const formItemLayout = {
@@ -27,6 +28,7 @@ class FormModal extends PureComponent {
       let params = {};
       Object.assign(params, rowData || {});
       Object.assign(params, formData);
+      params.code = toUpper(trim(params.code));
       save(params);
     });
   };
@@ -46,20 +48,10 @@ class FormModal extends PureComponent {
         onCancel={closeFormModal}
         visible={showModal}
         centered
-        maskClosable={false}
         footer={null}
         title={title}
       >
         <Form {...formItemLayout} layout="horizontal">
-          <FormItem label={formatMessage({ id: "global.code", defaultMessage: "代码" })}>
-            {getFieldDecorator("code", {
-              initialValue: rowData ? rowData.code : "",
-              rules: [{
-                required: true,
-                message: formatMessage({ id: "global.code.required", defaultMessage: "代码不能为空" })
-              }]
-            })(<Input />)}
-          </FormItem>
           <FormItem label={formatMessage({ id: "global.name", defaultMessage: "名称" })}>
             {getFieldDecorator("name", {
               initialValue: rowData ? rowData.name : "",
@@ -68,6 +60,17 @@ class FormModal extends PureComponent {
                 message: formatMessage({ id: "global.name.required", defaultMessage: "名称不能为空" })
               }]
             })(<Input />)}
+          </FormItem>
+          <FormItem label={formatMessage({ id: "global.code", defaultMessage: "代码" })}>
+            {getFieldDecorator("code", {
+              initialValue: rowData ? rowData.code : "",
+              rules: [{
+                required: true,
+                message: formatMessage({ id: "global.code.required", defaultMessage: "代码不能为空" })
+              }]
+            })(<Input
+              placeholder={formatMessage({ id: "global.code.tip", defaultMessage: "规则:名称各汉字首字母大写" })}
+            />)}
           </FormItem>
           <FormItem label={formatMessage({ id: "global.remark", defaultMessage: "说明" })}>
             {getFieldDecorator("remark", {
