@@ -244,7 +244,7 @@ class Feature extends Component {
                             </div>
                         </Card>
                     </Col>
-                    <Col span={18} className={cls("main-content")}>
+                    <Col span={18} className={cls("main-content",'auto-height')}>
                         {
                             currentFeatureGroup
                                 ? <PageFeature {...pageFeatureProps} />
