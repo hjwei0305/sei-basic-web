@@ -35,7 +35,7 @@ class Feature extends Component {
 
     componentDidUpdate() {
         const { featureGroup } = this.props;
-        if (!isEqual(this.state.listData, featureGroup.listData)) {
+        if (!isEqual(this.data, featureGroup.listData)) {
             const { pagination } = this.state;
             const { listData } = featureGroup;
             this.data = [...listData];
