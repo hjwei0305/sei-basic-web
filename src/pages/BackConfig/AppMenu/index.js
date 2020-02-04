@@ -76,6 +76,7 @@ class AppMenu extends Component {
             this.setState({ childParentNode: parent });
             const currentNode = {
                 parentId: parent.id,
+                [childFieldKey]: [],
             };
             this.props.dispatch({
                 type: "appMenu/updateState",
