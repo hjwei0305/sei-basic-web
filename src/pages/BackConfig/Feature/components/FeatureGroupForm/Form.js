@@ -1,5 +1,6 @@
 import React, { PureComponent } from "react";
 import cls from "classnames";
+import { toUpper, trim } from 'lodash'
 import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
 import { Button, Form, Input } from "antd";
 import { ComboList, utils } from "seid";
@@ -29,8 +30,19 @@ class FeatureGroupForm extends PureComponent {
         return;
       }
       const data = objectAssignAppend(getFieldsValue(), groupData || {});
+      data.code = `${data.appModuleCode}-${toUpper(trim(data.code))}`;
       saveFeatureGroup(data, handlerPopoverHide);
     });
+  };
+
+  getCode = () => {
+    const { groupData } = this.props;
+    let newCode = '';
+    if (groupData) {
+      const { code, appModuleCode } = groupData;
+      newCode = code.substring(appModuleCode.length + 1);
+    }
+    return newCode;
   };
 
   render() {
@@ -61,17 +73,6 @@ class FeatureGroupForm extends PureComponent {
             </span>
           </div>
           <Form {...formItemLayout}>
-            <FormItem label="代码">
-              {getFieldDecorator("code", {
-                initialValue: groupData ? groupData.code : "",
-                rules: [{
-                  required: true,
-                  message: formatMessage({ id: "global.code.required", defaultMessage: "代码不能为空" })
-                }]
-              })(
-                <Input allowClear />
-              )}
-            </FormItem>
             <FormItem label={formatMessage({ id: "global.name", defaultMessage: "名称" })}>
               {getFieldDecorator("name", {
                 initialValue: groupData ? groupData.name : "",
@@ -80,7 +81,18 @@ class FeatureGroupForm extends PureComponent {
                   message: formatMessage({ id: "global.name.required", defaultMessage: "名称不能为空" })
                 }]
               })(
-                <Input allowClear />
+                <Input />
+              )}
+            </FormItem>
+            <FormItem label="代码">
+              {getFieldDecorator("code", {
+                initialValue: this.getCode(),
+                rules: [{
+                  required: true,
+                  message: formatMessage({ id: "global.code.required", defaultMessage: "代码不能为空" })
+                }]
+              })(
+                <Input placeholder={formatMessage({ id: "global.code.tip", defaultMessage: "规则:名称各汉字首字母大写" })} />
               )}
             </FormItem>
             <FormItem label="所属应用模块">

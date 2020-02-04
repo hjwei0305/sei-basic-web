@@ -1,13 +1,16 @@
 @import '../../../themes/vars.less';
 .container-box {
-  height: 100vh;
+  height: 100%;
   padding: 0;
   overflow: hidden;
   background-color: @page-background-color;
   :global {
-    .panel-body {
-      height: 100vh !important;
-      max-height: 100vh !important;
+    .seid-panel{
+      height: 100%;
+      .panel-body {
+        height: 100% !important;
+        max-height: 100% !important;
+      }
     }
     .seid-tool-bar {
       button {

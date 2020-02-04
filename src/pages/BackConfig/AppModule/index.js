@@ -223,12 +223,7 @@ class AppModule extends Component {
           columns={columns}
           dataSource={list}
         />
-        {
-          showModal
-            ? <FormModal {...formModalProps
-            } />
-            : null
-        }
+        <FormModal {...formModalProps} />
       </div>
     );
   }

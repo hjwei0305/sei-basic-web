@@ -109,7 +109,6 @@ class MenuMoveModal extends Component {
             onCancel: closeMenuMoveModal,
             visible: showMove,
             centered: true,
-            maskClosable: false,
             title,
             okButtonProps: { disabled: !targetParentId, loading: loading.effects["appMenu/move"] },
             onOk: this.submitMove,
