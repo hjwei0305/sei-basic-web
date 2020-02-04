@@ -1,0 +1,45 @@
+@import '../../../themes/vars.less';
+.container-box {
+  height: 100%;
+  padding: 8px;
+  overflow: hidden;
+
+  :global {
+    .empty-wrapper {
+      margin-top: 200px;
+    }
+
+    .spin-wrapper {
+      height: 100%;
+      .ant-spin-container {
+        height: 100%;
+      }
+    }
+
+    .content-panel {
+      position: relative;
+      height: 100%;
+      .content-panel-title {
+        height: 40px;
+        span {
+          box-sizing: border-box;
+          border-left: 3px solid #1890ff;
+          padding-left: 6px;
+          margin-left: 10px;
+          line-height: 40px;
+        }
+      }
+      .content-panel-section {
+        position: absolute;
+        top: 40px;
+        right: 10px;
+        bottom: 10px;
+        left: 10px;
+        overflow: auto;
+      }
+    }
+    .right-panel {
+      box-shadow: 0 2px 8px 0 #aaa;
+    }
+  }
+}
