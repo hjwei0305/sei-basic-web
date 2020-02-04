@@ -2,12 +2,13 @@ import React, { Component, Fragment } from "react";
 import { connect } from "dva";
 import cls from "classnames";
 import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
-import { Popconfirm, Button, Card } from 'antd'
+import { Popconfirm, Button, Card, Tag } from 'antd'
 import { ExtTable, ExtIcon } from 'seid';
 import { constants } from '@/utils';
 import FeaturePageFormModal from './FeaturePageFormModal';
 import FeatureItem from './FeatureItem';
 import styles from './FeaturePage.less';
+import { ThemeUtils } from "seid/lib/utils";
 
 const { SERVER_PATH } = constants;
 
@@ -136,6 +137,19 @@ class FeaturePage extends Component {
         return <ExtIcon className="del" type="delete" antd />;
     };
 
+    renderName = (row) => {
+        let tag;
+        if (row.tenantCanUse) {
+            tag = <Tag color='green' style={{ marginLeft: 8 }}>租户可用</Tag>;
+        }
+        return (
+            <>
+                {row.name}
+                {tag}
+            </>
+        );
+    };
+
     render() {
         const { loading, featureGroup, feature } = this.props;
         const { currentFeatureGroup } = featureGroup;
@@ -187,22 +201,12 @@ class FeaturePage extends Component {
                 dataIndex: "name",
                 width: 220,
                 required: true,
+                render: (_text, record) => this.renderName(record),
             },
             {
                 title: '页面路由地址',
                 dataIndex: "groupCode",
                 width: 320,
-            },
-            {
-                title: '租户可用',
-                align: "center",
-                dataIndex: "tenantCanUse",
-                className: "checked",
-                render: (_text, record) => {
-                    if (record.tenantCanUse) {
-                        return <ExtIcon type="check" antd />;
-                    }
-                },
             },
         ];
         const toolBarProps = {
