@@ -178,7 +178,7 @@ class NodeForm extends Component {
         const { form, loading, editData } = this.props;
         const { getFieldDecorator } = form;
         const title = this.getFormTitle();
-        getFieldDecorator("featureId", { initialValue: this.getInitValueByFields("appModufeatureIdleId") });
+        getFieldDecorator("featureId", { initialValue: this.getInitValueByFields("featureId") });
         getFieldDecorator("featureCode", { initialValue: this.getInitValueByFields("featureCode") });
         const featureProps = {
             form,
