@@ -23,6 +23,13 @@ export default [
         ],
       },
       {
+        path: '/author',
+        name: 'author',
+        routes: [
+          { path: '/author/featureRole', component: './Author/FeatureRole' },
+        ],
+      },
+      {
         path: '/orgStructure',
         name: 'orgStructure',
         routes: [{

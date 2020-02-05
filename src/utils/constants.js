@@ -47,6 +47,11 @@ const LOGIN_STATUS = {
   "FAILURE": "failure"
 };
 
+const ROLE_VIEW = {
+  'SATION': 'role-station',
+  'USER': 'role-user',
+};
+
 export default {
   APP_BASE,
   LOCAL_PATH,
@@ -54,4 +59,5 @@ export default {
   APP_MODULE_BTN_KEY,
   LOGIN_STATUS,
   APP_MENU_BTN_KEY,
+  ROLE_VIEW,
 };

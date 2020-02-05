@@ -30,6 +30,17 @@ const menuData = [
       },
     ],
   },
+  {
+    id: '20',
+    name: '权限管理',
+    children: [
+      {
+        id: '201',
+        name: '功能角色',
+        path: '/author/featureRole',
+      },
+    ],
+  },
 ];
 
 const getIcon = (icon) => {

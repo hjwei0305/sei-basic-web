@@ -53,6 +53,7 @@ export default {
       storage.sessionStorage.clear();
       if (res.success) {
         message.success("登录成功");
+        storage.sessionStorage.set(CONST_GLOBAL.CURRENT_USER, res.data);
         storage.sessionStorage.set(CONST_GLOBAL.TOKEN_KEY, res.data.sessionId);
         const { from } = locationQuery;
         if (from && from.indexOf("/user/login") === -1) {
