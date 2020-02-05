@@ -50,6 +50,9 @@ export default [
         }, {
           path: '/regionManagement/region',
           component: 'RegionManagement/Region'
+        }, {
+          path: '/regionManagement/professionalDomain',
+          component: 'RegionManagement/ProfessionalDomain'
         }],
       },
     ],
