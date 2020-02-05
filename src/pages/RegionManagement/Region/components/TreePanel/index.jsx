@@ -182,7 +182,15 @@ class TreePanel extends Component {
     return (
       <div>
         <TreeView treeData={treeData} toolBar={this.getToolBarProps()} onSelect={this.handleSelect} />
-        { showCreateModal ? (<CreateFormModal formType={this.formType} visible={showCreateModal} onCancel={() => { this.handleCancel('create') }}/>) : (null)}
+        { showCreateModal ? (
+          <CreateFormModal
+            formType={this.formType}
+            visible={showCreateModal}
+            title={this.formType==="addRootNode" ? "新增根节点" : '新增子节点'}
+            onCancel={() => { this.handleCancel('create') }}
+          />)
+          : (null)
+        }
         { mTmVisible ? (<MoveTreeModal
           treeData={moveTreeData}
           visible={mTmVisible}

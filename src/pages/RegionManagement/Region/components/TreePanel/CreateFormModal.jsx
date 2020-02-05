@@ -8,8 +8,7 @@ import FormPanel from '../FormPanel';
 class CreateFormModal extends PureComponent {
 
   render() {
-    const { visible, onCancel, formType } = this.props;
-    const title = formatMessage({ id: "global.add", defaultMessage: "新建" });
+    const { visible, onCancel, formType,title, } = this.props;
 
     return (
       <ExtModal
@@ -20,6 +19,7 @@ class CreateFormModal extends PureComponent {
         maskClosable={false}
         title={title}
         onOk={() => {this.formRef.onFormSubmit()}}
+        okText="新增"
         width={600}
       >
         <FormPanel onRef={inst => this.formRef = inst} formType={formType}/>
