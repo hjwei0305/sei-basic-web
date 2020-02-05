@@ -31,7 +31,12 @@ export default [
         }, {
           path: '/orgStructure/positionCategory',
           component: 'OrgStructure/PositionCategory',
-        }, {
+        },
+        // {
+        //   path: '/orgStructure/position',
+        //   component: 'OrgStructure/Position',
+        // },
+        {
           path: '/orgStructure/organization',
           component: 'OrgStructure/Organization',
         }],
@@ -42,6 +47,9 @@ export default [
         routes: [{
           path: '/regionManagement/country',
           component: 'RegionManagement/Country'
+        }, {
+          path: '/regionManagement/region',
+          component: 'RegionManagement/Region'
         }],
       },
     ],
