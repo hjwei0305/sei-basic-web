@@ -20,6 +20,7 @@ export default [
           { path: '/backConfig/appModule', component: './BackConfig/AppModule' },
           { path: '/backConfig/feature', component: './BackConfig/Feature' },
           { path: '/backConfig/appMenu', component: './BackConfig/AppMenu' },
+          { path: '/backConfig/authorType', component: './BackConfig/AuthorType' },
         ],
       },
       {

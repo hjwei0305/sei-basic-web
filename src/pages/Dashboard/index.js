@@ -28,6 +28,11 @@ const menuData = [
         name: '应用菜单',
         path: '/backConfig/appMenu',
       },
+      {
+        id: '103',
+        name: '权限对象',
+        path: '/backConfig/authorType',
+      },
     ],
   },
   {
