@@ -2,7 +2,7 @@
 * @Author: zp
 * @Date:   2020-02-02 11:57:24
 * @Last Modified by:   zp
-* @Last Modified time: 2020-02-05 08:52:16
+* @Last Modified time: 2020-02-06 13:52:39
 */
 import { utils } from 'seid';
 import { constants } from '@/utils';
@@ -32,20 +32,19 @@ export async function save(data) {
 
 /** 删除 */
 export async function del(params) {
-  const url = `${SERVER_PATH}/sei-basic/region/delete`;
+  const url = `${SERVER_PATH}/sei-basic/region/delete/${params.id}`;
   return request({
     url,
     method: "DELETE",
-    params,
   });
 }
 
 /** 移动 */
-export async function move(params={}) {
-  const { nodeId, targetParentId, } = params;
-  const url = `${SERVER_PATH}/sei-basic/region/move?nodeId=${nodeId}&targetParentId=${targetParentId}`;
+export async function move(data) {
+  const url = `${SERVER_PATH}/sei-basic/region/move`;
   return request({
     url,
     method: "POST",
+    data,
   });
 }
