@@ -27,11 +27,10 @@ export async function save(data) {
 
 /** 菜单项删除 */
 export async function del(params) {
-  const url = `${SERVER_PATH}/sei-basic/menu/delete`;
+  const url = `${SERVER_PATH}/sei-basic/menu/delete/${params.id}`;
   return request({
     url,
     method: "DELETE",
-    data: params.id,
   });
 }
 

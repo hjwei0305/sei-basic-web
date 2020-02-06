@@ -26,12 +26,11 @@ export async function saveRoleGroup(data) {
 }
 
 /** 功能角色组删除 */
-export async function delRoleGroup(params) {
-  const url = `${SERVER_PATH}/sei-basic/featureRoleGroup/delete`;
+export async function delRoleGroup(data) {
+  const url = `${SERVER_PATH}/sei-basic/featureRoleGroup/delete/${data.id}`;
   return request({
     url,
     method: "DELETE",
-    data: params.id,
   });
 }
 
@@ -59,11 +58,10 @@ export async function saveFeatureRole(data) {
 }
 
 /** 功能角色删除 */
-export async function delFeatureRole(params) {
-  const url = `${SERVER_PATH}/sei-basic/featureRole/delete`;
+export async function delFeatureRole(data) {
+  const url = `${SERVER_PATH}/sei-basic/featureRole/delete/${data.id}`;
   return request({
     url,
     method: "DELETE",
-    data: params.id,
   });
 }

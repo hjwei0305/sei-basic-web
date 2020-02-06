@@ -28,6 +28,8 @@ class Role extends Component {
 
     static allValue = '';
 
+    static data = [];
+
     componentDidMount() {
         this.loadRoleList();
     };
@@ -37,9 +39,11 @@ class Role extends Component {
         if (!isEqual(prevProps.roleGroup.currentRoleGroup, roleGroup.currentRoleGroup)) {
             this.loadRoleList();
         }
-        if (!isEqual(this.state.listData, role.listData)) {
+        if (!isEqual(this.data, role.listData)) {
+            const { listData } = role;
+            this.data = [...listData];
             this.setState({
-                listData: role.listData,
+                listData,
             });
         }
     };
@@ -59,13 +63,12 @@ class Role extends Component {
     };
 
     handlerSearch = () => {
-        const { role } = this.props;
         let listData = [];
         if (this.allValue) {
             const valueKey = this.allValue.toLowerCase();
-            listData = role.listData.filter(ds => ds.name.toLowerCase().indexOf(valueKey) > -1 || ds.code.toLowerCase().indexOf(valueKey) > -1);
+            listData = this.data.filter(ds => ds.name.toLowerCase().indexOf(valueKey) > -1 || ds.code.toLowerCase().indexOf(valueKey) > -1);
         } else {
-            listData = [...role.listData];
+            listData = [...this.data];
         }
         this.setState({
             listData,
@@ -117,13 +120,13 @@ class Role extends Component {
         dispatch({
             type: 'role/updateState',
             payload: {
-                currentRole
+                currentRole,
+                showAssignFeature: false,
             }
         });
     };
 
     handlerExtAction = (key, roleData) => {
-        console.log(key, roleData);
         switch (key) {
             case ROLE_VIEW.SATION:
                 break;

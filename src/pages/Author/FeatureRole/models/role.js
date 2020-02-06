@@ -12,7 +12,7 @@ export default modelExtend(model, {
   state: {
     listData: [],
     currentRole: null,
-    showFormModal: false,
+    showAssignFeature: false,
   },
   effects: {
     * getFeatureRoleList({ payload }, { call, put }) {

@@ -27,10 +27,9 @@ export async function save(data) {
 
 /** 应用模块删除 */
 export async function del(params) {
-  const url = `${SERVER_PATH}/sei-basic/appModule/delete`;
+  const url = `${SERVER_PATH}/sei-basic/appModule/delete/${params.id}`;
   return request({
     url,
     method: "DELETE",
-    data: params.id,
   });
 }

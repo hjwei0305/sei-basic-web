@@ -27,11 +27,10 @@ export async function saveFeatureGroup(data) {
 
 /** 功能项组删除 */
 export async function delFeatureGroup(params) {
-  const url = `${SERVER_PATH}/sei-basic/featureGroup/delete`;
+  const url = `${SERVER_PATH}/sei-basic/featureGroup/delete/${params.id}`;
   return request({
     url,
     method: "DELETE",
-    data: params.id,
   });
 }
 
@@ -47,11 +46,10 @@ export async function saveFeature(data) {
 
 /** 功能项删除 */
 export async function delFeature(params) {
-  const url = `${SERVER_PATH}/sei-basic/feature/delete`;
+  const url = `${SERVER_PATH}/sei-basic/feature/delete/${params.id}`;
   return request({
     url,
     method: "DELETE",
-    data: params.id,
   });
 }
 

@@ -54,7 +54,7 @@ class FeatureRole extends Component {
     };
 
     handlerSearch = () => {
-        const { pagination, } = this.state;
+        const { pagination } = this.state;
         let listData = [];
         if (this.allValue) {
             const valueKey = this.allValue.toLowerCase();
@@ -149,10 +149,10 @@ class FeatureRole extends Component {
             }
         });
         dispatch({
-            type: "feature/updateState",
+            type: "role/updateState",
             payload: {
-                showFeatureItem: false,
-                currentPageRow: null
+                showAssignFeature: false,
+                currentRole: null
             }
         });
     };
