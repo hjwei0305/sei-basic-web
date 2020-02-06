@@ -8,7 +8,6 @@ import { constants } from '@/utils';
 import FeaturePageFormModal from './FeaturePageFormModal';
 import FeatureItem from './FeatureItem';
 import styles from './FeaturePage.less';
-import { ThemeUtils } from "seid/lib/utils";
 
 const { SERVER_PATH } = constants;
 
@@ -72,12 +71,6 @@ class FeaturePage extends Component {
             },
             callback: res => {
                 if (res.success) {
-                    dispatch({
-                        type: "feature/updateState",
-                        payload: {
-                            showFormModal: false
-                        }
-                    });
                     this.reloadData();
                 }
             }

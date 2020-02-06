@@ -42,4 +42,6 @@ export default {
   "global.warning.remove.title": "Data on the current item will be lost",
   "global.save-success": "Save successfully",
   "global.delete-success": "Delete successfully",
+  "global.assign-success": "Assign successfully",
+  "global.remove-success": "Remove successfully",
 };

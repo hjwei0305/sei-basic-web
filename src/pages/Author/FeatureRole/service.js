@@ -65,3 +65,61 @@ export async function delFeatureRole(data) {
     method: "DELETE",
   });
 }
+
+/** 为功能角色分配功能项 */
+export async function assignFeatureItem(data) {
+  const url = `${SERVER_PATH}/sei-basic/featureRoleFeature/insertRelations`;
+  return request({
+    url,
+    method: "POST",
+    data,
+  });
+}
+
+/** 功能角色移除已分配的功能项 */
+export async function removeAssignedFeatureItem(data) {
+  const url = `${SERVER_PATH}/sei-basic/featureRoleFeature/removeRelations`;
+  return request({
+    url,
+    method: "POST",
+    data,
+  });
+}
+
+/** 获取功能角色未分配的功能项 */
+export async function getUnAssignedFeatureItemList(params) {
+  const url = `${SERVER_PATH}/sei-basic/featureRoleFeature/getUnassigned`;
+  return request({
+    url,
+    method: "GET",
+    params,
+  });
+}
+
+/** 
+ * 根据功能角色的id获取已分配的用户
+ * params featureRoleId
+ */
+export async function getAssignedEmployeesByFeatureRole(params) {
+  const url = `${SERVER_PATH}/sei-basic/featureRole/getAssignedEmployeesByFeatureRole`;
+  return request({
+    url,
+    method: "GET",
+    params,
+  });
+}
+
+/** 
+ * 根据功能角色的id获取已分配的岗位
+ * params featureRoleId
+*/
+export async function getAssignedPositionsByFeatureRole(params) {
+  const url = `${SERVER_PATH}/sei-basic/featureRole/getAssignedPositionsByFeatureRole`;
+  return request({
+    url,
+    method: "GET",
+    params,
+  });
+}
+
+

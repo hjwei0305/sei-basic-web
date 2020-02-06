@@ -29,11 +29,17 @@ export default modelExtend(model, {
         message.error(re.message);
       }
     },
-    * saveFeature({ payload, callback }, { call }) {
+    * saveFeature({ payload, callback }, { call, put }) {
       const re = yield call(saveFeature, payload);
       message.destroy();
       if (re.success) {
         message.success(formatMessage({ id: "global.save-success", defaultMessage: "保存成功" }));
+        yield put({
+          type: "updateState",
+          payload: {
+            showFormModal: false
+          }
+        });
       } else {
         message.error(re.message);
       }

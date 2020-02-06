@@ -9,11 +9,10 @@ import empty from "@/assets/item_empty.svg";
 import RoleAdd from './Form/add';
 import RoleEdit from './Form/edit';
 import ExtAction from './ExtAction';
-import { constants } from '@/utils'
+import AssignedFeature from './AssignedFeature';
 import styles from './index.less';
 
 const Search = Input.Search;
-const { ROLE_VIEW } = constants;
 
 @connect(({ role, roleGroup, loading }) => ({ role, roleGroup, loading }))
 class Role extends Component {
@@ -134,17 +133,6 @@ class Role extends Component {
         });
     };
 
-    handlerExtAction = (key, roleData) => {
-        switch (key) {
-            case ROLE_VIEW.SATION:
-                break;
-            case ROLE_VIEW.USER:
-                break;
-            default:
-        }
-    };
-
-
     renderName = (row) => {
         let tag;
         if (row.publicUserType && row.publicOrgId) {
@@ -199,6 +187,9 @@ class Role extends Component {
         const listLoading = loading.effects["role/getFeatureRoleList"];
         const saving = loading.effects["role/saveFeatureRole"];
         const { currentRoleGroup } = roleGroup;
+        const assignedFeatureProps = {
+            currentRole,
+        };
         return (
             <div className={cls(styles['role-box'])}>
                 <Card
@@ -269,10 +260,7 @@ class Role extends Component {
                                                                     : <ExtIcon className={cls('del', 'action-item')} type="delete" antd />
                                                             }
                                                         </Popconfirm>
-                                                        <ExtAction
-                                                            roleData={item}
-                                                            action={this.handlerExtAction}
-                                                        />
+                                                        <ExtAction roleData={item} />
                                                     </div>
                                                 </List.Item>
                                             )}
@@ -284,7 +272,7 @@ class Role extends Component {
                         <Col span={16} className={cls("main-content", 'auto-height')}>
                             {
                                 currentRole
-                                    ? ''
+                                    ? <AssignedFeature {...assignedFeatureProps} />
                                     : <div className='blank-empty'>
                                         <Empty
                                             image={empty}

@@ -1,5 +1,4 @@
-import React, { Component, Fragment } from 'react';
-import { connect } from 'dva';
+import React, { Component } from 'react';
 import { Input, Tree, Empty, } from 'antd';
 import { ScrollBar, ToolBar } from 'seid';
 import { cloneDeep, isEqual, } from 'lodash';
@@ -118,7 +117,7 @@ class TreeView extends Component {
     }).filter((treeNode) => treeNode);
   }
 
-  getExpandedKeys = (data, result=[]) => {
+  getExpandedKeys = (data, result = []) => {
     for (const item of data) {
       result.push(item.id);
       if (item.children && item.children.length > 0) {
@@ -141,12 +140,12 @@ class TreeView extends Component {
     }
 
     return (
-      <TreeNode title={name} key={id} dataRef={item} isLeaf/>
+      <TreeNode title={name} key={id} dataRef={item} isLeaf />
     );
   });
 
   getToolBarProps = () => {
-    const { toolBar={}, } = this.props;
+    const { toolBar = {}, } = this.props;
     const { layout: customLayout, left = null, } = toolBar;
     let layout = {
       leftSpan: 0,
@@ -174,27 +173,27 @@ class TreeView extends Component {
 
   render() {
     const { expandedKeys, autoExpandParent, checkedKeys, selectedKeys, filterTreeData, } = this.state;
-    const { height=300 } = this.props;
+    const { height = 300 } = this.props;
     return (
-      <div style={{ height,}}>
+      <div style={{ height, }}>
         <ToolBar {...this.getToolBarProps()} />
         <ScrollBar>
-          { filterTreeData && filterTreeData.length ? (
-              <Tree
-                onCheck={this.handleCheck}
-                onSelect={this.handleSelect}
-                checkable={false}
-                blockNode={true}
-                onExpand={this.onExpand}
-                expandedKeys={expandedKeys}
-                checkedKeys={checkedKeys}
-                autoExpandParent={autoExpandParent}
-                selectedKeys={selectedKeys}
-              >
-                {this.getTreeNodes(filterTreeData)}
-              </Tree>
-            ) : (
-              <Empty className={cls("empty-wrapper")}/>
+          {filterTreeData && filterTreeData.length ? (
+            <Tree
+              onCheck={this.handleCheck}
+              onSelect={this.handleSelect}
+              checkable={false}
+              blockNode={true}
+              onExpand={this.onExpand}
+              expandedKeys={expandedKeys}
+              checkedKeys={checkedKeys}
+              autoExpandParent={autoExpandParent}
+              selectedKeys={selectedKeys}
+            >
+              {this.getTreeNodes(filterTreeData)}
+            </Tree>
+          ) : (
+              <Empty className={cls("empty-wrapper")} />
             )
           }
         </ScrollBar>

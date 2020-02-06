@@ -1,0 +1,226 @@
+import React, { Component, Fragment } from "react";
+import { connect } from "dva";
+import cls from "classnames";
+import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
+import { Card, Popconfirm, Button, Tag } from 'antd'
+import { ExtTable, ExtIcon } from 'seid';
+import { constants } from '@/utils';
+import UnAssignFeatureItem from './UnAssignFeatureItem';
+import styles from './AssignedFeature.less';
+
+const { SERVER_PATH, FEATURE_TYPE } = constants;
+
+@connect(({ role, loading }) => ({ role, loading }))
+class FeaturePage extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            delRowId: null,
+        };
+    }
+
+    static assignedTableRef;
+
+    reloadData = () => {
+        if (this.assignedTableRef) {
+            this.assignedTableRef.remoteDataRrefresh();
+        }
+    };
+
+    showAssignFeature = () => {
+        const { role, dispatch } = this.props;
+        const { currentRole } = role;
+        dispatch({
+            type: 'role/updateState',
+            payload: {
+                showAssignFeature: true,
+            }
+        });
+        dispatch({
+            type: 'role/getUnAssignedFeatureItemList',
+            payload: {
+                parentId: currentRole.id,
+            }
+        });
+    };
+
+    assignFeatureItem = (childIds) => {
+        const { role, dispatch } = this.props;
+        const { currentRole } = role;
+        dispatch({
+            type: "role/assignFeatureItem",
+            payload: {
+                parentId: currentRole.id,
+                childIds,
+            },
+            callback: res => {
+                if (res.success) {
+                    this.reloadData();
+                }
+            }
+        });
+    };
+
+    removeAssignFeatureItem = (data) => {
+        const { dispatch } = this.props;
+        dispatch({
+            type: 'role/removeAssignedFeatureItem',
+            payload: {
+                ...data
+            },
+            callback: res => {
+                if (res.success) {
+                    this.reloadData();
+                }
+            }
+        })
+    };
+
+    closeAssignFeatureItem = _ => {
+        const { dispatch } = this.props;
+        dispatch({
+            type: "role/updateState",
+            payload: {
+                showAssignFeature: false,
+            }
+        });
+    };
+
+    renderDelBtn = (row) => {
+        const { loading } = this.props;
+        const { delRowId } = this.state;
+        if (loading.effects["feature/delFeature"] && delRowId === row.id) {
+            return <ExtIcon className="del-loading" type="loading" antd />
+        }
+        return <ExtIcon className="del" type="delete" antd />;
+    };
+
+    renderName = (row) => {
+        let tag;
+        if (row.tenantCanUse) {
+            tag = <Tag color='green' style={{ marginLeft: 8 }}>租户可用</Tag>;
+        }
+        return (
+            <>
+                {row.name}
+                {tag}
+            </>
+        );
+    };
+
+    renderFeatureType = (row) => {
+        switch (row.featureType) {
+            case FEATURE_TYPE.PAGE:
+                return <Tag color='cyan'>菜单项</Tag>;
+            case FEATURE_TYPE.OPERATE:
+                return <Tag color='blue'>操作项</Tag>;
+            default:
+        }
+    };
+
+    render() {
+        const { role, loading } = this.props;
+        const { currentRole, showAssignFeature, unAssignListData } = role;
+        const columns = [
+            {
+                title: formatMessage({ id: "global.operation", defaultMessage: "操作" }),
+                key: "operation",
+                width: 120,
+                align: "center",
+                dataIndex: "id",
+                className: "action",
+                required: true,
+                render: (text, record) => (
+                    <span className={cls("action-box")}>
+                        <Popconfirm
+                            placement="topLeft"
+                            title={formatMessage({ id: "global.remove.confirm", defaultMessage: "确定要移除吗？" })}
+                            onConfirm={_ => this.del(record)}
+                        >
+                            {
+                                this.renderDelBtn(record)
+                            }
+                        </Popconfirm>
+                    </span>
+                )
+            },
+            {
+                title: formatMessage({ id: "global.code", defaultMessage: "代码" }),
+                dataIndex: "code",
+                width: 200,
+                optional: true,
+            },
+            {
+                title: formatMessage({ id: "global.name", defaultMessage: "名称" }),
+                dataIndex: "name",
+                width: 220,
+                required: true,
+                render: (_text, record) => this.renderName(record),
+            },
+            {
+                title: '类别',
+                dataIndex: "featureType",
+                width: 80,
+                required: true,
+                align: 'center',
+                render: (_text, record) => this.renderFeatureType(record),
+            },
+            {
+                title: '所属应用模块',
+                dataIndex: "featureGroup.appModule.name",
+                width: 200,
+                optional: true,
+            },
+        ];
+        const toolBarProps = {
+            left: (
+                <Fragment>
+                    <Button
+                        icon='plus'
+                        type="primary"
+                        loading={loading.effects["role/getUnAssignedFeatureItemList"]}
+                        onClick={this.showAssignFeature}
+                    >
+                        我要分配功能项
+                    </Button>
+                    <Button onClick={this.reloadData}>
+                        <FormattedMessage id="global.refresh" defaultMessage="刷新" />
+                    </Button>
+                </Fragment>
+            )
+        };
+        const extTableProps = {
+            bordered: false,
+            toolBar: toolBarProps,
+            columns,
+            checkbox: true,
+            cascadeParams: { parentId: currentRole ? currentRole.id : null },
+            onTableRef: ref => this.assignedTableRef = ref,
+            store: {
+                url: `${SERVER_PATH}/sei-basic/featureRoleFeature/getChildrenFromParentId`
+            }
+        };
+        const unAssignFeatureItemProps = {
+            loading: loading.effects["role/getUnAssignedFeatureItemList"],
+            unAssignListData,
+            assignFeatureItem: this.assignFeatureItem,
+            showAssignFeature,
+            closeAssignFeatureItem: this.closeAssignFeatureItem,
+            assigning: loading.effects["role/assignFeatureItem"],
+        };
+        return (
+            <div className={cls(styles['assigned-feature-box'])}>
+                <Card
+                    title="角色功能项管理"
+                    bordered={false}
+                >
+                    <ExtTable {...extTableProps} />
+                </Card>
+                <UnAssignFeatureItem {...unAssignFeatureItemProps} />
+            </div >
+        )
+    }
+}
+
+export default FeaturePage;

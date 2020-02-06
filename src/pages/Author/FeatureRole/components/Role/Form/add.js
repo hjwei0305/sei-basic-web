@@ -42,7 +42,7 @@ class RoleAdd extends Component {
         content={<Form {...popoverProps} />}
       >
         <span className={cls("form-popover-box-trigger")}>
-          <Button icon="plus" type='primary'>
+          <Button icon="plus" type='link'>
             新建角色
           </Button>
         </span>

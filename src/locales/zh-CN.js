@@ -41,4 +41,6 @@ export default {
   "global.warning.remove.title": "移除后当前项目上的配置信息将会丢失",
   "global.save-success": "保存成功",
   "global.delete-success": "删除成功",
+  "global.assign-success": "分配成功",
+  "global.remove-success": "移除成功",
 };

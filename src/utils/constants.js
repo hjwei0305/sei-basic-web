@@ -52,6 +52,12 @@ const ROLE_VIEW = {
   'USER': 'role-user',
 };
 
+const FEATURE_TYPE = {
+  'PAGE': 'Page',
+  'OPERATE': 'Operate',
+  'BUSINESS': 'Business',
+};
+
 export default {
   APP_BASE,
   LOCAL_PATH,
@@ -60,4 +66,5 @@ export default {
   LOGIN_STATUS,
   APP_MENU_BTN_KEY,
   ROLE_VIEW,
+  FEATURE_TYPE,
 };

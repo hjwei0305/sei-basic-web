@@ -67,13 +67,7 @@ class FeatureItem extends Component {
 
     handlerSearch = () => {
         const { pagination, } = this.state;
-        let listData = [];
-        if (this.allValue) {
-            const valueKey = this.allValue.toLowerCase();
-            listData = this.data.filter(ds => ds.name.toLowerCase().indexOf(valueKey) > -1 || ds.code.toLowerCase().indexOf(valueKey) > -1);
-        } else {
-            listData = [...this.data];
-        }
+        const listData = this.getLocalFilterData();
         this.setState({
             listData,
             pagination: {
@@ -81,6 +75,17 @@ class FeatureItem extends Component {
                 total: listData.length,
             },
         });
+    };
+
+    getLocalFilterData = () => {
+        let listData = [];
+        if (this.allValue) {
+            const valueKey = this.allValue.toLowerCase();
+            listData = this.data.filter(ds => ds.name.toLowerCase().indexOf(valueKey) > -1 || ds.code.toLowerCase().indexOf(valueKey) > -1);
+        } else {
+            listData = [...this.data];
+        }
+        return listData;
     };
 
     handlerPageChange = (current, pageSize) => {
