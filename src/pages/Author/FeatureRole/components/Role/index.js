@@ -37,7 +37,7 @@ class Role extends Component {
         if (!isEqual(prevProps.roleGroup.currentRoleGroup, roleGroup.currentRoleGroup)) {
             this.loadRoleList();
         }
-        if (!isEqual(prevProps.role.listData, role.listData)) {
+        if (!isEqual(this.state.listData, role.listData)) {
             this.setState({
                 listData: role.listData,
             });
