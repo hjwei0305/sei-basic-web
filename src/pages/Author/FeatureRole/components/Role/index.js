@@ -20,9 +20,11 @@ class Role extends Component {
 
     constructor(props) {
         super(props);
+        const { roleGroup } = this.props;
         this.state = {
             listData: [],
             delRoleId: null,
+            currentRoleGroup: roleGroup.currentRoleGroup,
         };
     }
 
@@ -34,10 +36,13 @@ class Role extends Component {
         this.loadRoleList();
     };
 
-    componentDidUpdate(prevProps) {
+    componentDidUpdate() {
         const { role, roleGroup } = this.props;
-        if (!isEqual(prevProps.roleGroup.currentRoleGroup, roleGroup.currentRoleGroup)) {
-            this.loadRoleList();
+        if (!isEqual(this.state.currentRoleGroup, roleGroup.currentRoleGroup)) {
+            const { currentRoleGroup } = roleGroup;
+            this.setState({
+                currentRoleGroup
+            }, this.loadRoleList);
         }
         if (!isEqual(this.data, role.listData)) {
             const { listData } = role;
@@ -49,13 +54,16 @@ class Role extends Component {
     };
 
     loadRoleList = () => {
-        const { dispatch, currentRoleGroup } = this.props;
-        dispatch({
-            type: 'role/getFeatureRoleList',
-            payload: {
-                roleGroupId: currentRoleGroup.id,
-            }
-        })
+        const { currentRoleGroup } = this.state;
+        if (currentRoleGroup) {
+            const { dispatch } = this.props;
+            dispatch({
+                type: 'role/getFeatureRoleList',
+                payload: {
+                    roleGroupId: currentRoleGroup.id,
+                }
+            });
+        }
     };
 
     handlerSearchChange = (v) => {
