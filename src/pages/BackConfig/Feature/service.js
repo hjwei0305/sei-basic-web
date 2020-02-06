@@ -31,7 +31,7 @@ export async function delFeatureGroup(params) {
   return request({
     url,
     method: "DELETE",
-    params,
+    data: params.id,
   });
 }
 
@@ -51,7 +51,7 @@ export async function delFeature(params) {
   return request({
     url,
     method: "DELETE",
-    params,
+    data: params.id,
   });
 }
 

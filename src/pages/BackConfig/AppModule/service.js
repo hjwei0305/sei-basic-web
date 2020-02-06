@@ -5,7 +5,7 @@ const { request } = utils;
 
 const { SERVER_PATH } = constants;
 
-/** 获取业务模块列表*/
+/** 获取应用模块列表*/
 export async function getList(params) {
   const url = `${SERVER_PATH}/sei-basic/appModule/findAll`;
   return request({
@@ -15,7 +15,7 @@ export async function getList(params) {
   });
 }
 
-/** 业务模保存 */
+/** 应用模块保存 */
 export async function save(data) {
   const url = `${SERVER_PATH}/sei-basic/appModule/save`;
   return request({
@@ -25,12 +25,12 @@ export async function save(data) {
   });
 }
 
-/** 业务模删除 */
+/** 应用模块删除 */
 export async function del(params) {
   const url = `${SERVER_PATH}/sei-basic/appModule/delete`;
   return request({
     url,
     method: "DELETE",
-    params,
+    data: params.id,
   });
 }

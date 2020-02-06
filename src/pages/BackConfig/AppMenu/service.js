@@ -31,16 +31,16 @@ export async function del(params) {
   return request({
     url,
     method: "DELETE",
-    params,
+    data: params.id,
   });
 }
 
 /** 菜单项移动 */
 export async function move(params) {
-    const url = `${SERVER_PATH}/sei-basic/menu/move`;
-    return request({
-      url,
-      method: "POST",
-      params,
-    });
-  }
+  const url = `${SERVER_PATH}/sei-basic/menu/move`;
+  return request({
+    url,
+    method: "POST",
+    params,
+  });
+}

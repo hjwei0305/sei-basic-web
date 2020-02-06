@@ -31,7 +31,7 @@ export async function delRoleGroup(params) {
   return request({
     url,
     method: "DELETE",
-    params,
+    data: params.id,
   });
 }
 
@@ -64,6 +64,6 @@ export async function delFeatureRole(params) {
   return request({
     url,
     method: "DELETE",
-    params,
+    data: params.id,
   });
 }

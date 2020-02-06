@@ -278,7 +278,7 @@ class NodeForm extends Component {
                                                 getFieldDecorator("featureName", {
                                                     initialValue: this.getInitValueByFields("featureName"),
                                                     rules: [{
-                                                        required: true,
+                                                        required: false,
                                                         message: "菜单项不能为空"
                                                     }]
                                                 })(<ComboGrid {...featureProps} />)

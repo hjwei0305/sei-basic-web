@@ -277,7 +277,7 @@ class Role extends Component {
                                     : <div className='blank-empty'>
                                         <Empty
                                             image={empty}
-                                            description="可选择角色列表项进行角色功能项管理"
+                                            description="选择角色列表项进行功能项配置"
                                         />
                                     </div>
                             }
