@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "dva";
 import cls from "classnames";
+import isEqual from 'react-fast-compare';
 import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
 import { Card, Popconfirm, Button, Tag, Drawer } from 'antd'
 import { ExtTable, ExtIcon } from 'seid';
@@ -13,6 +14,8 @@ const { SERVER_PATH, FEATURE_TYPE } = constants;
 @connect(({ role, loading }) => ({ role, loading }))
 class FeaturePage extends Component {
 
+    static assignedTableRef;
+
     constructor(props) {
         super(props);
         this.state = {
@@ -21,7 +24,14 @@ class FeaturePage extends Component {
         };
     }
 
-    static assignedTableRef;
+    componentDidUpdate(prevProps) {
+        if (!isEqual(prevProps.role.currentRole, this.props.role.currentRole)) {
+            this.setState({
+                delRowId: null,
+                selectedRowKeys: [],
+            });
+        }
+    }
 
     reloadData = () => {
         if (this.assignedTableRef) {
