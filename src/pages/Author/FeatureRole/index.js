@@ -243,14 +243,14 @@ class FeatureRole extends Component {
                             </div>
                         </Card>
                     </Col>
-                    <Col span={20} className={cls("main-content", 'auto-height')}>
+                    <Col span={20} className={cls("main-content", 'auto-height','role-main')}>
                         {
                             currentRoleGroup
                                 ? <Role {...roleProps} />
                                 : <div className='blank-empty'>
                                     <Empty
                                         image={empty}
-                                        description="可选择左边列表项进行相应的操作"
+                                        description="可选择左边列表角色组操作"
                                     />
                                 </div>
 

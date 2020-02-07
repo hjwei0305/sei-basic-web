@@ -34,6 +34,7 @@ class AssignFeatureItem extends Component {
             this.data = [...unAssignListData];
             this.setState({
                 unAssignListData,
+                checkedList: {},
                 pagination: {
                     ...pagination,
                     total: unAssignListData.length,
@@ -138,9 +139,7 @@ class AssignFeatureItem extends Component {
     };
 
     onSelectAllChange = e => {
-        const { unassigned } = this.props;
-        const { unAssignListData } = unassigned;
-        const { checkedList } = this.state;
+        const { checkedList, unAssignListData } = this.state;
         let checkedKeys = cloneDeep(checkedList);
         let selectAll = false;
         if (e.target.checked) {
@@ -190,11 +189,12 @@ class AssignFeatureItem extends Component {
             >
                 <div className="header-tool-box">
                     <Button
-                        saving={assigning}
+                        loading={assigning}
+                        type='primary'
                         disabled={checkCount === 0}
                         onClick={e => this.assignFeatureItem(e)}
                     >
-                        {`确定（${checkCount}）`}
+                        {`确定 (${checkCount})`}
                     </Button>
                     <Search
                         placeholder="输入名称关键字查询"

@@ -25,6 +25,24 @@
                         height: 100% !important;
                         max-height: 100% !important;
                         width: 100%;
+                        .left-box {
+                            .ant-drawer-top.ant-drawer-open .ant-drawer-content-wrapper {
+                                box-shadow: none;
+                            }
+                            .ant-drawer-body {
+                                padding: 0 0 0 8px;
+                                display: flex;
+                                align-items: center;
+                                height: 44px;
+                                line-height: 44px;
+                                background-color: @white;
+                                .select {
+                                    color: fade(@black, 65%);
+                                    display: inline-block;
+                                    min-width: 120px;
+                                }
+                            }
+                        }
                     }
                 }
                 .seid-tool-bar {

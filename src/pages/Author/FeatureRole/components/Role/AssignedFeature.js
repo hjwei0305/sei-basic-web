@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import { connect } from "dva";
 import cls from "classnames";
 import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
-import { Card, Popconfirm, Button, Tag } from 'antd'
+import { Card, Popconfirm, Button, Tag, Drawer } from 'antd'
 import { ExtTable, ExtIcon } from 'seid';
 import { constants } from '@/utils';
 import UnAssignFeatureItem from './UnAssignFeatureItem';
@@ -17,6 +17,7 @@ class FeaturePage extends Component {
         super(props);
         this.state = {
             delRowId: null,
+            selectedRowKeys: [],
         };
     }
 
@@ -62,20 +63,49 @@ class FeaturePage extends Component {
         });
     };
 
-    removeAssignFeatureItem = (data) => {
-        const { dispatch } = this.props;
+    removeAssignFeatureItem = (childIds) => {
+        const { role, dispatch } = this.props;
+        const { currentRole } = role;
+        if (childIds.length === 1) {
+            this.setState({
+                delRowId: childIds[0],
+            });
+        }
         dispatch({
             type: 'role/removeAssignedFeatureItem',
             payload: {
-                ...data
+                parentId: currentRole.id,
+                childIds,
             },
             callback: res => {
                 if (res.success) {
+                    this.setState({
+                        delRowId: null,
+                        selectedRowKeys: [],
+                    });
                     this.reloadData();
                 }
             }
         })
     };
+
+    batchRemoveAssignedFeatureItem = () => {
+        const { selectedRowKeys } = this.state;
+        this.removeAssignFeatureItem(selectedRowKeys);
+    };
+
+    onCancelBatchRemoveAssignedFeatureItem = () => {
+        this.setState({
+            selectedRowKeys: [],
+        });
+    };
+
+    handlerSelectRow = (selectedRowKeys) => {
+        this.setState({
+            selectedRowKeys,
+        });
+    };
+
 
     closeAssignFeatureItem = _ => {
         const { dispatch } = this.props;
@@ -87,26 +117,13 @@ class FeaturePage extends Component {
         });
     };
 
-    renderDelBtn = (row) => {
+    renderRemoveBtn = (row) => {
         const { loading } = this.props;
         const { delRowId } = this.state;
-        if (loading.effects["feature/delFeature"] && delRowId === row.id) {
+        if (loading.effects["role/removeAssignedFeatureItem"] && delRowId === row.id) {
             return <ExtIcon className="del-loading" type="loading" antd />
         }
-        return <ExtIcon className="del" type="delete" antd />;
-    };
-
-    renderName = (row) => {
-        let tag;
-        if (row.tenantCanUse) {
-            tag = <Tag color='green' style={{ marginLeft: 8 }}>租户可用</Tag>;
-        }
-        return (
-            <>
-                {row.name}
-                {tag}
-            </>
-        );
+        return <ExtIcon className="del" type="export" antd />;
     };
 
     renderFeatureType = (row) => {
@@ -122,24 +139,25 @@ class FeaturePage extends Component {
     render() {
         const { role, loading } = this.props;
         const { currentRole, showAssignFeature, unAssignListData } = role;
+        const { selectedRowKeys } = this.state;
         const columns = [
             {
                 title: formatMessage({ id: "global.operation", defaultMessage: "操作" }),
                 key: "operation",
-                width: 120,
+                width: 60,
                 align: "center",
                 dataIndex: "id",
                 className: "action",
                 required: true,
                 render: (text, record) => (
-                    <span className={cls("action-box")}>
+                    <span className={cls("action-box")} onClick={e => e.stopPropagation()}>
                         <Popconfirm
                             placement="topLeft"
                             title={formatMessage({ id: "global.remove.confirm", defaultMessage: "确定要移除吗？" })}
-                            onConfirm={_ => this.del(record)}
+                            onConfirm={_ => this.removeAssignFeatureItem([record.id])}
                         >
                             {
-                                this.renderDelBtn(record)
+                                this.renderRemoveBtn(record)
                             }
                         </Popconfirm>
                     </span>
@@ -156,7 +174,6 @@ class FeaturePage extends Component {
                 dataIndex: "name",
                 width: 220,
                 required: true,
-                render: (_text, record) => this.renderName(record),
             },
             {
                 title: '类别',
@@ -167,12 +184,24 @@ class FeaturePage extends Component {
                 render: (_text, record) => this.renderFeatureType(record),
             },
             {
+                title: '租户可用',
+                dataIndex: "tenantCanUse",
+                width: 80,
+                align: 'center',
+                render: (text, record) => {
+                    if (record.tenantCanUse) {
+                        return <ExtIcon type="check" antd />;
+                    }
+                }
+            },
+            {
                 title: '所属应用模块',
                 dataIndex: "featureGroup.appModule.name",
                 width: 200,
                 optional: true,
             },
         ];
+        const hasSelected = selectedRowKeys.length > 0;
         const toolBarProps = {
             left: (
                 <Fragment>
@@ -187,7 +216,34 @@ class FeaturePage extends Component {
                     <Button onClick={this.reloadData}>
                         <FormattedMessage id="global.refresh" defaultMessage="刷新" />
                     </Button>
-                </Fragment>
+                    <Drawer
+                        placement="top"
+                        closable={false}
+                        mask={false}
+                        height={44}
+                        getContainer={false}
+                        style={{ position: 'absolute' }}
+                        visible={hasSelected}
+                    >
+                        <Button
+                            onClick={this.onCancelBatchRemoveAssignedFeatureItem}
+                            disabled={loading.effects["role/removeAssignedFeatureItem"]}
+                        >
+                            取消
+                         </Button>
+                        <Popconfirm
+                            title="确定要移除选择的项目吗？"
+                            onConfirm={this.batchRemoveAssignedFeatureItem}
+                        >
+                            <Button type="danger" loading={loading.effects["role/removeAssignedFeatureItem"]}>
+                                批量移除
+                         </Button>
+                        </Popconfirm>
+                        <span className={cls("select")}>
+                            {`已选择 ${selectedRowKeys.length} 项`}
+                        </span>
+                    </Drawer>
+                </Fragment >
             )
         };
         const extTableProps = {
@@ -197,6 +253,8 @@ class FeaturePage extends Component {
             checkbox: true,
             cascadeParams: { parentId: currentRole ? currentRole.id : null },
             onTableRef: ref => this.assignedTableRef = ref,
+            onSelectRow: this.handlerSelectRow,
+            selectedRowKeys,
             store: {
                 url: `${SERVER_PATH}/sei-basic/featureRoleFeature/getChildrenFromParentId`
             }
@@ -210,7 +268,8 @@ class FeaturePage extends Component {
             assigning: loading.effects["role/assignFeatureItem"],
         };
         return (
-            <div className={cls(styles['assigned-feature-box'])}>
+            <div className={cls(styles['assigned-feature-box'])
+            }>
                 <Card
                     title="角色功能项管理"
                     bordered={false}

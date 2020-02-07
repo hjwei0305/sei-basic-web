@@ -81,7 +81,7 @@ export async function removeAssignedFeatureItem(data) {
   const url = `${SERVER_PATH}/sei-basic/featureRoleFeature/removeRelations`;
   return request({
     url,
-    method: "POST",
+    method: "DELETE",
     data,
   });
 }
