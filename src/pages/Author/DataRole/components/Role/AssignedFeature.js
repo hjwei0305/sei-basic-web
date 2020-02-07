@@ -96,7 +96,7 @@ class FeaturePage extends Component {
                     this.reloadData();
                 }
             }
-        });
+        })
     };
 
     batchRemoveAssignedFeatureItem = () => {

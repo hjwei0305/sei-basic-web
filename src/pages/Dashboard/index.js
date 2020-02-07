@@ -33,6 +33,16 @@ const menuData = [
         name: '权限对象',
         path: '/backConfig/authorType',
       },
+      {
+        id: '104',
+        name: '数据权限类型',
+        path: '/backConfig/dataAuthorType',
+      },
+      {
+        id: '105',
+        name: '租户管理',
+        path: '/backConfig/tenant',
+      },
     ],
   },
   {
@@ -43,6 +53,11 @@ const menuData = [
         id: '201',
         name: '功能角色',
         path: '/author/featureRole',
+      },
+      {
+        id: '202',
+        name: '数据角色',
+        path: '/author/dataRole',
       },
     ],
   },

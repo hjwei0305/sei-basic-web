@@ -8,7 +8,7 @@ import styles from "./UnAssignFeatureItem.less";
 
 const Search = Input.Search;
 
-class UnAssignFeatureItem extends Component {
+class AssignFeatureItem extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -35,8 +35,6 @@ class UnAssignFeatureItem extends Component {
             this.setState({
                 unAssignListData,
                 checkedList: {},
-                selectAll: false,
-                selectIndeterminate: false,
                 pagination: {
                     ...pagination,
                     total: unAssignListData.length,
@@ -253,4 +251,4 @@ class UnAssignFeatureItem extends Component {
     }
 }
 
-export default UnAssignFeatureItem;
+export default AssignFeatureItem;

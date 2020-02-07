@@ -3,66 +3,76 @@ import { connect } from "dva";
 import cls from "classnames";
 import isEqual from 'react-fast-compare';
 import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
-import { Card, Popconfirm, Button, Tag, Drawer } from 'antd'
+import { Popconfirm, Button, Card, Drawer } from 'antd'
 import { ExtTable, ExtIcon } from 'seid';
 import { constants } from '@/utils';
-import UnAssignFeatureItem from './UnAssignFeatureItem';
-import styles from './AssignedFeature.less';
+import UnAssignAppModuleItem from './UnAssignAppModuleItem';
+import styles from './AssignedAppModuleItem.less';
 
-const { SERVER_PATH, FEATURE_TYPE } = constants;
+const { SERVER_PATH } = constants;
 
-@connect(({ role, loading }) => ({ role, loading }))
-class FeaturePage extends Component {
+@connect(({ tenant, loading }) => ({ tenant, loading }))
+class TenantAssignedAppModuleItem extends Component {
 
-    static assignedTableRef;
+    static appModuleTableRef;
 
     constructor(props) {
         super(props);
         this.state = {
-            delRowId: null,
+            removeAppModuleId: null,
             selectedRowKeys: [],
         };
     }
 
     componentDidUpdate(prevProps) {
-        if (!isEqual(prevProps.role.currentRole, this.props.role.currentRole)) {
+        if (!isEqual(prevProps.tenant.currentTenant, this.props.tenant.currentTenant)) {
             this.setState({
-                delRowId: null,
+                removeAppModuleId: null,
                 selectedRowKeys: [],
+            }, () => {
+                const { dispatch } = this.props;
+                dispatch({
+                    type: 'tenant/updateState',
+                    payload: {
+                        showAssignAppModule: false,
+                    }
+                });
             });
         }
     }
 
+
     reloadData = () => {
-        if (this.assignedTableRef) {
-            this.assignedTableRef.remoteDataRrefresh();
+        if (this.appModuleTableRef) {
+            this.appModuleTableRef.remoteDataRrefresh();
         }
     };
 
-    showAssignFeature = () => {
-        const { role, dispatch } = this.props;
-        const { currentRole } = role;
+
+    showAssignAppModule = () => {
+        const { tenant, dispatch } = this.props;
+        const { currentTenant } = tenant;
         dispatch({
-            type: 'role/updateState',
+            type: 'tenant/updateState',
             payload: {
-                showAssignFeature: true,
+                showAssignAppModule: true,
             }
         });
         dispatch({
-            type: 'role/getUnAssignedFeatureItemList',
+            type: 'tenant/getUnAssignedAppModuleItemList',
             payload: {
-                parentId: currentRole.id,
+                parentId: currentTenant.id,
             }
         });
     };
 
-    assignFeatureItem = (childIds) => {
-        const { role, dispatch } = this.props;
-        const { currentRole } = role;
+    assignAppModuleItem = (childIds) => {
+        const { tenant, dispatch } = this.props;
+        const { currentTenant } = tenant;
         dispatch({
-            type: "role/assignFeatureItem",
+            type: "tenant/assignAppModuleItem",
             payload: {
-                parentId: currentRole.id,
+                parentId: currentTenant.id,
                 childIds,
             },
             callback: res => {
@@ -73,38 +83,38 @@ class FeaturePage extends Component {
         });
     };
 
-    removeAssignFeatureItem = (childIds) => {
-        const { role, dispatch } = this.props;
-        const { currentRole } = role;
+    removeAssignedAppModuleItem = (childIds) => {
+        const { tenant, dispatch } = this.props;
+        const { currentTenant } = tenant;
         if (childIds.length === 1) {
             this.setState({
-                delRowId: childIds[0],
+                removeAppModuleId: childIds[0],
             });
         }
         dispatch({
-            type: 'role/removeAssignedFeatureItem',
+            type: 'tenant/removeAssignedAppModuleItem',
             payload: {
-                parentId: currentRole.id,
+                parentId: currentTenant.id,
                 childIds,
             },
             callback: res => {
                 if (res.success) {
                     this.setState({
-                        delRowId: null,
+                        removeAppModuleId: null,
                         selectedRowKeys: [],
                     });
                     this.reloadData();
                 }
             }
-        });
+        })
     };
 
-    batchRemoveAssignedFeatureItem = () => {
+    batchRemoveAssignedAppModuleItem = () => {
         const { selectedRowKeys } = this.state;
-        this.removeAssignFeatureItem(selectedRowKeys);
+        this.removeAssignedAppModuleItem(selectedRowKeys);
     };
 
-    onCancelBatchRemoveAssignedFeatureItem = () => {
+    onCancelBatchRemoveAssignedAppModuleItem = () => {
         this.setState({
             selectedRowKeys: [],
         });
@@ -117,44 +127,34 @@ class FeaturePage extends Component {
     };
 
 
-    closeAssignFeatureItem = _ => {
+    closeAssignAppModuleItem = _ => {
         const { dispatch } = this.props;
         dispatch({
-            type: "role/updateState",
+            type: "tenant/updateState",
             payload: {
-                showAssignFeature: false,
+                showAssignAppModule: false,
             }
         });
     };
 
     renderRemoveBtn = (row) => {
         const { loading } = this.props;
-        const { delRowId } = this.state;
-        if (loading.effects["role/removeAssignedFeatureItem"] && delRowId === row.id) {
+        const { removeAppModuleId } = this.state;
+        if (loading.effects["tenant/removeAssignedAppModuleItem"] && removeAppModuleId === row.id) {
             return <ExtIcon className="del-loading" type="loading" antd />
         }
         return <ExtIcon className="del" type="export" antd />;
     };
 
-    renderFeatureType = (row) => {
-        switch (row.featureType) {
-            case FEATURE_TYPE.PAGE:
-                return <Tag color='cyan'>菜单项</Tag>;
-            case FEATURE_TYPE.OPERATE:
-                return <Tag color='blue'>操作项</Tag>;
-            default:
-        }
-    };
-
     render() {
-        const { role, loading } = this.props;
-        const { currentRole, showAssignFeature, unAssignListData } = role;
         const { selectedRowKeys } = this.state;
+        const { tenant, loading } = this.props;
+        const { currentTenant, unAssignListData, showAssignAppModule } = tenant;
         const columns = [
             {
                 title: formatMessage({ id: "global.operation", defaultMessage: "操作" }),
                 key: "operation",
-                width: 60,
+                width: 80,
                 align: "center",
                 dataIndex: "id",
                 className: "action",
@@ -164,7 +164,7 @@ class FeaturePage extends Component {
                         <Popconfirm
                             placement="topLeft"
                             title={formatMessage({ id: "global.remove.confirm", defaultMessage: "确定要移除吗？" })}
-                            onConfirm={_ => this.removeAssignFeatureItem([record.id])}
+                            onConfirm={_ => this.removeAssignedAppModuleItem([record.id])}
                         >
                             {
                                 this.renderRemoveBtn(record)
@@ -186,42 +186,21 @@ class FeaturePage extends Component {
                 required: true,
             },
             {
-                title: '类别',
-                dataIndex: "featureType",
-                width: 80,
-                required: true,
-                align: 'center',
-                render: (_text, record) => this.renderFeatureType(record),
-            },
-            {
-                title: '租户可用',
-                dataIndex: "tenantCanUse",
-                width: 80,
-                align: 'center',
-                render: (text, record) => {
-                    if (record.tenantCanUse) {
-                        return <ExtIcon type="check" antd />;
-                    }
-                }
-            },
-            {
-                title: '所属应用模块',
-                dataIndex: "appModuleName",
-                width: 200,
-                optional: true,
-            },
+                title: formatMessage({ id: "global.remark", defaultMessage: "说明" }),
+                dataIndex: "remark",
+                width: 320,
+            }
         ];
         const hasSelected = selectedRowKeys.length > 0;
         const toolBarProps = {
             left: (
                 <Fragment>
                     <Button
-                        icon='plus'
                         type="primary"
-                        loading={loading.effects["role/getUnAssignedFeatureItemList"]}
-                        onClick={this.showAssignFeature}
+                        icon='plus'
+                        onClick={this.showAssignAppModule}
                     >
-                        我要分配功能项
+                        应用模块
                     </Button>
                     <Button onClick={this.reloadData}>
                         <FormattedMessage id="global.refresh" defaultMessage="刷新" />
@@ -236,16 +215,16 @@ class FeaturePage extends Component {
                         visible={hasSelected}
                     >
                         <Button
-                            onClick={this.onCancelBatchRemoveAssignedFeatureItem}
-                            disabled={loading.effects["role/removeAssignedFeatureItem"]}
+                            onClick={this.onCancelBatchRemoveAssignedAppModuleItem}
+                            disabled={loading.effects["tenant/removeAssignedAppModuleItem"]}
                         >
                             取消
                          </Button>
                         <Popconfirm
                             title="确定要移除选择的项目吗？"
-                            onConfirm={this.batchRemoveAssignedFeatureItem}
+                            onConfirm={this.batchRemoveAssignedAppModuleItem}
                         >
-                            <Button type="danger" loading={loading.effects["role/removeAssignedFeatureItem"]}>
+                            <Button type="danger" loading={loading.effects["tenant/removeAssignedAppModuleItem"]}>
                                 批量移除
                          </Button>
                         </Popconfirm>
@@ -253,7 +232,7 @@ class FeaturePage extends Component {
                             {`已选择 ${selectedRowKeys.length} 项`}
                         </span>
                     </Drawer>
-                </Fragment >
+                </Fragment>
             )
         };
         const extTableProps = {
@@ -261,35 +240,34 @@ class FeaturePage extends Component {
             toolBar: toolBarProps,
             columns,
             checkbox: true,
-            cascadeParams: { parentId: currentRole ? currentRole.id : null },
-            onTableRef: ref => this.assignedTableRef = ref,
             onSelectRow: this.handlerSelectRow,
             selectedRowKeys,
+            cascadeParams: { parentId: currentTenant ? currentTenant.id : null },
+            onTableRef: ref => this.appModuleTableRef = ref,
             store: {
-                url: `${SERVER_PATH}/sei-basic/featureRoleFeature/getChildrenFromParentId`
+                url: `${SERVER_PATH}/sei-basic/tenantAppModule/getChildrenFromParentId`
             }
         };
-        const unAssignFeatureItemProps = {
-            loading: loading.effects["role/getUnAssignedFeatureItemList"],
+        const unAssignAppModuleItemProps = {
+            loading: loading.effects["tenant/getUnAssignedAppModuleItemList"],
             unAssignListData,
-            assignFeatureItem: this.assignFeatureItem,
-            showAssignFeature,
-            closeAssignFeatureItem: this.closeAssignFeatureItem,
-            assigning: loading.effects["role/assignFeatureItem"],
+            assignAppModuleItem: this.assignAppModuleItem,
+            showAssignAppModule,
+            closeAssignFeatureItem: this.closeAssignAppModuleItem,
+            assigning: loading.effects["tenant/assignAppModuleItem"],
         };
         return (
-            <div className={cls(styles['assigned-feature-box'])
-            }>
+            <div className={cls(styles['tenant-app-module-box'])}>
                 <Card
-                    title="角色功能项管理"
+                    title="可以使用的应用模块"
                     bordered={false}
                 >
                     <ExtTable {...extTableProps} />
                 </Card>
-                <UnAssignFeatureItem {...unAssignFeatureItemProps} />
-            </div >
+                <UnAssignAppModuleItem {...unAssignAppModuleItemProps} />
+            </div>
         )
     }
 }
 
-export default FeaturePage;
+export default TenantAssignedAppModuleItem;

@@ -13,8 +13,8 @@ const { APP_MODULE_BTN_KEY } = constants;
 const { authAction } = utils;
 
 
-@connect(({ appModule, loading }) => ({ appModule, loading }))
-class AppModule extends Component {
+@connect(({ dataAuthorType, loading }) => ({ dataAuthorType, loading }))
+class DataAuthorType extends Component {
 
   constructor(props) {
     super(props);
@@ -25,9 +25,9 @@ class AppModule extends Component {
   }
 
   componentDidUpdate(_prevProps, prevState) {
-    if (!isEqual(prevState.list, this.props.appModule.list)) {
+    if (!isEqual(prevState.list, this.props.dataAuthorType.list)) {
       this.setState({
-        list: this.props.appModule.list
+        list: this.props.dataAuthorType.list
       });
     }
   }
@@ -35,14 +35,14 @@ class AppModule extends Component {
   reloadData = _ => {
     const { dispatch } = this.props;
     dispatch({
-      type: "appModule/queryList"
+      type: "dataAuthorType/queryList"
     });
   };
 
   add = _ => {
     const { dispatch } = this.props;
     dispatch({
-      type: "appModule/updateState",
+      type: "dataAuthorType/updateState",
       payload: {
         showModal: true,
         rowData: null
@@ -53,7 +53,7 @@ class AppModule extends Component {
   edit = rowData => {
     const { dispatch } = this.props;
     dispatch({
-      type: "appModule/updateState",
+      type: "dataAuthorType/updateState",
       payload: {
         showModal: true,
         rowData: rowData
@@ -64,14 +64,14 @@ class AppModule extends Component {
   save = data => {
     const { dispatch } = this.props;
     dispatch({
-      type: "appModule/save",
+      type: "dataAuthorType/save",
       payload: {
         ...data
       },
       callback: res => {
         if (res.success) {
           dispatch({
-            type: "appModule/updateState",
+            type: "dataAuthorType/updateState",
             payload: {
               showModal: false
             }
@@ -88,7 +88,7 @@ class AppModule extends Component {
       delRowId: record.id
     }, _ => {
       dispatch({
-        type: "appModule/del",
+        type: "dataAuthorType/del",
         payload: {
           id: record.id
         },
@@ -107,7 +107,7 @@ class AppModule extends Component {
   closeFormModal = _ => {
     const { dispatch } = this.props;
     dispatch({
-      type: "appModule/updateState",
+      type: "dataAuthorType/updateState",
       payload: {
         showModal: false,
         rowData: null
@@ -118,16 +118,16 @@ class AppModule extends Component {
   renderDelBtn = (row) => {
     const { loading } = this.props;
     const { delRowId } = this.state;
-    if (loading.effects["appModule/del"] && delRowId === row.id) {
+    if (loading.effects["dataAuthorType/del"] && delRowId === row.id) {
       return <ExtIcon className="del-loading" type="loading" antd />
     }
     return <ExtIcon className="del" type="delete" antd />;
   };
 
   render() {
-    const { appModule, loading } = this.props;
+    const { dataAuthorType, loading } = this.props;
     const { list } = this.state;
-    const { showModal, rowData } = appModule;
+    const { showModal, rowData } = dataAuthorType;
     const columns = [
       {
         title: formatMessage({ id: "global.operation", defaultMessage: "操作" }),
@@ -165,15 +165,10 @@ class AppModule extends Component {
         )
       },
       {
-        title: formatMessage({ id: "global.rank", defaultMessage: "序号" }),
-        dataIndex: "rank",
-        width: 80,
-      },
-      {
         title: formatMessage({ id: "global.code", defaultMessage: "代码" }),
         dataIndex: "code",
-        width: 120,
-        required: true,
+        width: 160,
+        optional: true,
       },
       {
         title: formatMessage({ id: "global.name", defaultMessage: "名称" }),
@@ -182,21 +177,15 @@ class AppModule extends Component {
         required: true,
       },
       {
-        title: formatMessage({ id: "appModule.webBaseAddress", defaultMessage: "WEB基地址" }),
-        dataIndex: "webBaseAddress",
+        title: '权限对象类型',
+        dataIndex: "authorizeEntityTypeName",
         width: 160,
-        optional: true,
+        required: true,
       },
       {
-        title: formatMessage({ id: "appModule.apiBaseAddress", defaultMessage: "API基地址" }),
-        dataIndex: "API基地址",
-        width: 160,
-        optional: true,
-      },
-      {
-        title: formatMessage({ id: "global.remark", defaultMessage: "说明" }),
-        dataIndex: "remark",
-        width: 320,
+        title: '功能项',
+        dataIndex: "featureName",
+        width: 140,
       },
     ];
     const formModalProps = {
@@ -204,7 +193,7 @@ class AppModule extends Component {
       rowData,
       showModal,
       closeFormModal: this.closeFormModal,
-      saving: loading.effects["appModule/save"]
+      saving: loading.effects["dataAuthorType/save"]
     };
     const toolBarProps = {
       left: (
@@ -231,10 +220,11 @@ class AppModule extends Component {
       <div className={cls(styles["container-box"])} >
         < ExtTable
           bordered={false}
-          loading={loading.effects["appModule/queryList"]}
+          loading={loading.effects["dataAuthorType/queryList"]}
           toolBar={toolBarProps}
           columns={columns}
           dataSource={list}
+          searchProperties={['name', 'entityClassName', 'apiPath', 'appModuleName']}
         />
         <FormModal {...formModalProps} />
       </div>
@@ -242,4 +232,4 @@ class AppModule extends Component {
   }
 }
 
-export default AppModule;
+export default DataAuthorType;

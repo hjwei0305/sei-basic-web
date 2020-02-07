@@ -2,13 +2,13 @@ import React, { Component } from "react";
 import cls from 'classnames';
 import isEqual from 'react-fast-compare';
 import { cloneDeep } from 'lodash'
-import { Button, Input, Pagination, List, Skeleton, Checkbox, Drawer, Tag } from "antd";
+import { Button, Input, Pagination, List, Skeleton, Checkbox, Drawer } from "antd";
 import { ScrollBar } from 'seid';
-import styles from "./UnAssignFeatureItem.less";
+import styles from "./UnAssignAppModuleItem.less";
 
 const Search = Input.Search;
 
-class UnAssignFeatureItem extends Component {
+class UnAssignAppModuleItem extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -95,16 +95,16 @@ class UnAssignFeatureItem extends Component {
         );
     };
 
-    assignFeatureItem = (e) => {
+    assignAppModuleItem = (e) => {
         e && e.stopPropagation();
-        const { assignFeatureItem } = this.props;
+        const { assignAppModuleItem } = this.props;
         const { checkedList } = this.state;
         let childIds = [];
         if (Object.keys(checkedList).length > 0) {
             Object.keys(checkedList).forEach(key => childIds.push(key));
         }
-        if (assignFeatureItem) {
-            assignFeatureItem(childIds);
+        if (assignAppModuleItem) {
+            assignAppModuleItem(childIds);
         }
     };
 
@@ -159,22 +159,8 @@ class UnAssignFeatureItem extends Component {
         });
     };
 
-    renderItemTitle = (item) => {
-        return (
-            <>
-                {item.name}
-                <span className='code-box'>{item.code}</span>
-                {
-                    item.tenantCanUse
-                        ? <Tag color='green'>租户可用</Tag>
-                        : null
-                }
-            </>
-        )
-    };
-
     render() {
-        const { showAssignFeature, assigning, loading } = this.props;
+        const { showAssignAppModule, assigning, loading } = this.props;
         const { allValue, unAssignListData, pagination, checkedList, selectAll, selectIndeterminate } = this.state;
         const checkCount = Object.keys(checkedList).length;
         return (
@@ -183,8 +169,8 @@ class UnAssignFeatureItem extends Component {
                 destroyOnClose
                 getContainer={false}
                 placement="right"
-                visible={showAssignFeature}
-                title="未分配的功能项"
+                visible={showAssignAppModule}
+                title="未分配的应用模块"
                 className={cls(styles['feature-item-box'])}
                 onClose={this.handlerClose}
                 style={{ position: 'absolute' }}
@@ -194,7 +180,7 @@ class UnAssignFeatureItem extends Component {
                         loading={assigning}
                         type='primary'
                         disabled={checkCount === 0}
-                        onClick={e => this.assignFeatureItem(e)}
+                        onClick={e => this.assignAppModuleItem(e)}
                     >
                         {`确定 (${checkCount})`}
                     </Button>
@@ -232,8 +218,8 @@ class UnAssignFeatureItem extends Component {
                                                     onChange={(e) => this.onItemCheck(e, item)}
                                                 />
                                             }
-                                            title={this.renderItemTitle(item)}
-                                            description={item.url}
+                                            title={item.name}
+                                            description={item.code}
                                         />
                                     </Skeleton>
                                 </List.Item>
@@ -253,4 +239,4 @@ class UnAssignFeatureItem extends Component {
     }
 }
 
-export default UnAssignFeatureItem;
+export default UnAssignAppModuleItem;

@@ -21,6 +21,8 @@ export default [
           { path: '/backConfig/feature', component: './BackConfig/Feature' },
           { path: '/backConfig/appMenu', component: './BackConfig/AppMenu' },
           { path: '/backConfig/authorType', component: './BackConfig/AuthorType' },
+          { path: '/backConfig/dataAuthorType', component: './BackConfig/DataAuthorType' },
+          { path: '/backConfig/tenant', component: './BackConfig/Tenant' },
         ],
       },
       {
@@ -28,6 +30,7 @@ export default [
         name: 'author',
         routes: [
           { path: '/author/featureRole', component: './Author/FeatureRole' },
+          { path: '/author/dataRole', component: './Author/DataRole' },
         ],
       },
       {
