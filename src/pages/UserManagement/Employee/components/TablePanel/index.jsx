@@ -1,58 +1,68 @@
 import React, { Component, Fragment, } from 'react';
-import withRouter from 'umi/withRouter';
 import { connect } from 'dva';
 import cls from 'classnames';
-import { Button, Popconfirm, Tag } from "antd";
+import { isEqual, } from 'lodash';
+import { Button, Popconfirm, message, } from "antd";
 import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
-import { ExtTable, utils, ExtIcon } from 'seid';
-import { PageWrapper, } from '@/components';
-
+import { ExtTable, utils, ExtIcon } from 'seid'
 import { constants } from "@/utils";
 import FormModal from "./FormModal";
-import styles from "./index.less";
+import CopyModal from './CopyModal';
+import styles from "../../index.less";
 
-const { APP_MODULE_BTN_KEY } = constants;
+const { APP_MODULE_BTN_KEY, } = constants;
 const { authAction } = utils;
 
-@withRouter
-@connect(({ corporation, loading, }) => ({ corporation, loading, }))
-class Corporation extends Component {
+@connect(({ employee, loading, }) => ({ employee, loading, }))
+class TablePanel extends Component {
   state = {
     delRowId: null,
     list: [],
   }
 
-  // componentDidUpdate(_prevProps, prevState) {
-  //   const { list, } = this.props.corporation;
-  //   if (!isEqual(prevState.list, list)) {
-  //     this.setState({
-  //       list,
-  //     });
-  //   }
-  // }
+  componentDidUpdate(_prevProps, prevState) {
+    const { list, } = this.props.employee;
+    if (!isEqual(prevState.list, list)) {
+      this.setState({
+        list,
+      });
+    }
+  }
 
   reloadData = _ => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: "corporation/queryList"
-    });
+    const { dispatch, employee } = this.props;
+    const { currNode, } = employee;
+
+    if (currNode) {
+      dispatch({
+        type: "employee/queryListByOrgId",
+        payload: {
+          organizationId: currNode.id,
+        },
+      });
+    }
+
   };
 
   add = _ => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: "corporation/updateState",
-      payload: {
-        showModal: true,
-        rowData: null
-      }
-    });
+    const { dispatch, employee, } = this.props;
+    if (employee.currNode) {
+      dispatch({
+        type: "employee/updateState",
+        payload: {
+          showModal: true,
+          rowData: null
+        }
+      });
+    } else {
+      message.warn('请选择组织机构');
+    }
   };
 
   edit = rowData => {
     const { dispatch } = this.props;
     dispatch({
-      type: "corporation/updateState",
+      type: "employee/updateState",
       payload: {
         showModal: true,
         rowData: rowData
@@ -63,14 +73,14 @@ class Corporation extends Component {
   save = data => {
     const { dispatch } = this.props;
     dispatch({
-      type: "corporation/save",
+      type: "employee/save",
       payload: {
         ...data
       },
     }).then(res => {
       if (res.success) {
         dispatch({
-          type: "corporation/updateState",
+          type: "employee/updateState",
           payload: {
             showModal: false
           }
@@ -86,7 +96,7 @@ class Corporation extends Component {
       delRowId: record.id
     }, _ => {
       dispatch({
-        type: "corporation/del",
+        type: "employee/del",
         payload: {
           id: record.id
         },
@@ -101,12 +111,55 @@ class Corporation extends Component {
     });
   };
 
+  handleCopyToOrgNodes = data => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: "employee/copyTo",
+      payload: {
+        ...data
+      },
+    }).then(res => {
+      if (res.success) {
+        dispatch({
+          type: "employee/updateState",
+          payload: {
+            showCopyModal: false
+          }
+        });
+        this.reloadData();
+      }
+    });
+  }
+
+  handlCopy = (rowData) => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: "employee/updateState",
+      payload: {
+        showCopyModal: true,
+        rowData,
+      }
+    });
+  }
+
+  handleConfig = (rowData) => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: "employee/updateState",
+      payload: {
+        showPosionConfig: true,
+        rowData,
+      }
+    });
+  }
+
   closeFormModal = _ => {
     const { dispatch } = this.props;
     dispatch({
-      type: "corporation/updateState",
+      type: "employee/updateState",
       payload: {
         showModal: false,
+        showCopyModal: false,
         rowData: null
       }
     });
@@ -115,21 +168,21 @@ class Corporation extends Component {
   renderDelBtn = (row) => {
     const { loading } = this.props;
     const { delRowId } = this.state;
-    if (loading.effects["corporation/del"] && delRowId === row.id) {
+    if (loading.effects["employee/del"] && delRowId === row.id) {
       return <ExtIcon className="del-loading" type="loading" antd />
     }
     return <ExtIcon className="del" type="delete" antd />;
   };
 
   getExtableProps = () => {
-    // const { list } = this.state;
-    const { list, } = this.props.corporation;
-    const { loading } = this.props;
+    const { list } = this.state;
+    const { loading, employee,  } = this.props;
+    const { rowData, } = employee;
     const columns = [
       {
         title: formatMessage({ id: "global.operation", defaultMessage: "操作" }),
         key: "operation",
-        width: 100,
+        width: 150,
         align: "center",
         dataIndex: "id",
         className: "action",
@@ -158,13 +211,20 @@ class Corporation extends Component {
                 this.renderDelBtn(record)
               }
             </Popconfirm>
+            <ExtIcon
+              className="copy"
+              onClick={_ => this.handlCopy(record)}
+              type="copy"
+              antd
+            />
+            <ExtIcon
+              className="tool"
+              onClick={_ => this.handleConfig(record)}
+              type="tool"
+              antd
+            />
           </span>
         )
-      },
-      {
-        title: formatMessage({ id: "global.rank", defaultMessage: "序号" }),
-        dataIndex: "rank",
-        width: 80,
       },
       {
         title: formatMessage({ id: "global.code", defaultMessage: "代码" }),
@@ -175,54 +235,14 @@ class Corporation extends Component {
       {
         title: formatMessage({ id: "global.name", defaultMessage: "名称" }),
         dataIndex: "name",
+        width: 120,
+        required: true,
+      },
+      {
+        title: "岗位类别",
+        dataIndex: "employeeCategoryName",
         width: 220,
         required: true,
-      },
-      {
-        title: formatMessage({ id: "corporation.shortName", defaultMessage: "简称" }),
-        dataIndex: "shortName",
-        width: 120,
-        required: true,
-      },
-      {
-        title: formatMessage({ id: "corporation.erpCode", defaultMessage: "ERP公司代码" }),
-        dataIndex: "erpCode",
-        width: 80,
-        optional: true,
-      },
-      {
-        title: formatMessage({ id: "corporation.baseCurrencyName", defaultMessage: "本位币货币名称" }),
-        dataIndex: "baseCurrencyName",
-        width: 80,
-        optional: true,
-      },
-      {
-        title: formatMessage({ id: "corporation.baseCurrencyCode", defaultMessage: "本位币货币代码" }),
-        dataIndex: "baseCurrencyCode",
-        width: 80,
-        optional: true,
-      },
-      {
-        title: formatMessage({ id: "corporation.defaultTradePartner", defaultMessage: "默认贸易伙伴代码" }),
-        dataIndex: "defaultTradePartner",
-        width: 120,
-        optional: true,
-      },
-      {
-        title: formatMessage({ id: "corporation.relatedTradePartner", defaultMessage: "关联交易贸易伙伴" }),
-        dataIndex: "relatedTradePartner",
-        width: 120,
-        optional: true,
-      },
-      {
-        title: formatMessage({ id: "corporation.frozen", defaultMessage: "冻结" }),
-        dataIndex: "frozen",
-        width: 80,
-        render: (_text, row) => {
-          if (row.frozen) {
-            return <Tag color='red'>已冻结</Tag>
-          }
-        }
       },
     ];
     const toolBarProps = {
@@ -247,41 +267,61 @@ class Corporation extends Component {
       )
     };
     return {
+      bordered: false,
       columns,
-      loading: loading.effects["corporation/queryList"],
+      loading: loading.effects["employee/queryList"],
       toolBar: toolBarProps,
       dataSource: list,
     };
   };
 
   getFormModalProps = () => {
-    const { loading, corporation, } = this.props;
-    const { showModal, rowData } = corporation;
+    const { loading, employee, } = this.props;
+    const { showModal, rowData, currNode, } = employee;
 
     return {
       save: this.save,
       rowData,
       showModal,
+      parentData: currNode,
       closeFormModal: this.closeFormModal,
-      saving: loading.effects["corporation/save"]
+      saving: loading.effects["employee/save"]
+    };
+  };
+
+  getCopyModalProps = () => {
+    const { loading, employee, } = this.props;
+    const { showCopyModal, rowData, currNode, } = employee;
+
+    return {
+      save: this.handleCopyToOrgNodes,
+      rowData,
+      showModal: showCopyModal,
+      closeModal: this.closeFormModal,
+      saving: loading.effects["employee/copyTo"]
     };
   };
 
   render() {
-    const { corporation, } = this.props;
-    const { showModal, } = corporation;
+    const { employee, } = this.props;
+    const { showModal, showCopyModal } = employee;
 
     return (
-      <PageWrapper className={cls(styles["container-box"])} >
+      <div className={cls(styles["container-box"])} >
         <ExtTable {...this.getExtableProps()} />
         {
           showModal
             ? <FormModal {...this.getFormModalProps()} />
             : null
         }
-      </PageWrapper>
+        {
+          showCopyModal
+            ? <CopyModal {...this.getCopyModalProps()}/>
+            : null
+        }
+      </div>
     );
   }
 }
 
-export default Corporation;
+export default TablePanel;

@@ -34,6 +34,11 @@ export default [
         ],
       },
       {
+        path: '/dataDict',
+        name: 'dataDict',
+        component: 'DataDict',
+      },
+      {
         path: '/orgStructure',
         name: 'orgStructure',
         routes: [{
@@ -50,6 +55,14 @@ export default [
         {
           path: '/orgStructure/organization',
           component: 'OrgStructure/Organization',
+        }],
+      },
+      {
+        path: '/userManagement',
+        name: 'userManagement',
+        routes: [{
+          path: '/userManagement/employee',
+          component: 'UserManagement/Employee'
         }],
       },
       {

@@ -6,6 +6,8 @@ import { Row, Col, Spin, Empty } from "antd";
 import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
 import TreePanel from './components/TreePanel';
 import FormPanel from './components/FormPanel';
+import { CascadeLayout, PageWrapper, } from '@/components';
+
 import styles from "./index.less";
 
 @withRouter
@@ -17,26 +19,14 @@ class Region extends Component {
     const { selectedTreeNode } = region;
 
     return (
-      <Row className={cls(styles['container-box'])}>
+      <PageWrapper className={cls(styles['container-box'])}>
         <Spin spinning={loading.global} wrapperClassName={cls("spin-wrapper")}>
-          <Col className={cls('content-panel')} span={10}>
-            <header className={cls('content-panel-title')}>
-              <span>行政区域</span>
-            </header>
-            <div className={cls('content-panel-section')}>
-              <TreePanel />
-            </div>
-          </Col>
-          <Col className={cls('content-panel','right-panel')} span={14}>
-            <header className={cls('content-panel-title')}>
-              <span>{selectedTreeNode && selectedTreeNode.name}</span>
-            </header>
-            <div className={cls('content-panel-section')}>
-              { selectedTreeNode ? (<FormPanel />) : (<Empty className={cls("empty-wrapper")} description="请选择左边的树节点进行操作" />) }
-            </div>
-          </Col>
+          <CascadeLayout title={['行政区域', selectedTreeNode && selectedTreeNode.name]}>
+            <TreePanel slot="left" />
+            { selectedTreeNode ? (<FormPanel slot="right" />) : (<Empty slot="right" className={cls("empty-wrapper")} description="请选择左边的树节点进行操作" />) }
+          </CascadeLayout>
         </Spin>
-      </Row>
+      </PageWrapper>
     );
   }
 }
