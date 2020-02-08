@@ -4,8 +4,8 @@ import RoleStation from './RoleStation';
 import ListPanel from './ListPanel';
 import AssignLayout from './Layout/AssignLayout';
 import TreeView from './TreeView';
-export CascadeLayout from './Layout/CascadeLayout';
-export PageWrapper from './PageWrapper';
+import CascadeLayout from './Layout/CascadeLayout';
+import PageWrapper from './PageWrapper';
 
 export {
   Loader,
@@ -13,5 +13,7 @@ export {
   RoleStation,
   ListPanel,
   TreeView,
-  AssignLayout
+  AssignLayout,
+  CascadeLayout,
+  PageWrapper
 };
