@@ -34,20 +34,20 @@ class RoleGroupForm extends PureComponent {
   };
 
   onFormSubmit = _ => {
-    const { form, saveFeatureRole, roleData, handlerPopoverHide, currentRoleGroup } = this.props;
+    const { form, saveDataRole, roleData, handlerPopoverHide, currentRoleGroup } = this.props;
     form.validateFields((err, formData) => {
       if (err) {
         return;
       }
       const { isPublicRole } = this.state;
       let params = {
-        featureGroupId: currentRoleGroup.id,
-        featureRoleGroupCode: currentRoleGroup.code,
-        featureRoleGroupName: currentRoleGroup.name,
+        dataRoleGroupId: currentRoleGroup.id,
+        dataRoleGroupCode: currentRoleGroup.code,
+        dataRoleGroupName: currentRoleGroup.name,
       };
       Object.assign(params, roleData || {});
       Object.assign(params, formData);
-      params.code = `${params.featureRoleGroupCode}-${toUpper(trim(params.code))}`;
+      params.code = `${params.dataRoleGroupCode}-${toUpper(trim(params.code))}`;
       if (!isPublicRole) {
         Object.assign(params, {
           publicUserType: null,
@@ -56,7 +56,7 @@ class RoleGroupForm extends PureComponent {
           publicOrgName: null,
         });
       }
-      saveFeatureRole(params, handlerPopoverHide);
+      saveDataRole(params, handlerPopoverHide);
     });
   };
 
@@ -64,8 +64,8 @@ class RoleGroupForm extends PureComponent {
     const { roleData } = this.props;
     let newCode = '';
     if (roleData) {
-      const { code, featureRoleGroupCode } = roleData;
-      newCode = code.substring(featureRoleGroupCode.length + 1);
+      const { code, dataRoleGroupCode } = roleData;
+      newCode = code.substring(dataRoleGroupCode.length + 1);
     }
     return newCode;
   };
@@ -78,35 +78,12 @@ class RoleGroupForm extends PureComponent {
     const { isPublicRole } = this.state;
     const { form, roleData, saving, currentRoleGroup } = this.props;
     const { getFieldDecorator } = form;
-    getFieldDecorator('roleType', { initialValue: roleData ? roleData.roleType : null });
     getFieldDecorator('publicUserType', { initialValue: roleData ? roleData.publicUserType : null });
     getFieldDecorator('publicOrgId', { initialValue: roleData ? roleData.publicOrgId : null });
     getFieldDecorator('publicOrgCode', { initialValue: roleData ? roleData.publicOrgCode : null });
     const title = roleData
       ? '修改角色'
       : '新建角色';
-    const roleTypeProps = {
-      form,
-      name: 'roleTypeRemark',
-      field: ['roleType'],
-      showSearch: false,
-      store: {
-        autoLoad: true,
-        url: `${SERVER_PATH}/sei-basic/featureRole/listAllRoleTypeList`,
-      },
-      afterLoaded: (data) => {
-        if (data && data instanceof Array && data.length > 0) {
-          form.setFieldsValue({
-            roleTypeRemark: data[0].remark,
-            roleType: data[0].name,
-          });
-        }
-      },
-      reader: {
-        name: 'remark',
-        field: ['name']
-      }
-    };
     const publicUserTypeProps = {
       form,
       name: 'userTypeRemark',
@@ -162,11 +139,6 @@ class RoleGroupForm extends PureComponent {
                 maxLength={50}
                 placeholder={formatMessage({ id: "global.code.tip", defaultMessage: "规则:名称各汉字首字母大写" })}
               />)}
-            </FormItem>
-            <FormItem label='角色类型'>
-              {getFieldDecorator("roleTypeRemark", {
-                initialValue: roleData ? roleData.roleTypeRemark : null,
-              })(<ComboList {...roleTypeProps} />)}
             </FormItem>
             <FormItem label='公共角色'>
               {getFieldDecorator("isPublicRole", {

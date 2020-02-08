@@ -5,9 +5,9 @@ const { request } = utils;
 
 const { SERVER_PATH } = constants;
 
-/** 获取功能角色组列表*/
+/** 获取数据角色组列表*/
 export async function getRoleGroupList(params) {
-  const url = `${SERVER_PATH}/sei-basic/featureRoleGroup/findAll`;
+  const url = `${SERVER_PATH}/sei-basic/dataRoleGroup/findAll`;
   return request({
     url,
     method: "GET",
@@ -15,9 +15,9 @@ export async function getRoleGroupList(params) {
   });
 }
 
-/** 功能角色组保存 */
+/** 数据角色组保存 */
 export async function saveRoleGroup(data) {
-  const url = `${SERVER_PATH}/sei-basic/featureRoleGroup/save`;
+  const url = `${SERVER_PATH}/sei-basic/dataRoleGroup/save`;
   return request({
     url,
     method: "POST",
@@ -25,9 +25,9 @@ export async function saveRoleGroup(data) {
   });
 }
 
-/** 功能角色组删除 */
+/** 数据角色组删除 */
 export async function delRoleGroup(data) {
-  const url = `${SERVER_PATH}/sei-basic/featureRoleGroup/delete/${data.id}`;
+  const url = `${SERVER_PATH}/sei-basic/dataRoleGroup/delete/${data.id}`;
   return request({
     url,
     method: "DELETE",
@@ -35,11 +35,11 @@ export async function delRoleGroup(data) {
 }
 
 /** 
- * 根据角色组id获取功能角色列表
+ * 根据角色组id获取数据角色列表
  * param roleGroupId
 */
-export async function getFeatureRoleList(params) {
-  const url = `${SERVER_PATH}/sei-basic/featureRole/findByFeatureRoleGroup`;
+export async function getDataRoleList(params) {
+  const url = `${SERVER_PATH}/sei-basic/dataRole/findByDataRoleGroup`;
   return request({
     url,
     method: "GET",
@@ -47,9 +47,9 @@ export async function getFeatureRoleList(params) {
   });
 }
 
-/** 功能角色保存 */
-export async function saveFeatureRole(data) {
-  const url = `${SERVER_PATH}/sei-basic/featureRole/save`;
+/** 数据角色保存 */
+export async function saveDataRole(data) {
+  const url = `${SERVER_PATH}/sei-basic/dataRole/save`;
   return request({
     url,
     method: "POST",
@@ -57,64 +57,22 @@ export async function saveFeatureRole(data) {
   });
 }
 
-/** 功能角色删除 */
-export async function delFeatureRole(data) {
-  const url = `${SERVER_PATH}/sei-basic/featureRole/delete/${data.id}`;
+/** 数据角色删除 */
+export async function delDataRole(data) {
+  const url = `${SERVER_PATH}/sei-basic/dataRole/delete/${data.id}`;
   return request({
     url,
     method: "DELETE",
   });
 }
 
-/** 为功能角色分配功能项 */
-export async function assignFeatureItem(data) {
-  const url = `${SERVER_PATH}/sei-basic/featureRoleFeature/insertRelations`;
-  return request({
-    url,
-    method: "POST",
-    data,
-  });
-}
-
-/** 功能角色移除已分配的功能项 */
-export async function removeAssignedFeatureItem(data) {
-  const url = `${SERVER_PATH}/sei-basic/featureRoleFeature/removeRelations`;
-  return request({
-    url,
-    method: "DELETE",
-    data,
-  });
-}
-
-/** 获取功能角色未分配的功能项 */
-export async function getUnAssignedFeatureItemList(params) {
-  const url = `${SERVER_PATH}/sei-basic/featureRoleFeature/getUnassigned`;
-  return request({
-    url,
-    method: "GET",
-    params,
-  });
-}
-
 /** 
- * 根据功能角色的id获取已分配的用户
- * params featureRoleId
- */
-export async function getAssignedEmployeesByFeatureRole(params) {
-  const url = `${SERVER_PATH}/sei-basic/featureRole/getAssignedEmployeesByFeatureRole`;
-  return request({
-    url,
-    method: "GET",
-    params,
-  });
-}
-
-/** 
- * 根据功能角色的id获取已分配的岗位
- * params featureRoleId
+ * 通过数据角色Id和数据权限类型Id获取已分配的业务实体数据
+ * param authTypeId
+ * param roleId
 */
-export async function getAssignedPositionsByFeatureRole(params) {
-  const url = `${SERVER_PATH}/sei-basic/featureRole/getAssignedPositionsByFeatureRole`;
+export async function getAssignedAuthDataList(params) {
+  const url = `${SERVER_PATH}/sei-basic/dataRoleAuthTypeValue/getAssignedAuthDatas`;
   return request({
     url,
     method: "GET",
@@ -122,4 +80,44 @@ export async function getAssignedPositionsByFeatureRole(params) {
   });
 }
 
+/** 
+ * 通过数据角色Id和数据权限类型Id获取未分配的业务实体数据
+ * param authTypeId
+ * param roleId
+*/
+export async function getUnassignedAuthDataList(params) {
+  const url = `${SERVER_PATH}/sei-basic/dataRoleAuthTypeValue/getUnassignedAuthDataList`;
+  return request({
+    url,
+    method: "GET",
+    params,
+  });
+}
 
+/** 
+ * 通过数据角色Id和数据权限类型Id获取已分配的树形业务实体数据
+ * param authTypeId
+ * param roleId
+*/
+export async function getAssignedAuthTreeDataList(params) {
+  const url = `${SERVER_PATH}/sei-basic/dataRoleAuthTypeValue/getAssignedAuthTreeDataList`;
+  return request({
+    url,
+    method: "GET",
+    params,
+  });
+}
+
+/** 
+ * 通过数据角色Id和数据权限类型Id获取未分配的业务实体数据
+ * param authTypeId
+ * param roleId
+*/
+export async function getUnassignedAuthTreeDataList(params) {
+  const url = `${SERVER_PATH}/sei-basic/dataRoleAuthTypeValue/getUnassignedAuthTreeDataList`;
+  return request({
+    url,
+    method: "GET",
+    params,
+  });
+}

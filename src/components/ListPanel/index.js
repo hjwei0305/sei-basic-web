@@ -1,21 +1,35 @@
 import React, { Component } from "react";
 import cls from 'classnames';
+import PropTypes from "prop-types";
 import isEqual from 'react-fast-compare';
 import { cloneDeep } from 'lodash'
-import { Button, Input, Pagination, List, Skeleton, Checkbox, Drawer, Tag } from "antd";
+import { Input, Pagination, List, Skeleton, Checkbox, Card } from "antd";
 import { ScrollBar } from 'seid';
-import styles from "./UnAssignFeatureItem.less";
+import styles from "./index.less";
 
 const Search = Input.Search;
 
-class AssignFeatureItem extends Component {
+class ListPanel extends Component {
+
+    static propTypes = {
+        title: PropTypes.string.isRequired,
+        dataSource: PropTypes.array,
+        loading: PropTypes.bool,
+        onSelectChange: PropTypes.func,
+    };
+
+    static defaultProps = {
+        dataSource: [],
+        loading: false,
+    };
+
     constructor(props) {
         super(props);
         this.state = {
             selectAll: false,
             selectIndeterminate: false,
             checkedList: {},
-            unAssignListData: [],
+            dataSource: [],
             pagination: {
                 current: 1,
                 pageSize: 30,
@@ -28,16 +42,16 @@ class AssignFeatureItem extends Component {
     static data = [];
 
     componentDidUpdate(prevProps) {
-        const { unAssignListData } = this.props;
-        if (!isEqual(prevProps.unAssignListData, unAssignListData)) {
+        const { dataSource } = this.props;
+        if (!isEqual(prevProps.dataSource, dataSource)) {
             const { pagination } = this.state;
-            this.data = [...unAssignListData];
+            this.data = [...dataSource];
             this.setState({
-                unAssignListData,
+                dataSource,
                 checkedList: {},
                 pagination: {
                     ...pagination,
-                    total: unAssignListData.length,
+                    total: dataSource.length,
                 },
             });
         }
@@ -49,28 +63,28 @@ class AssignFeatureItem extends Component {
 
     handlerSearch = () => {
         const { pagination, } = this.state;
-        const unAssignListData = this.getLocalFilterData();
+        const dataSource = this.getLocalFilterData();
         this.setState({
             selectAll: false,
             selectIndeterminate: false,
             checkedList: {},
-            unAssignListData,
+            dataSource,
             pagination: {
                 ...pagination,
-                total: unAssignListData.length,
+                total: dataSource.length,
             },
         });
     };
 
     getLocalFilterData = () => {
-        let listData = [];
+        let dataSource = [];
         if (this.allValue) {
             const valueKey = this.allValue.toLowerCase();
-            listData = this.data.filter(ds => ds.name.toLowerCase().indexOf(valueKey) > -1 || ds.code.toLowerCase().indexOf(valueKey) > -1);
+            dataSource = this.data.filter(ds => ds.name.toLowerCase().indexOf(valueKey) > -1 || ds.code.toLowerCase().indexOf(valueKey) > -1);
         } else {
-            listData = [...this.data];
+            dataSource = [...this.data];
         }
-        return listData;
+        return dataSource;
     };
 
     handlerPageChange = (current, pageSize) => {
@@ -85,9 +99,9 @@ class AssignFeatureItem extends Component {
             },
             () => {
                 const newData = this.getLocalFilterData();
-                const unAssignListData = newData.slice((current - 1) * pageSize, current * pageSize);
+                const dataSource = newData.slice((current - 1) * pageSize, current * pageSize);
                 this.setState({
-                    unAssignListData,
+                    dataSource,
                 });
             },
         );
@@ -106,15 +120,8 @@ class AssignFeatureItem extends Component {
         }
     };
 
-    handlerClose = () => {
-        const { closeAssignFeatureItem } = this.props;
-        if (closeAssignFeatureItem) {
-            closeAssignFeatureItem();
-        }
-    };
-
     onItemCheck = (e, item) => {
-        const { checkedList, unAssignListData } = this.state;
+        const { checkedList, dataSource } = this.state;
         let checkedKeys = cloneDeep(checkedList);
         let selectAll = false;
         let selectIndeterminate = false;
@@ -126,7 +133,7 @@ class AssignFeatureItem extends Component {
         const keys = Object.keys(checkedKeys);
         if (keys.length > 0) {
             selectIndeterminate = true;
-            if (keys.length === unAssignListData.length) {
+            if (keys.length === dataSource.length) {
                 selectAll = true;
                 selectIndeterminate = false;
             }
@@ -135,15 +142,15 @@ class AssignFeatureItem extends Component {
             selectIndeterminate,
             selectAll,
             checkedList: checkedKeys
-        });
+        }, this.handlerSelectChange);
     };
 
     onSelectAllChange = e => {
-        const { checkedList, unAssignListData } = this.state;
+        const { checkedList, dataSource } = this.state;
         let checkedKeys = cloneDeep(checkedList);
         let selectAll = false;
         if (e.target.checked) {
-            unAssignListData.forEach(row => {
+            dataSource.forEach(row => {
                 checkedKeys[row.id] = row.id;
             });
             selectAll = true;
@@ -154,48 +161,26 @@ class AssignFeatureItem extends Component {
             selectAll,
             selectIndeterminate: false,
             checkedList: checkedKeys
-        });
+        }, this.handlerSelectChange);
     };
 
-    renderItemTitle = (item) => {
-        return (
-            <>
-                {item.name}
-                <span className='code-box'>{item.code}</span>
-                {
-                    item.tenantCanUse
-                        ? <Tag color='green'>租户可用</Tag>
-                        : null
-                }
-            </>
-        )
+    handlerSelectChange = () => {
+        const { onSelectChange } = this.props
+        const { checkedList } = this.state;
+        if (onSelectChange) {
+            onSelectChange(checkedList)
+        }
     };
 
     render() {
-        const { showAssignFeature, assigning, loading } = this.props;
-        const { allValue, unAssignListData, pagination, checkedList, selectAll, selectIndeterminate } = this.state;
-        const checkCount = Object.keys(checkedList).length;
+        const { loading, title } = this.props;
+        const { allValue, dataSource, pagination, checkedList, selectAll, selectIndeterminate } = this.state;
         return (
-            <Drawer
-                width={420}
-                destroyOnClose
-                getContainer={false}
-                placement="right"
-                visible={showAssignFeature}
-                title="未分配的功能项"
-                className={cls(styles['feature-item-box'])}
-                onClose={this.handlerClose}
-                style={{ position: 'absolute' }}
-            >
-                <div className="header-tool-box">
-                    <Button
-                        loading={assigning}
-                        type='primary'
-                        disabled={checkCount === 0}
-                        onClick={e => this.assignFeatureItem(e)}
-                    >
-                        {`确定 (${checkCount})`}
-                    </Button>
+            <Card
+                title={title}
+                className={cls(styles['list-panel-box'])}
+                bordered={false}
+                extra={
                     <Search
                         placeholder="输入名称关键字查询"
                         defaultValue={allValue}
@@ -204,7 +189,8 @@ class AssignFeatureItem extends Component {
                         onPressEnter={this.handlerSearch}
                         style={{ width: 172 }}
                     />
-                </div>
+                }
+            >
                 <div className="list-tool-box">
                     <Checkbox
                         checked={selectAll}
@@ -213,12 +199,12 @@ class AssignFeatureItem extends Component {
                     >
                         全选
                     </Checkbox>
-                    <span className='tool-desc'>{`共 ${unAssignListData.length} 项`}</span>
+                    <span className='tool-desc'>{`共 ${dataSource.length} 项`}</span>
                 </div>
                 <div className="list-body">
                     <ScrollBar>
                         <List
-                            dataSource={unAssignListData}
+                            dataSource={dataSource}
                             loading={loading}
                             renderItem={item => (
                                 <List.Item key={item.id} className={cls({ 'checked': !!checkedList[item.id] })} actions={[]}>
@@ -230,8 +216,8 @@ class AssignFeatureItem extends Component {
                                                     onChange={(e) => this.onItemCheck(e, item)}
                                                 />
                                             }
-                                            title={this.renderItemTitle(item)}
-                                            description={item.url}
+                                            title={item.name}
+                                            description={item.code}
                                         />
                                     </Skeleton>
                                 </List.Item>
@@ -246,9 +232,9 @@ class AssignFeatureItem extends Component {
                         {...pagination}
                     />
                 </div>
-            </Drawer>
+            </Card>
         )
     }
 }
 
-export default AssignFeatureItem;
+export default ListPanel;

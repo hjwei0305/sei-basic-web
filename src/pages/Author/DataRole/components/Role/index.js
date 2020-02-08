@@ -8,8 +8,7 @@ import { ScrollBar, ExtIcon } from 'seid';
 import empty from "@/assets/item_empty.svg";
 import RoleAdd from './Form/add';
 import RoleEdit from './Form/edit';
-import ExtAction from './ExtAction';
-import AssignedFeature from './AssignedFeature';
+import DataAuthorType from './DataAuthorType';
 import styles from './index.less';
 
 const Search = Input.Search;
@@ -57,7 +56,7 @@ class Role extends Component {
         if (currentRoleGroup) {
             const { dispatch } = this.props;
             dispatch({
-                type: 'role/getFeatureRoleList',
+                type: 'role/getDataRoleList',
                 payload: {
                     roleGroupId: currentRoleGroup.id,
                 }
@@ -82,10 +81,10 @@ class Role extends Component {
         });
     };
 
-    saveFeatureRole = (data, handlerPopoverHide) => {
+    saveDataRole = (data, handlerPopoverHide) => {
         const { dispatch } = this.props;
         dispatch({
-            type: "role/saveFeatureRole",
+            type: "role/saveDataRole",
             payload: {
                 ...data
             },
@@ -98,14 +97,14 @@ class Role extends Component {
         });
     };
 
-    delFeatureRole = (data, e) => {
+    delDataRole = (data, e) => {
         e && e.stopPropagation();
         const { dispatch } = this.props;
         this.setState({
             delRoleId: data.id
         }, _ => {
             dispatch({
-                type: "role/delFeatureRole",
+                type: "role/delDataRole",
                 payload: {
                     id: data.id
                 },
@@ -128,7 +127,6 @@ class Role extends Component {
             type: 'role/updateState',
             payload: {
                 currentRole,
-                showAssignFeature: false,
             }
         });
     };
@@ -184,16 +182,16 @@ class Role extends Component {
         const { loading, role, roleGroup } = this.props;
         const { currentRole } = role;
         const { listData, delRoleId } = this.state;
-        const listLoading = loading.effects["role/getFeatureRoleList"];
-        const saving = loading.effects["role/saveFeatureRole"];
+        const listLoading = loading.effects["role/getDataRoleList"];
+        const saving = loading.effects["role/saveDataRole"];
         const { currentRoleGroup } = roleGroup;
-        const assignedFeatureProps = {
+        const dataAuthorTypeProps = {
             currentRole,
         };
         return (
             <div className={cls(styles['role-box'])}>
                 <Card
-                    title="功能角色管理"
+                    title="数据角色管理"
                     className={cls('auto-height')}
                     bordered={false}
                 >
@@ -208,7 +206,7 @@ class Role extends Component {
                                     <RoleAdd
                                         currentRoleGroup={currentRoleGroup}
                                         saving={saving}
-                                        saveFeatureRole={this.saveFeatureRole}
+                                        saveDataRole={this.saveDataRole}
                                     />
                                     <Search
                                         placeholder="输入名称关键字查询"
@@ -246,21 +244,20 @@ class Role extends Component {
                                                         <RoleEdit
                                                             currentRoleGroup={currentRoleGroup}
                                                             saving={saving}
-                                                            saveFeatureRole={this.saveFeatureRole}
+                                                            saveDataRole={this.saveDataRole}
                                                             roleData={item}
                                                         />
                                                         <Popconfirm
                                                             placement="topLeft"
                                                             title={formatMessage({ id: "global.delete.confirm", defaultMessage: "确定要删除吗？提示：删除后不可恢复" })}
-                                                            onConfirm={(e) => this.delFeatureRole(item, e)}
+                                                            onConfirm={(e) => this.delDataRole(item, e)}
                                                         >
                                                             {
-                                                                loading.effects["role/delFeatureRole"] && delRoleId === item.id
+                                                                loading.effects["role/delDataRole"] && delRoleId === item.id
                                                                     ? <ExtIcon className={cls('del', 'action-item')} type="loading" antd />
                                                                     : <ExtIcon className={cls('del', 'action-item')} type="delete" antd />
                                                             }
                                                         </Popconfirm>
-                                                        <ExtAction roleData={item} />
                                                     </div>
                                                 </List.Item>
                                             )}
@@ -272,11 +269,11 @@ class Role extends Component {
                         <Col span={16} className={cls("main-content", 'auto-height')}>
                             {
                                 currentRole
-                                    ? <AssignedFeature {...assignedFeatureProps} />
+                                    ? <DataAuthorType {...dataAuthorTypeProps} />
                                     : <div className='blank-empty'>
                                         <Empty
                                             image={empty}
-                                            description="选择角色列表项进行功能项配置"
+                                            description="选择角色项进行权限配置"
                                         />
                                     </div>
                             }

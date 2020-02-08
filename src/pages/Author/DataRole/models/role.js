@@ -1,12 +1,11 @@
 import {
-  delFeatureRole,
-  saveFeatureRole,
-  getFeatureRoleList,
-  assignFeatureItem,
-  removeAssignedFeatureItem,
-  getUnAssignedFeatureItemList,
-  getAssignedEmployeesByFeatureRole,
-  getAssignedPositionsByFeatureRole
+  delDataRole,
+  saveDataRole,
+  getDataRoleList,
+  getAssignedAuthDataList,
+  getUnassignedAuthDataList,
+  getAssignedAuthTreeDataList,
+  getUnassignedAuthTreeDataList
 } from "../service";
 import { message } from "antd";
 import { formatMessage } from "umi-plugin-react/locale";
@@ -21,14 +20,12 @@ export default modelExtend(model, {
   state: {
     listData: [],
     currentRole: null,
-    showAssignFeature: false,
-    unAssignListData: [],
-    assignUserData: [],
-    assinStationData: [],
+    assignData: [],
+    unAssignData: [],
   },
   effects: {
-    * getFeatureRoleList({ payload }, { call, put }) {
-      const re = yield call(getFeatureRoleList, payload);
+    * getDataRoleList({ payload }, { call, put }) {
+      const re = yield call(getDataRoleList, payload);
       if (re.success) {
         yield put({
           type: "updateState",
@@ -40,8 +37,8 @@ export default modelExtend(model, {
         message.error(re.message);
       }
     },
-    * saveFeatureRole({ payload, callback }, { call }) {
-      const re = yield call(saveFeatureRole, payload);
+    * saveDataRole({ payload, callback }, { call }) {
+      const re = yield call(saveDataRole, payload);
       message.destroy();
       if (re.success) {
         message.success(formatMessage({ id: "global.save-success", defaultMessage: "保存成功" }));
@@ -52,8 +49,8 @@ export default modelExtend(model, {
         callback(re);
       }
     },
-    * delFeatureRole({ payload, callback }, { call }) {
-      const re = yield call(delFeatureRole, payload);
+    * delDataRole({ payload, callback }, { call }) {
+      const re = yield call(delDataRole, payload);
       message.destroy();
       if (re.success) {
         message.success(formatMessage({ id: "global.delete-success", defaultMessage: "删除成功" }));
@@ -64,69 +61,52 @@ export default modelExtend(model, {
         callback(re);
       }
     },
-    * assignFeatureItem({ payload, callback }, { call, put }) {
-      const re = yield call(assignFeatureItem, payload);
-      message.destroy();
-      if (re.success) {
-        message.success(formatMessage({ id: "global.assign-success", defaultMessage: "分配成功" }));
-        yield put({
-          type: "updateState",
-          payload: {
-            showAssignFeature: false,
-          }
-        });
-      } else {
-        message.error(re.message);
-      }
-      if (callback && callback instanceof Function) {
-        callback(re);
-      }
-    },
-    * removeAssignedFeatureItem({ payload, callback }, { call }) {
-      const re = yield call(removeAssignedFeatureItem, payload);
-      message.destroy();
-      if (re.success) {
-        message.success(formatMessage({ id: "global.remove-success", defaultMessage: "移除成功" }));
-      } else {
-        message.error(re.message);
-      }
-      if (callback && callback instanceof Function) {
-        callback(re);
-      }
-    },
-    * getUnAssignedFeatureItemList({ payload }, { call, put }) {
-      const re = yield call(getUnAssignedFeatureItemList, payload);
+    * getAssignedAuthDataList({ payload }, { call, put }) {
+      const re = yield call(getAssignedAuthDataList, payload);
       if (re.success) {
         yield put({
           type: "updateState",
           payload: {
-            unAssignListData: re.data,
+            assignData: re.data
           }
         });
       } else {
         message.error(re.message);
       }
     },
-    * getAssignedEmployeesByFeatureRole({ payload }, { call, put }) {
-      const re = yield call(getAssignedEmployeesByFeatureRole, payload);
+    * getUnassignedAuthDataList({ payload }, { call, put }) {
+      const re = yield call(getUnassignedAuthDataList, payload);
       if (re.success) {
         yield put({
           type: "updateState",
           payload: {
-            assignUserData: re.data
+            unAssignData: re.data
           }
         });
       } else {
         message.error(re.message);
       }
     },
-    * getAssignedPositionsByFeatureRole({ payload }, { call, put }) {
-      const re = yield call(getAssignedPositionsByFeatureRole, payload);
+    * getAssignedAuthTreeDataList({ payload }, { call, put }) {
+      const re = yield call(getAssignedAuthTreeDataList, payload);
       if (re.success) {
         yield put({
           type: "updateState",
           payload: {
-            assinStationData: re.data
+            assignData: re.data
+          }
+        });
+      } else {
+        message.error(re.message);
+      }
+    },
+    * getUnassignedAuthTreeDataList({ payload }, { call, put }) {
+      const re = yield call(getUnassignedAuthTreeDataList, payload);
+      if (re.success) {
+        yield put({
+          type: "updateState",
+          payload: {
+            unAssignData: re.data
           }
         });
       } else {
