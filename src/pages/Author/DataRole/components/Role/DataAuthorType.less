@@ -1,0 +1,61 @@
+@import '../../../../../themes/vars.less';
+.data-author-type-box {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  overflow: hidden;
+  background-color: @page-background-color;
+  position: relative;
+  :global {
+    .ant-table-bordered.ant-table-empty .ant-table-placeholder {
+      border-right-color: transparent;
+      border-left-color: transparent;
+    }
+    .ant-card {
+      height: 100%;
+      .ant-card-head {
+        background-color: @white;
+      }
+      .ant-card-body {
+        padding: 0;
+        height: calc(100% - 57px);
+        .seid-panel {
+          height: 100%;
+          .panel-body {
+            height: 100% !important;
+            max-height: 100% !important;
+            width: 100%;
+            .left-box {
+              .app-module-box {
+                display: inline-block;
+                margin-right: 8px;
+                .label {
+                  display: inline-block;
+                  &::after {
+                    content: ':';
+                    margin: 0 4px;
+                  }
+                }
+              }
+            }
+            .action-box {
+              .assign-popover-box-trigger {
+                &.ant-popover-open {
+                  i {
+                    color: @primary-color;
+                    background-color: fade(@black, 5%);
+                  }
+                }
+              }
+            }
+          }
+        }
+        .seid-tool-bar {
+          button {
+            margin-right: 8px;
+          }
+        }
+      }
+    }
+  }
+}

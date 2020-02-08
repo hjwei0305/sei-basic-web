@@ -16,7 +16,7 @@ export default modelExtend(model, {
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen(location => {
-        if (pathMatchRegexp("/author/featureRole", location.pathname)) {
+        if (pathMatchRegexp("/author/dataRole", location.pathname)) {
           dispatch({
             type: "getRoleGroupList"
           });
