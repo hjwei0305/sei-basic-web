@@ -159,7 +159,7 @@ class Tenant extends Component {
 
     render() {
         const { loading, tenant } = this.props;
-        const { currentTenant } = tenant;
+        const { currentTenant, tenantRootOrganization } = tenant;
         const { allValue, listData, pagination, delTenantId } = this.state;
         const listLoading = loading.effects["tenant/getTenantList"];
         const saving = loading.effects["tenant/saveTenant"];
@@ -222,10 +222,10 @@ class Tenant extends Component {
                                                     <TenantEdit
                                                         saving={saving}
                                                         saveTenant={this.saveTenant}
+                                                        tenantRootOrganization={tenantRootOrganization}
                                                         tenantData={item}
                                                     />
                                                     <Popconfirm
-                                                        placement="topLeft"
                                                         title={formatMessage({ id: "global.delete.confirm", defaultMessage: "确定要删除吗？提示：删除后不可恢复" })}
                                                         onConfirm={(e) => this.delTenant(item, e)}
                                                     >

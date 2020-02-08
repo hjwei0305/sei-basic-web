@@ -1,5 +1,6 @@
 import React, { PureComponent } from "react";
 import cls from "classnames";
+import { omit } from 'lodash'
 import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
 import { Button, Form, Input, Switch } from "antd";
 import styles from "./Form.less";
@@ -7,10 +8,10 @@ import styles from "./Form.less";
 const FormItem = Form.Item;
 const formItemLayout = {
   labelCol: {
-    span: 4
+    span: 6
   },
   wrapperCol: {
-    span: 20
+    span: 18
   }
 };
 
@@ -18,19 +19,27 @@ const formItemLayout = {
 class FeatureGroupForm extends PureComponent {
 
   onFormSubmit = _ => {
-    const { form, saveTenant, tenantData, handlerPopoverHide } = this.props;
+    const {
+      form,
+      saveTenant,
+      tenantData: originTenantData,
+      tenantRootOrganization: originTenantRootOrganization,
+      handlerPopoverHide
+    } = this.props;
     const { validateFields, getFieldsValue } = form;
     validateFields(errors => {
       if (errors) {
         return;
       }
-      const data = Object.assign(tenantData || {}, getFieldsValue());
-      saveTenant(data, handlerPopoverHide);
+      const formData = getFieldsValue();
+      const tenantData = omit(Object.assign(originTenantData || {}, formData), ['tenantRootOrganizationName']);
+      const tenantRootOrganization = Object.assign(originTenantRootOrganization || {}, { name: formData.tenantRootOrganizationName });
+      saveTenant({ tenantData, tenantRootOrganization }, handlerPopoverHide);
     });
   };
 
   render() {
-    const { form, tenantData, saving } = this.props;
+    const { form, tenantData, tenantRootOrganization, saving } = this.props;
     const { getFieldDecorator } = form;
     const title = tenantData ? '编辑租户' : '新建租户';
     return (
@@ -42,9 +51,13 @@ class FeatureGroupForm extends PureComponent {
             </span>
           </div>
           <Form {...formItemLayout}>
-            <FormItem label="代码">
+            <FormItem label="租户代码">
               {getFieldDecorator("code", {
                 initialValue: tenantData ? tenantData.code : "",
+                rules: [{
+                  required: true,
+                  message: formatMessage({ id: "global.code.required", defaultMessage: "代码不能为空" })
+                }]
               })(
                 <Input
                   maxLength={10}
@@ -53,7 +66,7 @@ class FeatureGroupForm extends PureComponent {
                 />
               )}
             </FormItem>
-            <FormItem label={formatMessage({ id: "global.name", defaultMessage: "名称" })}>
+            <FormItem label='租户名称'>
               {getFieldDecorator("name", {
                 initialValue: tenantData ? tenantData.name : "",
                 rules: [{
@@ -62,6 +75,17 @@ class FeatureGroupForm extends PureComponent {
                 }]
               })(
                 <Input />
+              )}
+            </FormItem>
+            <FormItem label='组织机构'>
+              {getFieldDecorator("tenantRootOrganizationName", {
+                initialValue: tenantRootOrganization ? tenantRootOrganization.name : "",
+                rules: [{
+                  required: true,
+                  message: '组织机构不能为空',
+                }]
+              })(
+                <Input addonBefore={tenantRootOrganization ? tenantRootOrganization.code : ""} />
               )}
             </FormItem>
             {
@@ -74,7 +98,7 @@ class FeatureGroupForm extends PureComponent {
                 </FormItem>
                 : null
             }
-            <FormItem wrapperCol={{ span: 4, offset: 4 }} className="btn-submit">
+            <FormItem wrapperCol={{ span: 4, offset: 6 }} className="btn-submit">
               <Button
                 type="primary"
                 loading={saving}
