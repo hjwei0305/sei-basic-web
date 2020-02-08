@@ -6,8 +6,8 @@ import { formatMessage } from "umi-plugin-react/locale";
 import { Avatar, Card, Row, Col, Empty, Input, List, Skeleton, Popconfirm, Tag } from 'antd';
 import { ScrollBar, ExtIcon } from 'seid';
 import empty from "@/assets/item_empty.svg";
-import RoleAdd from './Form/add';
-import RoleEdit from './Form/edit';
+import RoleAdd from './Form/Add';
+import RoleEdit from './Form/Edit';
 import DataAuthorType from './DataAuthorType';
 import styles from './index.less';
 

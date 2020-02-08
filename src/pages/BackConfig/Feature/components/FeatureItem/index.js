@@ -5,8 +5,8 @@ import isEqual from 'react-fast-compare';
 import { formatMessage } from "umi-plugin-react/locale";
 import { Input, Pagination, List, Skeleton, Popconfirm, Drawer, Tag } from "antd";
 import { ScrollBar, ExtIcon } from 'seid';
-import FeatureItemAdd from './Form/add';
-import FeatureItemEdit from './Form/edit';
+import FeatureItemAdd from './Form/Add';
+import FeatureItemEdit from './Form/Edit';
 import styles from "./index.less";
 
 const Search = Input.Search;

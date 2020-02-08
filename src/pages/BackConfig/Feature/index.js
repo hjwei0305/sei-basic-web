@@ -6,8 +6,8 @@ import { formatMessage } from "umi-plugin-react/locale";
 import { Row, Col, Card, Input, Empty, Pagination, List, Skeleton, Popconfirm } from "antd";
 import { ScrollBar, ExtIcon } from 'seid';
 import empty from "@/assets/item_empty.svg";
-import GroupAdd from './components/FeatureGroupForm/add';
-import GroupEdit from './components/FeatureGroupForm/edit';
+import GroupAdd from './components/FeatureGroupForm/Add';
+import GroupEdit from './components/FeatureGroupForm/Edit';
 import PageFeature from './components/FeaturePage';
 import styles from "./index.less";
 

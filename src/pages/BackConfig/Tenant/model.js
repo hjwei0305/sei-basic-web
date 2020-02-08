@@ -3,8 +3,7 @@ import {
   getTenantList,
   saveTenant,
   saveTenantRootOrganization,
-  getTenantRootOrganization,
-  getTenantAdmin,
+  saveTenantAdmin,
   assignAppModuleItem,
   removeAssignedAppModuleItem,
   getUnAssignedAppModuleItemList
@@ -52,30 +51,6 @@ export default modelExtend(model, {
         message.error(re.message);
       }
     },
-    * getTenantBaseInfo({ payload }, { call, put }) {
-      const org = yield call(getTenantRootOrganization, payload);
-      const admin = yield call(getTenantAdmin, payload);
-      if (admin.success) {
-        yield put({
-          type: "updateState",
-          payload: {
-            tenantAdmin: admin.data
-          }
-        });
-      } else {
-        message.error(admin.message);
-      }
-      if (org.success) {
-        yield put({
-          type: "updateState",
-          payload: {
-            tenantRootOrganization: org.data
-          }
-        });
-      } else {
-        message.error(org.message);
-      }
-    },
     * saveTenant({ payload, callback }, { call }) {
       const { tenantData, tenantRootOrganization } = payload;
       const re = yield call(saveTenant, { ...tenantData });
@@ -88,6 +63,18 @@ export default modelExtend(model, {
         } else {
           message.error(org.message);
         }
+      } else {
+        message.error(re.message);
+      }
+      if (callback && callback instanceof Function) {
+        callback(re);
+      }
+    },
+    * saveTenantAdmin({ payload, callback }, { call }) {
+      const re = yield call(saveTenantAdmin, payload);
+      message.destroy();
+      if (re.success) {
+        message.success(formatMessage({ id: "global.save-success", defaultMessage: "保存成功" }));
       } else {
         message.error(re.message);
       }

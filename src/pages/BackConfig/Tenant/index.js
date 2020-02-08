@@ -1,13 +1,16 @@
 import React, { Component } from "react";
 import { connect } from "dva";
 import cls from "classnames";
+import { omit } from 'lodash'
 import isEqual from 'react-fast-compare';
 import { formatMessage } from "umi-plugin-react/locale";
-import { Row, Col, Card, Input, Empty, Pagination, List, Skeleton, Popconfirm, Tag } from "antd";
+import { Row, Col, Card, Input, Empty, Pagination, List, Skeleton, Popconfirm, Tag, Button } from "antd";
 import { ScrollBar, ExtIcon } from 'seid';
 import empty from "@/assets/empty.svg";
-import TenantAdd from './components/TenantForm/add';
-import TenantEdit from './components/TenantForm/edit';
+import TenantAdd from './components/TenantForm/Add';
+import TenantEdit from './components/TenantForm/Edit';
+import AdminAdd from './components/AdminForm/Add';
+import AdminEdit from './components/AdminForm/Edit';
 import AssignedAppModuleItem from './components/AssignedAppModuleItem';
 import styles from "./index.less";
 
@@ -157,9 +160,60 @@ class Tenant extends Component {
         });
     };
 
+    saveTenantAdmin = (data, handlerPopoverHide) => {
+        const { dispatch } = this.props;
+        dispatch({
+            type: "tenant/saveTenantAdmin",
+            payload: {
+                ...data
+            },
+            callback: res => {
+                if (res.success) {
+                    dispatch({
+                        type: "tenant/getTenantList"
+                    });
+                    handlerPopoverHide && handlerPopoverHide();
+                }
+            }
+        });
+    };
+
+    renderName = (item) => {
+        const { loading } = this.props;
+        const saving = loading.effects["tenant/saveTenantAdmin"];
+        const tenantData = omit(item, ['employeeDto']);
+        if (!item.employeeDto) {
+            return (
+                <>
+                    {item.name}
+                    <div style={{ display: 'inline-block' }} onClick={e => e.stopPropagation()}>
+                        <AdminAdd
+                            saving={saving}
+                            tenantData={tenantData}
+                            saveTenantAdmin={this.saveTenantAdmin}
+                        />
+                    </div>
+                </>
+            )
+        }
+        return (
+            <>
+                {item.name}
+                <div style={{ display: 'inline-block' }} onClick={e => e.stopPropagation()}>
+                    <AdminEdit
+                        saving={saving}
+                        tenantData={tenantData}
+                        saveTenantAdmin={this.saveTenantAdmin}
+                        tenantAdmin={item.employeeDto}
+                    />
+                </div>
+            </>
+        );
+    };
+
     render() {
         const { loading, tenant } = this.props;
-        const { currentTenant, tenantRootOrganization } = tenant;
+        const { currentTenant } = tenant;
         const { allValue, listData, pagination, delTenantId } = this.state;
         const listLoading = loading.effects["tenant/getTenantList"];
         const saving = loading.effects["tenant/saveTenant"];
@@ -204,7 +258,7 @@ class Tenant extends Component {
                                             >
                                                 <Skeleton loading={listLoading} active>
                                                     <List.Item.Meta
-                                                        title={item.name}
+                                                        title={this.renderName(item)}
                                                         description={item.code}
                                                     />
                                                     <div className='desc'>
@@ -222,7 +276,7 @@ class Tenant extends Component {
                                                     <TenantEdit
                                                         saving={saving}
                                                         saveTenant={this.saveTenant}
-                                                        tenantRootOrganization={tenantRootOrganization}
+                                                        tenantRootOrganization={item.organizationDto}
                                                         tenantData={item}
                                                     />
                                                     <Popconfirm

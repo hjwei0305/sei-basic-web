@@ -57,22 +57,9 @@ export async function saveTenantRootOrganization(data) {
   });
 }
 
-/** 
- * 获取租户管理员信息
- * params tenantCode
-*/
-export async function getTenantAdmin(params) {
-  const url = `${SERVER_PATH}/sei-basic/employee/findAdminByTenantCode`;
-  return request({
-    url,
-    method: "GET",
-    params,
-  });
-}
-
 /** 租户管理员保存 */
 export async function saveTenantAdmin(data) {
-  const url = `${SERVER_PATH}/sei-basic/employee/save`;
+  const url = `${SERVER_PATH}/sei-basic/employee/saveTenantAdmin`;
   return request({
     url,
     method: "POST",
