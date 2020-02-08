@@ -58,6 +58,14 @@ export default [
         }],
       },
       {
+        path: '/userManagement',
+        name: 'userManagement',
+        routes: [{
+          path: '/userManagement/employee',
+          component: 'UserManagement/Employee'
+        }],
+      },
+      {
         path: '/regionManagement',
         name: 'regionManagement',
         routes: [{
