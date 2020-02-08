@@ -2,6 +2,7 @@ import {
   delTenant,
   getTenantList,
   saveTenant,
+  saveTenantRootOrganization,
   getTenantRootOrganization,
   getTenantAdmin,
   assignAppModuleItem,
@@ -75,17 +76,18 @@ export default modelExtend(model, {
         message.error(org.message);
       }
     },
-    * saveTenant({ payload, callback }, { call, put }) {
-      const re = yield call(saveTenant, payload);
+    * saveTenant({ payload, callback }, { call }) {
+      const { tenantData, tenantRootOrganization } = payload;
+      const re = yield call(saveTenant, { ...tenantData });
       message.destroy();
       if (re.success) {
         message.success(formatMessage({ id: "global.save-success", defaultMessage: "保存成功" }));
-        yield put({
-          type: "updateState",
-          payload: {
-            currentFeatureGroup: re.data
-          }
-        });
+        const org = yield call(saveTenantRootOrganization, { ...tenantRootOrganization });
+        if (org.success) {
+          message.success('组织机构保存成功');
+        } else {
+          message.error(org.message);
+        }
       } else {
         message.error(re.message);
       }
