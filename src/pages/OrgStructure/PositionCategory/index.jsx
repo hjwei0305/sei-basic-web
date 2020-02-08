@@ -5,7 +5,8 @@ import cls from 'classnames';
 import { isEqual, } from 'lodash';
 import { Button, Popconfirm } from "antd";
 import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
-import { ExtTable, utils, ExtIcon } from 'seid'
+import { ExtTable, utils, ExtIcon } from 'seid';
+import { PageWrapper, } from '@/components';
 import { constants } from "@/utils";
 import FormModal from "./FormModal";
 import styles from "./index.less";
@@ -219,14 +220,14 @@ class PositionCategory extends Component {
     const { showModal, } = positionCategory;
 
     return (
-      <div className={cls(styles["container-box"])} >
+      <PageWrapper className={cls(styles["container-box"])} >
         <ExtTable {...this.getExtableProps()} />
         {
           showModal
             ? <FormModal {...this.getFormModalProps()} />
             : null
         }
-      </div>
+      </PageWrapper>
     );
   }
 }

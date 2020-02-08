@@ -5,7 +5,7 @@ import { ExtTable, utils, ExtIcon, ComboTree, } from 'seid';
 import { Button, Popconfirm, Checkbox, } from "antd";
 import { constants } from "@/utils";
 import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
-import AssignLayout from './AssignLayout';
+import { AssignLayout } from '@/components';
 
 const { SERVER_PATH } = constants;
 
@@ -148,11 +148,11 @@ class UserConfig extends Component {
         if (rowIds && rowIds.length) {
           this.unAssignParentIds = rowIds;
           this.setState({
-            unAssignBtnDisabled: false,
+            assignBtnDisabled: false,
           });
         } else {
           this.setState({
-            unAssignBtnDisabled: true,
+            assignBtnDisabled: true,
           });
         }
       },
@@ -181,11 +181,11 @@ class UserConfig extends Component {
         if (rowIds && rowIds.length) {
           this.assignParentIds = rowIds;
           this.setState({
-            assignBtnDisabled: false,
+            unAssignBtnDisabled: false,
           });
         } else {
           this.setState({
-            assignBtnDisabled: true,
+            unAssignBtnDisabled: true,
           });
         }
       },
@@ -210,7 +210,7 @@ class UserConfig extends Component {
             <p>
               <Button
                 onClick={this.handleUnAssign}
-                disabled={assignBtnDisabled}
+                disabled={unAssignBtnDisabled}
                 shape="circle"
                 icon="left"
               />
@@ -218,7 +218,7 @@ class UserConfig extends Component {
             <p>
               <Button
                 onClick={this.handleAssign}
-                disabled={unAssignBtnDisabled}
+                disabled={assignBtnDisabled}
                 shape="circle"
                 icon="right"
               />

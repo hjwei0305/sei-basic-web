@@ -2,7 +2,7 @@
 * @Author: zp
 * @Date:   2020-02-02 11:57:24
 * @Last Modified by:   zp
-* @Last Modified time: 2020-02-07 22:33:00
+* @Last Modified time: 2020-02-08 13:07:12
 */
 import { utils } from 'seid';
 import { constants } from '@/utils';
@@ -82,14 +82,18 @@ export async function assignEmployee(data){
  */
 export async function unAssignEmployee(data){
   const url = `${SERVER_PATH}/sei-basic/employeePosition/removeRelationsByParents`;
-  return request.post(url, data);
+  return request({
+    url,
+    method: 'DELETE',
+    data,
+  });
 }
 
 /**
  * 分配功能角色
  */
 export async function assignFeatureRole(data){
-  const url = `${SERVER_PATH}/sei-basic/positionFeatureRole/insertRelationsByParents`;
+  const url = `${SERVER_PATH}/sei-basic/positionFeatureRole/insertRelations`;
   return request.post(url, data);
 }
 
@@ -97,15 +101,19 @@ export async function assignFeatureRole(data){
  * 移除分配的功能角色
  */
 export async function unAssignFeatureRole(data){
-  const url = `${SERVER_PATH}/sei-basic/positionFeatureRole/removeRelationsByParents`;
-  return request.delete(url, data);
+  const url = `${SERVER_PATH}/sei-basic/positionFeatureRole/removeRelations`;
+  return request({
+    url,
+    method: 'DELETE',
+    data,
+  });
 }
 
 /**
  * 分配数据角色
  */
 export async function assignDataRole(data){
-  const url = `${SERVER_PATH}/sei-basic/positionDataRole/insertRelationsByParents`;
+  const url = `${SERVER_PATH}/sei-basic/positionDataRole/insertRelations`;
   return request.post(url, data);
 }
 
@@ -113,8 +121,12 @@ export async function assignDataRole(data){
  * 移除分配的数据角色
  */
 export async function unAssignDataRole(data){
-  const url = `${SERVER_PATH}/sei-basic/positionDataRole/removeRelationsByParents`;
-  return request.delete(url, data);
+  const url = `${SERVER_PATH}/sei-basic/positionDataRole/removeRelations`;
+  return request({
+    url,
+    method: 'DELETE',
+    data,
+  });
 }
 
 

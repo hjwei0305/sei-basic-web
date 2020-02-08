@@ -1,11 +1,12 @@
-import React, { Component, Fragment, } from 'react';
+import React, { Component, } from 'react';
 import withRouter from 'umi/withRouter';
 import { connect } from 'dva';
 import cls from 'classnames';
-import { Row, Col, Spin, } from "antd";
+import { Row, Col, Spin, Empty, } from "antd";
 import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
 import TablePanel from './components/TablePanel';
 import TreeView from '@/components/TreeView';
+import { CascadeLayout, PageWrapper, } from '@/components';
 import PostionConfig from './components/PostionConfig';
 import styles from "./index.less";
 
@@ -38,31 +39,17 @@ class Position extends Component {
     const { treeData, currNode, showPosionConfig, rowData, } = position;
 
     return (
-      <Fragment>
-        <Row className={cls(styles['container-box'])}>
-          <Spin spinning={loading.global} wrapperClassName={cls("spin-wrapper")}>
-            <div style={{ height: '100%', display: !showPosionConfig ? '' : 'none', }}>
-              <Col className={cls('content-panel')} span={8}>
-                <header className={cls('content-panel-title')}>
-                  <span>组织机构</span>
-                </header>
-                <div className={cls('content-panel-section')}>
-                  <TreeView treeData={treeData} onSelect={this.handleSelect}/>
-                </div>
-              </Col>
-              <Col className={cls('content-panel','right-panel')} span={16}>
-                <header className={cls('content-panel-title')}>
-                  <span>{currNode && currNode.name}</span>
-                </header>
-                <div className={cls('content-panel-section')}>
-                  <TablePanel />
-                </div>
-              </Col>
-            </div>
-            { rowData && showPosionConfig ? (<PostionConfig style={{ display: showPosionConfig ? '' : 'none', }} />) : (null)}
-          </Spin>
-        </Row>
-      </Fragment>
+      <PageWrapper className={cls(styles['container-box'])}>
+        <Spin spinning={loading.global} wrapperClassName={cls("spin-wrapper")}>
+          <div style={{ height: '100%', display: !showPosionConfig ? '' : 'none', }}>
+            <CascadeLayout title={['组织机构', currNode && currNode.name]} layout={[8, 16]}>
+              <TreeView slot="left" treeData={treeData} onSelect={this.handleSelect} />
+              { currNode ? (<TablePanel slot="right" />) : (<Empty slot="right" className={cls("empty-wrapper")} description="请选择左边的树节点进行操作" />) }
+            </CascadeLayout>
+          </div>
+          { rowData && showPosionConfig ? (<PostionConfig style={{ display: showPosionConfig ? '' : 'none', }} />) : (null)}
+        </Spin>
+      </PageWrapper>
     );
   }
 }

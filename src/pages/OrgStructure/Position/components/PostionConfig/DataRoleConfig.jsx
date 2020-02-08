@@ -5,10 +5,11 @@ import { ExtTable, utils, ExtIcon, ComboGrid, } from 'seid';
 import { Button, Popconfirm, Checkbox, } from "antd";
 import { constants } from "@/utils";
 import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
-import AssignLayout from './AssignLayout';
+// import AssignLayout from './AssignLayout';
+import { AssignLayout } from '@/components';
 
 const { SERVER_PATH } = constants;
-const PFGURL = 'positionFeatureRole/getUnassigned';
+const PFGURL = 'positionDataRole/getUnassigned';
 const PGURL = 'position/getCanAssignedDataRoles';
 
 class DataRoleConfig extends Component {
@@ -20,9 +21,9 @@ class DataRoleConfig extends Component {
     unAssignUrl: PFGURL,
   }
 
-  assignParentIds=[]
+  assignChildIds=[]
 
-  unAssignParentIds=[]
+  unAssignChildIds=[]
 
   handleCheck = (e) => {
     const { checked } = e.target;
@@ -38,9 +39,9 @@ class DataRoleConfig extends Component {
 
   handleUnAssign = () => {
     const { onUnAssign, data, } = this.props;
-    const { id: childId, } = data;
+    const { id: parentId, } = data;
     if (onUnAssign) {
-      onUnAssign({ childId, parentIds: this.assignParentIds, }).then(res => {
+      onUnAssign({ parentId, childIds: this.assignChildIds, }).then(res => {
         this.setState({
           unAssignBtnDisabled: true,
         });
@@ -51,9 +52,9 @@ class DataRoleConfig extends Component {
 
   handleAssign = () => {
     const { onAssign, data, } = this.props;
-    const { id: childId, } = data;
+    const { id: parentId, } = data;
     if (onAssign) {
-      onAssign({ childId, parentIds: this.unAssignParentIds, }).then(res => {
+      onAssign({ parentId, childIds: this.unAssignChildIds, }).then(res => {
         this.setState({
           assignBtnDisabled: true,
         });
@@ -177,13 +178,13 @@ class DataRoleConfig extends Component {
       toolBar: toolBarProps,
       onSelectRow: (rowIds) => {
         if (rowIds && rowIds.length) {
-          this.unAssignParentIds = rowIds;
+          this.unAssignChildIds = rowIds;
           this.setState({
-            unAssignBtnDisabled: false,
+            assignBtnDisabled: false,
           });
         } else {
           this.setState({
-            unAssignBtnDisabled: true,
+            assignBtnDisabled: true,
           });
         }
       },
@@ -210,13 +211,13 @@ class DataRoleConfig extends Component {
       columns: this.getCommonColumns(),
       onSelectRow: (rowIds) => {
         if (rowIds && rowIds.length) {
-          this.assignParentIds = rowIds;
+          this.assignChildIds = rowIds;
           this.setState({
-            assignBtnDisabled: false,
+            unAssignBtnDisabled: false,
           });
         } else {
           this.setState({
-            assignBtnDisabled: true,
+            unAssignBtnDisabled: true,
           });
         }
       },
@@ -241,7 +242,7 @@ class DataRoleConfig extends Component {
             <p>
               <Button
                 onClick={this.handleUnAssign}
-                disabled={assignBtnDisabled}
+                disabled={unAssignBtnDisabled}
                 shape="circle"
                 icon="left"
               />
@@ -249,7 +250,7 @@ class DataRoleConfig extends Component {
             <p>
               <Button
                 onClick={this.handleAssign}
-                disabled={unAssignBtnDisabled}
+                disabled={assignBtnDisabled}
                 shape="circle"
                 icon="right"
               />

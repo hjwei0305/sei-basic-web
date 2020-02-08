@@ -1,61 +1,57 @@
 import React, { Component, Fragment, } from 'react';
-import withRouter from 'umi/withRouter';
 import { connect } from 'dva';
 import cls from 'classnames';
-import { Button, Popconfirm, Tag } from "antd";
+import { isEqual, } from 'lodash';
+import { Button, Popconfirm, message, Tag,  } from "antd";
 import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
 import { ExtTable, utils, ExtIcon } from 'seid';
-import { PageWrapper, } from '@/components';
-
 import { constants } from "@/utils";
 import FormModal from "./FormModal";
-import styles from "./index.less";
+import styles from "../../index.less";
 
-const { APP_MODULE_BTN_KEY } = constants;
+const { APP_MODULE_BTN_KEY, SERVER_PATH, } = constants;
 const { authAction } = utils;
 
-@withRouter
-@connect(({ corporation, loading, }) => ({ corporation, loading, }))
-class Corporation extends Component {
+@connect(({ dataDict, loading, }) => ({ dataDict, loading, }))
+class DataDictTypeTable extends Component {
   state = {
     delRowId: null,
     list: [],
   }
 
-  // componentDidUpdate(_prevProps, prevState) {
-  //   const { list, } = this.props.corporation;
-  //   if (!isEqual(prevState.list, list)) {
-  //     this.setState({
-  //       list,
-  //     });
-  //   }
-  // }
+  componentDidUpdate(_prevProps, prevState) {
+    const { list, } = this.props.dataDict;
+    if (!isEqual(prevState.list, list)) {
+      this.setState({
+        list,
+      });
+    }
+  }
 
   reloadData = _ => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: "corporation/queryList"
-    });
+    if (this.tableRef) {
+      this.tableRef.remoteDataRrefresh();
+    }
   };
 
   add = _ => {
-    const { dispatch } = this.props;
+    const { dispatch, dataDict, } = this.props;
     dispatch({
-      type: "corporation/updateState",
+      type: "dataDict/updateState",
       payload: {
         showModal: true,
-        rowData: null
+        currDictType: null
       }
     });
   };
 
-  edit = rowData => {
+  edit = currDictType => {
     const { dispatch } = this.props;
     dispatch({
-      type: "corporation/updateState",
+      type: "dataDict/updateState",
       payload: {
         showModal: true,
-        rowData: rowData
+        currDictType,
       }
     });
   };
@@ -63,14 +59,14 @@ class Corporation extends Component {
   save = data => {
     const { dispatch } = this.props;
     dispatch({
-      type: "corporation/save",
+      type: "dataDict/save",
       payload: {
         ...data
       },
     }).then(res => {
       if (res.success) {
         dispatch({
-          type: "corporation/updateState",
+          type: "dataDict/updateState",
           payload: {
             showModal: false
           }
@@ -86,7 +82,7 @@ class Corporation extends Component {
       delRowId: record.id
     }, _ => {
       dispatch({
-        type: "corporation/del",
+        type: "dataDict/del",
         payload: {
           id: record.id
         },
@@ -104,10 +100,11 @@ class Corporation extends Component {
   closeFormModal = _ => {
     const { dispatch } = this.props;
     dispatch({
-      type: "corporation/updateState",
+      type: "dataDict/updateState",
       payload: {
         showModal: false,
-        rowData: null
+        showCopyModal: false,
+        currDictType: null
       }
     });
   };
@@ -115,21 +112,21 @@ class Corporation extends Component {
   renderDelBtn = (row) => {
     const { loading } = this.props;
     const { delRowId } = this.state;
-    if (loading.effects["corporation/del"] && delRowId === row.id) {
+    if (loading.effects["dataDict/del"] && delRowId === row.id) {
       return <ExtIcon className="del-loading" type="loading" antd />
     }
     return <ExtIcon className="del" type="delete" antd />;
   };
 
   getExtableProps = () => {
-    // const { list } = this.state;
-    const { list, } = this.props.corporation;
-    const { loading } = this.props;
+    const { list } = this.state;
+    const { loading, dataDict,  } = this.props;
+    const { currDictType, } = dataDict;
     const columns = [
       {
         title: formatMessage({ id: "global.operation", defaultMessage: "操作" }),
         key: "operation",
-        width: 100,
+        width: 150,
         align: "center",
         dataIndex: "id",
         className: "action",
@@ -162,11 +159,6 @@ class Corporation extends Component {
         )
       },
       {
-        title: formatMessage({ id: "global.rank", defaultMessage: "序号" }),
-        dataIndex: "rank",
-        width: 80,
-      },
-      {
         title: formatMessage({ id: "global.code", defaultMessage: "代码" }),
         dataIndex: "code",
         width: 120,
@@ -175,53 +167,22 @@ class Corporation extends Component {
       {
         title: formatMessage({ id: "global.name", defaultMessage: "名称" }),
         dataIndex: "name",
+        width: 120,
+        required: true,
+      },
+      {
+        title: "描述",
+        dataIndex: "remark",
         width: 220,
         required: true,
       },
       {
-        title: formatMessage({ id: "corporation.shortName", defaultMessage: "简称" }),
-        dataIndex: "shortName",
-        width: 120,
-        required: true,
-      },
-      {
-        title: formatMessage({ id: "corporation.erpCode", defaultMessage: "ERP公司代码" }),
-        dataIndex: "erpCode",
-        width: 80,
-        optional: true,
-      },
-      {
-        title: formatMessage({ id: "corporation.baseCurrencyName", defaultMessage: "本位币货币名称" }),
-        dataIndex: "baseCurrencyName",
-        width: 80,
-        optional: true,
-      },
-      {
-        title: formatMessage({ id: "corporation.baseCurrencyCode", defaultMessage: "本位币货币代码" }),
-        dataIndex: "baseCurrencyCode",
-        width: 80,
-        optional: true,
-      },
-      {
-        title: formatMessage({ id: "corporation.defaultTradePartner", defaultMessage: "默认贸易伙伴代码" }),
-        dataIndex: "defaultTradePartner",
-        width: 120,
-        optional: true,
-      },
-      {
-        title: formatMessage({ id: "corporation.relatedTradePartner", defaultMessage: "关联交易贸易伙伴" }),
-        dataIndex: "relatedTradePartner",
-        width: 120,
-        optional: true,
-      },
-      {
-        title: formatMessage({ id: "corporation.frozen", defaultMessage: "冻结" }),
+        title: "冻结",
         dataIndex: "frozen",
         width: 80,
-        render: (_text, row) => {
-          if (row.frozen) {
-            return <Tag color='red'>已冻结</Tag>
-          }
+        required: true,
+        render: (text) => {
+          return <Tag color={text ? 'red' : 'green' }>{text? '冻结' : '可用'}</Tag>
         }
       },
     ];
@@ -247,41 +208,69 @@ class Corporation extends Component {
       )
     };
     return {
+      bordered: false,
       columns,
-      loading: loading.effects["corporation/queryList"],
       toolBar: toolBarProps,
-      dataSource: list,
+      store: {
+        type: 'POST',
+        url: `${SERVER_PATH}/sei-basic/dataDict/findByPage`,
+      },
+      onSelectRow: (_, rows) => {
+        const { dispatch, } = this.props;
+        if (rows && rows.length) {
+          dispatch({
+            type: 'dataDict/updateState',
+            payload: {
+              currDictType: rows[0],
+            }
+          });
+          dispatch({
+            type: 'dataDict/getDataDictItems',
+            payload: {
+              categoryCode: rows[0].code,
+              isAll: true,
+            }
+          });
+        } else {
+          dispatch({
+            type: 'dataDict/updateState',
+            payload: {
+              currDictType: null,
+            }
+          });
+        }
+      }
     };
   };
 
   getFormModalProps = () => {
-    const { loading, corporation, } = this.props;
-    const { showModal, rowData } = corporation;
+    const { loading, dataDict, } = this.props;
+    const { showModal, currDictType, } = dataDict;
 
     return {
       save: this.save,
-      rowData,
-      showModal,
-      closeFormModal: this.closeFormModal,
-      saving: loading.effects["corporation/save"]
+      rowData: currDictType,
+      visible: showModal,
+      onCancel: this.closeFormModal,
+      saving: loading.effects["dataDict/save"],
     };
   };
 
   render() {
-    const { corporation, } = this.props;
-    const { showModal, } = corporation;
+    const { dataDict, } = this.props;
+    const { showModal } = dataDict;
 
     return (
-      <PageWrapper className={cls(styles["container-box"])} >
-        <ExtTable {...this.getExtableProps()} />
+      <div className={cls(styles["container-box"])} >
+        <ExtTable onTableRef={inst => this.tableRef = inst} {...this.getExtableProps()} />
         {
           showModal
             ? <FormModal {...this.getFormModalProps()} />
             : null
         }
-      </PageWrapper>
+      </div>
     );
   }
 }
 
-export default Corporation;
+export default DataDictTypeTable;

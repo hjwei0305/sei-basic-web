@@ -34,6 +34,11 @@ export default [
         ],
       },
       {
+        path: '/dataDict',
+        name: 'dataDict',
+        component: 'DataDict',
+      },
+      {
         path: '/orgStructure',
         name: 'orgStructure',
         routes: [{
