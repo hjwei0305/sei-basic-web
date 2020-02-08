@@ -20,18 +20,19 @@ class DataDictTypeTable extends Component {
     rowData: null,
   }
 
-  componentDidUpdate(_prevProps, prevState) {
-    const { list, } = this.props.dataDict;
-    if (!isEqual(prevState.list, list)) {
-      this.setState({
-        list,
-      });
-    }
-  }
-
   reloadData = _ => {
-    if (this.tableRef) {
-      this.tableRef.remoteDataRrefresh();
+    const { dispatch, dataDict, } = this.props;
+    const { currDictType } = dataDict;
+    if (currDictType) {
+      dispatch({
+        type: 'dataDict/getDataDictItems',
+        payload: {
+          categoryCode: currDictType.code,
+          isAll: true,
+        }
+      });
+    } else {
+      message.warn('请选择字典类型');
     }
   };
 
@@ -96,14 +97,8 @@ class DataDictTypeTable extends Component {
   };
 
   closeFormModal = _ => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: "dataDict/updateState",
-      payload: {
-        showModal: false,
-        showCopyModal: false,
-        rowData: null
-      }
+    this.setState({
+      showModal: false,
     });
   };
 
@@ -176,20 +171,20 @@ class DataDictTypeTable extends Component {
       },
       {
         title: "值",
-        dataIndex: "vlue",
+        dataIndex: "value",
         width: 120,
         required: true,
       },
       {
         title: "值描述",
         dataIndex: "valueName",
-        width: 220,
+        width: 180,
         required: true,
       },
       {
         title: "描述",
         dataIndex: "remark",
-        width: 220,
+        width: 180,
         required: true,
       },
       {
@@ -234,20 +229,21 @@ class DataDictTypeTable extends Component {
 
   getFormModalProps = () => {
     const { loading, dataDict, } = this.props;
-    const { showModal, rowData, } = dataDict;
+    const { currDictType, } = dataDict;
+    const { showModal, rowData, } = this.state;
 
     return {
       save: this.save,
-      rowData,
+      dictType: currDictType,
+      rowData: rowData,
       visible: showModal,
       onCancel: this.closeFormModal,
-      saving: loading.effects["dataDict/save"]
+      saving: loading.effects["dataDict/saveDictItem"]
     };
   };
 
   render() {
-    const { dataDict, } = this.props;
-    const { showModal } = dataDict;
+    const { showModal } = this.state;
 
     return (
       <div className={cls(styles["container-box"])} >

@@ -236,6 +236,7 @@ class DataDictTypeTable extends Component {
             type: 'dataDict/updateState',
             payload: {
               currDictType: null,
+              dataDictItems: [],
             }
           });
         }

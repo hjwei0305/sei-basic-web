@@ -2,7 +2,7 @@
 * @Author: zp
 * @Date:   2020-02-02 11:57:38
 * @Last Modified by:   zp
-* @Last Modified time: 2020-02-08 18:28:42
+* @Last Modified time: 2020-02-08 21:26:43
 */
 import { del, getDataDictTypes, save, getDataDictItems, saveDictItem, deleteDictItem, } from "./service";
 import { message } from "antd";
@@ -17,22 +17,11 @@ export default modelExtend(model, {
 
   state: {
     dataDictTypes: [],
-    rowData: null,
+    currDictType: null,
     showCreateModal: false,
     selectedTreeNode: null,
     dataDictItems: [],
   },
-  // subscriptions: {
-  //   setup({ dispatch, history }) {
-  //     history.listen(location => {
-  //       if (pathMatchRegexp("/dataDict", location.pathname)) {
-  //         dispatch({
-  //           type: "queryList"
-  //         });
-  //       }
-  //     });
-  //   }
-  // },
   effects: {
     * queryList({ payload }, { call, put }) {
       const ds = yield call(getDataDictTypes, payload);
