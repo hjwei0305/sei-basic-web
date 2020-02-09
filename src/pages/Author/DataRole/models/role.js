@@ -49,11 +49,17 @@ export default modelExtend(model, {
         callback(re);
       }
     },
-    * delDataRole({ payload, callback }, { call }) {
+    * delDataRole({ payload, callback }, { call, put }) {
       const re = yield call(delDataRole, payload);
       message.destroy();
       if (re.success) {
         message.success(formatMessage({ id: "global.delete-success", defaultMessage: "删除成功" }));
+        yield put({
+          type: "updateState",
+          payload: {
+            currentRole: null,
+          }
+        });
       } else {
         message.error(re.message);
       }

@@ -52,11 +52,17 @@ export default modelExtend(model, {
         callback(re);
       }
     },
-    * delFeatureRole({ payload, callback }, { call }) {
+    * delFeatureRole({ payload, callback }, { call, put }) {
       const re = yield call(delFeatureRole, payload);
       message.destroy();
       if (re.success) {
         message.success(formatMessage({ id: "global.delete-success", defaultMessage: "删除成功" }));
+        yield put({
+          type: "updateState",
+          payload: {
+            currentRole: null,
+          }
+        });
       } else {
         message.error(re.message);
       }

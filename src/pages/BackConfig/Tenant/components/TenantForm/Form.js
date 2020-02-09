@@ -33,7 +33,7 @@ class TenantForm extends PureComponent {
       }
       const formData = getFieldsValue();
       const tenantData = omit(Object.assign(originTenantData || {}, formData), ['tenantRootOrganizationName']);
-      const tenantRootOrganization = Object.assign(originTenantRootOrganization || {}, { name: formData.tenantRootOrganizationName });
+      const tenantRootOrganization = Object.assign({ ...originTenantRootOrganization || {} }, { name: formData.tenantRootOrganizationName });
       if (!originTenantRootOrganization) {
         Object.assign(tenantRootOrganization, {
           tenantCode: formData.code,

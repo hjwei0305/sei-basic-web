@@ -57,11 +57,14 @@ export default modelExtend(model, {
       message.destroy();
       if (re.success) {
         message.success(formatMessage({ id: "global.save-success", defaultMessage: "保存成功" }));
-        const org = yield call(saveTenantRootOrganization, { ...tenantRootOrganization });
-        if (org.success) {
-          message.success('组织机构保存成功');
-        } else {
-          message.error(org.message);
+        const { organizationDto } = tenantData;
+        if (!organizationDto || organizationDto && organizationDto.name !== tenantRootOrganization.name) {
+          const org = yield call(saveTenantRootOrganization, { ...tenantRootOrganization });
+          if (org.success) {
+            message.success('组织机构保存成功');
+          } else {
+            message.error(org.message);
+          }
         }
       } else {
         message.error(re.message);
