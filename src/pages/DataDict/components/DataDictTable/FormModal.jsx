@@ -26,7 +26,7 @@ class FormModal extends PureComponent {
     const { form, } = this.props;
     return {
       form,
-      name: 'tenantName',
+      name: 'tenantCode',
       store: {
         autoLoad: false,
         url: `${SERVER_PATH}/sei-basic/tenant/findAllUnfrozen`,
@@ -66,7 +66,7 @@ class FormModal extends PureComponent {
       }
     };
     const title = rowData ? '编辑' : formatMessage({ id: "global.add", defaultMessage: "新建" });
-    const { id, code='', name='', tenantCode, tenantName, valueName,rank, value, remark, frozen=false, } = rowData || {};
+    const { id, code='', name='', tenantCode, valueName,rank, value, remark, frozen=false, } = rowData || {};
 
     return (
       <ExtModal
@@ -92,19 +92,14 @@ class FormModal extends PureComponent {
                   initialValue: id,
                 })(<Input />)}
               </FormItem>
-              <FormItem label="租户代码" style={{ display: 'none' }}>
-                {getFieldDecorator("tenantCode", {
-                  initialValue: tenantCode,
-                })(<Input />)}
-              </FormItem>
               <FormItem label="数据字典类型" style={{ display: 'none' }}>
                 {getFieldDecorator("categoryCode", {
                   initialValue: dictType && dictType.code,
                 })(<Input />)}
               </FormItem>
               <FormItem label="租户">
-                {getFieldDecorator("tenantName", {
-                  initialValue: tenantName,
+                {getFieldDecorator("tenantCode", {
+                  initialValue: tenantCode,
                 })(<ComboGrid {...this.getComboGridProps()} />)}
               </FormItem>
               <FormItem label={formatMessage({ id: "global.code", defaultMessage: "代码" })}>
