@@ -147,10 +147,14 @@ class TablePanel extends Component {
     dispatch({
       type: "employee/updateState",
       payload: {
-        showPosionConfig: true,
+        showEmployeeConfig: true,
         rowData,
       }
     });
+  }
+
+  handlResetPassword = (rowData) => {
+
   }
 
   closeFormModal = _ => {
@@ -201,16 +205,12 @@ class TablePanel extends Component {
                 />
               )
             }
-            <Popconfirm
-              key={APP_MODULE_BTN_KEY.DELETE}
-              placement="topLeft"
-              title={formatMessage({ id: "global.delete.confirm", defaultMessage: "确定要删除吗？提示：删除后不可恢复" })}
-              onConfirm={_ => this.del(record)}
-            >
-              {
-                this.renderDelBtn(record)
-              }
-            </Popconfirm>
+            <ExtIcon
+              className="reset"
+              onClick={_ => this.handlResetPassword(record)}
+              type="edit"
+              antd
+            />
             <ExtIcon
               className="copy"
               onClick={_ => this.handlCopy(record)}
@@ -227,21 +227,15 @@ class TablePanel extends Component {
         )
       },
       {
-        title: formatMessage({ id: "global.code", defaultMessage: "代码" }),
+        title: "员工编号",
         dataIndex: "code",
         width: 120,
         required: true,
       },
       {
-        title: formatMessage({ id: "global.name", defaultMessage: "名称" }),
-        dataIndex: "name",
+        title: "员工名称",
+        dataIndex: "userName",
         width: 120,
-        required: true,
-      },
-      {
-        title: "岗位类别",
-        dataIndex: "employeeCategoryName",
-        width: 220,
         required: true,
       },
     ];

@@ -9,8 +9,8 @@ import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
 import { AssignLayout } from '@/components';
 
 const { SERVER_PATH } = constants;
-const PFGURL = 'positionFeatureRole/getUnassigned';
-const PGURL = 'position/getCanAssignedFeatureRoles';
+const PFGURL = 'userFeatureRole/getUnassigned';
+const PGURL = 'employee/getCanAssignedFeatureRoles';
 
 class FeatureRoleConfig extends Component {
 
@@ -179,7 +179,7 @@ class FeatureRoleConfig extends Component {
         params: unAssignUrl === PFGURL ? {
           parentId: id,
         } : {
-          positionId: id,
+          userId: id,
           featureRoleGroupId,
         },
         url: `${SERVER_PATH}/sei-basic/${unAssignUrl}`,
@@ -213,7 +213,7 @@ class FeatureRoleConfig extends Component {
         params: {
           parentId: id,
         },
-        url: `${SERVER_PATH}/sei-basic/positionFeatureRole/getChildrenFromParentId`,
+        url: `${SERVER_PATH}/sei-basic/userFeatureRole/getChildrenFromParentId`,
       },
     };
   }

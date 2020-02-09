@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Form, Input, } from "antd";
+import { Form, Input, Checkbox, } from "antd";
 import { formatMessage, } from "umi-plugin-react/locale";
 import { ExtModal, ComboGrid } from 'seid';
 import { constants } from '@/utils';
@@ -33,37 +33,6 @@ class FormModal extends PureComponent {
     });
   };
 
-  getComboGridProps = () => {
-    const { form, } = this.props;
-    return {
-      form,
-      name: 'positionCategoryName',
-      store: {
-        autoLoad: false,
-        url: `${SERVER_PATH}/sei-basic/positionCategory/findAllUnfrozen`,
-      },
-      field: ['positionCategoryId', 'positionCategoryCode'],
-      columns: [
-        {
-          title: '代码',
-          width: 80,
-          dataIndex: 'code',
-        },
-        {
-          title: '名称',
-          width: 220,
-          dataIndex: 'name',
-        },
-      ],
-      searchProperties: ['code', 'name'],
-      rowKey: "id",
-      reader: {
-        name: 'name',
-        field: ['id', 'code'],
-      },
-    };
-  }
-
   render() {
     const { form, rowData, closeFormModal, saving, showModal, parentData } = this.props;
     const { getFieldDecorator } = form;
@@ -92,18 +61,18 @@ class FormModal extends PureComponent {
               initialValue: parentData && parentData.name,
             })(<Input  disabled={!!parentData} />)}
           </FormItem>
-          <FormItem label="岗位类别">
-            {getFieldDecorator("positionCategoryName", {
-              initialValue: rowData ? rowData.positionCategoryName : "",
+          <FormItem label="员工编号">
+            {getFieldDecorator("code", {
+              initialValue: rowData ? rowData.code : "",
               rules: [{
                 required: true,
-                message: "岗位类别不能为空",
+                message: "员工编号不能为空",
               }]
-            })(<ComboGrid {...this.getComboGridProps() }/>)}
+            })(<Input />)}
           </FormItem>
           <FormItem label={formatMessage({ id: "global.name", defaultMessage: "名称" })}>
-            {getFieldDecorator("name", {
-              initialValue: rowData ? rowData.name : "",
+            {getFieldDecorator("userName", {
+              initialValue: rowData ? rowData.userName : "",
               rules: [{
                 required: true,
                 message: formatMessage({ id: "global.name.required", defaultMessage: "名称不能为空" })
@@ -121,18 +90,6 @@ class FormModal extends PureComponent {
             style={{display: "none"}}>
             {getFieldDecorator('organizationCode', {
               initialValue: parentData && parentData.code,
-            })(<Input />)}
-          </FormItem>
-          <FormItem
-            style={{display: "none"}}>
-            {getFieldDecorator('positionCategoryId', {
-              initialValue: rowData ? rowData.positionCategoryId : '',
-            })(<Input />)}
-          </FormItem>
-          <FormItem
-            style={{display: "none"}}>
-            {getFieldDecorator('positionCategoryCode', {
-              initialValue: rowData ? rowData.positionCategoryCode : '',
             })(<Input />)}
           </FormItem>
         </Form>

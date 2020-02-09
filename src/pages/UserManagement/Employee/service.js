@@ -2,7 +2,7 @@
 * @Author: zp
 * @Date:   2020-02-02 11:57:24
 * @Last Modified by:   zp
-* @Last Modified time: 2020-02-08 22:29:24
+* @Last Modified time: 2020-02-09 15:06:58
 */
 import { utils } from 'seid';
 import { constants } from '@/utils';
@@ -70,18 +70,18 @@ export async function copyToOrgNodes(data){
 }
 
 /**
- * 分配岗位 企业员工
+ * 分配岗位
  */
 export async function assignEmployee(data){
-  const url = `${SERVER_PATH}/sei-basic/employeePosition/insertRelationsByParents`;
+  const url = `${SERVER_PATH}/sei-basic/employeePosition/insertRelations`;
   return request.post(url, data);
 }
 
 /**
- * 取消分配岗位 企业员工
+ * 取消分配岗位
  */
 export async function unAssignEmployee(data){
-  const url = `${SERVER_PATH}/sei-basic/employeePosition/removeRelationsByParents`;
+  const url = `${SERVER_PATH}/sei-basic/employeePosition/removeRelations`;
   return request({
     url,
     method: 'DELETE',
@@ -93,7 +93,7 @@ export async function unAssignEmployee(data){
  * 分配功能角色
  */
 export async function assignFeatureRole(data){
-  const url = `${SERVER_PATH}/sei-basic/employeeFeatureRole/insertRelations`;
+  const url = `${SERVER_PATH}/sei-basic/userFeatureRole/insertRelations`;
   return request.post(url, data);
 }
 
@@ -101,7 +101,7 @@ export async function assignFeatureRole(data){
  * 移除分配的功能角色
  */
 export async function unAssignFeatureRole(data){
-  const url = `${SERVER_PATH}/sei-basic/employeeFeatureRole/removeRelations`;
+  const url = `${SERVER_PATH}/sei-basic/userFeatureRole/removeRelations`;
   return request({
     url,
     method: 'DELETE',
@@ -113,7 +113,7 @@ export async function unAssignFeatureRole(data){
  * 分配数据角色
  */
 export async function assignDataRole(data){
-  const url = `${SERVER_PATH}/sei-basic/employeeDataRole/insertRelations`;
+  const url = `${SERVER_PATH}/sei-basic/userDataRole/insertRelations`;
   return request.post(url, data);
 }
 
@@ -121,7 +121,7 @@ export async function assignDataRole(data){
  * 移除分配的数据角色
  */
 export async function unAssignDataRole(data){
-  const url = `${SERVER_PATH}/sei-basic/employeeDataRole/removeRelations`;
+  const url = `${SERVER_PATH}/sei-basic/userDataRole/removeRelations`;
   return request({
     url,
     method: 'DELETE',

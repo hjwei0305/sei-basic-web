@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'dva';
 import { Tabs, Button, } from 'antd';
-import UserConfig from './UserConfig';
+import PositionConfig from './PositionConfig';
 import FeatureRoleConfig from './FeatureRoleConfig';
 import DataRoleConfig from './DataRoleConfig';
 import cls from 'classnames';
@@ -48,7 +48,7 @@ class PostionConfig extends React.Component {
     dispatch({
       type: "employee/updateState",
       payload: {
-        showPosionConfig: false,
+        showEmployeeConfig: false,
       }
     });
   }
@@ -66,21 +66,21 @@ class PostionConfig extends React.Component {
     return (
       <div className={cls(styles['page-box'])} style={style}>
         <Tabs defaultActiveKey="1" tabBarExtraContent={this.getTabExtra()}>
-          <TabPane tab={`【${rowData.name}】配置岗位`} key="1">
-            <UserConfig
+          <TabPane tab={`【${rowData.userName}】配置岗位`} key="1">
+            <PositionConfig
               data={rowData}
               onAssign={(params) => this.handleAssign('Employee', params)}
               onUnAssign={(params) => this.handleUnAssign('Employee', params)}
             />
           </TabPane>
-          <TabPane tab={`【${rowData.name}】配置功能角色`} key="2">
+          <TabPane tab={`【${rowData.userName}】配置功能角色`} key="2">
             <FeatureRoleConfig
               data={rowData}
               onAssign={(params) => this.handleAssign('FeatureRole', params)}
               onUnAssign={(params) => this.handleUnAssign('FeatureRole', params)}
             />
           </TabPane>
-          <TabPane tab={`【${rowData.name}】配置用户角色`} key="3">
+          <TabPane tab={`【${rowData.userName}】配置用户角色`} key="3">
             <DataRoleConfig
               data={rowData}
               onAssign={(params) => this.handleAssign('DataRole', params)}

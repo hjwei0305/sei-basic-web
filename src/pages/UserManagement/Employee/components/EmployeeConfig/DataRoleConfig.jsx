@@ -9,8 +9,8 @@ import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
 import { AssignLayout } from '@/components';
 
 const { SERVER_PATH } = constants;
-const PFGURL = 'positionDataRole/getUnassigned';
-const PGURL = 'position/getCanAssignedDataRoles';
+const PFGURL = 'userDataRole/getUnassigned';
+const PGURL = 'employee/getCanAssignedDataRoles';
 
 class DataRoleConfig extends Component {
 
@@ -192,7 +192,7 @@ class DataRoleConfig extends Component {
         params: unAssignUrl === PFGURL ? {
           parentId: id,
         } : {
-          positionId: id,
+          userId: id,
           dataRoleGroupId,
         },
         url: `${SERVER_PATH}/sei-basic/${unAssignUrl}`,

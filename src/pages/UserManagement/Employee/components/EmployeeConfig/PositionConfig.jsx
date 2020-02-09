@@ -9,7 +9,7 @@ import { AssignLayout } from '@/components';
 
 const { SERVER_PATH } = constants;
 
-class UserConfig extends Component {
+class PositionConfig extends Component {
 
   state = {
     assignBtnDisabled: true,
@@ -18,16 +18,15 @@ class UserConfig extends Component {
     organizationId: null,
   }
 
-  assignParentIds=[]
+  assignChildIds=[]
 
-  unAssignParentIds=[]
+  unAssignChildIds=[]
 
   handleCheck = (e) => {
     const { checked } = e.target;
     this.setState({
       includeSubNode: checked,
     }, () => {
-      console.log(this.unAssignTable);
       if (this.unAssignTable) {
         this.unAssignTable.remoteDataRrefresh();
       }
@@ -36,9 +35,9 @@ class UserConfig extends Component {
 
   handleUnAssign = () => {
     const { onUnAssign, data, } = this.props;
-    const { id: childId, } = data;
+    const { id: parentId, } = data;
     if (onUnAssign) {
-      onUnAssign({ childId, parentIds: this.assignParentIds, }).then(res => {
+      onUnAssign({ parentId, childIds: this.assignChildIds, }).then(res => {
         this.setState({
           unAssignBtnDisabled: true,
         });
@@ -49,9 +48,9 @@ class UserConfig extends Component {
 
   handleAssign = () => {
     const { onAssign, data, } = this.props;
-    const { id: childId, } = data;
+    const { id: parentId, } = data;
     if (onAssign) {
-      onAssign({ childId, parentIds: this.unAssignParentIds, }).then(res => {
+      onAssign({ parentId, childIds: this.unAssignChildIds, }).then(res => {
         this.setState({
           assignBtnDisabled: true,
         });
@@ -92,21 +91,21 @@ class UserConfig extends Component {
 
     return [
       {
-        title: "员工编号",
+        title: "代码",
         dataIndex: "code",
-        width: 180,
+        width: 120,
         required: true,
       },
       {
-        title: "员工姓名",
-        dataIndex: "userName",
-        width: 180,
+        title: "姓名",
+        dataIndex: "name",
+        width: 120,
         required: true,
       },
       {
-        title: "冻结",
-        dataIndex: "frozen",
-        width: 100,
+        title: "组织机构",
+        dataIndex: "organizationName",
+        width: 220,
         required: true,
       },
     ];
@@ -146,7 +145,7 @@ class UserConfig extends Component {
       toolBar: toolBarProps,
       onSelectRow: (rowIds) => {
         if (rowIds && rowIds.length) {
-          this.unAssignParentIds = rowIds;
+          this.unAssignChildIds = rowIds;
           this.setState({
             assignBtnDisabled: false,
           });
@@ -158,12 +157,12 @@ class UserConfig extends Component {
       },
       store: {
         params: {
-          positionId: id,
+          userId: id,
           organizationId: orgId || organizationId,
           includeSubNode,
         },
         type: 'POST',
-        url: `${SERVER_PATH}/sei-basic/employee/listAllCanAssignEmployees`,
+        url: `${SERVER_PATH}/sei-basic/position/listAllCanAssignPositions`,
       },
     };
   }
@@ -179,7 +178,7 @@ class UserConfig extends Component {
       columns: this.getCommonColumns(),
       onSelectRow: (rowIds) => {
         if (rowIds && rowIds.length) {
-          this.assignParentIds = rowIds;
+          this.assignChildIds = rowIds;
           this.setState({
             unAssignBtnDisabled: false,
           });
@@ -192,9 +191,9 @@ class UserConfig extends Component {
       loading: false,
       store: {
         params: {
-          childId: id,
+          parentId: id,
         },
-        url: `${SERVER_PATH}/sei-basic/employeePosition/getParentsFromChildId`,
+        url: `${SERVER_PATH}/sei-basic/employeePosition/getChildrenFromParentId`,
       },
     };
   }
@@ -231,4 +230,4 @@ class UserConfig extends Component {
   }
 }
 
-export default UserConfig;
+export default PositionConfig;
