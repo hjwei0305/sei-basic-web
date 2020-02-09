@@ -1,21 +1,24 @@
 import React, { Component, Fragment, } from 'react';
 import { Card, Row, Col, } from 'antd';
 import cls from 'classnames';
-import { ExtTable, utils, ExtIcon, ComboTree, } from 'seid';
+import { ExtTable, utils, ExtIcon, ComboGrid, } from 'seid';
 import { Button, Popconfirm, Checkbox, } from "antd";
 import { constants } from "@/utils";
 import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
+// import AssignLayout from './AssignLayout';
 import { AssignLayout } from '@/components';
 
 const { SERVER_PATH } = constants;
+const PFGURL = 'userFeatureRole/getUnassigned';
+const PGURL = 'employee/getCanAssignedFeatureRoles';
 
-class PositionConfig extends Component {
+class FeatureRoleConfig extends Component {
 
   state = {
     assignBtnDisabled: true,
     unAssignBtnDisabled: true,
-    includeSubNode: false,
-    organizationId: null,
+    featureRoleGroupId: null,
+    unAssignUrl: PFGURL,
   }
 
   assignChildIds=[]
@@ -27,6 +30,7 @@ class PositionConfig extends Component {
     this.setState({
       includeSubNode: checked,
     }, () => {
+      console.log(this.unAssignTable);
       if (this.unAssignTable) {
         this.unAssignTable.remoteDataRrefresh();
       }
@@ -59,24 +63,37 @@ class PositionConfig extends Component {
     }
   }
 
-  getComboTreeProps = () => {
-    const { data } = this.props;
-
+  getComboGridProps = () => {
     return {
-      defaultValue: data.organizationName || '',
-      name: 'orgName',
+      allowClear: true,
+      placeholder: '请选择功能角色组',
+      rowKey: "id",
+      name: 'roleGroupName',
       store: {
-        url: `${SERVER_PATH}/sei-basic/organization/findOrgTreeWithoutFrozen`,
+        url: `${SERVER_PATH}/sei-basic/featureRoleGroup/findAll`,
       },
       reader: {
         name: 'name',
       },
-      placeholder: '请选择组织机构',
+      columns: [
+        {
+          title: '代码',
+          width: 80,
+          dataIndex: 'code',
+        },
+        {
+          title: '名称',
+          width: 220,
+          dataIndex: 'name',
+        },
+      ],
+      searchProperties: ['code', 'name'],
       style: { width: 240, marginRight: 15, },
-      afterSelect: (node) => {
-        if (node) {
+      afterSelect: (rowData) => {
+        if (rowData) {
           this.setState({
-            organizationId: node.id
+            featureRoleGroupId: rowData.id,
+            unAssignUrl: PGURL,
           }, () => {
             if (this.unAssignTable) {
               this.unAssignTable.remoteDataRrefresh();
@@ -84,6 +101,16 @@ class PositionConfig extends Component {
           });
         }
       },
+      afterClear: () => {
+        this.setState({
+          unAssignUrl: PFGURL,
+          featureRoleGroupId: undefined,
+        }, () => {
+          if (this.unAssignTable) {
+            this.unAssignTable.remoteDataRrefresh();
+          }
+        });
+      }
     };
   }
 
@@ -91,21 +118,15 @@ class PositionConfig extends Component {
 
     return [
       {
-        title: "代码",
+        title: "角色代码",
         dataIndex: "code",
-        width: 120,
+        width: 180,
         required: true,
       },
       {
-        title: "名称",
+        title: "角色名称",
         dataIndex: "name",
-        width: 120,
-        required: true,
-      },
-      {
-        title: "组织机构",
-        dataIndex: "organizationName",
-        width: 220,
+        width: 180,
         required: true,
       },
     ];
@@ -122,9 +143,9 @@ class PositionConfig extends Component {
 
   /** 未分配表格属性 */
   getUnAssignTableProps = () => {
-    const { includeSubNode, organizationId: orgId, } = this.state;
+    const { featureRoleGroupId, unAssignUrl,  } = this.state;
     const { data, } = this.props;
-    const { id, organizationId, } = data || {};
+    const { id, } = data || {};
     const toolBarProps = {
       layout: {
         leftSpan: 16,
@@ -132,8 +153,7 @@ class PositionConfig extends Component {
       },
       left: (
         <Fragment>
-          <ComboTree {...this.getComboTreeProps()}/>
-          <Checkbox onChange={this.handleCheck}>包含子节点</Checkbox>
+          <ComboGrid {...this.getComboGridProps()}/>
         </Fragment>
       )
     };
@@ -156,13 +176,13 @@ class PositionConfig extends Component {
         }
       },
       store: {
-        params: {
+        params: unAssignUrl === PFGURL ? {
+          parentId: id,
+        } : {
           userId: id,
-          organizationId: orgId || organizationId,
-          includeSubNode,
+          featureRoleGroupId,
         },
-        type: 'POST',
-        url: `${SERVER_PATH}/sei-basic/position/listAllCanAssignPositions`,
+        url: `${SERVER_PATH}/sei-basic/${unAssignUrl}`,
       },
     };
   }
@@ -193,14 +213,13 @@ class PositionConfig extends Component {
         params: {
           parentId: id,
         },
-        url: `${SERVER_PATH}/sei-basic/employeePosition/getChildrenFromParentId`,
+        url: `${SERVER_PATH}/sei-basic/userFeatureRole/getChildrenFromParentId`,
       },
     };
   }
 
   render() {
     const { assignBtnDisabled, unAssignBtnDisabled, } = this.state;
-
     return (
       <AssignLayout>
         <ExtTable onTableRef={inst => this.unAssignTable = inst } slot="left" {...this.getUnAssignTableProps()} />
@@ -230,4 +249,4 @@ class PositionConfig extends Component {
   }
 }
 
-export default PositionConfig;
+export default FeatureRoleConfig;

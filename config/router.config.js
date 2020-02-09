@@ -63,6 +63,9 @@ export default [
         routes: [{
           path: '/userManagement/employee',
           component: 'UserManagement/Employee'
+        }, {
+          path: '/userManagement/supplierUser',
+          component: 'UserManagement/SupplierUser'
         }],
       },
       {

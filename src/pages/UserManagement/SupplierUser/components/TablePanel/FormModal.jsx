@@ -56,22 +56,17 @@ class FormModal extends PureComponent {
         onOk={this.onFormSubmit}
       >
         <Form {...formItemLayout} layout="horizontal" >
-          <FormItem label="组织机构">
-            {getFieldDecorator("organizationName", {
-              initialValue: parentData && parentData.name,
-            })(<Input  disabled={!!parentData} />)}
-          </FormItem>
-          <FormItem label="员工编号">
+          <FormItem label="帐号">
             {getFieldDecorator("code", {
               initialValue: rowData ? rowData.code : "",
               rules: [{
                 required: true,
-                message: "员工编号不能为空",
+                message: "帐号不能为空",
               }]
             })(<Input />)}
           </FormItem>
           <FormItem label={formatMessage({ id: "global.name", defaultMessage: "名称" })}>
-            {getFieldDecorator("userName", {
+            {getFieldDecorator("name", {
               initialValue: rowData ? rowData.userName : "",
               rules: [{
                 required: true,
@@ -79,19 +74,12 @@ class FormModal extends PureComponent {
               }]
             })(<Input />)}
           </FormItem>
-          {/*以下为隐藏的formItem*/}
-          <FormItem
-            style={{display: "none"}}>
-            {getFieldDecorator('organizationId', {
-              initialValue: parentData && parentData.id,
-            })(<Input />)}
+          <FormItem label={'冻结'}>
+            {getFieldDecorator('frozen', {
+              valuePropName: 'checked',
+              initialValue: rowData && rowData.frozen,
+            })(<Checkbox />)}
           </FormItem>
-{/*          <FormItem
-            style={{display: "none"}}>
-            {getFieldDecorator('organizationCode', {
-              initialValue: parentData && parentData.code,
-            })(<Input />)}
-          </FormItem>*/}
         </Form>
       </ExtModal>
     );

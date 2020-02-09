@@ -1,10 +1,7 @@
 import React, { PureComponent } from "react";
-import { Form, Input, Checkbox, } from "antd";
+import { Form, Input, } from "antd";
 import { formatMessage, } from "umi-plugin-react/locale";
-import { ExtModal, ComboGrid } from 'seid';
-import { constants } from '@/utils';
-
-const { SERVER_PATH } = constants;
+import { ExtModal, } from 'seid';
 
 const FormItem = Form.Item;
 const formItemLayout = {
@@ -36,12 +33,7 @@ class FormModal extends PureComponent {
   render() {
     const { form, rowData, closeFormModal, saving, showModal, parentData } = this.props;
     const { getFieldDecorator } = form;
-    const title = rowData
-      ? formatMessage({
-        id: "global.edit",
-        defaultMessage: "编辑"
-      })
-      : formatMessage({ id: "global.add", defaultMessage: "新建" });
+    const title = `重置用户【${rowData.userName}】的密码`;
 
     return (
       <ExtModal
@@ -52,7 +44,7 @@ class FormModal extends PureComponent {
         confirmLoading={saving}
         maskClosable={false}
         title={title}
-        okText={'保存'}
+        okText={'重置'}
         onOk={this.onFormSubmit}
       >
         <Form {...formItemLayout} layout="horizontal" >
