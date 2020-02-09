@@ -226,7 +226,7 @@ class DataRoleConfig extends Component {
         params: {
           parentId: id,
         },
-        url: `${SERVER_PATH}/sei-basic/positionDataRole/getChildrenFromParentId`,
+        url: `${SERVER_PATH}/sei-basic/userDataRole/getChildrenFromParentId`,
       },
     };
   }
