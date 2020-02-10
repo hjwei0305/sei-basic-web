@@ -2,10 +2,10 @@
 * @Author: zp
 * @Date:   2020-02-02 11:57:38
 * @Last Modified by:   zp
-* @Last Modified time: 2020-02-10 16:14:58
+* @Last Modified time: 2020-02-10 13:30:16
 */
 import {
-  del,
+  freeze,
   save,
   assignFeatureRole,
   unAssignFeatureRole,
@@ -20,15 +20,13 @@ const { pathMatchRegexp, dvaModel } = utils;
 const { modelExtend, model } = dvaModel;
 
 export default modelExtend(model, {
-  namespace: "supplierUser",
+  namespace: "expertUser",
 
   state: {
     list: [],
     rowData: null,
     showModal: false,
     showCopyModal: false,
-    treeData: [],
-    currNode: null,
     showConfig: false,
   },
   effects: {
@@ -43,8 +41,8 @@ export default modelExtend(model, {
 
       return re;
     },
-    * del({ payload }, { call }) {
-      const re = yield call(del, payload);
+    * freeze({ payload }, { call }) {
+      const re = yield call(freeze, payload);
       message.destroy();
       if (re.success) {
         message.success(formatMessage({ id: "global.delete-success", defaultMessage: "删除成功" }));

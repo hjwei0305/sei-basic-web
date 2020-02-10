@@ -66,6 +66,9 @@ export default [
         }, {
           path: '/userManagement/supplierUser',
           component: 'UserManagement/SupplierUser'
+        }, {
+          path: '/userManagement/expertUser',
+          component: 'UserManagement/ExpertUser'
         }],
       },
       {

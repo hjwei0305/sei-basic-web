@@ -1,19 +1,20 @@
 import React from 'react';
 import { connect } from 'dva';
 import { Tabs, Button, } from 'antd';
+import { constants } from "@/utils";
 import cls from 'classnames';
 import DataRoleAssign from '@/components/DataRoleAssign';
 import FeatureRoleAssign from '@/components/FeatureRoleAssign';
-import { constants } from "@/utils";
-import UserConfig from './UserConfig';
+// import FeatureRoleConfig from './FeatureRoleConfig';
+// import DataRoleConfig from './DataRoleConfig';
 
 import styles from './index.less';
 
 const { SERVER_PATH } = constants;
 const { TabPane } = Tabs;
 
-@connect(({ position, loading, }) => ({ position, loading, }))
-class PostionConfig extends React.Component {
+@connect(({ expertUser, loading, }) => ({ expertUser, loading, }))
+class ExpertUserConfig extends React.Component {
 
   constructor(props) {
     super(props);
@@ -22,8 +23,6 @@ class PostionConfig extends React.Component {
   handleAssign = (type, params) => {
     const { dispatch, } = this.props;
     // switch (type) {
-    //   case 'Employee':
-    //     break;
     //   case 'DataRole':
     //     break;
     //   case 'FeatureRole':
@@ -31,7 +30,7 @@ class PostionConfig extends React.Component {
     // }
 
     return dispatch({
-      type: `position/assign${type}`,
+      type: `expertUser/assign${type}`,
       payload: params
     });
   }
@@ -40,7 +39,7 @@ class PostionConfig extends React.Component {
     const { dispatch, } = this.props;
 
     return dispatch({
-      type: `position/unAssign${type}`,
+      type: `expertUser/unAssign${type}`,
       payload: params
     });
   }
@@ -48,9 +47,9 @@ class PostionConfig extends React.Component {
   handleBack = () => {
     const { dispatch, } = this.props;
     dispatch({
-      type: "position/updateState",
+      type: "expertUser/updateState",
       payload: {
-        showPosionConfig: false,
+        showConfig: false,
       }
     });
   }
@@ -62,43 +61,36 @@ class PostionConfig extends React.Component {
   }
 
   render() {
-    const { style, position, } = this.props;
-    const { rowData, } = position;
+    const { style, expertUser, } = this.props;
+    const { rowData, } = expertUser;
 
     return (
       <div className={cls(styles['page-box'])} style={style}>
         <Tabs defaultActiveKey="1" tabBarExtraContent={this.getTabExtra()}>
-          <TabPane tab={`【${rowData.name}】配置用户`} key="1">
-            <UserConfig
-              data={rowData}
-              onAssign={(params) => this.handleAssign('Employee', params)}
-              onUnAssign={(params) => this.handleUnAssign('Employee', params)}
-            />
-          </TabPane>
-          <TabPane tab={`【${rowData.name}】配置功能角色`} key="2">
+          <TabPane tab={`【${rowData.name}】配置功能角色`} key="1">
             <FeatureRoleAssign
               data={rowData}
               onAssign={(params) => this.handleAssign('FeatureRole', params)}
               onUnAssign={(params) => this.handleUnAssign('FeatureRole', params)}
               unAssignCfg={{
-                unAssignedUrl: `${SERVER_PATH}/sei-basic/positionFeatureRole/getUnassigned`,
-                unAssignedByIdUrl: `${SERVER_PATH}/sei-basic/position/getCanAssignedFeatureRoles`,
-                byIdKey: 'positionId',
+                unAssignedUrl: `${SERVER_PATH}/sei-basic/userFeatureRole/getUnassigned`,
+                unAssignedByIdUrl: `${SERVER_PATH}/sei-basic/employee/getCanAssignedFeatureRoles`,
+                byIdKey: 'userId',
               }}
-              assginCfg={{ url: `${SERVER_PATH}/sei-basic/positionFeatureRole/getChildrenFromParentId`, }}
+              assginCfg={{ url: `${SERVER_PATH}/sei-basic/userFeatureRole/getChildrenFromParentId`, }}
             />
           </TabPane>
-          <TabPane tab={`【${rowData.name}】配置用户角色`} key="3">
+          <TabPane tab={`【${rowData.name}】配置用户角色`} key="2">
             <DataRoleAssign
               data={rowData}
               onAssign={(params) => this.handleAssign('DataRole', params)}
               onUnAssign={(params) => this.handleUnAssign('DataRole', params)}
               unAssignCfg={{
-                unAssignedUrl: `${SERVER_PATH}/sei-basic/positionDataRole/getUnassigned`,
-                unAssignedByIdUrl: `${SERVER_PATH}/sei-basic/position/getCanAssignedDataRoles`,
-                byIdKey: 'positionId',
+                unAssignedUrl: `${SERVER_PATH}/sei-basic/userDataRole/getUnassigned`,
+                unAssignedByIdUrl: `${SERVER_PATH}/sei-basic/employee/getCanAssignedDataRoles`,
+                byIdKey: 'userId',
               }}
-              assginCfg={{ url: `${SERVER_PATH}/sei-basic/positionDataRole/getChildrenFromParentId`, }}
+              assginCfg={{ url: `${SERVER_PATH}/sei-basic/userDataRole/getChildrenFromParentId`, }}
             />
           </TabPane>
         </Tabs>
@@ -107,4 +99,4 @@ class PostionConfig extends React.Component {
   }
 }
 
-export default PostionConfig;
+export default ExpertUserConfig;

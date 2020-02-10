@@ -2,7 +2,7 @@
 * @Author: zp
 * @Date:   2020-02-02 11:57:24
 * @Last Modified by:   zp
-* @Last Modified time: 2020-02-10 16:15:16
+* @Last Modified time: 2020-02-10 15:58:43
 */
 import { utils } from 'seid';
 import { constants } from '@/utils';
@@ -11,10 +11,19 @@ const { request } = utils;
 
 const { SERVER_PATH } = constants;
 
+/** 获取列表*/
+export async function getList(params) {
+  const url = `${SERVER_PATH}/sei-basic/employee/findAll`;
+  return request({
+    url,
+    method: "GET",
+    params,
+  });
+}
+
 /** 保存 */
 export async function save(data) {
-  const url = `${SERVER_PATH}/sei-basic/supplierUser/saveSupplierUserVo
-`;
+  const url = `${SERVER_PATH}/sei-basic/expertUser/save`;
   return request({
     url,
     method: "POST",
@@ -22,12 +31,12 @@ export async function save(data) {
   });
 }
 
-/** 删除 */
-export async function del(params) {
-  const url = `${SERVER_PATH}/sei-basic/supplierUser/delete`;
+/** 冻结 */
+export async function freeze(params) {
+  const url = `${SERVER_PATH}/sei-basic/expertUser/freeze`;
   return request({
     url,
-    method: "DELETE",
+    method: "POST",
     params,
   });
 }
