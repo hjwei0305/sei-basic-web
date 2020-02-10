@@ -16,31 +16,12 @@ const { authAction } = utils;
 class TablePanel extends Component {
   state = {
     delRowId: null,
-    list: [],
-  }
-
-  componentDidUpdate(_prevProps, prevState) {
-    const { list, } = this.props.supplierUser;
-    if (!isEqual(prevState.list, list)) {
-      this.setState({
-        list,
-      });
-    }
   }
 
   reloadData = _ => {
-    const { dispatch, supplierUser } = this.props;
-    const { currNode, } = supplierUser;
-
-    if (currNode) {
-      dispatch({
-        type: "supplierUser/queryListByOrgId",
-        payload: {
-          organizationId: currNode.id,
-        },
-      });
+    if (this.tableRef) {
+      this.tableRef.remoteDataRrefresh();
     }
-
   };
 
   add = _ => {
@@ -143,7 +124,6 @@ class TablePanel extends Component {
   };
 
   getExtableProps = () => {
-    const { list } = this.state;
     const { loading, supplierUser,  } = this.props;
     const { rowData, } = supplierUser;
     const columns = [
@@ -169,12 +149,16 @@ class TablePanel extends Component {
                 />
               )
             }
-            <ExtIcon
-              className="form"
-              onClick={_ => this.handlResetPassword(record)}
-              type="form"
-              antd
-            />
+            <Popconfirm
+              key={APP_MODULE_BTN_KEY.DELETE}
+              placement="topLeft"
+              title={formatMessage({ id: "global.delete.confirm", defaultMessage: "确定要删除吗？提示：删除后不可恢复" })}
+              onConfirm={_ => this.del(record)}
+            >
+              {
+                this.renderDelBtn(record)
+              }
+            </Popconfirm>
             <ExtIcon
               className="tool"
               onClick={_ => this.handleConfig(record)}
@@ -242,12 +226,8 @@ class TablePanel extends Component {
     return {
       bordered: false,
       columns,
-      // loading: loading.effects["supplierUser/queryList"],
       toolBar: toolBarProps,
       store: {
-        params: {
-          // parentId: id,
-        },
         type: 'POST',
         url: `${SERVER_PATH}/sei-basic/supplierUser/findVoByPage`,
       },
@@ -256,13 +236,12 @@ class TablePanel extends Component {
 
   getFormModalProps = () => {
     const { loading, supplierUser, } = this.props;
-    const { showModal, rowData, currNode, } = supplierUser;
+    const { showModal, rowData, } = supplierUser;
 
     return {
       save: this.save,
       rowData,
       showModal,
-      parentData: currNode,
       closeFormModal: this.closeFormModal,
       saving: loading.effects["supplierUser/save"]
     };
@@ -274,7 +253,7 @@ class TablePanel extends Component {
 
     return (
       <div className={cls(styles["container-box"])} >
-        <ExtTable {...this.getExtableProps()} />
+        <ExtTable onTableRef={inst => this.tableRef = inst} {...this.getExtableProps()} />
         {
           showModal
             ? <FormModal {...this.getFormModalProps()} />

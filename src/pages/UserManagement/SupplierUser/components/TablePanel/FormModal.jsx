@@ -67,7 +67,7 @@ class FormModal extends PureComponent {
           </FormItem>
           <FormItem label={formatMessage({ id: "global.name", defaultMessage: "名称" })}>
             {getFieldDecorator("name", {
-              initialValue: rowData ? rowData.userName : "",
+              initialValue: rowData ? rowData.name : "",
               rules: [{
                 required: true,
                 message: formatMessage({ id: "global.name.required", defaultMessage: "名称不能为空" })

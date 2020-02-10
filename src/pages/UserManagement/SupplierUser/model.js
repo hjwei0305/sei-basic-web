@@ -2,7 +2,7 @@
 * @Author: zp
 * @Date:   2020-02-02 11:57:38
 * @Last Modified by:   zp
-* @Last Modified time: 2020-02-09 15:58:22
+* @Last Modified time: 2020-02-10 10:07:12
 */
 import {
   del,
@@ -103,36 +103,6 @@ export default modelExtend(model, {
         message.error(re.message);
       }
 
-      return re;
-    },
-    * copyTo({ payload, }, { call, }) {
-      const re = yield call(copyToOrgNodes, payload);
-      message.destroy();
-      if (re.success) {
-        message.success("复制成功");
-      } else {
-        message.error(re.message);
-      }
-      return re;
-    },
-    * assignEmployee({ payload, }, { call, }) {
-      const re = yield call(assignEmployee, payload);
-      message.destroy();
-      if (re.success) {
-        message.success(re.message);
-      } else {
-        message.error(re.message);
-      }
-      return re;
-    },
-    * unAssignEmployee({ payload, }, { call, }) {
-      const re = yield call(unAssignEmployee, payload);
-      message.destroy();
-      if (re.success) {
-        message.success(re.message);
-      } else {
-        message.error(re.message);
-      }
       return re;
     },
     * assignFeatureRole({ payload, }, { call, }) {

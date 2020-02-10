@@ -2,7 +2,7 @@
 * @Author: zp
 * @Date:   2020-02-02 11:57:24
 * @Last Modified by:   zp
-* @Last Modified time: 2020-02-09 16:51:37
+* @Last Modified time: 2020-02-10 10:07:54
 */
 import { utils } from 'seid';
 import { constants } from '@/utils';
@@ -23,7 +23,8 @@ export async function getList(params) {
 
 /** 保存 */
 export async function save(data) {
-  const url = `${SERVER_PATH}/sei-basic/supplierUser/save`;
+  const url = `${SERVER_PATH}/sei-basic/supplierUser/saveSupplierUserVo
+`;
   return request({
     url,
     method: "POST",
@@ -33,22 +34,12 @@ export async function save(data) {
 
 /** 删除 */
 export async function del(params) {
-  const url = `${SERVER_PATH}/sei-basic/employee/delete`;
+  const url = `${SERVER_PATH}/sei-basic/supplierUser/delete`;
   return request({
     url,
     method: "DELETE",
     params,
   });
-}
-
-/**
- * 获取所有组织机构 不包括冻结
- * @param params
- * @returns {*}
- */
-export async function listAllTree(params={}){
-  const url = `${SERVER_PATH}/sei-basic/organization/findOrgTreeWithoutFrozen`;
-  return request.get(url, params);
 }
 
 /**
