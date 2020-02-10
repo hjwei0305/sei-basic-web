@@ -22,7 +22,7 @@ class DataAuthorType extends Component {
 
     reloadData = () => {
         if (this.dataAutorTypeTableRef) {
-            this.dataAutorTypeTableRef.remoteDataRrefresh();
+            this.dataAutorTypeTableRef.remoteDataRefresh();
         }
     };
 

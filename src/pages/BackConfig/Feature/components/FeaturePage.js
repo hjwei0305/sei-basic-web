@@ -25,7 +25,7 @@ class FeaturePage extends Component {
 
     reloadData = () => {
         if (this.pageTableRef) {
-            this.pageTableRef.remoteDataRrefresh();
+            this.pageTableRef.remoteDataRefresh();
         }
     };
 

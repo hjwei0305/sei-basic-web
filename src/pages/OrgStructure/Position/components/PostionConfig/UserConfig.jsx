@@ -27,7 +27,7 @@ class UserConfig extends Component {
     }, () => {
       console.log(this.unAssignTable);
       if (this.unAssignTable) {
-        this.unAssignTable.remoteDataRrefresh();
+        this.unAssignTable.remoteDataRefresh();
       }
     });
   }
@@ -82,7 +82,7 @@ class UserConfig extends Component {
             organizationId: node.id
           }, () => {
             if (this.unAssignTable) {
-              this.unAssignTable.remoteDataRrefresh();
+              this.unAssignTable.remoteDataRefresh();
             }
           });
         }
@@ -116,10 +116,10 @@ class UserConfig extends Component {
 
   refreshTableData = () => {
     if (this.unAssignTable) {
-      this.unAssignTable.remoteDataRrefresh();
+      this.unAssignTable.remoteDataRefresh();
     }
     if (this.assignTable) {
-      this.assignTable.remoteDataRrefresh();
+      this.assignTable.remoteDataRefresh();
     }
   }
 

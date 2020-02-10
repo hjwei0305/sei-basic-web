@@ -29,7 +29,7 @@ class DataRoleConfig extends Component {
     }, () => {
       console.log(this.unAssignTable);
       if (this.unAssignTable) {
-        this.unAssignTable.remoteDataRrefresh();
+        this.unAssignTable.remoteDataRefresh();
       }
     });
   }
@@ -98,7 +98,7 @@ class DataRoleConfig extends Component {
             unAssignUrl: PGURL,
           }, () => {
             if (this.unAssignTable) {
-              this.unAssignTable.remoteDataRrefresh();
+              this.unAssignTable.remoteDataRefresh();
             }
           });
         }
@@ -109,7 +109,7 @@ class DataRoleConfig extends Component {
           dataRoleGroupId: undefined,
         }, () => {
           if (this.unAssignTable) {
-            this.unAssignTable.remoteDataRrefresh();
+            this.unAssignTable.remoteDataRefresh();
           }
         });
       }
@@ -148,10 +148,10 @@ class DataRoleConfig extends Component {
 
   refreshTableData = () => {
     if (this.unAssignTable) {
-      this.unAssignTable.remoteDataRrefresh();
+      this.unAssignTable.remoteDataRefresh();
     }
     if (this.assignTable) {
-      this.assignTable.remoteDataRrefresh();
+      this.assignTable.remoteDataRefresh();
     }
   }
 

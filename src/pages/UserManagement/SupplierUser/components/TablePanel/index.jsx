@@ -20,7 +20,7 @@ class TablePanel extends Component {
 
   reloadData = _ => {
     if (this.tableRef) {
-      this.tableRef.remoteDataRrefresh();
+      this.tableRef.remoteDataRefresh();
     }
   };
 

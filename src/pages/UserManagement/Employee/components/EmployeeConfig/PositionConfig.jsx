@@ -26,7 +26,7 @@ class PositionConfig extends Component {
       includeSubNode: checked,
     }, () => {
       if (this.unAssignTable) {
-        this.unAssignTable.remoteDataRrefresh();
+        this.unAssignTable.remoteDataRefresh();
       }
     });
   }
@@ -81,7 +81,7 @@ class PositionConfig extends Component {
             organizationId: node.id
           }, () => {
             if (this.unAssignTable) {
-              this.unAssignTable.remoteDataRrefresh();
+              this.unAssignTable.remoteDataRefresh();
             }
           });
         }
@@ -115,10 +115,10 @@ class PositionConfig extends Component {
 
   refreshTableData = () => {
     if (this.unAssignTable) {
-      this.unAssignTable.remoteDataRrefresh();
+      this.unAssignTable.remoteDataRefresh();
     }
     if (this.assignTable) {
-      this.assignTable.remoteDataRrefresh();
+      this.assignTable.remoteDataRefresh();
     }
   }
 

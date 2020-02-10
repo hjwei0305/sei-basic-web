@@ -44,7 +44,7 @@ class TenantAssignedAppModuleItem extends Component {
 
     reloadData = () => {
         if (this.appModuleTableRef) {
-            this.appModuleTableRef.remoteDataRrefresh();
+            this.appModuleTableRef.remoteDataRefresh();
         }
     };
 

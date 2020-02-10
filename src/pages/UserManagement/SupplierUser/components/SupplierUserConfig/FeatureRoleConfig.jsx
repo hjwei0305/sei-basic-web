@@ -29,7 +29,7 @@ class FeatureRoleConfig extends Component {
     }, () => {
       console.log(this.unAssignTable);
       if (this.unAssignTable) {
-        this.unAssignTable.remoteDataRrefresh();
+        this.unAssignTable.remoteDataRefresh();
       }
     });
   }
@@ -97,7 +97,7 @@ class FeatureRoleConfig extends Component {
             unAssignUrl: PGURL,
           }, () => {
             if (this.unAssignTable) {
-              this.unAssignTable.remoteDataRrefresh();
+              this.unAssignTable.remoteDataRefresh();
             }
           });
         }
@@ -108,7 +108,7 @@ class FeatureRoleConfig extends Component {
           featureRoleGroupId: undefined,
         }, () => {
           if (this.unAssignTable) {
-            this.unAssignTable.remoteDataRrefresh();
+            this.unAssignTable.remoteDataRefresh();
           }
         });
       }
@@ -135,10 +135,10 @@ class FeatureRoleConfig extends Component {
 
   refreshTableData = () => {
     if (this.unAssignTable) {
-      this.unAssignTable.remoteDataRrefresh();
+      this.unAssignTable.remoteDataRefresh();
     }
     if (this.assignTable) {
-      this.assignTable.remoteDataRrefresh();
+      this.assignTable.remoteDataRefresh();
     }
   }
 
