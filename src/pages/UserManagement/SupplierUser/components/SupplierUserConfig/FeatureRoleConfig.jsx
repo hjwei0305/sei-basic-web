@@ -5,7 +5,6 @@ import { ExtTable, utils, ExtIcon, ComboGrid, } from 'seid';
 import { Button, Popconfirm, Checkbox, } from "antd";
 import { constants } from "@/utils";
 import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
-// import AssignLayout from './AssignLayout';
 import { AssignLayout } from '@/components';
 
 const { SERVER_PATH } = constants;
@@ -19,11 +18,9 @@ class FeatureRoleConfig extends Component {
     unAssignBtnDisabled: true,
     featureRoleGroupId: null,
     unAssignUrl: PFGURL,
+    assignChildIds: [],
+    unAssignChildIds: [],
   }
-
-  assignChildIds=[]
-
-  unAssignChildIds=[]
 
   handleCheck = (e) => {
     const { checked } = e.target;
@@ -39,11 +36,13 @@ class FeatureRoleConfig extends Component {
 
   handleUnAssign = () => {
     const { onUnAssign, data, } = this.props;
+    const { assignChildIds, } = this.state;
     const { id: parentId, } = data;
     if (onUnAssign) {
-      onUnAssign({ parentId, childIds: this.assignChildIds, }).then(res => {
+      onUnAssign({ parentId, childIds: assignChildIds, }).then(res => {
         this.setState({
           unAssignBtnDisabled: true,
+          assignChildIds: [],
         });
         this.refreshTableData();
       });
@@ -52,11 +51,13 @@ class FeatureRoleConfig extends Component {
 
   handleAssign = () => {
     const { onAssign, data, } = this.props;
+    const { unAssignChildIds, } = this.state;
     const { id: parentId, } = data;
     if (onAssign) {
-      onAssign({ parentId, childIds: this.unAssignChildIds, }).then(res => {
+      onAssign({ parentId, childIds: unAssignChildIds, }).then(res => {
         this.setState({
           assignBtnDisabled: true,
+          unAssignChildIds: [],
         });
         this.refreshTableData();
       });
@@ -143,7 +144,7 @@ class FeatureRoleConfig extends Component {
 
   /** 未分配表格属性 */
   getUnAssignTableProps = () => {
-    const { featureRoleGroupId, unAssignUrl,  } = this.state;
+    const { featureRoleGroupId, unAssignUrl, unAssignChildIds, } = this.state;
     const { data, } = this.props;
     const { id, } = data || {};
     const toolBarProps = {
@@ -161,17 +162,19 @@ class FeatureRoleConfig extends Component {
     return {
       checkbox: true,
       bordered: false,
+      selectedRowKeys: unAssignChildIds,
       columns: this.getCommonColumns(),
       toolBar: toolBarProps,
       onSelectRow: (rowIds) => {
         if (rowIds && rowIds.length) {
-          this.unAssignChildIds = rowIds;
           this.setState({
             assignBtnDisabled: false,
+            unAssignChildIds: rowIds,
           });
         } else {
           this.setState({
             assignBtnDisabled: true,
+            unAssignChildIds: [],
           });
         }
       },
@@ -190,21 +193,24 @@ class FeatureRoleConfig extends Component {
   /** 已分配表格属性 */
   getAssignTableProps = () => {
     const { data, } = this.props;
+    const { assignChildIds, } = this.state;
     const { id, } = data || {};
 
     return {
       checkbox: true,
       bordered: false,
+      selectedRowKeys: assignChildIds,
       columns: this.getCommonColumns(),
       onSelectRow: (rowIds) => {
         if (rowIds && rowIds.length) {
-          this.assignChildIds = rowIds;
           this.setState({
             unAssignBtnDisabled: false,
+            assignChildIds: rowIds,
           });
         } else {
           this.setState({
             unAssignBtnDisabled: true,
+            assignChildIds: [],
           });
         }
       },
