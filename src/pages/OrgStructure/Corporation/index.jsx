@@ -134,7 +134,7 @@ class Corporation extends Component {
         dataIndex: "id",
         className: "action",
         required: true,
-        render: (text, record) => (
+        render: (_, record) => (
           <span className={cls("action-box")}>
             {
               authAction(

@@ -2,7 +2,7 @@ import React, { Component, Fragment, } from 'react';
 import { connect } from 'dva';
 import cls from 'classnames';
 import { isEqual, } from 'lodash';
-import { Button, Popconfirm, message, Tag,  } from "antd";
+import { Button, Popconfirm, Tag,  } from "antd";
 import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
 import { ExtTable, utils, ExtIcon } from 'seid';
 import { constants } from "@/utils";
@@ -35,7 +35,7 @@ class DataDictTypeTable extends Component {
   };
 
   add = _ => {
-    const { dispatch, dataDict, } = this.props;
+    const { dispatch, } = this.props;
     dispatch({
       type: "dataDict/updateState",
       payload: {
@@ -119,9 +119,6 @@ class DataDictTypeTable extends Component {
   };
 
   getExtableProps = () => {
-    const { list } = this.state;
-    const { loading, dataDict,  } = this.props;
-    const { currDictType, } = dataDict;
     const columns = [
       {
         title: formatMessage({ id: "global.operation", defaultMessage: "操作" }),
@@ -131,7 +128,7 @@ class DataDictTypeTable extends Component {
         dataIndex: "id",
         className: "action",
         required: true,
-        render: (text, record) => (
+        render: (_, record) => (
           <span className={cls("action-box")}>
             {
               authAction(

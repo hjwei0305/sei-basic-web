@@ -1,4 +1,4 @@
-import React, { Component, Fragment, } from 'react';
+import React, { Component, } from 'react';
 import withRouter from 'umi/withRouter';
 import { connect } from 'dva';
 import cls from 'classnames';
