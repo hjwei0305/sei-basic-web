@@ -16,11 +16,9 @@ class UserConfig extends Component {
     unAssignBtnDisabled: true,
     includeSubNode: false,
     organizationId: null,
+    assignParentIds: [],
+    unAssignParentIds: [],
   }
-
-  assignParentIds=[]
-
-  unAssignParentIds=[]
 
   handleCheck = (e) => {
     const { checked } = e.target;
@@ -36,11 +34,13 @@ class UserConfig extends Component {
 
   handleUnAssign = () => {
     const { onUnAssign, data, } = this.props;
+    const { assignParentIds, } = this.state;
     const { id: childId, } = data;
     if (onUnAssign) {
-      onUnAssign({ childId, parentIds: this.assignParentIds, }).then(res => {
+      onUnAssign({ childId, parentIds: assignParentIds, }).then(res => {
         this.setState({
           unAssignBtnDisabled: true,
+          assignParentIds: [],
         });
         this.refreshTableData();
       });
@@ -49,11 +49,13 @@ class UserConfig extends Component {
 
   handleAssign = () => {
     const { onAssign, data, } = this.props;
+    const { unAssignParentIds, } = this.state;
     const { id: childId, } = data;
     if (onAssign) {
-      onAssign({ childId, parentIds: this.unAssignParentIds, }).then(res => {
+      onAssign({ childId, parentIds: unAssignParentIds, }).then(res => {
         this.setState({
           assignBtnDisabled: true,
+          unAssignParentIds: [],
         });
         this.refreshTableData();
       });
@@ -123,7 +125,7 @@ class UserConfig extends Component {
 
   /** 未分配表格属性 */
   getUnAssignTableProps = () => {
-    const { includeSubNode, organizationId: orgId, } = this.state;
+    const { includeSubNode, organizationId: orgId, unAssignParentIds, } = this.state;
     const { data, } = this.props;
     const { id, organizationId, } = data || {};
     const toolBarProps = {
@@ -142,17 +144,19 @@ class UserConfig extends Component {
     return {
       checkbox: true,
       bordered: false,
+      selectedRowKeys: unAssignParentIds,
       columns: this.getCommonColumns(),
       toolBar: toolBarProps,
       onSelectRow: (rowIds) => {
         if (rowIds && rowIds.length) {
-          this.unAssignParentIds = rowIds;
           this.setState({
             assignBtnDisabled: false,
+            unAssignParentIds: rowIds,
           });
         } else {
           this.setState({
             assignBtnDisabled: true,
+            unAssignParentIds: [],
           });
         }
       },
@@ -171,21 +175,24 @@ class UserConfig extends Component {
   /** 已分配表格属性 */
   getAssignTableProps = () => {
     const { data, } = this.props;
+    const { assignParentIds, } = this.state;
     const { id, } = data || {};
 
     return {
       checkbox: true,
       bordered: false,
+      selectedRowKeys: assignParentIds,
       columns: this.getCommonColumns(),
       onSelectRow: (rowIds) => {
         if (rowIds && rowIds.length) {
-          this.assignParentIds = rowIds;
           this.setState({
             unAssignBtnDisabled: false,
+            assignParentIds: rowIds,
           });
         } else {
           this.setState({
             unAssignBtnDisabled: true,
+            assignParentIds: [],
           });
         }
       },
