@@ -200,7 +200,7 @@ class TenantAssignedAppModuleItem extends Component {
                         icon='plus'
                         onClick={this.showAssignAppModule}
                     >
-                        应用模块
+                        分配应用模块
                     </Button>
                     <Button onClick={this.reloadData}>
                         <FormattedMessage id="global.refresh" defaultMessage="刷新" />
