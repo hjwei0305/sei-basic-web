@@ -1,10 +1,7 @@
 import React, { Component, Fragment, } from 'react';
-import { Card, Row, Col, } from 'antd';
-import cls from 'classnames';
-import { ExtTable, utils, ExtIcon, ComboTree, } from 'seid';
-import { Button, Popconfirm, Checkbox, } from "antd";
+import { ExtTable, ComboTree, } from 'seid';
+import { Button, Checkbox, } from "antd";
 import { constants } from "@/utils";
-import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
 import { AssignLayout } from '@/components';
 
 const { SERVER_PATH } = constants;
@@ -25,7 +22,6 @@ class UserConfig extends Component {
     this.setState({
       includeSubNode: checked,
     }, () => {
-      console.log(this.unAssignTable);
       if (this.unAssignTable) {
         this.unAssignTable.remoteDataRefresh();
       }
@@ -37,7 +33,7 @@ class UserConfig extends Component {
     const { assignParentIds, } = this.state;
     const { id: childId, } = data;
     if (onUnAssign) {
-      onUnAssign({ childId, parentIds: assignParentIds, }).then(res => {
+      onUnAssign({ childId, parentIds: assignParentIds, }).then(_ => {
         this.setState({
           unAssignBtnDisabled: true,
           assignParentIds: [],
@@ -52,7 +48,7 @@ class UserConfig extends Component {
     const { unAssignParentIds, } = this.state;
     const { id: childId, } = data;
     if (onAssign) {
-      onAssign({ childId, parentIds: unAssignParentIds, }).then(res => {
+      onAssign({ childId, parentIds: unAssignParentIds, }).then(_ => {
         this.setState({
           assignBtnDisabled: true,
           unAssignParentIds: [],

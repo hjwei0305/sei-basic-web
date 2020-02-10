@@ -5,8 +5,6 @@ import { constants } from "@/utils";
 import cls from 'classnames';
 import DataRoleAssign from '@/components/DataRoleAssign';
 import FeatureRoleAssign from '@/components/FeatureRoleAssign';
-// import FeatureRoleConfig from './FeatureRoleConfig';
-// import DataRoleConfig from './DataRoleConfig';
 
 import styles from './index.less';
 

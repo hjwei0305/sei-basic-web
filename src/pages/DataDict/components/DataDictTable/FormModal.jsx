@@ -54,7 +54,7 @@ class FormModal extends PureComponent {
   }
 
   render() {
-    const { form, save, saving, visible, onCancel, rowData, dictType, } = this.props;
+    const { form, saving, visible, onCancel, rowData, dictType, } = this.props;
     const { getFieldDecorator } = form;
 
     const formItemLayout = {

@@ -1,5 +1,4 @@
 import React, { PureComponent } from "react";
-import { Form, Input, Checkbox, } from "antd";
 import { ExtModal, } from 'seid';
 import FormPanel from '../FormPanel';
 

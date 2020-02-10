@@ -1,10 +1,7 @@
 import React, { PureComponent } from "react";
 import { Form, Input, Checkbox, } from "antd";
 import { formatMessage, } from "umi-plugin-react/locale";
-import { ExtModal, ComboGrid } from 'seid';
-import { constants } from '@/utils';
-
-const { SERVER_PATH } = constants;
+import { ExtModal } from 'seid';
 
 const FormItem = Form.Item;
 const formItemLayout = {

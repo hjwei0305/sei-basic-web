@@ -1,7 +1,7 @@
 import React, { PureComponent, Fragment } from "react";
-import { Form, Input, Checkbox, InputNumber, Button, } from "antd";
+import { Form, Input, InputNumber, Button, } from "antd";
 import { formatMessage, FormattedMessage, } from "umi-plugin-react/locale";
-import { ExtModal, ComboGrid, ScrollBar, } from 'seid';
+import { ComboGrid, ScrollBar, } from 'seid';
 import { utils } from 'seid';
 import { isEqual, } from 'lodash';
 import { connect } from 'dva';

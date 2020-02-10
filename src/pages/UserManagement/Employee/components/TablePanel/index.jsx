@@ -2,9 +2,9 @@ import React, { Component, Fragment, } from 'react';
 import { connect } from 'dva';
 import cls from 'classnames';
 import { isEqual, } from 'lodash';
-import { Button, Popconfirm, message, } from "antd";
+import { Button, message, } from "antd";
 import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
-import { ExtTable, utils, ExtIcon } from 'seid'
+import { ExtTable, utils, ExtIcon } from 'seid';
 import { constants } from "@/utils";
 import FormModal from "./FormModal";
 import CopyModal from './CopyModal';

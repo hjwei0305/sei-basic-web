@@ -6,7 +6,6 @@
 */
 import {
   del,
-  getList,
   save,
   listAllTree,
   findByOrganizationId,

@@ -16,7 +16,7 @@ import { message } from "antd";
 import { formatMessage } from "umi-plugin-react/locale";
 import { utils } from 'seid';
 
-const { pathMatchRegexp, dvaModel } = utils;
+const { dvaModel } = utils;
 const { modelExtend, model } = dvaModel;
 
 export default modelExtend(model, {
