@@ -6,6 +6,7 @@ import TreePanel from './TreePanel';
 import AssignLayout from './Layout/AssignLayout';
 import TreeView from './TreeView';
 import CascadeLayout from './Layout/CascadeLayout';
+import ColumnLayout from './Layout/ColumnLayout';
 import PageWrapper from './PageWrapper';
 
 export {
@@ -17,5 +18,6 @@ export {
   TreeView,
   AssignLayout,
   CascadeLayout,
+  ColumnLayout,
   PageWrapper
 };

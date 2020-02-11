@@ -6,7 +6,10 @@ import styles from './index.less';
 export default class AssignLayout extends PureComponent {
 
   renderChildren = () => {
-    const { children, } = this.props;
+    const { children, title=['未分配', '已分配'], extra=[null, null,], layout=[11, 2, 11], } = this.props;
+    const [leftTitle, rightTitle,] = title;
+    const [leftSpan, centerSpan, rightSpan,] = layout;
+    const [leftExtra, rightExtra,] = extra;
     const bordered = false;
     if (!children) {
       return null;
@@ -17,23 +20,23 @@ export default class AssignLayout extends PureComponent {
       if (['left', 'center', 'right'].includes(slot)) {
         if (slot === 'left') {
           return (
-            <Col key={slot} className={cls('layout-col')} span={11}>
-              <Card title="未分配" bordered={bordered} >
+            <Col key={slot} className={cls('layout-col')} span={leftSpan}>
+              <Card title={leftTitle} bordered={bordered} extra={leftExtra} >
                 {child}
               </Card>
             </Col>
           );
         }
         if (slot === 'center') {
-          return (<Col key={slot} className={cls('layout-col', 'layout-col-center')} span={2}>
+          return (<Col key={slot} className={cls('layout-col', 'layout-col-center')} span={centerSpan}>
             <div className={cls('opt-wrapper')}>
               {child}
             </div>
           </Col>);
         }
         if (slot === 'right') {
-          return (<Col key={slot} className={cls('layout-col')} span={11}>
-            <Card title="已分配" bordered={bordered}>
+          return (<Col key={slot} className={cls('layout-col')} span={rightSpan}>
+            <Card title={rightTitle} bordered={bordered} extra={rightExtra}>
               {child}
             </Card>
           </Col>);

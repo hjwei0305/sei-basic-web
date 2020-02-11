@@ -1,13 +1,15 @@
 import React from 'react';
 import { connect } from 'dva';
 import { Tabs, Button, } from 'antd';
-import UserConfig from './UserConfig';
-import FeatureRoleConfig from './FeatureRoleConfig';
-import DataRoleConfig from './DataRoleConfig';
 import cls from 'classnames';
+import DataRoleAssign from '@/components/DataRoleAssign';
+import FeatureRoleAssign from '@/components/FeatureRoleAssign';
+import { constants } from "@/utils";
+import UserConfig from './UserConfig';
 
 import styles from './index.less';
 
+const { SERVER_PATH } = constants;
 const { TabPane } = Tabs;
 
 @connect(({ position, loading, }) => ({ position, loading, }))
@@ -74,17 +76,29 @@ class PostionConfig extends React.Component {
             />
           </TabPane>
           <TabPane tab={`【${rowData.name}】配置功能角色`} key="2">
-            <FeatureRoleConfig
+            <FeatureRoleAssign
               data={rowData}
               onAssign={(params) => this.handleAssign('FeatureRole', params)}
               onUnAssign={(params) => this.handleUnAssign('FeatureRole', params)}
+              unAssignCfg={{
+                unAssignedUrl: `${SERVER_PATH}/sei-basic/positionFeatureRole/getUnassigned`,
+                unAssignedByIdUrl: `${SERVER_PATH}/sei-basic/position/getCanAssignedFeatureRoles`,
+                byIdKey: 'positionId',
+              }}
+              assginCfg={{ url: `${SERVER_PATH}/sei-basic/positionFeatureRole/getChildrenFromParentId`, }}
             />
           </TabPane>
           <TabPane tab={`【${rowData.name}】配置用户角色`} key="3">
-            <DataRoleConfig
+            <DataRoleAssign
               data={rowData}
               onAssign={(params) => this.handleAssign('DataRole', params)}
               onUnAssign={(params) => this.handleUnAssign('DataRole', params)}
+              unAssignCfg={{
+                unAssignedUrl: `${SERVER_PATH}/sei-basic/positionDataRole/getUnassigned`,
+                unAssignedByIdUrl: `${SERVER_PATH}/sei-basic/position/getCanAssignedDataRoles`,
+                byIdKey: 'positionId',
+              }}
+              assginCfg={{ url: `${SERVER_PATH}/sei-basic/positionDataRole/getChildrenFromParentId`, }}
             />
           </TabPane>
         </Tabs>

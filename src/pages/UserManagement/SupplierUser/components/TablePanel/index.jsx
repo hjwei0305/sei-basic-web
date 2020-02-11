@@ -1,8 +1,7 @@
 import React, { Component, Fragment, } from 'react';
 import { connect } from 'dva';
 import cls from 'classnames';
-import { isEqual, } from 'lodash';
-import { Button, Popconfirm, message, Tag, } from "antd";
+import { Button, Popconfirm, Tag, } from "antd";
 import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
 import { ExtTable, utils, ExtIcon } from 'seid'
 import { constants } from "@/utils";

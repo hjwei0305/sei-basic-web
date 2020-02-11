@@ -2,17 +2,11 @@
 * @Author: zp
 * @Date:   2020-02-02 11:57:38
 * @Last Modified by:   zp
-* @Last Modified time: 2020-02-10 10:07:12
+* @Last Modified time: 2020-02-10 16:14:58
 */
 import {
   del,
-  getList,
   save,
-  listAllTree,
-  findByOrganizationId,
-  copyToOrgNodes,
-  assignEmployee,
-  unAssignEmployee,
   assignFeatureRole,
   unAssignFeatureRole,
   assignDataRole,
@@ -22,7 +16,7 @@ import { message } from "antd";
 import { formatMessage } from "umi-plugin-react/locale";
 import { utils } from 'seid';
 
-const { pathMatchRegexp, dvaModel } = utils;
+const { dvaModel } = utils;
 const { modelExtend, model } = dvaModel;
 
 export default modelExtend(model, {
@@ -35,54 +29,9 @@ export default modelExtend(model, {
     showCopyModal: false,
     treeData: [],
     currNode: null,
-    showEmployeeConfig: false,
+    showConfig: false,
   },
-  // subscriptions: {
-  //   setup({ dispatch, history }) {
-  //     history.listen(location => {
-  //       if (pathMatchRegexp("/userManagement/supplierUser", location.pathname)) {
-  //         dispatch({
-  //           type: "queryTree"
-  //         });
-  //       }
-  //     });
-  //   }
-  // },
   effects: {
-    * queryTree({ payload }, { call, put }) {
-      const ds = yield call(listAllTree, payload);
-      if (ds.success) {
-        yield put({
-          type: "updateState",
-          payload: {
-            treeData: ds.data
-          }
-        });
-      } else {
-        throw ds;
-      }
-    },
-    * updateCurrNode ({ payload, }, { put, }) {
-      yield put({
-        type: "updateState",
-        payload,
-      });
-
-      return payload;
-    },
-    * queryListByOrgId({ payload }, { call, put }) {
-      const re = yield call(findByOrganizationId, payload);
-      if (re.success) {
-        yield put({
-          type: "updateState",
-          payload: {
-            list: re.data
-          }
-        });
-      } else {
-        throw re;
-      }
-    },
     * save({ payload }, { call }) {
       const re = yield call(save, payload);
       message.destroy();

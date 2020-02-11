@@ -1,25 +1,25 @@
 import React, { Component, Fragment, } from 'react';
-import { Card, Row, Col, } from 'antd';
-import cls from 'classnames';
-import { ExtTable, utils, ExtIcon, ComboGrid, } from 'seid';
-import { Button, Popconfirm, Checkbox, } from "antd";
-import { constants } from "@/utils";
-import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
+import { Button, } from "antd";
+import { ExtTable, ComboGrid, } from 'seid';
 import { AssignLayout } from '@/components';
+import { constants } from "@/utils";
 
 const { SERVER_PATH } = constants;
-const PFGURL = 'userFeatureRole/getUnassigned';
-const PGURL = 'employee/getCanAssignedFeatureRoles';
 
 class FeatureRoleConfig extends Component {
 
-  state = {
-    assignBtnDisabled: true,
-    unAssignBtnDisabled: true,
-    featureRoleGroupId: null,
-    unAssignUrl: PFGURL,
-    assignChildIds: [],
-    unAssignChildIds: [],
+  constructor(props) {
+    super(props);
+    const { unAssignCfg, } = props;
+    const { unAssignedUrl, } = unAssignCfg;
+    this.state = {
+      assignBtnDisabled: true,
+      unAssignBtnDisabled: true,
+      featureRoleGroupId: null,
+      unAssignUrl: unAssignedUrl,
+      assignChildIds: [],
+      unAssignChildIds: [],
+    };
   }
 
   handleCheck = (e) => {
@@ -27,7 +27,6 @@ class FeatureRoleConfig extends Component {
     this.setState({
       includeSubNode: checked,
     }, () => {
-      console.log(this.unAssignTable);
       if (this.unAssignTable) {
         this.unAssignTable.remoteDataRefresh();
       }
@@ -51,7 +50,7 @@ class FeatureRoleConfig extends Component {
 
   handleAssign = () => {
     const { onAssign, data, } = this.props;
-    const { unAssignChildIds, } = this.state;
+    const { unAssignChildIds } = this.state;
     const { id: parentId, } = data;
     if (onAssign) {
       onAssign({ parentId, childIds: unAssignChildIds, }).then(res => {
@@ -65,6 +64,9 @@ class FeatureRoleConfig extends Component {
   }
 
   getComboGridProps = () => {
+    const { unAssignCfg, } = this.props;
+    const { unAssignedUrl, unAssignedByIdUrl, } = unAssignCfg;
+
     return {
       allowClear: true,
       placeholder: '请选择功能角色组',
@@ -94,7 +96,7 @@ class FeatureRoleConfig extends Component {
         if (rowData) {
           this.setState({
             featureRoleGroupId: rowData.id,
-            unAssignUrl: PGURL,
+            unAssignUrl: unAssignedByIdUrl,
           }, () => {
             if (this.unAssignTable) {
               this.unAssignTable.remoteDataRefresh();
@@ -104,7 +106,7 @@ class FeatureRoleConfig extends Component {
       },
       afterClear: () => {
         this.setState({
-          unAssignUrl: PFGURL,
+          unAssignUrl: unAssignedUrl,
           featureRoleGroupId: undefined,
         }, () => {
           if (this.unAssignTable) {
@@ -144,8 +146,9 @@ class FeatureRoleConfig extends Component {
 
   /** 未分配表格属性 */
   getUnAssignTableProps = () => {
-    const { featureRoleGroupId, unAssignUrl, unAssignChildIds, } = this.state;
-    const { data, } = this.props;
+    const { featureRoleGroupId, unAssignUrl, unAssignChildIds } = this.state;
+    const { data, unAssignCfg, } = this.props;
+    const { unAssignedUrl, byIdKey, } = unAssignCfg;
     const { id, } = data || {};
     const toolBarProps = {
       layout: {
@@ -179,21 +182,22 @@ class FeatureRoleConfig extends Component {
         }
       },
       store: {
-        params: unAssignUrl === PFGURL ? {
+        params: unAssignUrl === unAssignedUrl ? {
           parentId: id,
         } : {
-          userId: id,
+          [byIdKey]: id,
           featureRoleGroupId,
         },
-        url: `${SERVER_PATH}/sei-basic/${unAssignUrl}`,
+        url: unAssignUrl,
       },
     };
   }
 
   /** 已分配表格属性 */
   getAssignTableProps = () => {
-    const { data, } = this.props;
+    const { data, assginCfg, } = this.props;
     const { assignChildIds, } = this.state;
+    const { url } = assginCfg;
     const { id, } = data || {};
 
     return {
@@ -219,7 +223,7 @@ class FeatureRoleConfig extends Component {
         params: {
           parentId: id,
         },
-        url: `${SERVER_PATH}/sei-basic/userFeatureRole/getChildrenFromParentId`,
+        url,
       },
     };
   }

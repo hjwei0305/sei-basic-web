@@ -78,12 +78,6 @@ class FormModal extends PureComponent {
               initialValue: parentData && parentData.id,
             })(<Input />)}
           </FormItem>
-{/*          <FormItem
-            style={{display: "none"}}>
-            {getFieldDecorator('organizationCode', {
-              initialValue: parentData && parentData.code,
-            })(<Input />)}
-          </FormItem>*/}
         </Form>
       </ExtModal>
     );

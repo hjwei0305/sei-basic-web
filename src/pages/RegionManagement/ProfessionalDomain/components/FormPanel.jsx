@@ -1,14 +1,12 @@
-import React, { PureComponent, Fragment } from "react";
-import { Form, Input, Checkbox, InputNumber, Button, } from "antd";
+import React, { PureComponent, } from "react";
+import { Form, Input, InputNumber, Button, } from "antd";
 import { formatMessage, FormattedMessage, } from "umi-plugin-react/locale";
-import { ExtModal, ComboGrid, ScrollBar, } from 'seid';
+import { ScrollBar, } from 'seid';
 import { utils } from 'seid';
 import { isEqual, } from 'lodash';
 import { connect } from 'dva';
-import { constants } from '@/utils';
 
 const { objectAssignHave } = utils;
-const { SERVER_PATH } = constants;
 const FormItem = Form.Item;
 const buttonWrapper = { span: 18, offset: 6 };
 

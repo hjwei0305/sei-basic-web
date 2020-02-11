@@ -1,25 +1,25 @@
 import React, { Component, Fragment, } from 'react';
-import { Card, Row, Col, } from 'antd';
-import cls from 'classnames';
-import { ExtTable, utils, ExtIcon, ComboGrid, } from 'seid';
-import { Button, Popconfirm, Checkbox, } from "antd";
-import { constants } from "@/utils";
-import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
+import { ExtTable, ComboGrid, } from 'seid';
+import { Button,} from "antd";
 import { AssignLayout } from '@/components';
+import { constants } from "@/utils";
 
 const { SERVER_PATH } = constants;
-const PFGURL = 'userDataRole/getUnassigned';
-const PGURL = 'employee/getCanAssignedDataRoles';
 
-class DataRoleConfig extends Component {
+class DataRoleAssign extends Component {
 
-  state = {
-    assignBtnDisabled: true,
-    unAssignBtnDisabled: true,
-    dataRoleGroupId: null,
-    unAssignUrl: PFGURL,
-    assignChildIds: [],
-    unAssignChildIds: [],
+  constructor(props) {
+    super(props);
+    const { unAssignCfg, } = props;
+    const { unAssignedUrl, } = unAssignCfg;
+    this.state = {
+      assignBtnDisabled: true,
+      unAssignBtnDisabled: true,
+      dataRoleGroupId: null,
+      unAssignUrl: unAssignedUrl,
+      assignChildIds: [],
+      unAssignChildIds: [],
+    }
   }
 
   handleCheck = (e) => {
@@ -65,6 +65,8 @@ class DataRoleConfig extends Component {
   }
 
   getComboGridProps = () => {
+    const { unAssignCfg, } = this.props;
+    const { unAssignedUrl, unAssignedByIdUrl, } = unAssignCfg;
 
     return {
       allowClear: true,
@@ -95,7 +97,7 @@ class DataRoleConfig extends Component {
         if (rowData) {
           this.setState({
             dataRoleGroupId: rowData.id,
-            unAssignUrl: PGURL,
+            unAssignUrl: unAssignedByIdUrl,
           }, () => {
             if (this.unAssignTable) {
               this.unAssignTable.remoteDataRefresh();
@@ -105,7 +107,7 @@ class DataRoleConfig extends Component {
       },
       afterClear: () => {
         this.setState({
-          unAssignUrl: PFGURL,
+          unAssignUrl: unAssignedUrl,
           dataRoleGroupId: undefined,
         }, () => {
           if (this.unAssignTable) {
@@ -158,7 +160,8 @@ class DataRoleConfig extends Component {
   /** 未分配表格属性 */
   getUnAssignTableProps = () => {
     const { dataRoleGroupId, unAssignUrl, unAssignChildIds, } = this.state;
-    const { data, } = this.props;
+    const { data, unAssignCfg, } = this.props;
+    const { unAssignedUrl, byIdKey, } = unAssignCfg;
     const { id, } = data || {};
     const toolBarProps = {
       layout: {
@@ -192,21 +195,22 @@ class DataRoleConfig extends Component {
         }
       },
       store: {
-        params: unAssignUrl === PFGURL ? {
+        params: unAssignUrl === unAssignedUrl ? {
           parentId: id,
         } : {
-          userId: id,
+          [byIdKey]: id,
           dataRoleGroupId,
         },
-        url: `${SERVER_PATH}/sei-basic/${unAssignUrl}`,
+        url: unAssignUrl,
       },
     };
   }
 
   /** 已分配表格属性 */
   getAssignTableProps = () => {
-    const { data, } = this.props;
+    const { data, assginCfg } = this.props;
     const { assignChildIds, } = this.state;
+    const { url } = assginCfg;
     const { id, } = data || {};
 
     return {
@@ -232,7 +236,7 @@ class DataRoleConfig extends Component {
         params: {
           parentId: id,
         },
-        url: `${SERVER_PATH}/sei-basic/positionDataRole/getChildrenFromParentId`,
+        url,
       },
     };
   }
@@ -269,4 +273,4 @@ class DataRoleConfig extends Component {
   }
 }
 
-export default DataRoleConfig;
+export default DataRoleAssign;

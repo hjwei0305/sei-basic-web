@@ -1,10 +1,7 @@
 import React, { Component, Fragment, } from 'react';
-import { Card, Row, Col, } from 'antd';
-import cls from 'classnames';
-import { ExtTable, utils, ExtIcon, ComboTree, } from 'seid';
-import { Button, Popconfirm, Checkbox, } from "antd";
+import { ExtTable, ComboTree, } from 'seid';
+import { Button, Checkbox, } from "antd";
 import { constants } from "@/utils";
-import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
 import { AssignLayout } from '@/components';
 
 const { SERVER_PATH } = constants;

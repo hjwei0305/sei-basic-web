@@ -1,6 +1,5 @@
 import React, { PureComponent } from "react";
 import { Form, Input, Checkbox,} from "antd";
-import { formatMessage, } from "umi-plugin-react/locale";
 import { ExtModal, ComboTree, utils } from 'seid';
 import { constants } from '@/utils';
 

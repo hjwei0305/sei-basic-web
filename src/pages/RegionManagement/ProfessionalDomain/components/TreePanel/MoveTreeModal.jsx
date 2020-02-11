@@ -1,6 +1,5 @@
 import React, { PureComponent } from "react";
-import { Form, Input, Checkbox, } from "antd";
-import { ExtModal, ComboGrid } from 'seid';
+import { ExtModal } from 'seid';
 import TreeView from '@/components/TreeView';
 
 class MoveTreeModal extends PureComponent {

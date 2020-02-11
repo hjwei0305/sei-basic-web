@@ -1,9 +1,8 @@
-import React, { Component, Fragment, } from 'react';
+import React, { Component, } from 'react';
 import withRouter from 'umi/withRouter';
 import { connect } from 'dva';
 import cls from 'classnames';
-import { Row, Col, Spin, Empty } from "antd";
-import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
+import { Spin, Empty } from "antd";
 import TreePanel from './components/TreePanel';
 import FormPanel from './components/FormPanel';
 import { CascadeLayout, PageWrapper} from '@/components';

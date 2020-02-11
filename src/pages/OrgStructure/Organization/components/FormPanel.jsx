@@ -1,7 +1,6 @@
 import React, { PureComponent } from "react";
 import { Form, Input, Checkbox, InputNumber, Button, } from "antd";
 import { formatMessage, FormattedMessage, } from "umi-plugin-react/locale";
-import { ExtModal } from 'seid'
 import { connect } from 'dva';
 
 const FormItem = Form.Item;
