@@ -13,16 +13,16 @@ import styles from './index.less';
 
 const Search = Input.Search;
 
-@connect(({ role, roleGroup, loading }) => ({ role, roleGroup, loading }))
+@connect(({ dataRole, dataRoleGroup, loading }) => ({ dataRole, dataRoleGroup, loading }))
 class Role extends Component {
 
     constructor(props) {
         super(props);
-        const { roleGroup } = this.props;
+        const { dataRoleGroup } = this.props;
         this.state = {
             listData: [],
             delRoleId: null,
-            currentRoleGroup: roleGroup.currentRoleGroup,
+            currentRoleGroup: dataRoleGroup.currentRoleGroup,
         };
     }
 
@@ -35,15 +35,15 @@ class Role extends Component {
     };
 
     componentDidUpdate() {
-        const { role, roleGroup } = this.props;
-        if (!isEqual(this.state.currentRoleGroup, roleGroup.currentRoleGroup)) {
-            const { currentRoleGroup } = roleGroup;
+        const { dataRole, dataRoleGroup } = this.props;
+        if (!isEqual(this.state.currentRoleGroup, dataRoleGroup.currentRoleGroup)) {
+            const { currentRoleGroup } = dataRoleGroup;
             this.setState({
                 currentRoleGroup
             }, this.loadRoleList);
         }
-        if (!isEqual(this.data, role.listData)) {
-            const { listData } = role;
+        if (!isEqual(this.data, dataRole.listData)) {
+            const { listData } = dataRole;
             this.data = [...listData];
             this.setState({
                 listData,
@@ -56,7 +56,7 @@ class Role extends Component {
         if (currentRoleGroup) {
             const { dispatch } = this.props;
             dispatch({
-                type: 'role/getDataRoleList',
+                type: 'dataRole/getDataRoleList',
                 payload: {
                     roleGroupId: currentRoleGroup.id,
                 }
@@ -84,7 +84,7 @@ class Role extends Component {
     saveDataRole = (data, handlerPopoverHide) => {
         const { dispatch } = this.props;
         dispatch({
-            type: "role/saveDataRole",
+            type: "dataRole/saveDataRole",
             payload: {
                 ...data
             },
@@ -104,7 +104,7 @@ class Role extends Component {
             delRoleId: data.id
         }, _ => {
             dispatch({
-                type: "role/delDataRole",
+                type: "dataRole/delDataRole",
                 payload: {
                     id: data.id
                 },
@@ -124,7 +124,7 @@ class Role extends Component {
         e && e.stopPropagation();
         const { dispatch } = this.props;
         dispatch({
-            type: 'role/updateState',
+            type: 'dataRole/updateState',
             payload: {
                 currentRole,
             }
@@ -179,12 +179,12 @@ class Role extends Component {
     };
 
     render() {
-        const { loading, role, roleGroup } = this.props;
-        const { currentRole } = role;
+        const { loading, dataRole, dataRoleGroup } = this.props;
+        const { currentRole } = dataRole;
         const { listData, delRoleId } = this.state;
-        const listLoading = loading.effects["role/getDataRoleList"];
-        const saving = loading.effects["role/saveDataRole"];
-        const { currentRoleGroup } = roleGroup;
+        const listLoading = loading.effects["dataRole/getDataRoleList"];
+        const saving = loading.effects["dataRole/saveDataRole"];
+        const { currentRoleGroup } = dataRoleGroup;
         const dataAuthorTypeProps = {
             currentRole,
         };
@@ -252,7 +252,7 @@ class Role extends Component {
                                                             onConfirm={(e) => this.delDataRole(item, e)}
                                                         >
                                                             {
-                                                                loading.effects["role/delDataRole"] && delRoleId === item.id
+                                                                loading.effects["dataRole/delDataRole"] && delRoleId === item.id
                                                                     ? <ExtIcon className={cls('del', 'action-item')} type="loading" antd />
                                                                     : <ExtIcon className={cls('del', 'action-item')} type="delete" antd />
                                                             }

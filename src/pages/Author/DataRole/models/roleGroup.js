@@ -7,7 +7,7 @@ const { pathMatchRegexp, dvaModel } = utils;
 const { modelExtend, model } = dvaModel;
 
 export default modelExtend(model, {
-  namespace: "roleGroup",
+  namespace: "dataRoleGroup",
 
   state: {
     listData: [],

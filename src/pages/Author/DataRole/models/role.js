@@ -17,7 +17,7 @@ const { dvaModel } = utils;
 const { modelExtend, model } = dvaModel;
 
 export default modelExtend(model, {
-  namespace: "role",
+  namespace: "dataRole",
 
   state: {
     listData: [],

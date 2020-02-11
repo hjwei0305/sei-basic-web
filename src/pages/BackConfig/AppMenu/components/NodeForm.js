@@ -162,7 +162,6 @@ class NodeForm extends Component {
 
     getFormTitle = () => {
         const { editData } = this.props;
-        console.log(editData);
         let title = '';
         if (editData) {
             if (editData.parentId) {

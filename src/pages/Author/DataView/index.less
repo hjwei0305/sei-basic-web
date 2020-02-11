@@ -19,6 +19,7 @@
         .header-tool-box {
           display: flex;
           align-items: center;
+          justify-content: flex-end;
           height: 42px;
           line-height: 42px;
           position: relative;
@@ -111,6 +112,35 @@
                 }
               }
             }
+          }
+        }
+      }
+    }
+    .blank-empty {
+      display: flex;
+      position: relative;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+      background-color: @white;
+      height: 100%;
+    }
+    .role-list-body {
+      .blank-empty {
+        display: block;
+        text-align: center;
+        .ant-empty-image {
+          margin-top: 20%;
+        }
+      }
+    }
+    .main-content {
+      .blank-empty {
+        .ant-empty-image {
+          height: 220px;
+          img {
+            height: 220px;
+            width: 220px;
           }
         }
       }

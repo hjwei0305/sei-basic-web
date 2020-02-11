@@ -14,7 +14,7 @@ import styles from "./index.less";
 const Search = Input.Search;
 
 
-@connect(({ roleGroup, loading }) => ({ roleGroup, loading }))
+@connect(({ dataRoleGroup, loading }) => ({ dataRoleGroup, loading }))
 class FeatureRole extends Component {
 
     constructor(props) {
@@ -34,10 +34,10 @@ class FeatureRole extends Component {
     static data = [];
 
     componentDidUpdate() {
-        const { roleGroup } = this.props;
-        if (!isEqual(this.data, roleGroup.listData)) {
+        const { dataRoleGroup } = this.props;
+        if (!isEqual(this.data, dataRoleGroup.listData)) {
             const { pagination } = this.state;
-            const { listData } = roleGroup;
+            const { listData } = dataRoleGroup;
             this.data = [...listData];
             this.setState({
                 listData,
@@ -74,21 +74,21 @@ class FeatureRole extends Component {
     reloadRoleGroupData = _ => {
         const { dispatch } = this.props;
         dispatch({
-            type: "roleGroup/getRoleGroupList"
+            type: "dataRoleGroup/getRoleGroupList"
         });
     };
 
     saveRoleGroup = (data, handlerPopoverHide) => {
         const { dispatch } = this.props;
         dispatch({
-            type: "roleGroup/saveRoleGroup",
+            type: "dataRoleGroup/saveRoleGroup",
             payload: {
                 ...data
             },
             callback: res => {
                 if (res.success) {
                     dispatch({
-                        type: "roleGroup/getRoleGroupList"
+                        type: "dataRoleGroup/getRoleGroupList"
                     });
                     handlerPopoverHide && handlerPopoverHide();
                 }
@@ -103,7 +103,7 @@ class FeatureRole extends Component {
             delGroupId: data.id
         }, _ => {
             dispatch({
-                type: "roleGroup/delRoleGroup",
+                type: "dataRoleGroup/delRoleGroup",
                 payload: {
                     id: data.id
                 },
@@ -143,7 +143,7 @@ class FeatureRole extends Component {
         e && e.stopPropagation();
         const { dispatch } = this.props;
         dispatch({
-            type: 'roleGroup/updateState',
+            type: 'dataRoleGroup/updateState',
             payload: {
                 currentRoleGroup
             }
@@ -158,11 +158,11 @@ class FeatureRole extends Component {
     };
 
     render() {
-        const { loading, roleGroup } = this.props;
-        const { currentRoleGroup } = roleGroup;
+        const { loading, dataRoleGroup } = this.props;
+        const { currentRoleGroup } = dataRoleGroup;
         const { listData, pagination, delGroupId } = this.state;
-        const listLoading = loading.effects["roleGroup/getRoleGroupList"];
-        const saving = loading.effects["roleGroup/saveRoleGroup"];
+        const listLoading = loading.effects["dataRoleGroup/getRoleGroupList"];
+        const saving = loading.effects["dataRoleGroup/saveRoleGroup"];
         const roleProps = {
             currentRoleGroup,
         };
@@ -223,7 +223,7 @@ class FeatureRole extends Component {
                                                         onConfirm={(e) => this.delRoleGroup(item, e)}
                                                     >
                                                         {
-                                                            loading.effects["roleGroup/delRoleGroup"] && delGroupId === item.id
+                                                            loading.effects["dataRoleGroup/delRoleGroup"] && delGroupId === item.id
                                                                 ? <ExtIcon className={cls('del', 'action-item')} type="loading" antd />
                                                                 : <ExtIcon className={cls('del', 'action-item')} type="delete" antd />
                                                         }

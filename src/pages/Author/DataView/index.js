@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import cls from "classnames";
 import { connect } from "dva";
-import { Avatar, Card, Row, Col, Empty, Input, List, Skeleton, Tag, Button } from 'antd';
+import { Avatar, Card, Row, Col, Empty, Input, List, Skeleton, Tag, Button, Tooltip } from 'antd';
 import { ScrollBar, ExtIcon } from 'seid';
+import roleEmpty from "@/assets/empty.svg";
 import empty from "@/assets/item_empty.svg";
 import styles from './index.less';
 
@@ -105,48 +106,67 @@ class Role extends Component {
                 <Row gutter={4} className='auto-height'>
                     <Col span={8} className={cls('left-content', 'auto-height')}>
                         <Card
-                            title="角色列表"
+                            title="用户角色列表"
                             bordered={false}
                             className={cls('list-box', 'auto-height')}
                         >
                             <div className="header-tool-box">
                                 <div className='field-box'>
-                                    <span className='label'>租户代码</span>
-                                    <Input style={{ width: 120 }} />
+                                    <Tooltip
+                                        trigger={["hover"]}
+                                        title='租户代码'
+                                        placement="top"
+                                    >
+                                        <Input style={{ width: 100 }} placeholder='租户代码' />
+                                    </Tooltip>
                                 </div>
                                 <div className='field-box'>
-                                    <span className='label'>用户账号</span>
-                                    <Input style={{ width: 120 }} />
+                                    <Tooltip
+                                        trigger={["hover"]}
+                                        title='用户账号'
+                                        placement="top"
+                                    >
+                                        <Input style={{ width: 160 }} placeholder='用户账号' />
+                                    </Tooltip>
                                 </div>
                                 <Button type='primary'>查询</Button>
                             </div>
                             <div className="role-list-body">
                                 <ScrollBar>
-                                    <List
-                                        dataSource={listData}
-                                        loading={listLoading}
-                                        renderItem={item => (
-                                            <List.Item
-                                                key={item.id}
-                                                onClick={(e) => this.handlerRoleSelect(item, e)}
-                                                className={cls({
-                                                    [cls('row-selected')]: currentRole && item.id === currentRole.id,
-                                                })}
-                                            >
-                                                <Skeleton avatar loading={listLoading} active>
-                                                    <List.Item.Meta
-                                                        avatar={<Avatar icon='user' shape='square' />}
-                                                        title={this.renderName(item)}
-                                                        description={this.renderDescription(item)}
-                                                    />
-                                                    <div className='desc'>{item.roleTypeRemark}</div>
-                                                    <div className='arrow-box'>
-                                                        <ExtIcon type="right" antd />
-                                                    </div>
-                                                </Skeleton>
-                                            </List.Item>
-                                        )}
-                                    />
+                                    {
+                                        listData.length === 0
+                                            ? <div className='blank-empty'>
+                                                <Empty
+                                                    image={roleEmpty}
+                                                    description="暂无数据角色"
+                                                />
+                                            </div>
+                                            : <List
+                                                dataSource={listData}
+                                                loading={listLoading}
+                                                renderItem={item => (
+                                                    <List.Item
+                                                        key={item.id}
+                                                        onClick={(e) => this.handlerRoleSelect(item, e)}
+                                                        className={cls({
+                                                            [cls('row-selected')]: currentRole && item.id === currentRole.id,
+                                                        })}
+                                                    >
+                                                        <Skeleton avatar loading={listLoading} active>
+                                                            <List.Item.Meta
+                                                                avatar={<Avatar icon='user' shape='square' />}
+                                                                title={this.renderName(item)}
+                                                                description={this.renderDescription(item)}
+                                                            />
+                                                            <div className='desc'>{item.roleTypeRemark}</div>
+                                                            <div className='arrow-box'>
+                                                                <ExtIcon type="right" antd />
+                                                            </div>
+                                                        </Skeleton>
+                                                    </List.Item>
+                                                )}
+                                            />
+                                    }
                                 </ScrollBar>
                             </div>
                         </Card>
@@ -158,7 +178,7 @@ class Role extends Component {
                                 : <div className='blank-empty'>
                                     <Empty
                                         image={empty}
-                                        description="选择角色项进行权限配置"
+                                        description="选择相应的角色项显示权限"
                                     />
                                 </div>
                         }

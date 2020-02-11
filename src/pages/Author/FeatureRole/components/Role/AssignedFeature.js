@@ -11,7 +11,7 @@ import styles from './AssignedFeature.less';
 
 const { SERVER_PATH, FEATURE_TYPE } = constants;
 
-@connect(({ role, loading }) => ({ role, loading }))
+@connect(({ featureRole, loading }) => ({ featureRole, loading }))
 class FeaturePage extends Component {
 
     static assignedTableRef;
@@ -25,7 +25,7 @@ class FeaturePage extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (!isEqual(prevProps.role.currentRole, this.props.role.currentRole)) {
+        if (!isEqual(prevProps.featureRole.currentRole, this.props.featureRole.currentRole)) {
             this.setState({
                 delRowId: null,
                 selectedRowKeys: [],
@@ -40,16 +40,16 @@ class FeaturePage extends Component {
     };
 
     showAssignFeature = () => {
-        const { role, dispatch } = this.props;
-        const { currentRole } = role;
+        const { featureRole, dispatch } = this.props;
+        const { currentRole } = featureRole;
         dispatch({
-            type: 'role/updateState',
+            type: 'featureRole/updateState',
             payload: {
                 showAssignFeature: true,
             }
         });
         dispatch({
-            type: 'role/getUnAssignedFeatureItemList',
+            type: 'featureRole/getUnAssignedFeatureItemList',
             payload: {
                 parentId: currentRole.id,
             }
@@ -57,10 +57,10 @@ class FeaturePage extends Component {
     };
 
     assignFeatureItem = (childIds) => {
-        const { role, dispatch } = this.props;
-        const { currentRole } = role;
+        const { featureRole, dispatch } = this.props;
+        const { currentRole } = featureRole;
         dispatch({
-            type: "role/assignFeatureItem",
+            type: "featureRole/assignFeatureItem",
             payload: {
                 parentId: currentRole.id,
                 childIds,
@@ -74,15 +74,15 @@ class FeaturePage extends Component {
     };
 
     removeAssignFeatureItem = (childIds) => {
-        const { role, dispatch } = this.props;
-        const { currentRole } = role;
+        const { featureRole, dispatch } = this.props;
+        const { currentRole } = featureRole;
         if (childIds.length === 1) {
             this.setState({
                 delRowId: childIds[0],
             });
         }
         dispatch({
-            type: 'role/removeAssignedFeatureItem',
+            type: 'featureRole/removeAssignedFeatureItem',
             payload: {
                 parentId: currentRole.id,
                 childIds,
@@ -120,7 +120,7 @@ class FeaturePage extends Component {
     closeAssignFeatureItem = _ => {
         const { dispatch } = this.props;
         dispatch({
-            type: "role/updateState",
+            type: "featureRole/updateState",
             payload: {
                 showAssignFeature: false,
             }
@@ -130,7 +130,7 @@ class FeaturePage extends Component {
     renderRemoveBtn = (row) => {
         const { loading } = this.props;
         const { delRowId } = this.state;
-        if (loading.effects["role/removeAssignedFeatureItem"] && delRowId === row.id) {
+        if (loading.effects["featureRole/removeAssignedFeatureItem"] && delRowId === row.id) {
             return <ExtIcon className="del-loading" type="loading" antd />
         }
         return <ExtIcon className="del" type="export" antd />;
@@ -147,8 +147,8 @@ class FeaturePage extends Component {
     };
 
     render() {
-        const { role, loading } = this.props;
-        const { currentRole, showAssignFeature, unAssignListData } = role;
+        const { featureRole, loading } = this.props;
+        const { currentRole, showAssignFeature, unAssignListData } = featureRole;
         const { selectedRowKeys } = this.state;
         const columns = [
             {
@@ -218,7 +218,7 @@ class FeaturePage extends Component {
                     <Button
                         icon='plus'
                         type="primary"
-                        loading={loading.effects["role/getUnAssignedFeatureItemList"]}
+                        loading={loading.effects["featureRole/getUnAssignedFeatureItemList"]}
                         onClick={this.showAssignFeature}
                     >
                         我要分配功能项
@@ -237,7 +237,7 @@ class FeaturePage extends Component {
                     >
                         <Button
                             onClick={this.onCancelBatchRemoveAssignedFeatureItem}
-                            disabled={loading.effects["role/removeAssignedFeatureItem"]}
+                            disabled={loading.effects["featureRole/removeAssignedFeatureItem"]}
                         >
                             取消
                          </Button>
@@ -245,7 +245,7 @@ class FeaturePage extends Component {
                             title="确定要移除选择的项目吗？"
                             onConfirm={this.batchRemoveAssignedFeatureItem}
                         >
-                            <Button type="danger" loading={loading.effects["role/removeAssignedFeatureItem"]}>
+                            <Button type="danger" loading={loading.effects["featureRole/removeAssignedFeatureItem"]}>
                                 批量移除
                          </Button>
                         </Popconfirm>
@@ -270,12 +270,12 @@ class FeaturePage extends Component {
             }
         };
         const unAssignFeatureItemProps = {
-            loading: loading.effects["role/getUnAssignedFeatureItemList"],
+            loading: loading.effects["featureRole/getUnAssignedFeatureItemList"],
             unAssignListData,
             assignFeatureItem: this.assignFeatureItem,
             showAssignFeature,
             closeAssignFeatureItem: this.closeAssignFeatureItem,
-            assigning: loading.effects["role/assignFeatureItem"],
+            assigning: loading.effects["featureRole/assignFeatureItem"],
         };
         return (
             <div className={cls(styles['assigned-feature-box'])

@@ -30,7 +30,7 @@ const menuData = () => {
   ];
 };
 
-@connect(({ role, loading }) => ({ role, loading }))
+@connect(({ featureRole, loading }) => ({ featureRole, loading }))
 class ExtAction extends Component {
 
   constructor(props) {
@@ -44,15 +44,15 @@ class ExtAction extends Component {
   }
 
   componentDidUpdate() {
-    const { role } = this.props;
-    if (!isEqual(this.state.assignUserData, role.assignUserData)) {
+    const { featureRole } = this.props;
+    if (!isEqual(this.state.assignUserData, featureRole.assignUserData)) {
       this.setState({
-        assignUserData: role.assignUserData
+        assignUserData: featureRole.assignUserData
       });
     }
-    if (!isEqual(this.state.assinStationData, role.assinStationData)) {
+    if (!isEqual(this.state.assinStationData, featureRole.assinStationData)) {
       this.setState({
-        assinStationData: role.assinStationData
+        assinStationData: featureRole.assinStationData
       });
     }
   }
@@ -61,7 +61,7 @@ class ExtAction extends Component {
     const { roleData, dispatch } = this.props;
     if (roleData) {
       dispatch({
-        type: 'role/getAssignedEmployeesByFeatureRole',
+        type: 'featureRole/getAssignedEmployeesByFeatureRole',
         payload: {
           featureRoleId: roleData.id,
         }
@@ -73,7 +73,7 @@ class ExtAction extends Component {
     const { roleData, dispatch } = this.props;
     if (roleData) {
       dispatch({
-        type: 'role/getAssignedPositionsByFeatureRole',
+        type: 'featureRole/getAssignedPositionsByFeatureRole',
         payload: {
           featureRoleId: roleData.id,
         }
@@ -121,7 +121,7 @@ class ExtAction extends Component {
                 <Item key={m.key}>
                   <UserView
                     key={`user-${m.key}`}
-                    loading={loading.effects['role/getAssignedEmployeesByFeatureRole']}
+                    loading={loading.effects['featureRole/getAssignedEmployeesByFeatureRole']}
                     assignUserData={assignUserData}
                     menuId={menuId}
                     title={m.title}
@@ -134,7 +134,7 @@ class ExtAction extends Component {
               return (
                 <Item key={m.key}>
                   <StationView
-                    loading={loading.effects['role/getAssignedPositionsByFeatureRole']}
+                    loading={loading.effects['featureRole/getAssignedPositionsByFeatureRole']}
                     assinStationData={assinStationData}
                     menuId={menuId}
                     title={m.title}

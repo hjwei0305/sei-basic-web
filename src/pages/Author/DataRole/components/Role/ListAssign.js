@@ -6,7 +6,7 @@ import { ListPanel } from '@/components';
 import styles from './ListAssign.less';
 
 
-@connect(({ role, loading }) => ({ role, loading }))
+@connect(({ dataRole, loading }) => ({ dataRole, loading }))
 class ListAssign extends PureComponent {
 
     constructor(props) {
@@ -28,7 +28,7 @@ class ListAssign extends PureComponent {
         const { dispatch, currentDataAuthorType, currentRole } = this.props;
         if (currentDataAuthorType && currentRole) {
             dispatch({
-                type: 'role/getAssignedAuthDataList',
+                type: 'dataRole/getAssignedAuthDataList',
                 payload: {
                     authTypeId: currentDataAuthorType.id,
                     roleId: currentRole.id,
@@ -41,7 +41,7 @@ class ListAssign extends PureComponent {
         const { dispatch, currentDataAuthorType, currentRole } = this.props;
         if (currentDataAuthorType && currentRole) {
             dispatch({
-                type: 'role/getUnassignedAuthDataList',
+                type: 'dataRole/getUnassignedAuthDataList',
                 payload: {
                     authTypeId: currentDataAuthorType.id,
                     roleId: currentRole.id,
@@ -55,7 +55,7 @@ class ListAssign extends PureComponent {
         const { dispatch, currentDataAuthorType, currentRole } = this.props;
         if (currentDataAuthorType && currentRole) {
             dispatch({
-                type: 'role/saveAssignRelations',
+                type: 'dataRole/saveAssignRelations',
                 payload: {
                     dataAuthorizeTypeId: currentDataAuthorType.id,
                     dataRoleId: currentRole.id,
@@ -80,7 +80,7 @@ class ListAssign extends PureComponent {
         const { dispatch, currentDataAuthorType, currentRole } = this.props;
         if (currentDataAuthorType && currentRole) {
             dispatch({
-                type: 'role/removeAssignRelations',
+                type: 'dataRole/removeAssignRelations',
                 payload: {
                     dataAuthorizeTypeId: currentDataAuthorType.id,
                     dataRoleId: currentRole.id,
@@ -125,8 +125,8 @@ class ListAssign extends PureComponent {
     };
 
     render() {
-        const { currentDataAuthorType, role, loading } = this.props;
-        const { assignData, unAssignData } = role;
+        const { currentDataAuthorType, dataRole, loading } = this.props;
+        const { assignData, unAssignData } = dataRole;
         const { assignBtnDisabled, unAssignBtnDisabled } = this.state;
         return (
             <div className={cls(styles['list-assign-box'])} >
@@ -139,7 +139,7 @@ class ListAssign extends PureComponent {
                             title='已分配'
                             className='assign-box'
                             dataSource={assignData}
-                            loading={loading.effects['role/getAssignedAuthDataList']}
+                            loading={loading.effects['dataRole/getAssignedAuthDataList']}
                             onSelectChange={this.assignHandlerSelectChange}
                         />
                     </Col>
@@ -148,7 +148,7 @@ class ListAssign extends PureComponent {
                             key="rightButton"
                             shape="circle"
                             icon="left"
-                            loading={loading.effects['role/saveAssignRelations']}
+                            loading={loading.effects['dataRole/saveAssignRelations']}
                             disabled={assignBtnDisabled}
                             style={{ marginBottom: 36 }}
                             onClick={this.handlerAssign}
@@ -157,7 +157,7 @@ class ListAssign extends PureComponent {
                             key="leftButton"
                             shape="circle"
                             icon="right"
-                            loading={loading.effects['role/removeAssignRelations']}
+                            loading={loading.effects['dataRole/removeAssignRelations']}
                             disabled={unAssignBtnDisabled}
                             onClick={this.handlerRemove} />
                     </Col>
@@ -166,7 +166,7 @@ class ListAssign extends PureComponent {
                             title='未分配'
                             dataSource={unAssignData}
                             onSelectChange={this.unAssignHandlerSelectChange}
-                            loading={loading.effects['role/getUnassignedAuthDataList']}
+                            loading={loading.effects['dataRole/getUnassignedAuthDataList']}
                         />
                     </Col>
                 </Row>
