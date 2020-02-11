@@ -26,13 +26,15 @@ export default modelExtend(model, {
     }
   },
   effects: {
-    * getMenuList({ payload }, { call, put }) {
+    * getMenuList({ payload }, { call, put, select }) {
+      const { currentNode } = yield select(s => s.appMenu);
       const re = yield call(getMenuList, payload);
       if (re.success) {
         yield put({
           type: "updateState",
           payload: {
-            treeData: re.data
+            treeData: re.data,
+            currentNode,
           }
         });
       } else {
