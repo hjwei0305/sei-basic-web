@@ -20,10 +20,12 @@ class AppMenu extends Component {
 
     constructor(props) {
         super(props);
+        const { appMenu } = props;
+        const { currentNode } = appMenu;
         this.state = {
             treeData: [],
             expandedKeys: [],
-            selectedKeys: [],
+            selectedKeys: currentNode ? [currentNode.id] : [],
             autoExpandParent: true,
             childParentNode: null,
         };
