@@ -2,8 +2,8 @@ import React, { PureComponent } from "react";
 import { connect } from "dva";
 import cls from "classnames";
 import { Row, Col, Button } from 'antd';
-import { ListPanel } from '@/components';
-import styles from './ListAssign.less';
+import { TreePanel } from '@/components';
+import styles from './TreeAssign.less';
 
 
 @connect(({ role, loading }) => ({ role, loading }))
@@ -28,7 +28,7 @@ class ListAssign extends PureComponent {
         const { dispatch, currentDataAuthorType, currentRole } = this.props;
         if (currentDataAuthorType && currentRole) {
             dispatch({
-                type: 'role/getAssignedAuthDataList',
+                type: 'role/getAssignedAuthTreeDataList',
                 payload: {
                     authTypeId: currentDataAuthorType.id,
                     roleId: currentRole.id,
@@ -41,7 +41,7 @@ class ListAssign extends PureComponent {
         const { dispatch, currentDataAuthorType, currentRole } = this.props;
         if (currentDataAuthorType && currentRole) {
             dispatch({
-                type: 'role/getUnassignedAuthDataList',
+                type: 'role/getUnassignedAuthTreeDataList',
                 payload: {
                     authTypeId: currentDataAuthorType.id,
                     roleId: currentRole.id,
@@ -65,10 +65,6 @@ class ListAssign extends PureComponent {
                     if (re.success) {
                         this.loadAssignedData();
                         this.loadUnAssignedData();
-                        this.setState({
-                            assignBtnDisabled: true,
-                            unAssignBtnDisabled: true,
-                        });
                     }
                 }
             });
@@ -90,10 +86,6 @@ class ListAssign extends PureComponent {
                     if (re.success) {
                         this.loadAssignedData();
                         this.loadUnAssignedData();
-                        this.setState({
-                            assignBtnDisabled: true,
-                            unAssignBtnDisabled: true,
-                        });
                     }
                 }
             });
@@ -129,17 +121,17 @@ class ListAssign extends PureComponent {
         const { assignData, unAssignData } = role;
         const { assignBtnDisabled, unAssignBtnDisabled } = this.state;
         return (
-            <div className={cls(styles['list-assign-box'])} >
+            <div className={cls(styles['tree-assign-box'])} >
                 <div className='header-box'>
                     <span>{`数据配置 (${currentDataAuthorType.name})`}</span>
                 </div>
                 <Row className={cls('list-body')} type="flex" justify="space-between" align="middle">
                     <Col key='left' span={11} className={cls('list-left')}>
-                        <ListPanel
+                        <TreePanel
                             title='已分配'
                             className='assign-box'
                             dataSource={assignData}
-                            loading={loading.effects['role/getAssignedAuthDataList']}
+                            loading={loading.effects['role/getAssignedAuthTreeDataList']}
                             onSelectChange={this.assignHandlerSelectChange}
                         />
                     </Col>
@@ -162,11 +154,11 @@ class ListAssign extends PureComponent {
                             onClick={this.handlerRemove} />
                     </Col>
                     <Col key='right' span={11} className={cls('list-right')}>
-                        <ListPanel
+                        <TreePanel
                             title='未分配'
                             dataSource={unAssignData}
                             onSelectChange={this.unAssignHandlerSelectChange}
-                            loading={loading.effects['role/getUnassignedAuthDataList']}
+                            loading={loading.effects['role/getUnassignedAuthTreeDataList']}
                         />
                     </Col>
                 </Row>

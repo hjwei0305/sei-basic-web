@@ -16,6 +16,7 @@ class ListPanel extends Component {
         dataSource: PropTypes.array,
         loading: PropTypes.bool,
         onSelectChange: PropTypes.func,
+        className: PropTypes.string,
     };
 
     static defaultProps = {
@@ -41,14 +42,16 @@ class ListPanel extends Component {
     static allValue = '';
     static data = [];
 
-    componentDidUpdate(prevProps) {
+    componentDidUpdate() {
         const { dataSource } = this.props;
-        if (!isEqual(prevProps.dataSource, dataSource)) {
+        if (!isEqual(this.data, dataSource)) {
             const { pagination } = this.state;
             this.data = [...dataSource];
             this.setState({
                 dataSource,
                 checkedList: {},
+                selectAll: false,
+                selectIndeterminate: false,
                 pagination: {
                     ...pagination,
                     total: dataSource.length,
@@ -107,19 +110,6 @@ class ListPanel extends Component {
         );
     };
 
-    assignFeatureItem = (e) => {
-        e && e.stopPropagation();
-        const { assignFeatureItem } = this.props;
-        const { checkedList } = this.state;
-        let childIds = [];
-        if (Object.keys(checkedList).length > 0) {
-            Object.keys(checkedList).forEach(key => childIds.push(key));
-        }
-        if (assignFeatureItem) {
-            assignFeatureItem(childIds);
-        }
-    };
-
     onItemCheck = (e, item) => {
         const { checkedList, dataSource } = this.state;
         let checkedKeys = cloneDeep(checkedList);
@@ -173,12 +163,12 @@ class ListPanel extends Component {
     };
 
     render() {
-        const { loading, title } = this.props;
+        const { loading, title, className } = this.props;
         const { allValue, dataSource, pagination, checkedList, selectAll, selectIndeterminate } = this.state;
         return (
             <Card
                 title={title}
-                className={cls(styles['list-panel-box'])}
+                className={cls(styles['list-panel-box'], className)}
                 bordered={false}
                 extra={
                     <Search

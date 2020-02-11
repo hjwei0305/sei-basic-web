@@ -3,9 +3,7 @@ import { connect } from "dva";
 import cls from "classnames";
 import isEqual from 'react-fast-compare';
 import { Button, Row, Col, Card, Input, Tree, Empty } from "antd";
-import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
 import { ScrollBar, ExtIcon, ListLoader } from 'seid';
-import { constants } from "@/utils";
 import empty from "@/assets/item_empty.svg";
 import NodeForm from './components/NodeForm';
 import MenuMoveModal from './components/MenuMoveModal'
@@ -13,7 +11,6 @@ import styles from "./index.less";
 
 const Search = Input.Search;
 const { TreeNode } = Tree;
-const { APP_MENU_BTN_KEY } = constants;
 const childFieldKey = 'children';
 const hightLightColor = '#f50';
 

@@ -59,6 +59,12 @@ const menuData = [
         name: '数据角色',
         path: '/author/dataRole',
       },
+      {
+        id: '203',
+        name: '数据权限显示',
+        path: '/author/dataView',
+      },
+      
     ],
   },
 ];

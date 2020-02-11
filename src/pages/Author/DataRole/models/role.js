@@ -5,7 +5,9 @@ import {
   getAssignedAuthDataList,
   getUnassignedAuthDataList,
   getAssignedAuthTreeDataList,
-  getUnassignedAuthTreeDataList
+  getUnassignedAuthTreeDataList,
+  saveAssignRelations,
+  removeAssignRelations,
 } from "../service";
 import { message } from "antd";
 import { formatMessage } from "umi-plugin-react/locale";
@@ -60,6 +62,30 @@ export default modelExtend(model, {
             currentRole: null,
           }
         });
+      } else {
+        message.error(re.message);
+      }
+      if (callback && callback instanceof Function) {
+        callback(re);
+      }
+    },
+    * saveAssignRelations({ payload, callback }, { call }) {
+      const re = yield call(saveAssignRelations, payload);
+      message.destroy();
+      if (re.success) {
+        message.success(formatMessage({ id: "global.assign-success", defaultMessage: "分配成功" }));
+      } else {
+        message.error(re.message);
+      }
+      if (callback && callback instanceof Function) {
+        callback(re);
+      }
+    },
+    * removeAssignRelations({ payload, callback }, { call }) {
+      const re = yield call(removeAssignRelations, payload);
+      message.destroy();
+      if (re.success) {
+        message.success(formatMessage({ id: "global.remove-success", defaultMessage: "移除成功" }));
       } else {
         message.error(re.message);
       }

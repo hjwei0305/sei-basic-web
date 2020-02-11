@@ -5,6 +5,7 @@ import { ExtIcon, ListLoader } from 'seid';
 import styles from "./Assign.less";
 
 const ListAssign = React.lazy(() => import("./ListAssign"));
+const TreeAssign = React.lazy(() => import("./TreeAssign"));
 
 class Assign extends Component {
 
@@ -35,7 +36,7 @@ class Assign extends Component {
         if (currentDataAuthorType.beTree) {
             return (
                 <Suspense fallback={<ListLoader />}>
-                    <ListAssign {...assignProps} />
+                    <TreeAssign {...assignProps} />
                 </Suspense>
             )
         } else {
