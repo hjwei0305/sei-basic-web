@@ -47,7 +47,7 @@ class AppMenu extends Component {
                 }
             });
         }
-        if (!isEqual(preProps.appMenu.currentNode, appMenu.currentNode) && appMenu.currentNode && appMenu.currentNode.id) {
+        if (appMenu.currentNode && appMenu.currentNode.id) {
             const { currentNode } = appMenu;
             this.setState({
                 selectedKeys: [currentNode.id],
