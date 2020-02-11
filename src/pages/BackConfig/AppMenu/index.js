@@ -31,7 +31,7 @@ class AppMenu extends Component {
 
     static allValue = '';
 
-    componentDidUpdate(preProps) {
+    componentDidUpdate() {
         const { appMenu } = this.props;
         if (!isEqual(this.state.treeData, appMenu.treeData)) {
             this.setState({
