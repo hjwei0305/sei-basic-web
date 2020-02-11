@@ -24,7 +24,7 @@ class TablePanel extends Component {
   };
 
   add = _ => {
-    const { dispatch, supplierUser, } = this.props;
+    const { dispatch, } = this.props;
     dispatch({
       type: "supplierUser/updateState",
       payload: {
@@ -123,8 +123,7 @@ class TablePanel extends Component {
   };
 
   getExtableProps = () => {
-    const { loading, supplierUser,  } = this.props;
-    const { rowData, } = supplierUser;
+
     const columns = [
       {
         title: formatMessage({ id: "global.operation", defaultMessage: "操作" }),
@@ -248,7 +247,7 @@ class TablePanel extends Component {
 
   render() {
     const { supplierUser, } = this.props;
-    const { showModal, showCopyModal } = supplierUser;
+    const { showModal, } = supplierUser;
 
     return (
       <div className={cls(styles["container-box"])} >

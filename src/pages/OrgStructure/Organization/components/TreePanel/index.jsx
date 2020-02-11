@@ -162,9 +162,8 @@ class TreePanel extends Component {
       type: "organization/queryTree",
     });
   }
-  //查找关键字节点
-  findNode = (value, tree) => {
-    return tree.map(treeNode => {
+  // 查找关键字节点
+  findNode = (value, tree) => tree.map(treeNode => {
       const isInclude = treeNode.name.includes(value);
       // 如果有子节点
       if (treeNode.children && treeNode.children.length > 0) {
@@ -184,29 +183,26 @@ class TreePanel extends Component {
         }
       }
     }).filter((treeNode, i, self) => treeNode);
-  }
 
-  getToolBarProps = () => {
-    return {
-      left: (<Fragment>
-        <Button style={{ marginRight: 8}} type="primary" onClick={this.handleCreate}>创建节点</Button>
-        <Popconfirm
-          // key={APP_MODULE_BTN_KEY.DELETE}
-          placement="topLeft"
-          title={formatMessage({ id: "global.delete.confirm", defaultMessage: "确定要删除吗？提示：删除后不可恢复" })}
-          onConfirm={_ => this.handleDel()}
-        >
-          <Button type="danger">删除</Button>
-        </Popconfirm>
-      </Fragment>),
-      right: (<Search
-        allowClear
-        placeholder="请输入名称搜索"
-        onSearch={this.handleSearch}
-        style={{ width: 200 }}
-      />)
-    };
-  }
+  getToolBarProps = () => ({
+    left: (<Fragment>
+      <Button style={{ marginRight: 8}} type="primary" onClick={this.handleCreate}>创建节点</Button>
+      <Popconfirm
+        // key={APP_MODULE_BTN_KEY.DELETE}
+        placement="topLeft"
+        title={formatMessage({ id: "global.delete.confirm", defaultMessage: "确定要删除吗？提示：删除后不可恢复" })}
+        onConfirm={_ => this.handleDel()}
+      >
+        <Button type="danger">删除</Button>
+      </Popconfirm>
+    </Fragment>),
+    right: (<Search
+      allowClear
+      placeholder="请输入名称搜索"
+      onSearch={this.handleSearch}
+      style={{ width: 200 }}
+    />)
+  });
 
   getExpandedKeys = (data) => {
     for (let item of data) {

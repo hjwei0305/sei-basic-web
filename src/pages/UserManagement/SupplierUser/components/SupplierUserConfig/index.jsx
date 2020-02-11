@@ -12,11 +12,7 @@ const { SERVER_PATH } = constants;
 const { TabPane } = Tabs;
 
 @connect(({ supplierUser, loading, }) => ({ supplierUser, loading, }))
-class PostionConfig extends React.Component {
-
-  constructor(props) {
-    super(props);
-  }
+class PostionConfig extends React.PureComponent {
 
   handleAssign = (type, params) => {
     const { dispatch, } = this.props;

@@ -15,10 +15,6 @@ const { TabPane } = Tabs;
 @connect(({ position, loading, }) => ({ position, loading, }))
 class PostionConfig extends React.Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   handleAssign = (type, params) => {
     const { dispatch, } = this.props;
     // switch (type) {
