@@ -31,7 +31,7 @@ class AppMenu extends Component {
 
     static allValue = '';
 
-    componentDidUpdate() {
+    componentDidUpdate(preProps) {
         const { appMenu } = this.props;
         if (!isEqual(this.state.treeData, appMenu.treeData)) {
             this.setState({
@@ -47,7 +47,7 @@ class AppMenu extends Component {
                 }
             });
         }
-        if (appMenu.currentNode && appMenu.currentNode.id) {
+        if (!isEqual(preProps.appMenu.currentNode, appMenu.currentNode) && appMenu.currentNode && appMenu.currentNode.id) {
             const { currentNode } = appMenu;
             this.setState({
                 selectedKeys: [currentNode.id],
