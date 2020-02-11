@@ -7,7 +7,6 @@ import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
 import { ExtTable, utils, ExtIcon } from 'seid';
 import { constants } from "@/utils";
 import FormModal from "./FormModal";
-import CopyModal from './CopyModal';
 import styles from "../../index.less";
 
 const { APP_MODULE_BTN_KEY, SERVER_PATH, } = constants;
@@ -106,26 +105,6 @@ class TablePanel extends Component {
     });
   };
 
-  handleCopyToOrgNodes = data => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: "employee/copyTo",
-      payload: {
-        ...data
-      },
-    }).then(res => {
-      if (res.success) {
-        dispatch({
-          type: "employee/updateState",
-          payload: {
-            showCopyModal: false
-          }
-        });
-        this.reloadData();
-      }
-    });
-  }
-
   handlCopy = (rowData) => {
     const { dispatch } = this.props;
     dispatch({
@@ -158,7 +137,6 @@ class TablePanel extends Component {
       type: "employee/updateState",
       payload: {
         showModal: false,
-        showCopyModal: false,
         rowData: null
       }
     });
@@ -296,22 +274,9 @@ class TablePanel extends Component {
     };
   };
 
-  getCopyModalProps = () => {
-    const { loading, employee, } = this.props;
-    const { showCopyModal, rowData, } = employee;
-
-    return {
-      save: this.handleCopyToOrgNodes,
-      rowData,
-      showModal: showCopyModal,
-      closeModal: this.closeFormModal,
-      saving: loading.effects["employee/copyTo"]
-    };
-  };
-
   render() {
     const { employee, } = this.props;
-    const { showModal, showCopyModal } = employee;
+    const { showModal, } = employee;
 
     return (
       <div className={cls(styles["container-box"])} >
@@ -319,11 +284,6 @@ class TablePanel extends Component {
         {
           showModal
             ? <FormModal {...this.getFormModalProps()} />
-            : null
-        }
-        {
-          showCopyModal
-            ? <CopyModal {...this.getCopyModalProps()}/>
             : null
         }
       </div>
