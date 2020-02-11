@@ -110,7 +110,9 @@ class TreePanel extends Component {
         this.setState({ checkedKeys }, () => {
             const { onSelectChange } = this.props
             if (onSelectChange) {
-                onSelectChange(checkedKeys)
+                const { checked } = checkedKeys;
+                console.log(checked);
+                onSelectChange(checked)
             }
         });
     };

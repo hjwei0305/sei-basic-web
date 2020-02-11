@@ -65,6 +65,10 @@ class ListAssign extends PureComponent {
                     if (re.success) {
                         this.loadAssignedData();
                         this.loadUnAssignedData();
+                        this.setState({
+                            assignBtnDisabled: true,
+                            unAssignBtnDisabled: true,
+                        });
                     }
                 }
             });
@@ -86,14 +90,17 @@ class ListAssign extends PureComponent {
                     if (re.success) {
                         this.loadAssignedData();
                         this.loadUnAssignedData();
+                        this.setState({
+                            assignBtnDisabled: true,
+                            unAssignBtnDisabled: true,
+                        });
                     }
                 }
             });
         }
     };
 
-    assignHandlerSelectChange = (checkedList) => {
-        const unAssignCheckedKeys = Object.keys(checkedList);
+    assignHandlerSelectChange = (unAssignCheckedKeys) => {
         let unAssignBtnDisabled = true;
         if (unAssignCheckedKeys.length > 0) {
             unAssignBtnDisabled = false;
@@ -104,8 +111,7 @@ class ListAssign extends PureComponent {
         });
     };
 
-    unAssignHandlerSelectChange = (checkedList) => {
-        const assignCheckedKeys = Object.keys(checkedList);
+    unAssignHandlerSelectChange = (assignCheckedKeys) => {
         let assignBtnDisabled = true;
         if (assignCheckedKeys.length > 0) {
             assignBtnDisabled = false;
