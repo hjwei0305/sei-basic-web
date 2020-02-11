@@ -12,11 +12,7 @@ const { SERVER_PATH } = constants;
 const { TabPane } = Tabs;
 
 @connect(({ expertUser, loading, }) => ({ expertUser, loading, }))
-class ExpertUserConfig extends React.Component {
-
-  constructor(props) {
-    super(props);
-  }
+class ExpertUserConfig extends React.PureComponent {
 
   handleAssign = (type, params) => {
     const { dispatch, } = this.props;

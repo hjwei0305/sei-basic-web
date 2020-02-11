@@ -154,7 +154,7 @@ class FormModal extends PureComponent {
   }
 
   render() {
-    const { form, region, formType } = this.props;
+    const { form, formType } = this.props;
     const { getFieldDecorator } = form;
     const formItemLayout = {
       labelCol: {

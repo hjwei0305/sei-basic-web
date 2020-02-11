@@ -2,7 +2,7 @@
 * @Author: zp
 * @Date:   2020-02-02 11:57:38
 * @Last Modified by:   zp
-* @Last Modified time: 2020-02-10 13:30:16
+* @Last Modified time: 2020-02-11 15:12:20
 */
 import {
   freeze,
@@ -16,7 +16,7 @@ import { message } from "antd";
 import { formatMessage } from "umi-plugin-react/locale";
 import { utils } from 'seid';
 
-const { pathMatchRegexp, dvaModel } = utils;
+const { dvaModel } = utils;
 const { modelExtend, model } = dvaModel;
 
 export default modelExtend(model, {

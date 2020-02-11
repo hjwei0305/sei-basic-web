@@ -122,11 +122,13 @@ class TreePanel extends Component {
           message.warn('请选择要删除的节点！');
         }
         break;
+      default:
+        break;
     }
   }
 
   handleCancel = (type) => {
-    if (type == "create") {
+    if (type === "create") {
       const { dispatch } = this.props;
       dispatch({
         type: 'region/updateState',

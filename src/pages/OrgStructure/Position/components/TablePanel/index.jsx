@@ -176,8 +176,8 @@ class TablePanel extends Component {
 
   getExtableProps = () => {
     const { list } = this.state;
-    const { loading, position,  } = this.props;
-    const { rowData, } = position;
+    const { loading,  } = this.props;
+
     const columns = [
       {
         title: formatMessage({ id: "global.operation", defaultMessage: "操作" }),
@@ -292,7 +292,7 @@ class TablePanel extends Component {
 
   getCopyModalProps = () => {
     const { loading, position, } = this.props;
-    const { showCopyModal, rowData, currNode, } = position;
+    const { showCopyModal, rowData, } = position;
 
     return {
       save: this.handleCopyToOrgNodes,

@@ -23,7 +23,7 @@ class TablePanel extends Component {
   };
 
   add = _ => {
-    const { dispatch, expertUser, } = this.props;
+    const { dispatch, } = this.props;
     dispatch({
       type: "expertUser/updateState",
       payload: {
@@ -107,8 +107,7 @@ class TablePanel extends Component {
   };
 
   getExtableProps = () => {
-    const { loading, expertUser,  } = this.props;
-    const { rowData, } = expertUser;
+
     const columns = [
       {
         title: formatMessage({ id: "global.operation", defaultMessage: "操作" }),

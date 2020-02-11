@@ -2,7 +2,6 @@ import React, { Fragment, } from 'react';
 import { connect } from 'dva';
 import { Button, } from 'antd';
 import { ExtTable, ComboTree, } from 'seid';
-import { FormattedMessage } from "umi-plugin-react/locale";
 
 import { constants } from "@/utils";
 import { AssignLayout, ColumnLayout, } from '@/components';
@@ -77,7 +76,7 @@ class CopyConfig extends React.Component {
   getUserExtableProps = () => {
     const { organizationId } = this.state;
     const { employee,  } = this.props;
-    const { rowData, currNode, } = employee;
+    const { currNode, } = employee;
     const columns = [
       {
         title: "员工编号",
