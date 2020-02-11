@@ -66,6 +66,38 @@ export async function delDataRole(data) {
   });
 }
 
+
+/** 
+ * 数据角色Id和数据权限类型Id分配业务实体数据
+ * param dataAuthorizeTypeId
+ * param dataRoleId
+ * entityIds string[]
+ */
+export async function saveAssignRelations(data) {
+  const url = `${SERVER_PATH}/sei-basic/dataRoleAuthTypeValue/insertRelations`;
+  return request({
+    url,
+    method: "POST",
+    data,
+  });
+}
+
+/** 
+ * 数据角色Id和数据权限类型Id分配业务实体数据
+ * param dataAuthorizeTypeId
+ * param dataRoleId
+ * entityIds string[]
+ */
+export async function removeAssignRelations(data) {
+  const url = `${SERVER_PATH}/sei-basic/dataRoleAuthTypeValue/removeRelations`;
+  return request({
+    url,
+    method: "POST",
+    data,
+  });
+}
+
+
 /** 
  * 通过数据角色Id和数据权限类型Id获取已分配的业务实体数据
  * param authTypeId
