@@ -3,40 +3,33 @@ import { Card, Row, Col, } from 'antd';
 import cls from 'classnames';
 import styles from './index.less';
 
-export default class AssignLayout extends PureComponent {
+export default class ColumnLayout extends PureComponent {
 
   renderChildren = () => {
-    const { children, title=['未分配', '已分配'], extra=[null, null,], layout=[11, 2, 11], } = this.props;
+    const { children, title=['左标题', '右标题'], layout=[10, 14] } = this.props;
     const [leftTitle, rightTitle,] = title;
-    const [leftSpan, centerSpan, rightSpan,] = layout;
-    const [leftExtra, rightExtra,] = extra;
+    const [leftSpan, rightSpan,] = layout;
     const bordered = false;
+
     if (!children) {
       return null;
     }
 
     return [].concat(children).map((child) => {
       const { slot, } = child.props;
-      if (['left', 'center', 'right'].includes(slot)) {
+      if (['left', 'right'].includes(slot)) {
         if (slot === 'left') {
           return (
             <Col key={slot} className={cls('layout-col')} span={leftSpan}>
-              <Card title={leftTitle} bordered={bordered} extra={leftExtra} >
+              <Card title={leftTitle} bordered={bordered} >
                 {child}
               </Card>
             </Col>
           );
         }
-        if (slot === 'center') {
-          return (<Col key={slot} className={cls('layout-col', 'layout-col-center')} span={centerSpan}>
-            <div className={cls('opt-wrapper')}>
-              {child}
-            </div>
-          </Col>);
-        }
         if (slot === 'right') {
           return (<Col key={slot} className={cls('layout-col')} span={rightSpan}>
-            <Card title={rightTitle} bordered={bordered} extra={rightExtra}>
+            <Card title={rightTitle} bordered={bordered}>
               {child}
             </Card>
           </Col>);
@@ -49,7 +42,7 @@ export default class AssignLayout extends PureComponent {
 
   render() {
     return (
-      <Row className={cls(styles['assign-layout-wrapper'])}>
+      <Row gutter={8} className={cls(styles['cascade-layout-wrapper'])}>
         {this.renderChildren()}
       </Row>
     );

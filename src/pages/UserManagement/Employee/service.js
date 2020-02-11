@@ -2,7 +2,7 @@
 * @Author: zp
 * @Date:   2020-02-02 11:57:24
 * @Last Modified by:   zp
-* @Last Modified time: 2020-02-09 15:06:58
+* @Last Modified time: 2020-02-11 14:42:06
 */
 import { utils } from 'seid';
 import { constants } from '@/utils';
@@ -52,7 +52,7 @@ export async function listAllTree(params={}){
 }
 
 /**
- * 获得组织机构下所有岗位
+ * 获得组织机构下所有员工
  *
  * param organizationId 组织机构ID
  */
@@ -62,10 +62,25 @@ export async function findByOrganizationId(params={}){
 }
 
 /**
- * 实现快速配置岗位，把一个岗位复制到多个组织机构节点上，可以复制功能角色
+ * 获得组织机构下所有员工
+ *
  */
-export async function copyToOrgNodes(data){
-  const url = `${SERVER_PATH}/sei-basic/employee/copyToOrgNodes`;
+export async function findByUserQueryParam(data) {
+  const url = `${SERVER_PATH}/sei-basic/employee/findByUserQueryParam`;
+  return request({
+    url,
+    method: 'POST',
+    data
+  });
+}
+
+
+
+/**
+ * 把一个企业用户的功能角色和数据角色复制到多个企业用户
+ */
+export async function copyToEmployees(data){
+  const url = `${SERVER_PATH}/sei-basic/employee/copyToEmployees`;
   return request.post(url, data);
 }
 

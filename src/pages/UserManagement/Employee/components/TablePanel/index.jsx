@@ -2,7 +2,7 @@ import React, { Component, Fragment, } from 'react';
 import { connect } from 'dva';
 import cls from 'classnames';
 import { isEqual, } from 'lodash';
-import { Button, message, } from "antd";
+import { Button, message, Checkbox, } from "antd";
 import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
 import { ExtTable, utils, ExtIcon } from 'seid';
 import { constants } from "@/utils";
@@ -10,7 +10,7 @@ import FormModal from "./FormModal";
 import CopyModal from './CopyModal';
 import styles from "../../index.less";
 
-const { APP_MODULE_BTN_KEY, } = constants;
+const { APP_MODULE_BTN_KEY, SERVER_PATH, } = constants;
 const { authAction } = utils;
 
 @connect(({ employee, loading, }) => ({ employee, loading, }))
@@ -18,30 +18,25 @@ class TablePanel extends Component {
   state = {
     delRowId: null,
     list: [],
+    includeSubNode: false,
+    currNode: null,
   }
 
   componentDidUpdate(_prevProps, prevState) {
-    const { list, } = this.props.employee;
-    if (!isEqual(prevState.list, list)) {
+    const { currNode, } = this.props.employee;
+    if (!isEqual(this.state.currNode, currNode)) {
       this.setState({
-        list,
+        currNode,
+      }, () => {
+        this.reloadData();
       });
     }
   }
 
   reloadData = _ => {
-    const { dispatch, employee } = this.props;
-    const { currNode, } = employee;
-
-    if (currNode) {
-      dispatch({
-        type: "employee/queryListByOrgId",
-        payload: {
-          organizationId: currNode.id,
-        },
-      });
+    if (this.tableRef) {
+      this.tableRef.remoteDataRefresh();
     }
-
   };
 
   add = _ => {
@@ -136,7 +131,7 @@ class TablePanel extends Component {
     dispatch({
       type: "employee/updateState",
       payload: {
-        showCopyModal: true,
+        showCopyConfig: true,
         rowData,
       }
     });
@@ -178,8 +173,17 @@ class TablePanel extends Component {
     return <ExtIcon className="del" type="delete" antd />;
   };
 
+  handleCheck = (e) => {
+    const { checked, } = e.target;
+    this.setState({
+      includeSubNode: checked,
+    }, () => {
+      this.reloadData();
+    });
+  }
+
   getExtableProps = () => {
-    const { list } = this.state;
+    const { list, includeSubNode, currNode } = this.state;
     const { loading, employee,  } = this.props;
     const { rowData, } = employee;
     const columns = [
@@ -257,21 +261,31 @@ class TablePanel extends Component {
           <Button onClick={this.reloadData}>
             <FormattedMessage id="global.refresh" defaultMessage="刷新" />
           </Button>
+          <Checkbox onChange={this.handleCheck}>包含子节点：</Checkbox>
         </Fragment>
       )
     };
     return {
       bordered: false,
+      remotePaging: true,
+      // searchProperties: ['code', 'userName'],
       columns,
-      loading: loading.effects["employee/queryList"],
       toolBar: toolBarProps,
-      dataSource: list,
+      store: {
+        type: 'POST',
+        url: `${SERVER_PATH}/sei-basic/employee/findByUserQueryParam`,
+        params: {
+          organizationId: currNode && currNode.id,
+          includeSubNode,
+        },
+      },
     };
   };
 
   getFormModalProps = () => {
+    const { currNode, } = this.state;
     const { loading, employee, } = this.props;
-    const { showModal, rowData, currNode, } = employee;
+    const { showModal, rowData, } = employee;
 
     return {
       save: this.save,
@@ -302,7 +316,7 @@ class TablePanel extends Component {
 
     return (
       <div className={cls(styles["container-box"])} >
-        <ExtTable {...this.getExtableProps()} />
+        <ExtTable onTableRef={inst => this.tableRef=inst } {...this.getExtableProps()} />
         {
           showModal
             ? <FormModal {...this.getFormModalProps()} />

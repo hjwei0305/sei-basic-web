@@ -2,14 +2,14 @@
 * @Author: zp
 * @Date:   2020-02-02 11:57:38
 * @Last Modified by:   zp
-* @Last Modified time: 2020-02-08 22:24:11
+* @Last Modified time: 2020-02-11 14:43:07
 */
 import {
   del,
   save,
   listAllTree,
   findByOrganizationId,
-  copyToOrgNodes,
+  copyToEmployees,
   assignEmployee,
   unAssignEmployee,
   assignFeatureRole,
@@ -31,7 +31,7 @@ export default modelExtend(model, {
     list: [],
     rowData: null,
     showModal: false,
-    showCopyModal: false,
+    showCopyConfig: false,
     treeData: [],
     currNode: null,
     showEmployeeConfig: false,
@@ -105,7 +105,7 @@ export default modelExtend(model, {
       return re;
     },
     * copyTo({ payload, }, { call, }) {
-      const re = yield call(copyToOrgNodes, payload);
+      const re = yield call(copyToEmployees, payload);
       message.destroy();
       if (re.success) {
         message.success("复制成功");

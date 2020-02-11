@@ -94,24 +94,11 @@ class CopyModal extends PureComponent {
         centered
         confirmLoading={saving}
         maskClosable={false}
-        title={'复制岗位到指定组织机构'}
+        title={`复制【${rowData.userName}】的角色到其他用户`}
         okText={'保存'}
         onOk={this.onFormSubmit}
       >
         <Form {...formItemLayout} layout="horizontal" >
-          <FormItem label="源岗位Id" style={{ display: 'none', }}>
-            {getFieldDecorator("positionId", {
-              initialValue: rowData ? rowData.id : "",
-            })(<Input />)}
-          </FormItem>
-          <FormItem label="源岗位">
-            {getFieldDecorator("positionName", {
-              initialValue: rowData ? rowData.name : "",
-              rules: [{
-                required: true,
-              }]
-            })(<Input disabled={true}/>)}
-          </FormItem>
           <FormItem label="目标组织机构id" style={{ display: 'none' }}>
             {getFieldDecorator("orgId", {
               initialValue: "",
