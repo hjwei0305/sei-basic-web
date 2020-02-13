@@ -45,15 +45,16 @@ class DataDictTypeTable extends Component {
     });
   };
 
-  edit = currDictType => {
+  edit = (currDictType, e) => {
     const { dispatch } = this.props;
     dispatch({
       type: "dataDict/updateState",
       payload: {
-        showModal: true,
         currDictType,
+        showModal: true,
       }
     });
+    e.stopPropagation();
   };
 
   save = data => {
@@ -103,8 +104,6 @@ class DataDictTypeTable extends Component {
       type: "dataDict/updateState",
       payload: {
         showModal: false,
-        showCopyModal: false,
-        currDictType: null
       }
     });
   };
@@ -135,7 +134,7 @@ class DataDictTypeTable extends Component {
                 <ExtIcon
                   key={APP_MODULE_BTN_KEY.EDIT}
                   className="edit"
-                  onClick={_ => this.edit(record)}
+                  onClick={e => this.edit(record, e)}
                   type="edit"
                   ignore='true'
                   antd
