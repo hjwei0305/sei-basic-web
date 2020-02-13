@@ -3,7 +3,6 @@ import { formatMessage } from "umi-plugin-react/locale";
 
 export default {
   onError(err, action, ...rest) {
-    console.log(err, action, ...rest);
     err.preventDefault();
     if (err.statusCode === 401) {
       window.g_app._store.dispatch({
