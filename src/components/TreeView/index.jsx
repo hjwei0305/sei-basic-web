@@ -193,7 +193,7 @@ class TreeView extends Component {
               {this.getTreeNodes(filterTreeData)}
             </Tree>
           ) : (
-              <Empty className={cls("empty-wrapper")} />
+              <Empty className={cls("empty-wrapper")} description="暂无数据"/>
             )
           }
         </ScrollBar>
