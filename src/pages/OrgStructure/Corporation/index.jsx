@@ -248,6 +248,7 @@ class Corporation extends Component {
     };
     return {
       columns,
+      border:false,
       loading: loading.effects["corporation/queryList"],
       toolBar: toolBarProps,
       dataSource: list,
@@ -257,7 +258,6 @@ class Corporation extends Component {
   getFormModalProps = () => {
     const { loading, corporation, } = this.props;
     const { showModal, rowData } = corporation;
-
     return {
       save: this.save,
       rowData,
@@ -268,17 +268,10 @@ class Corporation extends Component {
   };
 
   render() {
-    const { corporation, } = this.props;
-    const { showModal, } = corporation;
-
     return (
       <PageWrapper className={cls(styles["container-box"])} >
         <ExtTable {...this.getExtableProps()} />
-        {
-          showModal
-            ? <FormModal {...this.getFormModalProps()} />
-            : null
-        }
+        <FormModal {...this.getFormModalProps()} />
       </PageWrapper>
     );
   }
