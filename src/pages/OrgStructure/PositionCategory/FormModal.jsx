@@ -45,7 +45,6 @@ class FormModal extends PureComponent {
         visible={showModal}
         centered
         confirmLoading={saving}
-        maskClosable={false}
         title={title}
         onOk={this.onFormSubmit}
         width={600}
