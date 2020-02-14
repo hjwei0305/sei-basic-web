@@ -5,7 +5,7 @@ import isEqual from 'react-fast-compare';
 import { formatMessage } from "umi-plugin-react/locale";
 import { Row, Col, Card, Input, Empty, Pagination, List, Skeleton, Popconfirm } from "antd";
 import { ScrollBar, ExtIcon } from 'seid';
-import empty from "@/assets/empty.svg";
+import empty from "@/assets/item_empty.svg";
 import RoleGroupAdd from './components/RoleGroupForm/Add';
 import RoleGroupEdit from './components/RoleGroupForm/Edit';
 import Role from './components/Role';
@@ -169,7 +169,7 @@ class FeatureRole extends Component {
         return (
             <div className={cls(styles["container-box"])} >
                 <Row gutter={4} className='auto-height'>
-                    <Col span={4} className='auto-height'>
+                    <Col span={5} className='auto-height'>
                         <Card
                             title="角色组"
                             bordered={false}
@@ -243,7 +243,7 @@ class FeatureRole extends Component {
                             </div>
                         </Card>
                     </Col>
-                    <Col span={20} className={cls("main-content", 'auto-height','role-main')}>
+                    <Col span={19} className={cls("main-content", 'auto-height','role-main')}>
                         {
                             currentRoleGroup
                                 ? <Role {...roleProps} />

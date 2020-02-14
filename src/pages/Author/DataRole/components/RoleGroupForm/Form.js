@@ -11,10 +11,10 @@ const { objectAssignAppend } = utils;
 const FormItem = Form.Item;
 const formItemLayout = {
   labelCol: {
-    span: 5
+    span: 4
   },
   wrapperCol: {
-    span: 19
+    span: 20
   }
 };
 
@@ -30,7 +30,7 @@ class RoleGroupForm extends PureComponent {
     }
   }
 
-  onFormSubmit = _ => {
+  handlerFormSubmit = _ => {
     const { tenantCode } = this.state;
     const { form, saveRoleGroup, groupData, handlerPopoverHide } = this.props;
     const { validateFields, getFieldsValue } = form;
@@ -95,11 +95,11 @@ class RoleGroupForm extends PureComponent {
                 <Input />
               )}
             </FormItem>
-            <FormItem wrapperCol={{ span: 4, offset: 5 }} className="btn-submit">
+            <FormItem wrapperCol={{ span: 4, offset: 4 }} className="btn-submit">
               <Button
                 type="primary"
                 loading={saving}
-                onClick={this.onFormSubmit}
+                onClick={this.handlerFormSubmit}
               >
                 <FormattedMessage id='global.save' defaultMessage='保存' />
               </Button>

@@ -1,25 +1,23 @@
 import React, { PureComponent } from "react";
 import { toUpper, trim } from 'lodash'
-import { Button, Form, Input, InputNumber } from "antd";
-import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
+import { Form, Input, InputNumber } from "antd";
+import { formatMessage } from "umi-plugin-react/locale";
 import { ExtModal } from 'seid'
 
 const FormItem = Form.Item;
 const formItemLayout = {
   labelCol: {
-    span: 6
+    span: 5
   },
   wrapperCol: {
-    span: 18
+    span: 19
   }
 };
-
-const buttonWrapper = { span: 18, offset: 6 };
 
 @Form.create()
 class FormModal extends PureComponent {
 
-  onFormSubmit = _ => {
+  handlerFormSubmit = _ => {
     const { form, save, rowData } = this.props;
     form.validateFields((err, formData) => {
       if (err) {
@@ -48,8 +46,10 @@ class FormModal extends PureComponent {
         onCancel={closeFormModal}
         visible={showModal}
         centered
-        footer={null}
+        bodyStyle={{ paddingBottom: 0 }}
+        confirmLoading={saving}
         title={title}
+        onOk={this.handlerFormSubmit}
       >
         <Form {...formItemLayout} layout="horizontal">
           <FormItem label={formatMessage({ id: "global.name", defaultMessage: "名称" })}>
@@ -96,15 +96,6 @@ class FormModal extends PureComponent {
                 message: formatMessage({ id: "global.rank.required", defaultMessage: "序号不能为空" })
               }]
             })(<InputNumber precision={0} />)}
-          </FormItem>
-          <FormItem wrapperCol={buttonWrapper} className="btn-submit">
-            <Button
-              type="primary"
-              loading={saving}
-              onClick={this.onFormSubmit}
-            >
-              <FormattedMessage id="global.ok" defaultMessage="确定" />
-            </Button>
           </FormItem>
         </Form>
       </ExtModal>

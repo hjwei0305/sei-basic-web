@@ -12,17 +12,17 @@ const { SERVER_PATH } = constants;
 const FormItem = Form.Item;
 const formItemLayout = {
   labelCol: {
-    span: 7
+    span: 5
   },
   wrapperCol: {
-    span: 17
+    span: 19
   }
 };
 
 @Form.create()
 class FeatureGroupForm extends PureComponent {
 
-  onFormSubmit = _ => {
+  handlerFormSubmit = _ => {
     const { form, saveFeatureGroup, groupData, handlerPopoverHide } = this.props;
     const { validateFields, getFieldsValue } = form;
     validateFields(errors => {
@@ -95,7 +95,7 @@ class FeatureGroupForm extends PureComponent {
                 <Input maxLength={30} placeholder={formatMessage({ id: "global.code.tip", defaultMessage: "规则:名称各汉字首字母大写" })} />
               )}
             </FormItem>
-            <FormItem label="所属应用模块">
+            <FormItem label="应用模块">
               {getFieldDecorator("appModuleName", {
                 initialValue: groupData ? groupData.appModuleName : "",
                 rules: [{
@@ -106,11 +106,11 @@ class FeatureGroupForm extends PureComponent {
                 <ComboList {...appModuleProps} />
               )}
             </FormItem>
-            <FormItem wrapperCol={{ span: 4, offset: 7 }} className="btn-submit">
+            <FormItem wrapperCol={{ span: 4, offset: 5 }} className="btn-submit">
               <Button
                 type="primary"
                 loading={saving}
-                onClick={this.onFormSubmit}
+                onClick={this.handlerFormSubmit}
               >
                 <FormattedMessage id='global.save' defaultMessage='保存' />
               </Button>

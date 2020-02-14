@@ -171,7 +171,7 @@ class AuthorType extends Component {
         required: true,
       },
       {
-        title: '所属应用模块',
+        title: '应用模块',
         dataIndex: "appModuleName",
         width: 160,
       },

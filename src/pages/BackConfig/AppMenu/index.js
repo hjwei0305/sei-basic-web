@@ -356,6 +356,7 @@ class AppMenu extends Component {
                                     />
                                     <Button
                                         icon="plus"
+                                        type='link'
                                         onClick={e => this.addParent(e)}
                                     >
                                         根菜单

@@ -3,7 +3,7 @@ import cls from "classnames";
 import { connect } from "dva";
 import { Avatar, Card, Row, Col, Empty, Input, List, Skeleton, Tag, Button, Tooltip } from 'antd';
 import { ScrollBar, ExtIcon } from 'seid';
-import roleEmpty from "@/assets/empty.svg";
+import roleEmpty from "@/assets/item_empty.svg";
 import empty from "@/assets/item_empty.svg";
 import styles from './index.less';
 
@@ -104,7 +104,7 @@ class Role extends Component {
         return (
             <div className={cls(styles['role-box'])}>
                 <Row gutter={4} className='auto-height'>
-                    <Col span={8} className={cls('left-content', 'auto-height')}>
+                    <Col span={7} className={cls('left-content', 'auto-height')}>
                         <Card
                             title="用户角色列表"
                             bordered={false}
@@ -133,45 +133,36 @@ class Role extends Component {
                             </div>
                             <div className="role-list-body">
                                 <ScrollBar>
-                                    {
-                                        listData.length === 0
-                                            ? <div className='blank-empty'>
-                                                <Empty
-                                                    image={roleEmpty}
-                                                    description="暂无数据角色"
-                                                />
-                                            </div>
-                                            : <List
-                                                dataSource={listData}
-                                                loading={listLoading}
-                                                renderItem={item => (
-                                                    <List.Item
-                                                        key={item.id}
-                                                        onClick={(e) => this.handlerRoleSelect(item, e)}
-                                                        className={cls({
-                                                            [cls('row-selected')]: currentRole && item.id === currentRole.id,
-                                                        })}
-                                                    >
-                                                        <Skeleton avatar loading={listLoading} active>
-                                                            <List.Item.Meta
-                                                                avatar={<Avatar icon='user' shape='square' />}
-                                                                title={this.renderName(item)}
-                                                                description={this.renderDescription(item)}
-                                                            />
-                                                            <div className='desc'>{item.roleTypeRemark}</div>
-                                                            <div className='arrow-box'>
-                                                                <ExtIcon type="right" antd />
-                                                            </div>
-                                                        </Skeleton>
-                                                    </List.Item>
-                                                )}
-                                            />
-                                    }
+                                    <List
+                                        dataSource={listData}
+                                        loading={listLoading}
+                                        renderItem={item => (
+                                            <List.Item
+                                                key={item.id}
+                                                onClick={(e) => this.handlerRoleSelect(item, e)}
+                                                className={cls({
+                                                    [cls('row-selected')]: currentRole && item.id === currentRole.id,
+                                                })}
+                                            >
+                                                <Skeleton avatar loading={listLoading} active>
+                                                    <List.Item.Meta
+                                                        avatar={<Avatar icon='user' shape='square' />}
+                                                        title={this.renderName(item)}
+                                                        description={this.renderDescription(item)}
+                                                    />
+                                                    <div className='desc'>{item.roleTypeRemark}</div>
+                                                    <div className='arrow-box'>
+                                                        <ExtIcon type="right" antd />
+                                                    </div>
+                                                </Skeleton>
+                                            </List.Item>
+                                        )}
+                                    />
                                 </ScrollBar>
                             </div>
                         </Card>
                     </Col>
-                    <Col span={16} className={cls("main-content", 'auto-height')}>
+                    <Col span={17} className={cls("main-content", 'auto-height')}>
                         {
                             currentRole
                                 ? ''

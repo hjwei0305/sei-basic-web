@@ -8,17 +8,17 @@ import styles from "./Form.less";
 const FormItem = Form.Item;
 const formItemLayout = {
   labelCol: {
-    span: 6
+    span: 5
   },
   wrapperCol: {
-    span: 18
+    span: 19
   }
 };
 
 @Form.create()
 class TenantForm extends PureComponent {
 
-  onFormSubmit = _ => {
+  handlerFormSubmit = _ => {
     const {
       form,
       saveTenant,
@@ -105,11 +105,11 @@ class TenantForm extends PureComponent {
                 </FormItem>
                 : null
             }
-            <FormItem wrapperCol={{ span: 4, offset: 6 }} className="btn-submit">
+            <FormItem wrapperCol={{ span: 4, offset: 5 }} className="btn-submit">
               <Button
                 type="primary"
                 loading={saving}
-                onClick={this.onFormSubmit}
+                onClick={this.handlerFormSubmit}
               >
                 <FormattedMessage id='global.save' defaultMessage='保存' />
               </Button>

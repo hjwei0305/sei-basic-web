@@ -4,9 +4,9 @@ import cls from "classnames";
 import { omit } from 'lodash'
 import isEqual from 'react-fast-compare';
 import { formatMessage } from "umi-plugin-react/locale";
-import { Row, Col, Card, Input, Empty, Pagination, List, Skeleton, Popconfirm, Tag, Button } from "antd";
+import { Row, Col, Card, Input, Empty, Pagination, List, Skeleton, Popconfirm, Tag } from "antd";
 import { ScrollBar, ExtIcon } from 'seid';
-import empty from "@/assets/empty.svg";
+import empty from "@/assets/item_empty.svg";
 import TenantAdd from './components/TenantForm/Add';
 import TenantEdit from './components/TenantForm/Edit';
 import AdminAdd from './components/AdminForm/Add';

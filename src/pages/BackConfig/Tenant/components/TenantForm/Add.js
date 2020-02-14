@@ -42,7 +42,7 @@ class TenantAdd extends Component {
         content={<Form {...popoverProps} />}
       >
         <span className={cls("form-popover-box-trigger")}>
-          <Button icon="plus">
+          <Button icon="plus" type='link'>
             租户
           </Button>
         </span>

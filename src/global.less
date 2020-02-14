@@ -36,7 +36,7 @@ li {
   .auto-height {
     height: 100% !important;
   }
-  .ant-table-tbody>tr>td {
+  .ant-table-tbody > tr > td {
     color: fade(@black, 65%);
     &.action {
       padding: 0 8px !important;
@@ -106,4 +106,20 @@ li {
       border-color: #d9d9d9 !important;
     }
   }
+  .blank-empty {
+    display: flex;
+    position: relative;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    background-color: @white;
+    height: 100%;
+    .ant-empty-image {
+        height: 240px;
+        img {
+            height: 220px;
+            width: 320px;
+        }
+    }
+}
 }

@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { toUpper, trim } from 'lodash'
-import { Button, Form, Input, Switch } from "antd";
-import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
+import { Form, Input, Switch } from "antd";
+import { formatMessage } from "umi-plugin-react/locale";
 import { ExtModal, ComboList } from 'seid';
 import { constants } from "@/utils";
 
@@ -9,19 +9,17 @@ const { SERVER_PATH } = constants;
 const FormItem = Form.Item;
 const formItemLayout = {
   labelCol: {
-    span: 6
+    span: 5
   },
   wrapperCol: {
-    span: 18
+    span: 19
   }
 };
-
-const buttonWrapper = { span: 18, offset: 6 };
 
 @Form.create()
 class FormModal extends PureComponent {
 
-  onFormSubmit = _ => {
+  handlerFormSubmit = _ => {
     const { form, save, rowData } = this.props;
     form.validateFields((err, formData) => {
       if (err) {
@@ -60,11 +58,13 @@ class FormModal extends PureComponent {
         onCancel={closeFormModal}
         visible={showModal}
         centered
-        footer={null}
+        bodyStyle={{ paddingBottom: 0 }}
+        confirmLoading={saving}
+        onOk={this.handlerFormSubmit}
         title={title}
       >
         <Form {...formItemLayout} layout="horizontal">
-          <FormItem label="所属应用模块">
+          <FormItem label="应用模块">
             {getFieldDecorator("appModuleName", {
               initialValue: rowData ? rowData.appModuleName : "",
               rules: [{
@@ -107,15 +107,6 @@ class FormModal extends PureComponent {
               initialValue: rowData ? rowData.beTree || false : false,
               valuePropName: "checked"
             })(<Switch size="small" />)}
-          </FormItem>
-          <FormItem wrapperCol={buttonWrapper} className="btn-submit">
-            <Button
-              type="primary"
-              loading={saving}
-              onClick={this.onFormSubmit}
-            >
-              <FormattedMessage id="global.ok" defaultMessage="确定" />
-            </Button>
           </FormItem>
         </Form>
       </ExtModal>

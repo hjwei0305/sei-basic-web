@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { toUpper, trim } from 'lodash'
-import { Button, Form, Input, Switch } from "antd";
-import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
+import { Form, Input, Switch } from "antd";
+import { formatMessage } from "umi-plugin-react/locale";
 import { ExtModal } from 'seid'
 
 const FormItem = Form.Item;
@@ -14,12 +14,10 @@ const formItemLayout = {
   }
 };
 
-const buttonWrapper = { span: 18, offset: 6 };
-
 @Form.create()
 class FormModal extends PureComponent {
 
-  onFormSubmit = _ => {
+  handlerFormSubmit = _ => {
     const { form, save, currentPageRow, currentFeatureGroup } = this.props;
     form.validateFields((err, formData) => {
       if (err) {
@@ -64,7 +62,9 @@ class FormModal extends PureComponent {
         onCancel={closePageFormModal}
         visible={showFormModal}
         centered
-        footer={null}
+        bodyStyle={{ paddingBottom: 0 }}
+        confirmLoading={saving}
+        onOk={this.handlerFormSubmit}
         title={title}
       >
         <Form {...formItemLayout} layout="horizontal">
@@ -100,15 +100,6 @@ class FormModal extends PureComponent {
               initialValue: currentPageRow ? currentPageRow.tenantCanUse || false : false,
               valuePropName: "checked"
             })(<Switch size="small" />)}
-          </FormItem>
-          <FormItem wrapperCol={buttonWrapper} className="btn-submit">
-            <Button
-              type="primary"
-              loading={saving}
-              onClick={this.onFormSubmit}
-            >
-              <FormattedMessage id="global.save" defaultMessage="保存" />
-            </Button>
           </FormItem>
         </Form>
       </ExtModal>
