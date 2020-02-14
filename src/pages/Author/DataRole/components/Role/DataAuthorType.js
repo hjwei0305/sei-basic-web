@@ -97,6 +97,10 @@ class DataAuthorType extends Component {
             }
         };
         const toolBarProps = {
+            layout: {
+                leftSpan: 14,
+                rightSpan: 10,
+            },
             left: (
                 <Fragment>
                     <div className='app-module-box'>
