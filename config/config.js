@@ -17,6 +17,7 @@ export default {
   base: `${base}/`,
   publicPath: `${base}/`,
   mountElementId: name,
+  hash: true,
   plugins: [
     ['@umijs/plugin-qiankun'],
     [
