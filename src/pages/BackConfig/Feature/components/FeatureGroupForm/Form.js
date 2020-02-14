@@ -22,6 +22,14 @@ const formItemLayout = {
 @Form.create()
 class FeatureGroupForm extends PureComponent {
 
+  constructor(props) {
+    super(props);
+    const { groupData } = this.props;
+    this.state = {
+      currentAppModuleCode: groupData ? groupData.appModuleCode : '',
+    };
+  }
+
   handlerFormSubmit = _ => {
     const { form, saveFeatureGroup, groupData, handlerPopoverHide } = this.props;
     const { validateFields, getFieldsValue } = form;
@@ -46,6 +54,7 @@ class FeatureGroupForm extends PureComponent {
   };
 
   render() {
+    const { currentAppModuleCode } = this.state;
     const { form, groupData, saving } = this.props;
     const { getFieldDecorator } = form;
     const title = groupData ? '编辑功能项组' : '新建功能项组';
@@ -58,6 +67,9 @@ class FeatureGroupForm extends PureComponent {
       searchPlaceHolder: "输入名称关键字查询",
       store: {
         url: `${SERVER_PATH}/sei-basic/appModule/findAllUnfrozen`
+      },
+      afterSelect: item => {
+        this.setState({ currentAppModuleCode: item.code });
       },
       reader: {
         name: 'name',
@@ -73,6 +85,17 @@ class FeatureGroupForm extends PureComponent {
             </span>
           </div>
           <Form {...formItemLayout}>
+            <FormItem label="应用模块">
+              {getFieldDecorator("appModuleName", {
+                initialValue: groupData ? groupData.appModuleName : "",
+                rules: [{
+                  required: true,
+                  message: formatMessage({ id: "feature.group.appModule.required", defaultMessage: "请选择所属应用模块" })
+                }]
+              })(
+                <ComboList {...appModuleProps} />
+              )}
+            </FormItem>
             <FormItem label={formatMessage({ id: "global.name", defaultMessage: "名称" })}>
               {getFieldDecorator("name", {
                 initialValue: groupData ? groupData.name : "",
@@ -92,18 +115,11 @@ class FeatureGroupForm extends PureComponent {
                   message: formatMessage({ id: "global.code.required", defaultMessage: "代码不能为空" })
                 }]
               })(
-                <Input maxLength={30} placeholder={formatMessage({ id: "global.code.tip", defaultMessage: "规则:名称各汉字首字母大写" })} />
-              )}
-            </FormItem>
-            <FormItem label="应用模块">
-              {getFieldDecorator("appModuleName", {
-                initialValue: groupData ? groupData.appModuleName : "",
-                rules: [{
-                  required: true,
-                  message: formatMessage({ id: "feature.group.appModule.required", defaultMessage: "请选择所属应用模块" })
-                }]
-              })(
-                <ComboList {...appModuleProps} />
+                <Input
+                  addonBefore={`${currentAppModuleCode}-`}
+                  maxLength={30}
+                  placeholder={formatMessage({ id: "global.code.tip", defaultMessage: "规则:名称各汉字首字母大写" })}
+                />
               )}
             </FormItem>
             <FormItem wrapperCol={{ span: 4, offset: 5 }} className="btn-submit">
