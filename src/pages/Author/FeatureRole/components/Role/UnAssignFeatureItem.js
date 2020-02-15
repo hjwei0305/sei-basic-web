@@ -115,15 +115,15 @@ class UnAssignFeatureItem extends Component {
         }
     };
 
-    onItemCheck = (e, item) => {
-        const { checkedList, unAssignListData } = this.state;
-        let checkedKeys = cloneDeep(checkedList);
+    handlerItemCheck = (item) => {
+        const { checkedList,unAssignListData } = this.state;
+        const checkedKeys = cloneDeep(checkedList);
         let selectAll = false;
         let selectIndeterminate = false;
-        if (e.target.checked) {
-            checkedKeys[item.id] = item.id;
-        } else {
+        if (checkedList[item.id]) {
             delete checkedKeys[item.id];
+        } else {
+            checkedKeys[item.id] = item.id;
         }
         const keys = Object.keys(checkedKeys);
         if (keys.length > 0) {
@@ -136,7 +136,7 @@ class UnAssignFeatureItem extends Component {
         this.setState({
             selectIndeterminate,
             selectAll,
-            checkedList: checkedKeys
+            checkedList: checkedKeys,
         });
     };
 
@@ -223,15 +223,10 @@ class UnAssignFeatureItem extends Component {
                             dataSource={unAssignListData}
                             loading={loading}
                             renderItem={item => (
-                                <List.Item key={item.id} className={cls({ 'checked': !!checkedList[item.id] })} actions={[]}>
+                                <List.Item key={item.id} onClick={() => this.handlerItemCheck(item)} className={cls({ 'checked': !!checkedList[item.id] })} actions={[]}>
                                     <Skeleton avatar loading={loading} active>
                                         <List.Item.Meta
-                                            avatar={
-                                                <Checkbox
-                                                    checked={!!checkedList[item.id]}
-                                                    onChange={(e) => this.onItemCheck(e, item)}
-                                                />
-                                            }
+                                            avatar={<Checkbox checked={!!checkedList[item.id]} />}
                                             title={this.renderItemTitle(item)}
                                             description={item.url}
                                         />

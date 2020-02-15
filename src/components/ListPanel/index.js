@@ -110,15 +110,15 @@ class ListPanel extends Component {
         );
     };
 
-    onItemCheck = (e, item) => {
+    handlerItemCheck = (item) => {
         const { checkedList, dataSource } = this.state;
         let checkedKeys = cloneDeep(checkedList);
         let selectAll = false;
         let selectIndeterminate = false;
-        if (e.target.checked) {
-            checkedKeys[item.id] = item.id;
-        } else {
+        if (checkedList[item.id]) {
             delete checkedKeys[item.id];
+        } else {
+            checkedKeys[item.id] = item.id;
         }
         const keys = Object.keys(checkedKeys);
         if (keys.length > 0) {
@@ -197,15 +197,10 @@ class ListPanel extends Component {
                             dataSource={dataSource}
                             loading={loading}
                             renderItem={item => (
-                                <List.Item key={item.id} className={cls({ 'checked': !!checkedList[item.id] })} actions={[]}>
+                                <List.Item key={item.id} onClick={() => this.handlerItemCheck(item)} className={cls({ 'checked': !!checkedList[item.id] })} actions={[]}>
                                     <Skeleton avatar loading={loading} active>
                                         <List.Item.Meta
-                                            avatar={
-                                                <Checkbox
-                                                    checked={!!checkedList[item.id]}
-                                                    onChange={(e) => this.onItemCheck(e, item)}
-                                                />
-                                            }
+                                            avatar={<Checkbox checked={!!checkedList[item.id]} />}
                                             title={item.name}
                                             description={item.code}
                                         />
