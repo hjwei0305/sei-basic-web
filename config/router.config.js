@@ -40,6 +40,11 @@ export default [
         component: 'DataDict',
       },
       {
+        path: '/userProfile',
+        name: 'userProfile',
+        component: 'UserProfile',
+      },
+      {
         path: '/orgStructure',
         name: 'orgStructure',
         routes: [{
