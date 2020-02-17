@@ -3,8 +3,8 @@ import { connect } from "dva";
 import cls from "classnames";
 import isEqual from 'react-fast-compare';
 import { formatMessage } from "umi-plugin-react/locale";
-import { Row, Col, Card, Input, Empty, Pagination, List, Skeleton, Popconfirm } from "antd";
-import { ScrollBar, ExtIcon } from 'seid';
+import { Row, Col, Input, Empty, Popconfirm } from "antd";
+import { ExtIcon, ListCard } from 'seid';
 import empty from "@/assets/item_empty.svg";
 import GroupAdd from './components/FeatureGroupForm/Add';
 import GroupEdit from './components/FeatureGroupForm/Edit';
@@ -22,53 +22,18 @@ class Feature extends Component {
         this.state = {
             listData: [],
             delGroupId: null,
-            pagination: {
-                current: 1,
-                pageSize: 30,
-                total: 0,
-            },
         };
     }
 
-    static allValue = '';
-    static data = [];
 
     componentDidUpdate() {
         const { featureGroup } = this.props;
-        if (!isEqual(this.data, featureGroup.listData)) {
-            const { pagination } = this.state;
+        if (!isEqual(this.state.listData, featureGroup.listData)) {
             const { listData } = featureGroup;
-            this.data = [...listData];
             this.setState({
                 listData,
-                pagination: {
-                    ...pagination,
-                    total: listData.length,
-                },
             });
         }
-    };
-
-    handlerSearchChange = (v) => {
-        this.allValue = v;
-    };
-
-    handlerSearch = () => {
-        const { pagination, } = this.state;
-        let listData = [];
-        if (this.allValue) {
-            const valueKey = this.allValue.toLowerCase();
-            listData = this.data.filter(ds => ds.name.toLowerCase().indexOf(valueKey) > -1 || ds.code.toLowerCase().indexOf(valueKey) > -1);
-        } else {
-            listData = [...this.data];
-        }
-        this.setState({
-            listData,
-            pagination: {
-                ...pagination,
-                total: listData.length,
-            },
-        });
     };
 
     reloadFeatureGroupData = _ => {
@@ -119,33 +84,13 @@ class Feature extends Component {
         });
     };
 
-    handlerPageChange = (current, pageSize) => {
-        const { pagination } = this.state;
-        this.setState(
-            {
-                pagination: {
-                    ...pagination,
-                    current,
-                    pageSize,
-                },
-            },
-            () => {
-                const newData = this.getLocalFilterData();
-                const listData = newData.slice((current - 1) * pageSize, current * pageSize);
-                this.setState({
-                    listData,
-                });
-            },
-        );
-    };
-
-    handlerGroupSelect = (currentFeatureGroup, e) => {
-        e && e.stopPropagation();
+    handlerGroupSelect = (keys, items) => {
         const { dispatch } = this.props;
+        const currentFeatureGroup = keys.length === 1 ? items[0] : null;
         dispatch({
             type: 'featureGroup/updateState',
             payload: {
-                currentFeatureGroup
+                currentFeatureGroup,
             }
         });
         dispatch({
@@ -157,12 +102,85 @@ class Feature extends Component {
         });
     };
 
+    handlerSearchChange = v => {
+        this.listCardRef.handlerSearchChange(v);
+    };
+
+    handlerSearch = () => {
+        this.listCardRef.handlerSearch();
+    };
+
+    renderCustomTool = ({ total }) => {
+        const { loading } = this.props;
+        const saving = loading.effects["featureGroup/saveFeatureGroup"];
+        return (
+            <>
+                <GroupAdd
+                    saving={saving}
+                    saveFeatureGroup={this.saveFeatureGroup}
+                />
+                <div>
+                    <Search
+                        placeholder="输入关键字查询"
+                        onChange={e => this.handlerSearchChange(e.target.value)}
+                        onSearch={this.handlerSearch}
+                        onPressEnter={this.handlerSearch}
+                        style={{ width: 140 }}
+                    />
+                    <span style={{ marginLeft: 8 }}>{`共 ${total} 项`}</span>
+                </div>
+            </>
+        );
+    };
+
+    renderItemAction = (item) => {
+        const { loading } = this.props;
+        const { delGroupId } = this.state;
+        const saving = loading.effects["featureGroup/saveFeatureGroup"];
+        return (
+            <>
+                <div className='tool-action' onClick={e => e.stopPropagation()}>
+                    <GroupEdit
+                        saving={saving}
+                        saveFeatureGroup={this.saveFeatureGroup}
+                        groupData={item}
+                    />
+                    <Popconfirm
+                        title={formatMessage({ id: "global.delete.confirm", defaultMessage: "确定要删除吗？提示：删除后不可恢复" })}
+                        onConfirm={(e) => this.delFeatureGroup(item, e)}
+                    >
+                        {
+                            loading.effects["featureGroup/delFeatureGroup"] && delGroupId === item.id
+                                ? <ExtIcon className={cls('del', 'action-item')} type="loading" antd />
+                                : <ExtIcon className={cls('del', 'action-item')} type="delete" antd />
+                        }
+                    </Popconfirm>
+                </div>
+            </>
+        )
+    };
+
     render() {
         const { loading, featureGroup } = this.props;
         const { currentFeatureGroup } = featureGroup;
-        const { allValue, listData, pagination, delGroupId } = this.state;
+        const { listData } = this.state;
         const listLoading = loading.effects["featureGroup/queryFeatureGroupList"];
-        const saving = loading.effects["featureGroup/saveFeatureGroup"];
+        const featureGroupprops = {
+            className: 'left-content',
+            title: '功能组',
+            showSearch: false,
+            loading: listLoading,
+            dataSource: listData,
+            onSelectChange: this.handlerGroupSelect,
+            customTool: this.renderCustomTool,
+            onListCardRef: ref => (this.listCardRef = ref),
+            itemField: {
+                title: item => item.name,
+                description: item => item.code,
+                extra: item => <span style={{ marginRight: 8 }}>{item.appModuleName}</span>,
+            },
+            itemTool: this.renderItemAction,
+        };
         const pageFeatureProps = {
             currentFeatureGroup,
         };
@@ -170,80 +188,9 @@ class Feature extends Component {
             <div className={cls(styles["container-box"])} >
                 <Row gutter={4} className='auto-height'>
                     <Col span={6} className='auto-height'>
-                        <Card
-                            title="功能组"
-                            bordered={false}
-                            className="left-content"
-                        >
-                            <div className="header-tool-box">
-                                <GroupAdd
-                                    saving={saving}
-                                    saveFeatureGroup={this.saveFeatureGroup}
-                                />
-                                <Search
-                                    placeholder="输入名称关键字查询"
-                                    defaultValue={allValue}
-                                    onChange={e => this.handlerSearchChange(e.target.value)}
-                                    onSearch={this.handlerSearch}
-                                    onPressEnter={this.handlerSearch}
-                                    style={{ width: 172 }}
-                                />
-                            </div>
-                            <div className="list-body">
-                                <ScrollBar>
-                                    <List
-                                        dataSource={listData}
-                                        loading={listLoading}
-                                        renderItem={item => (
-                                            <List.Item
-                                                key={item.id}
-                                                onClick={(e) => this.handlerGroupSelect(item, e)}
-                                                className={cls({
-                                                    [cls('row-selected')]: currentFeatureGroup && item.id === currentFeatureGroup.id,
-                                                })}
-                                            >
-                                                <Skeleton loading={listLoading} active>
-                                                    <List.Item.Meta
-                                                        title={item.name}
-                                                        description={item.code}
-                                                    />
-                                                    <div className='desc'>{item.appModuleName}</div>
-                                                    <div className='arrow-box'>
-                                                        <ExtIcon type="right" antd />
-                                                    </div>
-                                                </Skeleton>
-                                                <div className='tool-action' onClick={e => e.stopPropagation()}>
-                                                    <GroupEdit
-                                                        saving={saving}
-                                                        saveFeatureGroup={this.saveFeatureGroup}
-                                                        groupData={item}
-                                                    />
-                                                    <Popconfirm
-                                                        title={formatMessage({ id: "global.delete.confirm", defaultMessage: "确定要删除吗？提示：删除后不可恢复" })}
-                                                        onConfirm={(e) => this.delFeatureGroup(item, e)}
-                                                    >
-                                                        {
-                                                            loading.effects["featureGroup/delFeatureGroup"] && delGroupId === item.id
-                                                                ? <ExtIcon className={cls('del', 'action-item')} type="loading" antd />
-                                                                : <ExtIcon className={cls('del', 'action-item')} type="delete" antd />
-                                                        }
-                                                    </Popconfirm>
-                                                </div>
-                                            </List.Item>
-                                        )}
-                                    />
-                                </ScrollBar>
-                            </div>
-                            <div className="list-page-bar">
-                                <Pagination
-                                    simple
-                                    onChange={this.handlerPageChange}
-                                    {...pagination}
-                                />
-                            </div>
-                        </Card>
+                        <ListCard {...featureGroupprops} />
                     </Col>
-                    <Col span={18} className={cls("main-content",'auto-height')}>
+                    <Col span={18} className={cls("main-content", 'auto-height')}>
                         {
                             currentFeatureGroup
                                 ? <PageFeature {...pageFeatureProps} />
@@ -253,7 +200,6 @@ class Feature extends Component {
                                         description="可选择左边列表项进行相应的操作"
                                     />
                                 </div>
-
                         }
                     </Col>
                 </Row>

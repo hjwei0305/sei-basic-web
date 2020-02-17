@@ -220,7 +220,7 @@ class AppMenu extends Component {
 
     getSelectData = (selectedKey, treeData, currentNode) => {
         for (let i = 0; i < treeData.length; i += 1) {
-            let item = treeData[i];
+            const item = treeData[i];
             const childData = item[childFieldKey];
             if (item.id === selectedKey) {
                 Object.assign(currentNode, item);

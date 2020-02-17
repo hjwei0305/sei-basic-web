@@ -27,9 +27,9 @@ class UnAssignFeatureItem extends Component {
     static allValue = '';
     static data = [];
 
-    componentDidUpdate(prevProps) {
+    componentDidUpdate() {
         const { unAssignListData } = this.props;
-        if (!isEqual(prevProps.unAssignListData, unAssignListData)) {
+        if (!isEqual(this.data, unAssignListData)) {
             const { pagination } = this.state;
             this.data = [...unAssignListData];
             this.setState({

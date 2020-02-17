@@ -1,116 +1,64 @@
 @import '../../../themes/vars.less';
 .container-box {
-    height: 100%;
-    padding: 0;
-    overflow: hidden;
-    background-color: @page-background-color;
-    :global {
-        .left-content {
-            position: relative;
-            height: 100%;
-            .ant-card-head {
-                border-color: transparent;
+  height: 100%;
+  padding: 0;
+  overflow: hidden;
+  background-color: @page-background-color;
+  :global {
+    .left-content {
+      .ant-list-item {
+        .tool-action {
+          position: absolute;
+          right: 20px;
+          bottom: 2px;
+          .action-item {
+            visibility: hidden;
+            &.ant-popover-open {
+              visibility: visible;
+              i {
+                color: @primary-color;
+                background-color: fade(@black, 5%);
+              }
             }
-            .ant-card-body {
-                height: calc(100% - 57px);
-                padding: 0;
-                .list-body {
-                    width: 100%;
-                    height: calc(100% - 90px);
-                    overflow: hidden;
-                    .scrollbar-container {
-                        width: 100%;
-                    }
-                    .ant-list-item {
-                        padding: 12px 16px 20px 8px;
-                        cursor: pointer;
-                        position: relative;
-                        .tool-action {
-                            position: absolute;
-                            right: 20px;
-                            bottom: 2px;
-                            .action-item {
-                                visibility: hidden;
-                                &.ant-popover-open {
-                                    visibility: visible;
-                                    i {
-                                        color: @primary-color;
-                                        background-color: fade(@black, 5%);
-                                    }
-                                }
-                            }
-                            i {
-                                display: inline-block;
-                                width: 32px;
-                                height: 32px;
-                                line-height: 34px;
-                                border-radius: 4px;
-                                cursor: pointer;
-                                transition: all ease-in 0.2s;
-                                &.ant-dropdown-open,
-                                &:hover {
-                                    color: @primary-color;
-                                    background-color: fade(@black, 5%);
-                                }
-                                &.del:hover {
-                                    color: @error-color;
-                                    background-color: fade(@error-color, 15%);
-                                }
-                                &.ant-popover-open:hover,
-                                &.ant-popover-open {
-                                    color: @error-color;
-                                    background-color: fade(@error-color, 15%);
-                                }
-                            }
-                        }
-                        &:hover {
-                            background-color: fade(@item-hover-bg, 45%);
-                            .tool-action {
-                                .action-item {
-                                    visibility: visible;
-                                }
-                            }
-                        }
-                        .desc {
-                            margin-right: 8px;
-                        }
-                        .arrow-box {
-                            font-size: 10px;
-                            color: fade(@black, 45%);
-                        }
-                    }
-                }
-                .list-page-bar {
-                    position: relative;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    width: 100%;
-                    height: 48px;
-                    background-color: #fff;
-                    border-top: 1px solid @border-color;
-                }
+          }
+          i {
+            display: inline-block;
+            width: 32px;
+            height: 32px;
+            line-height: 34px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all ease-in 0.2s;
+            &.ant-dropdown-open,
+            &:hover {
+              color: @primary-color;
+              background-color: fade(@black, 5%);
             }
-            .header-tool-box {
-                display: flex;
-                align-items: center;
-                height: 42px;
-                line-height: 42px;
-                justify-content: space-between;
-                position: relative;
-                padding: 0 8px;
-                border-bottom: 1px solid @border-color;
+            &.del:hover {
+              color: @error-color;
+              background-color: fade(@error-color, 15%);
             }
+            &.ant-popover-open:hover,
+            &.ant-popover-open {
+              color: @error-color;
+              background-color: fade(@error-color, 15%);
+            }
+          }
         }
-        .main-content {
-            height: 100%;
-            position: relative;
-            display: flex;
-            justify-content: center;
+        &:hover {
+          .tool-action {
+            .action-item {
+              visibility: visible;
+            }
+          }
         }
+      }
     }
-}
-
-.row-selected {
-    background-color: @item-hover-bg !important;
+    .main-content {
+      height: 100%;
+      position: relative;
+      display: flex;
+      justify-content: center;
+    }
+  }
 }
