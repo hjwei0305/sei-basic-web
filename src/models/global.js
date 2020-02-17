@@ -13,8 +13,6 @@ const {
   getCurrentUser,
 } = userUtils;
 
-console.log(userUtils);
-
 const { constants, storage } = utils;
 const { CONST_GLOBAL } = constants;
 

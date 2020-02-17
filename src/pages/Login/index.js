@@ -75,7 +75,7 @@ class LoginForm extends PureComponent {
             {
               showTenant && <Item>
                 {
-                  getFieldDecorator("tenantCode", {
+                  getFieldDecorator("tenant", {
                     rules: [{ required: false, message: formatMessage({ id: "login.tenant.required", defaultMessage: "请输入租户账号" }) }]
                   })(
                     <Input
