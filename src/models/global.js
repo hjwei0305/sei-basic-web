@@ -58,7 +58,7 @@ export default {
     * login({ payload }, { call, select }) {
       const { locationQuery } = yield select(_ => _.global);
       const res = yield call(login, payload);
-      const { success, data, message: msg } = res || {};
+      const { success, data} = res || {};
       const { loginStatus, authorityPolicy, sessionId, } = data || {};
       message.destroy();
       storage.sessionStorage.clear();
