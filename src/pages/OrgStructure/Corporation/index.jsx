@@ -19,17 +19,7 @@ const { authAction } = utils;
 class Corporation extends Component {
   state = {
     delRowId: null,
-    list: [],
   }
-
-  // componentDidUpdate(_prevProps, prevState) {
-  //   const { list, } = this.props.corporation;
-  //   if (!isEqual(prevState.list, list)) {
-  //     this.setState({
-  //       list,
-  //     });
-  //   }
-  // }
 
   reloadData = _ => {
     const { dispatch } = this.props;
@@ -122,7 +112,6 @@ class Corporation extends Component {
   };
 
   getExtableProps = () => {
-    // const { list } = this.state;
     const { list, } = this.props.corporation;
     const { loading } = this.props;
     const columns = [

@@ -11,7 +11,7 @@ export default [
     path: '/',
     component: '../layouts/AuthLayout',
     routes: [
-      { path: '/', redirect: '/dashboard' },
+      // { path: '/', redirect: '/dashboard' },
       { path: '/dashboard', component: './Dashboard' },
       {
         path: '/backConfig',
@@ -38,6 +38,11 @@ export default [
         path: '/dataDict',
         name: 'dataDict',
         component: 'DataDict',
+      },
+      {
+        path: '/userProfile',
+        name: 'userProfile',
+        component: 'UserProfile',
       },
       {
         path: '/orgStructure',

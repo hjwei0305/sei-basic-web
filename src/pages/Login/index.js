@@ -19,11 +19,28 @@ class LoginForm extends PureComponent {
     e.preventDefault();
     this.props.form.validateFields((err, user) => {
       if (!err) {
+        const { dispatch, } = this.props;
         user.password = md5(user.password);
-        this.props.dispatch({
+        dispatch({
           type: "global/login",
           payload: {
             ...user
+          }
+        }).then(res => {
+          const { success, data } = res || {};
+          if (success) {
+            if (data.loginStatus === 'multiTenant') {
+              dispatch({
+                type: 'global/updateState',
+                payload: {
+                  showTenant: true,
+                }
+              });
+            } else {
+              dispatch({
+                type: 'global/getUserFeatures',
+              });
+            }
           }
         });
       }
@@ -58,7 +75,7 @@ class LoginForm extends PureComponent {
             {
               showTenant && <Item>
                 {
-                  getFieldDecorator("tenantCode", {
+                  getFieldDecorator("tenant", {
                     rules: [{ required: false, message: formatMessage({ id: "login.tenant.required", defaultMessage: "请输入租户账号" }) }]
                   })(
                     <Input

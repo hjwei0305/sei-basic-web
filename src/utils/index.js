@@ -1,5 +1,7 @@
 import constants from './constants';
 import { utils } from 'seid'
+import * as userAuth from './user';
+
 
 const { storage, constants: seidConstants } = utils;
 
@@ -11,5 +13,6 @@ const getCurrentUserContext = () => {
 
 export {
   constants,
+  userAuth as userUtils,
   getCurrentUserContext,
 };
