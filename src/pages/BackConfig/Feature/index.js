@@ -25,7 +25,6 @@ class Feature extends Component {
         };
     }
 
-
     componentDidUpdate() {
         const { featureGroup } = this.props;
         if (!isEqual(this.state.listData, featureGroup.listData)) {
