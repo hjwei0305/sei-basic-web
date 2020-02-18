@@ -2,7 +2,7 @@
 * @Author: zp
 * @Date:   2020-02-17 11:36:34
 * @Last Modified by:   zp
-* @Last Modified time: 2020-02-17 20:52:23
+* @Last Modified time: 2020-02-18 09:12:35
 */
 import {
   findByUserId,
@@ -53,12 +53,12 @@ export default modelExtend(model, {
       message.destroy();
       if (res.success) {
         message.success(res.message);
-        yield put({
-          type: 'updateState',
-          payload: {
-            basicInfo: res.data,
-          },
-        });
+        // yield put({
+        //   type: 'updateState',
+        //   payload: {
+        //     basicInfo: res.data,
+        //   },
+        // });
       } else {
         message.error(res.message);
       }
