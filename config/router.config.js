@@ -11,7 +11,6 @@ export default [
     path: '/',
     component: '../layouts/AuthLayout',
     routes: [
-      // { path: '/', redirect: '/dashboard' },
       { path: '/dashboard', component: './Dashboard' },
       {
         path: '/backConfig',

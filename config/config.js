@@ -9,19 +9,6 @@ const pkg = path.join(__dirname, '../package.json');
 const { base } = require(appConfigPath);
 const { name, title } = require(pkg);
 
-const getTreeLeaf = (trees = [], result = []) => {
-  for (let i = trees.length - 1; i >= 0; i -= 1) {
-    const item = trees[i];
-    if (item.routes && item.routes.length) {
-      getTreeLeaf(item.routes, result);
-    } else {
-      result.push(item.path);
-    }
-  }
-
-  return result;
-};
-
 export default {
   history: 'hash',
   treeShaking: true,
@@ -33,9 +20,6 @@ export default {
   hash: true,
   plugins: [
     ['@umijs/plugin-qiankun'],
-    ['umi-plugin-cache-route', {
-      keepalive: getTreeLeaf(pageRoutes),
-    }],
     [
       'umi-plugin-react',
       {

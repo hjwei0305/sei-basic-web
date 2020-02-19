@@ -28,8 +28,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-fast-compare": "^2.0.4",
-    "seid": "^1.1.52",
-    "umi-plugin-cache-route": "^2.0.0"
+    "seid": "^1.1.52"
   },
   "devDependencies": {
     "babel-eslint": "^9.0.0",
