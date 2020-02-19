@@ -159,7 +159,7 @@ class TreePanel extends Component {
             return (
                 <div className='blank-empty'>
                     <Empty
-                        image={empty}
+                        image={Empty.PRESENTED_IMAGE_SIMPLE}
                         description="暂时没有数据"
                     />
                 </div>
