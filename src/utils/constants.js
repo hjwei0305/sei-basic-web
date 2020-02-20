@@ -13,7 +13,7 @@ const getServerPath = function () {
 
 const BASE_DOMAIN = '/';
 
-const GATEWAY = 'sei-gateway';
+const GATEWAY = 'api-gateway';
 
 const APP_BASE = base;
 

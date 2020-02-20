@@ -64,7 +64,7 @@ const menuData = [
         name: '数据权限显示',
         path: '/author/dataView',
       },
-      
+
     ],
   },
 ];
