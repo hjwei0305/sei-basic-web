@@ -18,7 +18,7 @@ class MoveTreeModal extends PureComponent {
         okText='移动'
         width={400}
       >
-        <TreeView onChange={onChange} treeData={treeData}/>
+        <TreeView height={300} onChange={onChange} treeData={treeData}/>
       </ExtModal>
     );
   }

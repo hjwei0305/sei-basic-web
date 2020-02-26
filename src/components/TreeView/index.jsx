@@ -173,30 +173,32 @@ class TreeView extends Component {
 
   render() {
     const { expandedKeys, autoExpandParent, checkedKeys, selectedKeys, filterTreeData, } = this.state;
-    const { height = 300 } = this.props;
+    const { height = '100%' } = this.props;
     return (
       <div style={{ height, }}>
         <ToolBar {...this.getToolBarProps()} />
-        <ScrollBar>
-          {filterTreeData && filterTreeData.length ? (
-            <Tree
-              onCheck={this.handleCheck}
-              onSelect={this.handleSelect}
-              checkable={false}
-              blockNode={true}
-              onExpand={this.onExpand}
-              expandedKeys={expandedKeys}
-              checkedKeys={checkedKeys}
-              autoExpandParent={autoExpandParent}
-              selectedKeys={selectedKeys}
-            >
-              {this.getTreeNodes(filterTreeData)}
-            </Tree>
-          ) : (
-              <Empty className={cls("empty-wrapper")} description="暂无数据"/>
-            )
-          }
-        </ScrollBar>
+        <div style={{ height: 'calc(100% - 46px)', }}>
+          <ScrollBar>
+            {filterTreeData && filterTreeData.length ? (
+              <Tree
+                onCheck={this.handleCheck}
+                onSelect={this.handleSelect}
+                checkable={false}
+                blockNode={true}
+                onExpand={this.onExpand}
+                expandedKeys={expandedKeys}
+                checkedKeys={checkedKeys}
+                autoExpandParent={autoExpandParent}
+                selectedKeys={selectedKeys}
+              >
+                {this.getTreeNodes(filterTreeData)}
+              </Tree>
+            ) : (
+                <Empty className={cls("empty-wrapper")} description="暂无数据"/>
+              )
+            }
+          </ScrollBar>
+        </div>
       </div>
     );
   }
