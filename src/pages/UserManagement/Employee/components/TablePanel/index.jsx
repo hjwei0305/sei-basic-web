@@ -14,11 +14,16 @@ const { authAction } = utils;
 
 @connect(({ employee, loading, }) => ({ employee, loading, }))
 class TablePanel extends Component {
-  state = {
-    delRowId: null,
-    list: [],
-    includeSubNode: false,
-    currNode: null,
+
+  constructor(props) {
+    super(props);
+    const { currNode, } = props.employee;
+    this.state = {
+      delRowId: null,
+      list: [],
+      includeSubNode: false,
+      currNode: currNode,
+    }
   }
 
   componentDidUpdate(_prevProps, prevState) {
