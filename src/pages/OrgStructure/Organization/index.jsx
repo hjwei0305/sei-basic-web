@@ -21,7 +21,7 @@ class Organization extends Component {
         <Spin spinning={loading.global} wrapperClassName={cls("spin-wrapper")}>
           <CascadeLayout title={['组织机构', selectedTreeNode && selectedTreeNode.name]} layout={[10, 14]}>
             <TreePanel slot="left" />
-            { selectedTreeNode ? (<FormPanel slot="right" />) : (<Empty slot="right" className={cls("empty-wrapper")} description="请选择左边的树节点进行操作" />) }
+            { selectedTreeNode ? (<FormPanel key={selectedTreeNode.id} slot="right" />) : (<Empty slot="right" className={cls("empty-wrapper")} description="请选择左边的树节点进行操作" />) }
           </CascadeLayout>
         </Spin>
       </PageWrapper>
