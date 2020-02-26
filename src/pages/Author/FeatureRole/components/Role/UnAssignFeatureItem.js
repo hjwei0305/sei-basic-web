@@ -39,6 +39,7 @@ class UnAssignFeatureItem extends Component {
                 selectIndeterminate: false,
                 pagination: {
                     ...pagination,
+                    current: 1,
                     total: unAssignListData.length,
                 },
             });
@@ -59,6 +60,7 @@ class UnAssignFeatureItem extends Component {
             unAssignListData,
             pagination: {
                 ...pagination,
+                current: 1,
                 total: unAssignListData.length,
             },
         });
