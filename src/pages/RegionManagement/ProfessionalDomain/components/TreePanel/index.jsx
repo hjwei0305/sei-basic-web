@@ -175,7 +175,7 @@ class TreePanel extends Component {
     const { showCreateModal, moveTreeData, selectedTreeNode, treeData } = professionalDomain;
 
     return (
-      <div>
+      <div style={{ height: '100%'}}>
         <TreeView treeData={treeData} toolBar={this.getToolBarProps()} onSelect={this.handleSelect} />
         { showCreateModal ? (
           <CreateFormModal

@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'dva';
 import { Input, Tree, Empty, Popconfirm, Button, message, } from 'antd';
 import { formatMessage, } from "umi-plugin-react/locale";
-import { ToolBar } from 'seid';
+import { ToolBar, ScrollBar, } from 'seid';
 import { cloneDeep, isEqual, } from 'lodash';
 import cls from 'classnames';
 import FormModal from './FormModal';
@@ -236,26 +236,30 @@ class TreePanel extends Component {
     const { showCreateModal } = organization;
 
     return (
-      <div>
+      <div style={{ height: '100%', }}>
         <ToolBar {...this.getToolBarProps()} />
-        { filterTreeData && filterTreeData.length ? (
-            <Tree
-              onCheck={this.handleCheck}
-              onSelect={this.handleSelect}
-              checkable={false}
-              blockNode={true}
-              onExpand={this.onExpand}
-              expandedKeys={expandedKeys}
-              checkedKeys={checkedKeys}
-              autoExpandParent={autoExpandParent}
-              selectedKeys={selectedKeys}
-            >
-              {this.getTreeNodes(filterTreeData)}
-            </Tree>
-          ) : (
-            <Empty className={cls("empty-wrapper")}  description="暂无数据"/>
-          )
-        }
+        <div style={{ height: 'calc(100% - 46px)', }}>
+          <ScrollBar>
+            { filterTreeData && filterTreeData.length ? (
+                <Tree
+                  onCheck={this.handleCheck}
+                  onSelect={this.handleSelect}
+                  checkable={false}
+                  blockNode={true}
+                  onExpand={this.onExpand}
+                  expandedKeys={expandedKeys}
+                  checkedKeys={checkedKeys}
+                  autoExpandParent={autoExpandParent}
+                  selectedKeys={selectedKeys}
+                >
+                  {this.getTreeNodes(filterTreeData)}
+                </Tree>
+              ) : (
+                <Empty className={cls("empty-wrapper")}  description="暂无数据"/>
+              )
+            }
+          </ScrollBar>
+        </div>
         { showCreateModal ? (<FormModal visible={showCreateModal} onCancel={this.handleCancel}/>) : (null)}
       </div>
     );
