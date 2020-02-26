@@ -1,8 +1,8 @@
 /*
 * @Author: zp
 * @Date:   2020-02-02 11:57:24
-* @Last Modified by:   zp
-* @Last Modified time: 2020-02-08 13:07:12
+ * @Last Modified by: Eason
+ * @Last Modified time: 2020-02-26 20:41:52
 */
 import { utils } from 'seid';
 import { constants } from '@/utils';
@@ -33,11 +33,10 @@ export async function save(data) {
 
 /** 删除 */
 export async function del(params) {
-  const url = `${SERVER_PATH}/sei-basic/position/delete`;
+  const url = `${SERVER_PATH}/sei-basic/position/delete/${params.id}`;
   return request({
     url,
     method: "DELETE",
-    params,
   });
 }
 
