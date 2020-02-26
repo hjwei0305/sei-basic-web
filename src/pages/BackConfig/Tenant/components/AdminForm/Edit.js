@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import cls from "classnames";
-import { Button, Popover } from "antd";
+import { Popover, Tooltip } from "antd";
+import { ExtIcon } from 'seid';
 import Form from "./Form";
 import styles from "./index.less";
 
@@ -41,9 +42,11 @@ class GroupEdit extends Component {
         overlayClassName={cls(styles["form-popover-box"])}
         content={<Form {...popoverProps} />}
       >
-        <span className='admin-box user'>
-          管理员
-        </span>
+        <Tooltip title='管理员'>
+          <span className={cls("form-popover-box-trigger", 'action-item')}>
+            <ExtIcon type="user" antd />
+          </span>
+        </Tooltip>
       </Popover>
     );
   }

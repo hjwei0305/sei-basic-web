@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Popover } from "antd";
+import { Popover, Tooltip } from "antd";
+import { ExtIcon } from 'seid';
 import cls from "classnames";
 import Form from "./Form";
 import styles from "./index.less";
@@ -41,9 +42,11 @@ class TenantAdd extends Component {
         overlayClassName={cls(styles["form-popover-box"])}
         content={<Form {...popoverProps} />}
       >
-        <span className='admin-box'>
-          设置管理员
-        </span>
+        <Tooltip title='设置管理员'>
+          <span className={cls("form-popover-box-trigger", 'action-item','admin-add')}>
+            <ExtIcon type="user-add" antd />
+          </span>
+        </Tooltip>
       </Popover>
     );
   }

@@ -178,36 +178,30 @@ class Tenant extends Component {
         });
     };
 
-    renderName = (item) => {
+    renderAdmin = (item) => {
         const { loading } = this.props;
         const saving = loading.effects["tenant/saveTenantAdmin"];
         const tenantData = omit(item, ['employeeDto']);
         if (!item.employeeDto) {
             return (
-                <>
-                    {item.name}
-                    <div style={{ display: 'inline-block' }} onClick={e => e.stopPropagation()}>
-                        <AdminAdd
-                            saving={saving}
-                            tenantData={tenantData}
-                            saveTenantAdmin={this.saveTenantAdmin}
-                        />
-                    </div>
-                </>
-            )
-        }
-        return (
-            <>
-                {item.name}
                 <div style={{ display: 'inline-block' }} onClick={e => e.stopPropagation()}>
-                    <AdminEdit
+                    <AdminAdd
                         saving={saving}
                         tenantData={tenantData}
                         saveTenantAdmin={this.saveTenantAdmin}
-                        tenantAdmin={item.employeeDto}
                     />
                 </div>
-            </>
+            )
+        }
+        return (
+            <div style={{ display: 'inline-block' }} onClick={e => e.stopPropagation()}>
+                <AdminEdit
+                    saving={saving}
+                    tenantData={tenantData}
+                    saveTenantAdmin={this.saveTenantAdmin}
+                    tenantAdmin={item.employeeDto}
+                />
+            </div>
         );
     };
 
@@ -258,7 +252,7 @@ class Tenant extends Component {
                                             >
                                                 <Skeleton loading={listLoading} active>
                                                     <List.Item.Meta
-                                                        title={this.renderName(item)}
+                                                        title={item.name}
                                                         description={item.code}
                                                     />
                                                     <div className='desc'>
@@ -289,6 +283,9 @@ class Tenant extends Component {
                                                                 : <ExtIcon className={cls('del', 'action-item')} type="delete" antd />
                                                         }
                                                     </Popconfirm>
+                                                    {
+                                                        this.renderAdmin(item)
+                                                    }
                                                 </div>
                                             </List.Item>
                                         )}

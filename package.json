@@ -28,7 +28,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-fast-compare": "^2.0.4",
-    "seid": "^1.1.55"
+    "seid": "^1.1.56"
   },
   "devDependencies": {
     "babel-eslint": "^9.0.0",
