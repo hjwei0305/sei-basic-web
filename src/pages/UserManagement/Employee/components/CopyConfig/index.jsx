@@ -104,6 +104,7 @@ class CopyConfig extends React.Component {
       checkbox: true,
       columns,
       toolBar: toolBarProps,
+      searchProperties: ['code', ],
       store: {
         type: 'POST',
         url: `${SERVER_PATH}/sei-basic/employee/findByUserQueryParam`,
@@ -213,7 +214,7 @@ class CopyConfig extends React.Component {
       <AssignLayout
         title={['选择复制到的用户', `用户【${rowData.userName}】的功能角色和数据角色`]}
         layout={[7, 1, 16]}
-        extra={[(<Button onClick={this.handleBack}>返回</Button>)]}
+        extra={[null, (<Button type="primary" onClick={this.handleBack}>返回</Button>)]}
       >
         <ExtTable slot="left" onTableRef={inst => this.userTableRef=inst } {...this.getUserExtableProps()} />
         <div slot="center">
