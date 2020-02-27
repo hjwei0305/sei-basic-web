@@ -91,9 +91,17 @@ class TreePanel extends Component {
             },
           }).then(res => {
             if (res.success) {
+              selectedTreeNode.parentId = this.targetParentNode.id;
               this.targetParentNode = null;
 
-              this.reloadData();
+              this.reloadData().then(() => {
+                dispatch({
+                  type: 'professionalDomain/updateState',
+                  payload: {
+                    selectedTreeNode,
+                  },
+                });
+              });
             }
           });
         } else {
@@ -145,7 +153,7 @@ class TreePanel extends Component {
 
   reloadData = () => {
     const { dispatch } = this.props;
-    dispatch({
+    return dispatch({
       type: "professionalDomain/queryTree",
     });
   }
