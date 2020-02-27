@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import isEqual from 'react-fast-compare';
 import { cloneDeep } from 'lodash'
 import { Input, Pagination, List, Skeleton, Checkbox, Card } from "antd";
-import { ScrollBar } from 'seid';
+import { ScrollBar, ListLoader } from 'seid';
 import styles from "./index.less";
 
 const Search = Input.Search;
@@ -165,6 +165,10 @@ class ListPanel extends Component {
     render() {
         const { loading, title, className } = this.props;
         const { allValue, dataSource, pagination, checkedList, selectAll, selectIndeterminate } = this.state;
+        const loadProps = {
+            spinning: loading,
+            indicator: <ListLoader />,
+        };
         return (
             <Card
                 title={title}
@@ -195,7 +199,7 @@ class ListPanel extends Component {
                     <ScrollBar>
                         <List
                             dataSource={dataSource}
-                            loading={loading}
+                            loading={loadProps}
                             renderItem={item => (
                                 <List.Item key={item.id} onClick={() => this.handlerItemCheck(item)} className={cls({ 'checked': !!checkedList[item.id] })} actions={[]}>
                                     <Skeleton avatar loading={loading} active>
