@@ -1,0 +1,20 @@
+@import '../../../../themes/vars.less';
+.list-assign-box {
+  height: 100%;
+  padding: 0;
+  overflow: hidden;
+  :global {
+    .header-box {
+      height: 42px;
+      line-height: 42px;
+      display: flex;
+      align-items: center;
+      color: fade(@black, 85%);
+      font-weight: 700;
+      font-size: 16px;
+    }
+    .assign-box {
+      height: calc(100% - 42px);
+    }
+  }
+}

@@ -196,7 +196,7 @@ class NodeForm extends Component {
                 width: 220,
                 dataIndex: "name",
             }, {
-                title: "所属应用模块",
+                title: "应用模块",
                 width: 180,
                 dataIndex: 'appModuleName'
             }],

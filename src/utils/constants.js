@@ -24,7 +24,7 @@ const SERVER_PATH = getServerPath();
 
 const APP_PREFIX = 'BASIC_BTN_APP_MODULE';
 
-/** 业务模块功能项*/
+/** 应用模块功能项*/
 const APP_MODULE_BTN_KEY = {
   "CREATE": `${APP_PREFIX}_CREATE`,
   "EDIT": `${APP_PREFIX}_EDIT`,

@@ -37,9 +37,9 @@ class FormModal extends PureComponent {
     const title = rowData
       ? formatMessage({
         id: "appModule.edit",
-        defaultMessage: "修改业务模块"
+        defaultMessage: "修改应用模块"
       })
-      : formatMessage({ id: "appModule.add", defaultMessage: "新建业务模块" });
+      : formatMessage({ id: "appModule.add", defaultMessage: "新建应用模块" });
     return (
       <ExtModal
         destroyOnClose

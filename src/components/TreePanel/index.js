@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import isEqual from 'react-fast-compare';
 import { Input, Tree, Card, Empty } from "antd";
 import { ScrollBar, ListLoader, ExtIcon } from 'seid';
-import empty from "@/assets/item_empty.svg";
 import styles from "./index.less";
 
 const Search = Input.Search;
@@ -20,11 +19,15 @@ class TreePanel extends Component {
         loading: PropTypes.bool,
         onSelectChange: PropTypes.func,
         className: PropTypes.string,
+        checkable: PropTypes.bool,
+        checkStrictly: PropTypes.bool,
     };
 
     static defaultProps = {
         dataSource: [],
         loading: false,
+        checkable: true,
+        checkStrictly: true,
     };
 
     constructor(props) {
@@ -155,6 +158,7 @@ class TreePanel extends Component {
 
     renderTree = () => {
         const { dataSource, autoExpandParent, checkedKeys, expandedKeys } = this.state;
+        const { checkable, checkStrictly } = this.props;
         if (dataSource.length === 0) {
             return (
                 <div className='blank-empty'>
@@ -167,8 +171,8 @@ class TreePanel extends Component {
         }
         return (
             <Tree
-                checkable
-                checkStrictly
+                checkable={checkable}
+                checkStrictly={checkStrictly}
                 autoExpandParent={autoExpandParent}
                 expandedKeys={expandedKeys}
                 switcherIcon={<ExtIcon type="down" antd style={{ fontSize: 12 }} />}

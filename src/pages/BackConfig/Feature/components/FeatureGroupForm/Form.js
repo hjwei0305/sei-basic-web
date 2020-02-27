@@ -90,7 +90,7 @@ class FeatureGroupForm extends PureComponent {
                 initialValue: groupData ? groupData.appModuleName : "",
                 rules: [{
                   required: true,
-                  message: formatMessage({ id: "feature.group.appModule.required", defaultMessage: "请选择所属应用模块" })
+                  message: formatMessage({ id: "feature.group.appModule.required", defaultMessage: "请选择应用模块" })
                 }]
               })(
                 <ComboList {...appModuleProps} />

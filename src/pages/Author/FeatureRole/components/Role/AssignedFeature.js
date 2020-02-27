@@ -205,7 +205,7 @@ class FeaturePage extends Component {
                 }
             },
             {
-                title: '所属应用模块',
+                title: '应用模块',
                 dataIndex: "appModuleName",
                 width: 200,
                 optional: true,

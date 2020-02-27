@@ -1,5 +1,6 @@
 import {
     getRoleList,
+    getDataAuthorTypeList,
     getAssignedAuthDataList,
     getAssignedAuthTreeDataList,
 } from "./service";
@@ -10,13 +11,14 @@ const { dvaModel } = utils;
 const { modelExtend, model } = dvaModel;
 
 export default modelExtend(model, {
-    namespace: "role",
+    namespace: "dataView",
 
     state: {
-        listData: [],
-        currentRole: null,
+        roleList: [],
+        dataAuthorTypeList: [],
+        currentRoleId: null,
+        currentDataAuthorType: null,
         assignData: [],
-        unAssignData: [],
     },
     effects: {
         * getRoleList({ payload }, { call, put }) {
@@ -25,7 +27,20 @@ export default modelExtend(model, {
                 yield put({
                     type: "updateState",
                     payload: {
-                        listData: re.data
+                        roleList: re.data
+                    }
+                });
+            } else {
+                message.error(re.message);
+            }
+        },
+        * getDataAuthorTypeList({ payload }, { call, put }) {
+            const re = yield call(getDataAuthorTypeList, payload);
+            if (re.success) {
+                yield put({
+                    type: "updateState",
+                    payload: {
+                        dataAuthorTypeList: re.data
                     }
                 });
             } else {

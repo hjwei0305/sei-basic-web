@@ -1,24 +1,17 @@
-import React, { Component, Fragment } from "react";
+import React, { PureComponent } from "react";
 import cls from "classnames";
 import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
 import { Card, Button } from 'antd'
-import { ExtTable, ExtIcon, ComboList } from 'seid';
+import { ExtTable, ExtIcon } from 'seid';
 import { constants } from '@/utils';
 import Assign from './Assign';
 import styles from './DataAuthorType.less';
 
 const { SERVER_PATH } = constants;
 
-class DataAuthorType extends Component {
+class DataAuthorType extends PureComponent {
 
     static dataAutorTypeTableRef;
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            currentAppModuleId: null,
-        };
-    }
 
     reloadData = () => {
         if (this.dataAutorTypeTableRef) {
@@ -27,8 +20,7 @@ class DataAuthorType extends Component {
     };
 
     render() {
-        const { currentRole } = this.props;
-        const { currentAppModuleId } = this.state;
+        const { currentRoleId } = this.props;
         const columns = [
             {
                 title: formatMessage({ id: "global.operation", defaultMessage: "操作" }),
@@ -38,9 +30,9 @@ class DataAuthorType extends Component {
                 dataIndex: "id",
                 className: "action",
                 required: true,
-                render: (text, record) => (
+                render: (_text, record) => (
                     <span className={cls("action-box")} onClick={e => e.stopPropagation()}>
-                        <Assign currentDataAuthorType={record} currentRole={currentRole} />
+                        <Assign currentDataAuthorType={record} currentRoleId={currentRoleId} />
                     </span>
                 )
             },
@@ -63,72 +55,41 @@ class DataAuthorType extends Component {
                 align: "center",
                 required: true,
                 render: (text, record) => {
-                    if (record.beTree) {
+                    if (record.authorizeEntityTypeBeTree) {
                         return <ExtIcon type="check" antd />;
                     }
                 }
             },
             {
                 title: '应用模块',
-                dataIndex: "appModuleName",
+                dataIndex: "authorizeEntityTypeAppModuleName",
                 width: 200,
             },
         ];
-        const appModulePros = {
-            style: { width: 220 },
-            allowClear: true,
-            placeholder: '所有应用模块',
-            store: {
-                url: `${SERVER_PATH}/sei-basic/tenantAppModule/getTenantAppModules`,
-            },
-            afterSelect: item => {
-                this.setState({
-                    currentAppModuleId: item.id,
-                });
-            },
-            afterClear: () => {
-                this.setState({
-                    currentAppModuleId: null,
-                });
-            },
-            reader: {
-                name: 'name',
-                description: 'code',
-            }
-        };
         const toolBarProps = {
             layout: {
                 leftSpan: 14,
                 rightSpan: 10,
             },
             left: (
-                <Fragment>
-                    <div className='app-module-box'>
-                        <span className='label'>应用模块</span>
-                        <ComboList {...appModulePros} />
-                    </div>
-                    <Button onClick={this.reloadData}>
-                        <FormattedMessage id="global.refresh" defaultMessage="刷新" />
-                    </Button>
-                </Fragment >
+                <Button onClick={this.reloadData}>
+                    <FormattedMessage id="global.refresh" defaultMessage="刷新" />
+                </Button>
             )
         };
         const extTableProps = {
             bordered: false,
             toolBar: toolBarProps,
             columns,
-            cascadeParams: { roleId: currentRole ? currentRole.id : null },
+            cascadeParams: { roleId: currentRoleId ? currentRoleId : null },
+            searchPlaceHolder: '可输入名称或应用模块关键字查询',
+            searchProperties: ['name', 'authorizeEntityTypeAppModuleName'],
+            searchWidth: 260,
             onTableRef: ref => this.dataAutorTypeTableRef = ref,
             store: {
-                url: `${SERVER_PATH}/sei-basic/dataAuthorizeType/getByDataRole`
+                url: `${SERVER_PATH}/sei-basic/dataRoleAuthTypeValue/getAuthorizeTypesByRoleId`
             }
         };
-        if (currentAppModuleId) {
-            extTableProps.store = {
-                url: `${SERVER_PATH}/sei-basic/dataAuthorizeType/getByAppModuleAndDataRole`
-            }
-            extTableProps.cascadeParams.appModuleId = currentAppModuleId;
-        }
         return (
             <div className={cls(styles['data-author-type-box'])
             }>

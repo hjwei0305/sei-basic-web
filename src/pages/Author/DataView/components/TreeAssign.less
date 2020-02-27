@@ -1,0 +1,35 @@
+@import '../../../../themes/vars.less';
+.tree-assign-box {
+  height: 100%;
+  padding: 0;
+  overflow: hidden;
+  :global {
+    .header-box {
+      height: 42px;
+      line-height: 42px;
+      display: flex;
+      align-items: center;
+      color: fade(@black, 85%);
+      font-weight: 700;
+      font-size: 16px;
+    }
+    .assign-box {
+      height: calc(100% - 42px);
+      .ant-card-head {
+        height: 42px;
+        line-height: 42px;
+        border-bottom-width: 0;
+        padding: 0 16px;
+        .ant-card-extra {
+          padding: 0;
+        }
+      }
+      .ant-card-body {
+        height: calc(100% - 42px);
+        .tree-body {
+          height: 100%;
+        }
+      }
+    }
+  }
+}

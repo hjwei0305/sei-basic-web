@@ -1,89 +1,81 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import cls from "classnames";
 import { connect } from "dva";
-import { Avatar, Card, Row, Col, Empty, Input, List, Skeleton, Tag, Button, Tooltip } from 'antd';
-import { ScrollBar, ExtIcon } from 'seid';
-import roleEmpty from "@/assets/item_empty.svg";
+import { Card, Row, Col, Empty, Input, message, Tag, Button, Tooltip } from 'antd';
+import { ListCard } from 'seid';
 import empty from "@/assets/item_empty.svg";
+import DataAuthorType from './components/DataAuthorType';
 import styles from './index.less';
 
-@connect(({ role, loading }) => ({ role, loading }))
-class Role extends Component {
+@connect(({ dataView, loading }) => ({ dataView, loading }))
+class DataView extends PureComponent {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            listData: [],
-        };
-    }
+    static account = '';
 
-    static allValue = '';
-
-    static data = [];
-
-    handlerSearchChange = (v) => {
-        this.allValue = v;
+    handlerAccountChange = (v) => {
+        this.account = v;
     };
 
-    handlerSearch = () => {
-        let listData = [];
-        if (this.allValue) {
-            const valueKey = this.allValue.toLowerCase();
-            listData = this.data.filter(ds => ds.name.toLowerCase().indexOf(valueKey) > -1 || ds.code.toLowerCase().indexOf(valueKey) > -1);
-        } else {
-            listData = [...this.data];
-        }
-        this.setState({
-            listData,
-        });
-    };
-
-    handlerRoleSelect = (currentRole, e) => {
+    getRoleList = (e) => {
         e && e.stopPropagation();
+        if (this.account) {
+            const { dispatch } = this.props;
+            dispatch({
+                type: 'dataView/getRoleList',
+                payload: {
+                    account: this.account,
+                }
+            });
+        } else {
+            message.warning('请输入用户账号');
+        }
+    };
+
+    handlerRoleSelect = (keys, items) => {
         const { dispatch } = this.props;
         dispatch({
-            type: 'role/updateState',
+            type: 'dataView/updateState',
             payload: {
-                currentRole,
+                currentRoleId: keys[0],
             }
         });
     };
 
-    renderName = (row) => {
+    renderRoleName = (item) => {
         let tag;
-        if (row.publicUserType && row.publicOrgId) {
+        if (item.publicUserType && item.publicOrgId) {
             tag = <Tag color='green' style={{ marginLeft: 8 }}>公共角色</Tag>;
         }
         return (
             <>
-                {row.name}
+                {item.name}
                 {tag}
             </>
         );
     };
 
-    renderDescription = (row) => {
+    renderRoleDescription = (item) => {
         let pubUserType;
         let publicOrg;
-        if (row.publicUserType) {
+        if (item.publicUserType) {
             pubUserType = (
                 <div className='field-item info'>
                     <span className='label'>用户类型</span>
-                    <span className='value'>{row.userTypeRemark}</span>
+                    <span className='value'>{item.userTypeRemark}</span>
                 </div>
             );
         }
-        if (row.publicOrgId) {
+        if (item.publicOrgId) {
             publicOrg = (
                 <div className='field-item info'>
                     <span className='label'>组织机构</span>
-                    <span className='value'>{row.publicOrgName}</span>
+                    <span className='value'>{item.publicOrgName}</span>
                 </div>
             );
         }
         return (
             <div className='desc-box'>
-                <div className='field-item'>{row.code}</div>
+                <div className='field-item'>{item.code}</div>
                 {
                     publicOrg || pubUserType
                         ? <div className='public-box'>
@@ -96,76 +88,61 @@ class Role extends Component {
         );
     };
 
+    renderCustomTool = ({ total }) => {
+        const { loading } = this.props;
+        const roleListLoading = loading.effects["dataView/getRoleList"];
+        return (
+            <>
+                <span style={{ marginLeft: 8 }}>{`共 ${total} 项`}</span>
+                <div>
+                    <Tooltip
+                        trigger={["hover"]}
+                        title='用户账号'
+                        placement="top"
+                    >
+                        <Input
+                            style={{ width: 220, marginRight: 8 }}
+                            placeholder='输入查询的用户账号'
+                            onChange={e => this.handlerAccountChange(e.target.value)}
+                            onPressEnter={e => this.getRoleList(e)}
+                        />
+                    </Tooltip>
+                    <Button
+                        type='primary'
+                        loading={roleListLoading}
+                        onClick={e => this.getRoleList(e)}
+                    >
+                        查询
+                </Button>
+                </div>
+            </>
+        );
+    };
+
     render() {
-        const { loading, role } = this.props;
-        const { currentRole } = role;
-        const { listData } = this.state;
-        const listLoading = loading.effects["role/getDataRoleList"];
+        const { dataView } = this.props;
+        const { currentRoleId, roleList } = dataView;
+        const roleListProps = {
+            title: '用户角色列表',
+            dataSource: roleList,
+            showSearch: false,
+            onSelectChange: this.handlerRoleSelect,
+            customTool: this.renderCustomTool,
+            itemField: {
+                title: this.renderRoleName,
+                description: this.renderRoleDescription,
+            }
+        };
         return (
             <div className={cls(styles['role-box'])}>
                 <Row gutter={4} className='auto-height'>
                     <Col span={7} className={cls('left-content', 'auto-height')}>
-                        <Card
-                            title="用户角色列表"
-                            bordered={false}
-                            className={cls('list-box', 'auto-height')}
-                        >
-                            <div className="header-tool-box">
-                                <div className='field-box'>
-                                    <Tooltip
-                                        trigger={["hover"]}
-                                        title='租户代码'
-                                        placement="top"
-                                    >
-                                        <Input style={{ width: 100 }} placeholder='租户代码' />
-                                    </Tooltip>
-                                </div>
-                                <div className='field-box'>
-                                    <Tooltip
-                                        trigger={["hover"]}
-                                        title='用户账号'
-                                        placement="top"
-                                    >
-                                        <Input style={{ width: 160 }} placeholder='用户账号' />
-                                    </Tooltip>
-                                </div>
-                                <Button type='primary'>查询</Button>
-                            </div>
-                            <div className="role-list-body">
-                                <ScrollBar>
-                                    <List
-                                        dataSource={listData}
-                                        loading={listLoading}
-                                        renderItem={item => (
-                                            <List.Item
-                                                key={item.id}
-                                                onClick={(e) => this.handlerRoleSelect(item, e)}
-                                                className={cls({
-                                                    [cls('row-selected')]: currentRole && item.id === currentRole.id,
-                                                })}
-                                            >
-                                                <Skeleton avatar loading={listLoading} active>
-                                                    <List.Item.Meta
-                                                        avatar={<Avatar icon='user' shape='square' />}
-                                                        title={this.renderName(item)}
-                                                        description={this.renderDescription(item)}
-                                                    />
-                                                    <div className='desc'>{item.roleTypeRemark}</div>
-                                                    <div className='arrow-box'>
-                                                        <ExtIcon type="right" antd />
-                                                    </div>
-                                                </Skeleton>
-                                            </List.Item>
-                                        )}
-                                    />
-                                </ScrollBar>
-                            </div>
-                        </Card>
+                        <ListCard {...roleListProps} />
                     </Col>
                     <Col span={17} className={cls("main-content", 'auto-height')}>
                         {
-                            currentRole
-                                ? ''
+                            currentRoleId
+                                ? <DataAuthorType currentRoleId={currentRoleId} />
                                 : <div className='blank-empty'>
                                     <Empty
                                         image={empty}
@@ -180,4 +157,4 @@ class Role extends Component {
     }
 }
 
-export default Role;
+export default DataView;
