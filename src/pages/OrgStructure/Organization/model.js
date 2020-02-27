@@ -2,7 +2,7 @@
 * @Author: zp
 * @Date:   2020-02-02 11:57:38
 * @Last Modified by:   zp
-* @Last Modified time: 2020-02-18 20:34:08
+* @Last Modified time: 2020-02-27 10:25:34
 */
 import { del, getTree, save } from "./service";
 import { message } from "antd";
@@ -52,15 +52,16 @@ export default modelExtend(model, {
       message.destroy();
       if (re.success) {
         message.success(formatMessage({ id: "global.save-success", defaultMessage: "保存成功" }));
+        yield put({
+          type: "updateState",
+          payload: {
+            showCreateModal: false,
+            selectedTreeNode: re.data,
+          }
+        });
       } else {
         message.error(re.message);
       }
-      yield put({
-        type: "updateState",
-        payload: {
-          showCreateModal: false
-        }
-      });
       return re;
     },
     * del({ payload }, { call }) {
