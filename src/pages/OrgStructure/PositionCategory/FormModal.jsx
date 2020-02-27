@@ -56,6 +56,9 @@ class FormModal extends PureComponent {
               rules: [{
                 required: true,
                 message: formatMessage({ id: "global.code.required", defaultMessage: "代码不能为空" })
+              }, {
+                max: 5,
+                message: '岗位类别代码不能超过5个字符',
               }]
             })(<Input  disabled={!!rowData} />)}
           </FormItem>
