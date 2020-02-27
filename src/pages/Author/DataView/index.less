@@ -6,56 +6,13 @@
   width: 100%;
   background-color: @page-background-color;
   :global {
-    .list-box {
-      position: relative;
-      height: 100%;
-      .ant-card-head {
-        border-color: transparent;
-      }
-      .ant-card-body {
-        height: calc(100% - 57px);
-        padding: 0;
-        background-color: @white;
-        .header-tool-box {
-          display: flex;
-          align-items: center;
-          justify-content: flex-end;
-          height: 42px;
-          line-height: 42px;
-          position: relative;
-          padding: 0 8px;
-          border-bottom: 1px solid @border-color;
-          .field-box {
-            display: inline-block;
-            margin-right: 8px;
-            .label {
-              display: inline-block;
-              &::after {
-                content: ':';
-                margin: 0 4px;
-              }
-            }
-          }
-        }
-        .role-list-body {
-          width: 100%;
-          height: calc(100% - 42px);
-          overflow: hidden;
-        }
-      }
-    }
-    .role-list-body {
-      .blank-empty {
-        display: block;
-        text-align: center;
-        .ant-empty-image {
-          margin-top: 20%;
+    .desc-box {
+      .field-item {
+        .label::after {
+          content: ':';
+          margin: 0 4px;
         }
       }
     }
   }
-}
-
-.row-selected {
-  background-color: @item-hover-bg !important;
 }
