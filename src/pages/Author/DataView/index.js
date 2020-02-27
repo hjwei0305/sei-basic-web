@@ -109,6 +109,7 @@ class DataView extends PureComponent {
                     </Tooltip>
                     <Button
                         type='primary'
+                        icon='search'
                         loading={roleListLoading}
                         onClick={e => this.getRoleList(e)}
                     >
@@ -120,12 +121,14 @@ class DataView extends PureComponent {
     };
 
     render() {
-        const { dataView } = this.props;
+        const { loading, dataView } = this.props;
         const { currentRoleId, roleList } = dataView;
+        const roleListLoading = loading.effects["dataView/getRoleList"];
         const roleListProps = {
             title: '用户角色列表',
             dataSource: roleList,
             showSearch: false,
+            loading: roleListLoading,
             onSelectChange: this.handlerRoleSelect,
             customTool: this.renderCustomTool,
             itemField: {
