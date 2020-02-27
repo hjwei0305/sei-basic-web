@@ -186,6 +186,9 @@ class TablePanel extends Component {
                   className="edit"
                   onClick={_ => this.edit(record)}
                   type="edit"
+                  tooltip={
+                    { title: '编辑' }
+                  }
                   ignore='true'
                   antd
                 />
@@ -201,12 +204,18 @@ class TablePanel extends Component {
               className="copy"
               onClick={_ => this.handlCopy(record)}
               type="copy"
+              tooltip={
+                { title: '复制角色' }
+              }
               antd
             />
             <ExtIcon
               className="tool"
               onClick={_ => this.handleConfig(record)}
               type="tool"
+              tooltip={
+                { title: '配置角色' }
+              }
               antd
             />
           </span>
@@ -250,7 +259,7 @@ class TablePanel extends Component {
     return {
       bordered: false,
       remotePaging: true,
-      // searchProperties: ['code', 'userName'],
+      searchProperties: ['code'],
       columns,
       toolBar: toolBarProps,
       store: {

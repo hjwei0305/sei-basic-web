@@ -53,7 +53,7 @@ class PostionConfig extends React.Component {
 
   getTabExtra = () => {
     return (
-      <Button onClick={this.handleBack}>返回</Button>
+      <Button type="primary" onClick={this.handleBack}>返回</Button>
     );
   }
 
@@ -84,7 +84,7 @@ class PostionConfig extends React.Component {
               assginCfg={{ url: `${SERVER_PATH}/sei-basic/userFeatureRole/getChildrenFromParentId`, }}
             />
           </TabPane>
-          <TabPane tab={`【${rowData.userName}】配置用户角色`} key="3">
+          <TabPane tab={`【${rowData.userName}】配置数据角色`} key="3">
             <DataRoleAssign
               data={rowData}
               onAssign={(params) => this.handleAssign('DataRole', params)}
