@@ -196,7 +196,7 @@ class FormModal extends PureComponent {
                 required: true,
                 message: formatMessage({ id: "global.rank.required", defaultMessage: "序号不能为空" })
               }]
-            })(<InputNumber style={{ width: '100%', }} precision={0} />)}
+            })(<InputNumber min={0} max={999999999} style={{ width: '100%', }} precision={0} />)}
           </FormItem>
           <FormItem label="拼音">
             {getFieldDecorator("pinYin", {
