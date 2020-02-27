@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import cls from "classnames";
+import { isEqual } from 'lodash';
 import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
 import { Card, Button } from 'antd'
 import { ExtTable, ExtIcon, ComboList } from 'seid';
@@ -10,14 +11,22 @@ import styles from './DataAuthorType.less';
 const { SERVER_PATH } = constants;
 
 class DataAuthorType extends Component {
-
     static dataAutorTypeTableRef;
 
     constructor(props) {
         super(props);
+        const { currentRole } = props;
         this.state = {
             currentAppModuleId: null,
+            currentRole,
         };
+    }
+
+    componentDidUpdate(preProps) {
+        const { currentRole } = this.props;
+        if (!isEqual(preProps.currentRole, currentRole)) {
+            this.setState({ currentRole });
+        }
     }
 
     reloadData = () => {
@@ -26,9 +35,17 @@ class DataAuthorType extends Component {
         }
     };
 
+    renderAssign = (record) => {
+        const { currentRole } = this.state;
+        return (
+            <span className={cls("action-box")} onClick={e => e.stopPropagation()}>
+                <Assign currentDataAuthorType={record} currentRole={currentRole} />
+            </span>
+        )
+    };
+
     render() {
-        const { currentRole } = this.props;
-        const { currentAppModuleId } = this.state;
+        const { currentAppModuleId, currentRole } = this.state;
         const columns = [
             {
                 title: formatMessage({ id: "global.operation", defaultMessage: "操作" }),
@@ -38,11 +55,7 @@ class DataAuthorType extends Component {
                 dataIndex: "id",
                 className: "action",
                 required: true,
-                render: (text, record) => (
-                    <span className={cls("action-box")} onClick={e => e.stopPropagation()}>
-                        <Assign currentDataAuthorType={record} currentRole={currentRole} />
-                    </span>
-                )
+                render: (_text, record) => this.renderAssign(record),
             },
             {
                 title: formatMessage({ id: "global.code", defaultMessage: "代码" }),

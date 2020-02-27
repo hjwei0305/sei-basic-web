@@ -1,5 +1,6 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 import cls from "classnames";
+import { isEqual } from 'lodash';
 import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
 import { Card, Button } from 'antd'
 import { ExtTable, ExtIcon } from 'seid';
@@ -9,14 +10,38 @@ import styles from './DataAuthorType.less';
 
 const { SERVER_PATH } = constants;
 
-class DataAuthorType extends PureComponent {
+class DataAuthorType extends Component {
 
     static dataAutorTypeTableRef;
+
+    constructor(props) {
+        super(props);
+        const { currentRoleId } = props;
+        this.state = {
+            currentRoleId,
+        };
+    }
+
+    componentDidUpdate(preProps) {
+        const { currentRoleId } = this.props;
+        if (!isEqual(preProps.currentRoleId, currentRoleId)) {
+            this.setState({ currentRoleId });
+        }
+    }
 
     reloadData = () => {
         if (this.dataAutorTypeTableRef) {
             this.dataAutorTypeTableRef.remoteDataRefresh();
         }
+    };
+
+    renderAssign = (record) => {
+        const { currentRoleId } = this.state;
+        return (
+            <span className={cls("action-box")} onClick={e => e.stopPropagation()}>
+                <Assign currentDataAuthorType={record} currentRoleId={currentRoleId} />
+            </span>
+        )
     };
 
     render() {
@@ -30,11 +55,7 @@ class DataAuthorType extends PureComponent {
                 dataIndex: "id",
                 className: "action",
                 required: true,
-                render: (_text, record) => (
-                    <span className={cls("action-box")} onClick={e => e.stopPropagation()}>
-                        <Assign currentDataAuthorType={record} currentRoleId={currentRoleId} />
-                    </span>
-                )
+                render: (_text, record) => this.renderAssign(record),
             },
             {
                 title: formatMessage({ id: "global.code", defaultMessage: "代码" }),

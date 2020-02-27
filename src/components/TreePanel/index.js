@@ -14,7 +14,7 @@ const hightLightColor = '#f50';
 class TreePanel extends Component {
 
     static propTypes = {
-        title: PropTypes.string.isRequired,
+        title: PropTypes.string,
         dataSource: PropTypes.array,
         loading: PropTypes.bool,
         onSelectChange: PropTypes.func,
@@ -114,7 +114,6 @@ class TreePanel extends Component {
             const { onSelectChange } = this.props
             if (onSelectChange) {
                 const { checked } = checkedKeys;
-                console.log(checked);
                 onSelectChange(checked)
             }
         });
