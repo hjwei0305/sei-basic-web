@@ -57,6 +57,9 @@ class FormModal extends PureComponent {
               rules: [{
                 required: true,
                 message: formatMessage({ id: "global.code.required", defaultMessage: "代码不能为空" })
+              }, {
+                max: 4,
+                message: '字符长度不能超过4个'
               }]
             })(<Input  disabled={!!rowData} />)}
           </FormItem>

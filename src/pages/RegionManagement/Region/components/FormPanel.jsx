@@ -115,6 +115,9 @@ class FormModal extends PureComponent {
             rules: [{
               required: true,
               message: formatMessage({ id: "global.code.required", defaultMessage: "代码不能为空" })
+            }, {
+              max: 10,
+              message: '字符长度不能超过10个'
             }]
           })(<Input  disabled={!parentId} />)}
         </FormItem>
