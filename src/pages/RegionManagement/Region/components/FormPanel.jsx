@@ -51,6 +51,12 @@ class FormModal extends PureComponent {
     }).then(res => {
       if (res.success) {
         dispatch({
+          type: "region/updateState",
+          payload: {
+            showCreateModal: false,
+          }
+        });
+        dispatch({
           type: "region/queryTree",
         });
       }

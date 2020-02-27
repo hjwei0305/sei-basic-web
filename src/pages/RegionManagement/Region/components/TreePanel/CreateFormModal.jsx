@@ -6,7 +6,7 @@ import FormPanel from '../FormPanel';
 class CreateFormModal extends PureComponent {
 
   render() {
-    const { visible, onCancel, formType,title, } = this.props;
+    const { visible, saving, onCancel, formType,title, } = this.props;
 
     return (
       <ExtModal
@@ -15,6 +15,7 @@ class CreateFormModal extends PureComponent {
         centered
         onCancel={onCancel}
         maskClosable={false}
+        confirmLoading={saving}
         title={title}
         onOk={() => {this.formRef.onFormSubmit()}}
         okText="新增"

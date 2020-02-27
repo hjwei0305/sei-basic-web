@@ -2,7 +2,7 @@
 * @Author: zp
 * @Date:   2020-02-02 11:57:38
 * @Last Modified by:   zp
-* @Last Modified time: 2020-02-05 10:53:35
+* @Last Modified time: 2020-02-27 10:05:41
 */
 import { del, getTree, save, move } from "./service";
 import { message } from "antd";
@@ -55,12 +55,6 @@ export default modelExtend(model, {
       } else {
         message.error(re.message);
       }
-      yield put({
-        type: "updateState",
-        payload: {
-          showCreateModal: false,
-        }
-      });
       return re;
     },
     * del({ payload }, { call }) {

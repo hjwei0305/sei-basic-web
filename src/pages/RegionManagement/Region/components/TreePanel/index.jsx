@@ -7,7 +7,7 @@ import CreateFormModal from './CreateFormModal';
 import MoveTreeModal from './MoveTreeModal';
 import TreeView from '@/components/TreeView';
 
-@connect(({ region, }) => ({ region, }))
+@connect(({ region, loading, }) => ({ region, loading, }))
 class TreePanel extends Component {
 
   state = {
@@ -179,7 +179,7 @@ class TreePanel extends Component {
 
   render() {
     const { mTmVisible, } = this.state;
-    const { region, } = this.props;
+    const { region, loading, } = this.props;
     const { showCreateModal, moveTreeData, selectedTreeNode, treeData } = region;
 
     return (
@@ -187,6 +187,7 @@ class TreePanel extends Component {
         <TreeView treeData={treeData} toolBar={this.getToolBarProps()} onSelect={this.handleSelect} />
         { showCreateModal ? (
           <CreateFormModal
+            saving={loading.effects['region/save']}
             formType={this.formType}
             visible={showCreateModal}
             title={this.formType==="addRootNode" ? "新增根节点" : '新增子节点'}
