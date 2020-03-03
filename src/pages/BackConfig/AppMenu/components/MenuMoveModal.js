@@ -93,7 +93,7 @@ class MenuMoveModal extends Component {
                 );
             }
             return <TreeNode
-                switcherIcon={<ExtIcon type={item.parentId ? 'star' : 'down'} antd style={{ fontSize: 10 }} />}
+                switcherIcon={<ExtIcon type={item.parentId ? 'file-text' : 'down'} antd style={{ fontSize: 10 }} />}
                 title={title}
                 key={item.id}
             />;

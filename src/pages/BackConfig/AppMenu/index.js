@@ -308,7 +308,7 @@ class AppMenu extends Component {
                 );
             }
             return <TreeNode
-                switcherIcon={<ExtIcon type="star" antd style={{ fontSize: 12 }} />}
+                switcherIcon={<ExtIcon type="file-text" antd style={{ fontSize: 12 }} />}
                 title={title}
                 key={item.id}
             />;
