@@ -2,6 +2,7 @@ import React, { PureComponent } from "react";
 import { Form, Input, } from "antd";
 import { formatMessage, } from "umi-plugin-react/locale";
 import { ExtModal } from 'seid';
+import md5 from "md5";
 import { userUtils, } from '@/utils';
 
 const { getCurrentUser, } = userUtils;
@@ -25,9 +26,14 @@ class ResetPwdModal extends PureComponent {
       if (err) {
         return;
       }
+      const { oldPassword, newPassword, confirmNewPassword, } = formData;
       let params = {};
       Object.assign(params, { tenant: tenantCode, });
-      Object.assign(params, formData);
+      Object.assign(params, formData, {
+        oldPassword: md5(oldPassword),
+        newPassword: md5(newPassword),
+        confirmNewPassword: md5(confirmNewPassword)
+      });
       save(params);
     });
   };
