@@ -26,22 +26,6 @@ class LoginForm extends PureComponent {
           payload: {
             ...user
           }
-        }).then(res => {
-          const { success, data } = res || {};
-          if (success) {
-            if (data.loginStatus === 'multiTenant') {
-              dispatch({
-                type: 'global/updateState',
-                payload: {
-                  showTenant: true,
-                }
-              });
-            } else {
-              dispatch({
-                type: 'global/getUserFeatures',
-              });
-            }
-          }
         });
       }
     });
@@ -139,7 +123,7 @@ class LoginForm extends PureComponent {
                 className="login-form-button"
                 onClick={this.handlerSubmit}
                 style={{ width: "100%" }}
-                loading={loading.effects["global/login"]}
+                loading={loading.global}
               >
                 登录
               </Button>
