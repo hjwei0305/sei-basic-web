@@ -33,6 +33,7 @@ export default modelExtend(model, {
         yield put({
           type: "updateState",
           payload: {
+            showAssignFeature: false,
             listData: re.data
           }
         });

@@ -9,8 +9,15 @@ import styles from "./UnAssignFeatureItem.less";
 const Search = Input.Search;
 
 class UnAssignFeatureItem extends Component {
+
+    static allValue = '';
+
+    static data = [];
+
     constructor(props) {
         super(props);
+        this.data = [];
+        this.allValue = '';
         this.state = {
             selectAll: false,
             selectIndeterminate: false,
@@ -24,12 +31,12 @@ class UnAssignFeatureItem extends Component {
         };
     }
 
-    static allValue = '';
-    static data = [];
-
-    componentDidUpdate() {
-        const { unAssignListData } = this.props;
-        if (!isEqual(this.data, unAssignListData)) {
+    componentDidUpdate(prevProps) {
+        const { unAssignListData, showAssignFeature, currentRole } = this.props;
+        if (!isEqual(prevProps.currentRole, currentRole)) {
+            this.allValue = '';
+        }
+        if (!isEqual(this.data, unAssignListData) && showAssignFeature) {
             const { pagination } = this.state;
             this.data = [...unAssignListData];
             this.setState({
@@ -118,7 +125,7 @@ class UnAssignFeatureItem extends Component {
     };
 
     handlerItemCheck = (item) => {
-        const { checkedList,unAssignListData } = this.state;
+        const { checkedList, unAssignListData } = this.state;
         const checkedKeys = cloneDeep(checkedList);
         let selectAll = false;
         let selectIndeterminate = false;
@@ -165,7 +172,6 @@ class UnAssignFeatureItem extends Component {
         return (
             <>
                 {item.name}
-                <span className='code-box'>{item.code}</span>
                 {
                     item.tenantCanUse
                         ? <Tag color='green'>租户可用</Tag>
@@ -175,9 +181,30 @@ class UnAssignFeatureItem extends Component {
         )
     };
 
+    renderItemDescription = (item) => {
+        return (
+            <>
+                <div className='desc-box'>
+                    <span className='label'>功能代码</span>
+                    {item.code}
+                </div>
+                {
+                    item.url
+                        ? (
+                            <div className='desc-box'>
+                                <span className='label'>页面地址</span>
+                                {item.url}
+                            </div>
+                        )
+                        : null
+                }
+            </>
+        )
+    };
+
     render() {
         const { showAssignFeature, assigning, loading } = this.props;
-        const { allValue, unAssignListData, pagination, checkedList, selectAll, selectIndeterminate } = this.state;
+        const { unAssignListData, pagination, checkedList, selectAll, selectIndeterminate } = this.state;
         const checkCount = Object.keys(checkedList).length;
         return (
             <Drawer
@@ -202,7 +229,7 @@ class UnAssignFeatureItem extends Component {
                     </Button>
                     <Search
                         placeholder="输入名称关键字查询"
-                        defaultValue={allValue}
+                        defaultValue={this.allValue}
                         onChange={e => this.handlerSearchChange(e.target.value)}
                         onSearch={this.handlerSearch}
                         onPressEnter={this.handlerSearch}
@@ -230,7 +257,7 @@ class UnAssignFeatureItem extends Component {
                                         <List.Item.Meta
                                             avatar={<Checkbox checked={!!checkedList[item.id]} />}
                                             title={this.renderItemTitle(item)}
-                                            description={item.url}
+                                            description={this.renderItemDescription(item)}
                                         />
                                     </Skeleton>
                                 </List.Item>

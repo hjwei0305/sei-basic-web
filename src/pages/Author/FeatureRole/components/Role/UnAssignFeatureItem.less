@@ -18,7 +18,7 @@
       line-height: 42px;
       justify-content: space-between;
       position: relative;
-      padding: 0 8px;
+      padding: 0 16px;
       border-bottom: 1px solid @border-color;
     }
     .list-tool-box {
@@ -28,7 +28,7 @@
       line-height: 42px;
       justify-content: space-between;
       position: relative;
-      padding: 0 8px;
+      padding: 0 16px;
     }
     .list-body {
       width: 100%;
@@ -38,7 +38,7 @@
         width: 100%;
       }
       .ant-list-item {
-        padding: 12px 16px 12px 8px;
+        padding: 12px 16px 12px 16px;
         cursor: pointer;
         position: relative;
         &:nth-child(odd) {
@@ -50,11 +50,17 @@
         .ant-list-item-meta-title {
           margin-bottom: 2px;
         }
-        .code-box {
+        .desc-box {
           color: fade(@black, 45%);
           font-size: 12px;
           font-weight: normal;
           margin-left: 8px;
+          .label {
+            &::after {
+              content: ':';
+              margin: 0 4px;
+            }
+          }
         }
         .ant-tag {
           margin-left: 8px;

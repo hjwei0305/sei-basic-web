@@ -274,6 +274,7 @@ class FeaturePage extends Component {
             unAssignListData,
             assignFeatureItem: this.assignFeatureItem,
             showAssignFeature,
+            currentRole,
             closeAssignFeatureItem: this.closeAssignFeatureItem,
             assigning: loading.effects["featureRole/assignFeatureItem"],
         };

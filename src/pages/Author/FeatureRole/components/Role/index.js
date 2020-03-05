@@ -36,12 +36,21 @@ class Role extends Component {
     };
 
     componentDidUpdate() {
-        const { featureRole, featureRoleGroup } = this.props;
+        const { featureRole, featureRoleGroup, dispatch } = this.props;
         if (!isEqual(this.state.currentRoleGroup, featureRoleGroup.currentRoleGroup)) {
             const { currentRoleGroup } = featureRoleGroup;
             this.setState({
                 currentRoleGroup
-            }, this.loadRoleList);
+            }, () => {
+                this.loadRoleList();
+                dispatch({
+                    type: 'featureRole/updateState',
+                    payload: {
+                        currentRole: null,
+                        showAssignFeature: false,
+                    }
+                });
+            });
         }
         if (!isEqual(this.data, featureRole.listData)) {
             const { listData } = featureRole;
