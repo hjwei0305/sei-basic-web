@@ -153,7 +153,6 @@ class AuthorType extends Component {
             }
             <Popconfirm
               key={APP_MODULE_BTN_KEY.DELETE}
-              placement="topLeft"
               title={formatMessage({ id: "global.delete.confirm", defaultMessage: "确定要删除吗？提示：删除后不可恢复" })}
               onConfirm={_ => this.del(record)}
             >

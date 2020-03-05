@@ -46,7 +46,7 @@ export default modelExtend(model, {
         yield put({
           type: "updateState",
           payload: {
-            currentFeatureGroup: re.data
+            currentRoleGroup: re.data
           }
         });
       } else {
@@ -64,7 +64,7 @@ export default modelExtend(model, {
         yield put({
           type: "updateState",
           payload: {
-            currentFeatureGroup: null
+            currentRoleGroup: null
           }
         });
       } else {

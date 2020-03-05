@@ -185,18 +185,17 @@ class AppModule extends Component {
         title: formatMessage({ id: "appModule.webBaseAddress", defaultMessage: "WEB基地址" }),
         dataIndex: "webBaseAddress",
         width: 160,
-        optional: true,
       },
       {
         title: formatMessage({ id: "appModule.apiBaseAddress", defaultMessage: "API基地址" }),
         dataIndex: "API基地址",
         width: 160,
-        optional: true,
       },
       {
         title: formatMessage({ id: "global.remark", defaultMessage: "说明" }),
         dataIndex: "remark",
         width: 320,
+        optional: true,
       },
     ];
     const formModalProps = {

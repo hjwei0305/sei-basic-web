@@ -35,11 +35,11 @@ export async function del(params) {
 }
 
 /** 菜单项移动 */
-export async function move(params) {
+export async function move(data) {
   const url = `${SERVER_PATH}/sei-basic/menu/move`;
   return request({
     url,
     method: "POST",
-    params,
+    data,
   });
 }

@@ -78,6 +78,7 @@ class RoleGroupForm extends PureComponent {
                 }]
               })(
                 <Input
+                  disabled={!!groupData}
                   addonBefore={`${tenantCode}-`}
                   maxLength={20 - `${tenantCode}-`.length}
                   placeholder={formatMessage({ id: "global.code.tip", defaultMessage: "规则:名称各汉字首字母大写" })}

@@ -36,6 +36,7 @@ class Role extends Component {
 
     componentDidUpdate() {
         const { dataRole, dataRoleGroup } = this.props;
+        console.log(this.state.currentRoleGroup, dataRoleGroup.currentRoleGroup)
         if (!isEqual(this.state.currentRoleGroup, dataRoleGroup.currentRoleGroup)) {
             const { currentRoleGroup } = dataRoleGroup;
             this.setState({
