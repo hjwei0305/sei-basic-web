@@ -68,7 +68,7 @@ class FormModal extends PureComponent {
       remotePaging: true,
       name: 'featureName',
       field: ['featureId'],
-      searchPlaceHolder: "输入关键字查询",
+      searchPlaceHolder: "输入名称或代码关键字查询",
       searchProperties: ["name", "code"],
       allowClear: true,
       width: 520,
