@@ -59,7 +59,7 @@ class FormModal extends PureComponent {
                 required: true,
                 message: formatMessage({ id: "global.name.required", defaultMessage: "名称不能为空" })
               }]
-            })(<Input />)}
+            })(<Input maxLength={30} />)}
           </FormItem>
           <FormItem label={formatMessage({ id: "global.code", defaultMessage: "代码" })}>
             {getFieldDecorator("code", {
@@ -69,7 +69,7 @@ class FormModal extends PureComponent {
                 message: formatMessage({ id: "global.code.required", defaultMessage: "代码不能为空" })
               }]
             })(<Input
-              maxLength={10}
+              maxLength={20}
               placeholder={formatMessage({ id: "global.code.tip", defaultMessage: "规则:名称各汉字首字母大写" })}
             />)}
           </FormItem>
@@ -81,12 +81,12 @@ class FormModal extends PureComponent {
           <FormItem label={formatMessage({ id: "appModule.webBaseAddress", defaultMessage: "WEB基地址" })}>
             {getFieldDecorator("webBaseAddress", {
               initialValue: rowData ? rowData.webBaseAddress : ""
-            })(<Input precision={0} />)}
+            })(<Input />)}
           </FormItem>
           <FormItem label={formatMessage({ id: "appModule.apiBaseAddress", defaultMessage: "API基地址" })}>
             {getFieldDecorator("apiBaseAddress", {
               initialValue: rowData ? rowData.apiBaseAddress : ""
-            })(<Input precision={0} />)}
+            })(<Input />)}
           </FormItem>
           <FormItem label={formatMessage({ id: "global.rank", defaultMessage: "序号" })}>
             {getFieldDecorator("rank", {
@@ -95,7 +95,7 @@ class FormModal extends PureComponent {
                 required: true,
                 message: formatMessage({ id: "global.rank.required", defaultMessage: "序号不能为空" })
               }]
-            })(<InputNumber precision={0} />)}
+            })(<InputNumber precision={0} min={0} />)}
           </FormItem>
         </Form>
       </ExtModal>
