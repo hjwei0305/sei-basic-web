@@ -3,7 +3,6 @@ import cls from 'classnames';
 import { cloneDeep } from 'lodash';
 import isEqual from 'react-fast-compare';
 import { Tree } from "antd";
-import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
 import { ScrollBar, ExtIcon, ExtModal } from 'suid';
 import styles from './MenuMoveModal.less'
 
@@ -92,8 +91,12 @@ class MenuMoveModal extends Component {
                     </TreeNode>
                 );
             }
+            const iconProps = {
+                type: item.parentId ? 'dian' : 'down',
+                antd: !item.parentId,
+            };
             return <TreeNode
-                switcherIcon={<ExtIcon type={item.parentId ? 'dian' : 'down'} antd style={{ fontSize: 10 }} />}
+                switcherIcon={<ExtIcon {...iconProps} style={{ fontSize: 10 }} />}
                 title={title}
                 key={item.id}
             />;
