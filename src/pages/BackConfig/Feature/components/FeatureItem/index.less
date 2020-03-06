@@ -4,6 +4,12 @@
   padding: 0;
   overflow: hidden;
   :global {
+    .seid-list-loader {
+      &.ant-spin-dot {
+        left: 0 !important;
+        margin-left: 0 !important;
+      }
+    }
     .ant-drawer-header {
       border-color: transparent;
     }
@@ -41,11 +47,16 @@
         .ant-list-item-meta-title {
           margin-bottom: 2px;
         }
-        .code-box {
+        .desc-box {
           color: fade(@black, 45%);
           font-size: 12px;
           font-weight: normal;
-          margin-left: 8px;
+          .label {
+            &::after {
+              content: ':';
+              margin: 0 4px;
+            }
+          }
         }
         .ant-tag {
           margin-left: 8px;

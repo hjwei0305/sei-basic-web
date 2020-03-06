@@ -4,7 +4,7 @@ import { connect } from "dva";
 import isEqual from 'react-fast-compare';
 import { formatMessage } from "umi-plugin-react/locale";
 import { Input, Pagination, List, Skeleton, Popconfirm, Drawer, Tag } from "antd";
-import { ScrollBar, ExtIcon } from 'seid';
+import { ScrollBar, ExtIcon, ListLoader } from 'seid';
 import FeatureItemAdd from './Form/Add';
 import FeatureItemEdit from './Form/Edit';
 import styles from "./index.less";
@@ -13,9 +13,12 @@ const Search = Input.Search;
 
 @connect(({ feature, featureGroup, loading }) => ({ feature, featureGroup, loading }))
 class FeatureItem extends Component {
+
     constructor(props) {
         super(props);
+        this.data = [];
         this.state = {
+            allValue: '',
             delFeatureId: null,
             listData: [],
             pagination: {
@@ -26,24 +29,22 @@ class FeatureItem extends Component {
         };
     }
 
-    static allValue = '';
-    static data = [];
-
     componentDidUpdate(prevProps) {
-        const { feature } = this.props;
-        if (!isEqual(prevProps.feature.listData, feature.listData)) {
+        const { feature, showFeatureItem } = this.props;
+        if (!isEqual(prevProps.feature.listData, feature.listData) && showFeatureItem) {
             const { pagination } = this.state;
             const { listData } = feature;
-            this.data = [...listData];
             this.setState({
                 listData,
+                allValue: '',
                 pagination: {
                     ...pagination,
+                    current: 1,
                     total: listData.length,
                 },
             });
         }
-        if (!isEqual(feature.currentPageRow, prevProps.feature.currentPageRow)) {
+        if (!isEqual(prevProps.feature.currentPageRow, feature.currentPageRow)) {
             this.reloadFeatrueData();
         }
     };
@@ -62,7 +63,7 @@ class FeatureItem extends Component {
     };
 
     handlerSearchChange = (v) => {
-        this.allValue = v;
+        this.setState({ allValue: v });
     };
 
     handlerSearch = () => {
@@ -72,20 +73,24 @@ class FeatureItem extends Component {
             listData,
             pagination: {
                 ...pagination,
+                current: 1,
                 total: listData.length,
             },
         });
     };
 
     getLocalFilterData = () => {
-        let listData = [];
-        if (this.allValue) {
-            const valueKey = this.allValue.toLowerCase();
-            listData = this.data.filter(ds => ds.name.toLowerCase().indexOf(valueKey) > -1 || ds.code.toLowerCase().indexOf(valueKey) > -1);
+        let data = [];
+        const { feature } = this.props;
+        const { listData } = feature;
+        const { allValue } = this.state;
+        if (allValue) {
+            const valueKey = allValue.toLowerCase();
+            data = listData.filter(ds => ds.name.toLowerCase().indexOf(valueKey) > -1 || ds.code.toLowerCase().indexOf(valueKey) > -1);
         } else {
-            listData = [...this.data];
+            data = [...listData];
         }
-        return listData;
+        return data;
     };
 
     handlerPageChange = (current, pageSize) => {
@@ -161,10 +166,30 @@ class FeatureItem extends Component {
         return (
             <>
                 {item.name}
-                <span className='code-box'>{item.code}</span>
                 {
                     item.tenantCanUse
                         ? <Tag color='green'>租户可用</Tag>
+                        : null
+                }
+            </>
+        )
+    };
+
+    renderItemDescription = (item) => {
+        return (
+            <>
+                <div className='desc-box'>
+                    <span className='label'>功能代码</span>
+                    {item.code}
+                </div>
+                {
+                    item.url
+                        ? (
+                            <div className='desc-box'>
+                                <span className='label'>功能路径</span>
+                                {item.url}
+                            </div>
+                        )
                         : null
                 }
             </>
@@ -175,13 +200,16 @@ class FeatureItem extends Component {
         const { loading, featureGroup, feature } = this.props;
         const { currentFeatureGroup } = featureGroup;
         const { currentPageRow, showFeatureItem } = feature;
-        const { allValue, listData, pagination, delFeatureId } = this.state;
+        const { listData, pagination, delFeatureId, allValue } = this.state;
         const listLoading = loading.effects["feature/getFeatureItemList"];
         const saving = loading.effects["feature/saveFeature"];
+        const loadProps = {
+            spinning: listLoading,
+            indicator: <ListLoader />,
+        };
         return (
             <Drawer
                 width={480}
-                destroyOnClose
                 getContainer={false}
                 placement="right"
                 visible={showFeatureItem}
@@ -199,7 +227,7 @@ class FeatureItem extends Component {
                     />
                     <Search
                         placeholder="输入名称关键字查询"
-                        defaultValue={allValue}
+                        value={allValue}
                         onChange={e => this.handlerSearchChange(e.target.value)}
                         onSearch={this.handlerSearch}
                         onPressEnter={this.handlerSearch}
@@ -210,13 +238,13 @@ class FeatureItem extends Component {
                     <ScrollBar>
                         <List
                             dataSource={listData}
-                            loading={listLoading}
+                            loading={loadProps}
                             renderItem={item => (
                                 <List.Item key={item.id}>
                                     <Skeleton loading={listLoading} active>
                                         <List.Item.Meta
                                             title={this.renderItemTitle(item)}
-                                            description={item.url}
+                                            description={this.renderItemDescription(item)}
                                         />
                                     </Skeleton>
                                     <div className='tool-action'>

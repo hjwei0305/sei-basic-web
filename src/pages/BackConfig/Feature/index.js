@@ -164,6 +164,7 @@ class Feature extends Component {
         const { currentFeatureGroup } = featureGroup;
         const { listData } = this.state;
         const listLoading = loading.effects["featureGroup/queryFeatureGroupList"];
+        const selectedKeys = currentFeatureGroup ? [currentFeatureGroup.id] : [];
         const featureGroupprops = {
             className: 'left-content',
             title: '功能组',
@@ -173,10 +174,11 @@ class Feature extends Component {
             onSelectChange: this.handlerGroupSelect,
             customTool: this.renderCustomTool,
             onListCardRef: ref => (this.listCardRef = ref),
+            selectedKeys,
             itemField: {
                 title: item => item.name,
                 description: item => item.code,
-                extra: item => <span style={{ marginRight: 8 }}>{item.appModuleName}</span>,
+                extra: item => <span style={{ marginRight: 8, fontSize: 12 }}>{item.appModuleName}</span>,
             },
             itemTool: this.renderItemAction,
         };

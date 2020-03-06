@@ -79,14 +79,14 @@ class FeatureGroupForm extends PureComponent {
             </FormItem>
             <FormItem label={formatMessage({ id: "global.code", defaultMessage: "代码" })}>
               {getFieldDecorator("code", {
-                initialValue: this.getCode(),
+                initialValue: featureData ? featureData.code : "",
                 rules: [{
                   required: true,
                   message: formatMessage({ id: "global.code.required", defaultMessage: "代码不能为空" })
                 }]
               })(<Input maxLength={50} placeholder={formatMessage({ id: "global.code.tip", defaultMessage: "规则:名称各汉字首字母大写" })} />)}
             </FormItem>
-            <FormItem label='服务方法地址'>
+            <FormItem label='功能路径'>
               {getFieldDecorator("url", {
                 initialValue: featureData ? featureData.url : ""
               })(<Input />)}

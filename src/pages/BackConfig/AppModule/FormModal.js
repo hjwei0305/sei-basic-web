@@ -69,6 +69,7 @@ class FormModal extends PureComponent {
                 message: formatMessage({ id: "global.code.required", defaultMessage: "代码不能为空" })
               }]
             })(<Input
+              disabled={!!rowData}
               maxLength={20}
               placeholder={formatMessage({ id: "global.code.tip", defaultMessage: "规则:名称各汉字首字母大写" })}
             />)}

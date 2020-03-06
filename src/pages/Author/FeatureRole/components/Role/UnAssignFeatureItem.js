@@ -192,7 +192,7 @@ class UnAssignFeatureItem extends Component {
                     item.url
                         ? (
                             <div className='desc-box'>
-                                <span className='label'>页面地址</span>
+                                <span className='label'>功能路径</span>
                                 {item.url}
                             </div>
                         )
