@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import { Form, Input, Checkbox,} from "antd";
-import { ExtModal, ComboTree, utils } from 'seid';
+import { ExtModal, ComboTree, utils } from 'suid';
 import { constants } from '@/utils';
 
 const { objectAssignHave } = utils;

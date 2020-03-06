@@ -3,7 +3,7 @@ import cls from "classnames";
 import { toUpper, trim } from 'lodash'
 import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
 import { Button, Form, Input } from "antd";
-import { utils } from "seid";
+import { utils } from "suid";
 import { getCurrentUserContext } from "@/utils";
 import styles from "./Form.less";
 

@@ -1,8 +1,8 @@
 import React, { PureComponent, } from "react";
 import { Form, Input, InputNumber, Button, } from "antd";
 import { formatMessage, FormattedMessage, } from "umi-plugin-react/locale";
-import { ScrollBar, } from 'seid';
-import { utils } from 'seid';
+import { ScrollBar, } from 'suid';
+import { utils } from 'suid';
 import { isEqual, } from 'lodash';
 import { connect } from 'dva';
 

@@ -15,7 +15,7 @@ import {
 } from "./service";
 import { message } from "antd";
 import { formatMessage } from "umi-plugin-react/locale";
-import { utils } from 'seid';
+import { utils } from 'suid';
 import { userUtils, } from '@/utils';
 
 const { dvaModel, pathMatchRegexp } = utils;

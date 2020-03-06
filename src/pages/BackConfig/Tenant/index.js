@@ -5,7 +5,7 @@ import { omit } from 'lodash'
 import isEqual from 'react-fast-compare';
 import { formatMessage } from "umi-plugin-react/locale";
 import { Row, Col, Card, Input, Empty, Pagination, List, Skeleton, Popconfirm, Tag } from "antd";
-import { ScrollBar, ExtIcon } from 'seid';
+import { ScrollBar, ExtIcon } from 'suid';
 import empty from "@/assets/item_empty.svg";
 import TenantAdd from './components/TenantForm/Add';
 import TenantEdit from './components/TenantForm/Edit';

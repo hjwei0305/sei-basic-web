@@ -4,7 +4,7 @@ import cls from "classnames";
 import isEqual from 'react-fast-compare';
 import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
 import { Popconfirm, Button, Card, Drawer } from 'antd'
-import { ExtTable, ExtIcon } from 'seid';
+import { ExtTable, ExtIcon } from 'suid';
 import { constants } from '@/utils';
 import UnAssignAppModuleItem from './UnAssignAppModuleItem';
 import styles from './AssignedAppModuleItem.less';
@@ -143,7 +143,7 @@ class TenantAssignedAppModuleItem extends Component {
         if (loading.effects["tenant/removeAssignedAppModuleItem"] && removeAppModuleId === row.id) {
             return <ExtIcon className="del-loading" type="loading" antd />
         }
-        return <ExtIcon className="del" type="export" antd />;
+        return <ExtIcon className="del" type="minus-circle" antd />;
     };
 
     render() {

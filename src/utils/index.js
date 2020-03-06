@@ -1,5 +1,5 @@
 import constants from './constants';
-import { utils } from 'seid'
+import { utils } from 'suid'
 import * as userAuth from './user';
 
 

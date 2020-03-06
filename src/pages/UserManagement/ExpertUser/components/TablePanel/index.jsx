@@ -3,7 +3,7 @@ import { connect } from 'dva';
 import cls from 'classnames';
 import { Button, Popconfirm, Tag, } from "antd";
 import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
-import { ExtTable, ExtIcon } from 'seid';
+import { ExtTable, ExtIcon } from 'suid';
 import { constants } from "@/utils";
 
 import styles from "../../index.less";

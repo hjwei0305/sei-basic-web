@@ -4,7 +4,7 @@ import cls from "classnames";
 import isEqual from 'react-fast-compare';
 import { formatMessage } from "umi-plugin-react/locale";
 import { Row, Col, Input, Empty, Popconfirm } from "antd";
-import { ExtIcon, ListCard } from 'seid';
+import { ExtIcon, ListCard } from 'suid';
 import empty from "@/assets/item_empty.svg";
 import GroupAdd from './components/FeatureGroupForm/Add';
 import GroupEdit from './components/FeatureGroupForm/Edit';

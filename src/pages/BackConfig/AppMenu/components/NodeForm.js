@@ -4,7 +4,7 @@ import { cloneDeep, get } from "lodash";
 import isEqual from "react-fast-compare";
 import { formatMessage } from "umi-plugin-react/locale";
 import { Button, Form, Input, Popconfirm, InputNumber } from "antd";
-import { ScrollBar, ExtIcon, ComboGrid } from 'seid';
+import { ScrollBar, ExtIcon, ComboGrid } from 'suid';
 import { constants } from '@/utils';
 import styles from "./NodeForm.less";
 
@@ -268,7 +268,7 @@ class NodeForm extends Component {
                                             required: true,
                                             message: formatMessage({ id: "global.rank.required", defaultMessage: "序号不能为空" })
                                         }]
-                                    })(<InputNumber precision={0} style={{ width: '100%' }} />)}
+                                    })(<InputNumber precision={0} min={0} style={{ width: '100%' }} />)}
                                 </FormItem>
                                 {
                                     editData.children && editData.children.length === 0

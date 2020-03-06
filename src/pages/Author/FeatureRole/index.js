@@ -4,7 +4,7 @@ import cls from "classnames";
 import isEqual from 'react-fast-compare';
 import { formatMessage } from "umi-plugin-react/locale";
 import { Row, Col, Card, Input, Empty, Pagination, List, Skeleton, Popconfirm } from "antd";
-import { ScrollBar, ExtIcon } from 'seid';
+import { ScrollBar, ExtIcon } from 'suid';
 import empty from "@/assets/item_empty.svg";
 import RoleGroupAdd from './components/RoleGroupForm/Add';
 import RoleGroupEdit from './components/RoleGroupForm/Edit';

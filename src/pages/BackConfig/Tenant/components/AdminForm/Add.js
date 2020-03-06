@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Popover, Tooltip } from "antd";
-import { ExtIcon } from 'seid';
+import { ExtIcon } from 'suid';
 import cls from "classnames";
 import Form from "./Form";
 import styles from "./index.less";

@@ -1,6 +1,6 @@
 import React, { Fragment, Component, } from 'react';
 import { Button, Popconfirm, } from 'antd';
-import { ExtTable, ExtIcon, } from 'seid';
+import { ExtTable, ExtIcon, } from 'suid';
 import { connect, } from 'dva';
 import cls from 'classnames';
 import { FormattedMessage, formatMessage, } from "umi-plugin-react/locale";

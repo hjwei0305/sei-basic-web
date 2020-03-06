@@ -3,7 +3,7 @@ import cls from 'classnames';
 import isEqual from 'react-fast-compare';
 import { cloneDeep } from 'lodash'
 import { Button, Input, Pagination, List, Skeleton, Checkbox, Drawer, Tag } from "antd";
-import { ScrollBar } from 'seid';
+import { ScrollBar } from 'suid';
 import styles from "./UnAssignFeatureItem.less";
 
 const Search = Input.Search;

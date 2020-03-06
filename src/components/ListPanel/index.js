@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import isEqual from 'react-fast-compare';
 import { cloneDeep } from 'lodash'
 import { Input, Pagination, List, Skeleton, Checkbox, Card } from "antd";
-import { ScrollBar, ListLoader } from 'seid';
+import { ScrollBar, ListLoader } from 'suid';
 import styles from "./index.less";
 
 const Search = Input.Search;

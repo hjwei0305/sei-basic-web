@@ -3,7 +3,7 @@ import cls from 'classnames';
 import PropTypes from "prop-types";
 import isEqual from 'react-fast-compare';
 import { Input, Tree, Card, Empty } from "antd";
-import { ScrollBar, ListLoader, ExtIcon } from 'seid';
+import { ScrollBar, ListLoader, ExtIcon } from 'suid';
 import styles from "./index.less";
 
 const Search = Input.Search;

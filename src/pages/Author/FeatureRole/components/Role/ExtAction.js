@@ -3,7 +3,7 @@ import cls from "classnames";
 import { connect } from "dva";
 import isEqual from 'react-fast-compare';
 import { Dropdown, Menu } from "antd";
-import { utils, ExtIcon } from 'seid';
+import { utils, ExtIcon } from 'suid';
 import { constants } from '@/utils';
 import UserView from './UserView';
 import StationView from './StationView';

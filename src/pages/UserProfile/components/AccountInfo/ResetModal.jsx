@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { Form, Input, } from "antd";
 import { formatMessage, } from "umi-plugin-react/locale";
-import { ExtModal } from 'seid';
+import { ExtModal } from 'suid';
 import md5 from "md5";
 import { userUtils, } from '@/utils';
 

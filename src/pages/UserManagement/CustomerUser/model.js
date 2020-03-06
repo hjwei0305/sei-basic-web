@@ -1,8 +1,8 @@
 /*
 * @Author: zp
 * @Date:   2020-02-02 11:57:38
-* @Last Modified by:   zp
-* @Last Modified time: 2020-02-10 16:10:36
+ * @Last Modified by: Eason
+ * @Last Modified time: 2020-03-06 13:34:57
 */
 import {
   freeze,
@@ -14,7 +14,7 @@ import {
 } from "./service";
 import { message } from "antd";
 import { formatMessage } from "umi-plugin-react/locale";
-import { utils } from 'seid';
+import { utils } from 'suid';
 
 const { dvaModel } = utils;
 const { modelExtend, model } = dvaModel;

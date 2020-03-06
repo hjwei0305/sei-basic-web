@@ -1,5 +1,5 @@
 import React, { Component, Fragment, } from 'react';
-import { ExtTable, ComboTree, } from 'seid';
+import { ExtTable, ComboTree, } from 'suid';
 import { Button, Checkbox, } from "antd";
 import { constants } from "@/utils";
 import { AssignLayout } from '@/components';

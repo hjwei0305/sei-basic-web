@@ -1,6 +1,6 @@
 import React, { Component, Fragment, } from 'react';
 import { Button, } from "antd";
-import { ExtTable, ComboGrid, } from 'seid';
+import { ExtTable, ComboGrid, } from 'suid';
 import { AssignLayout } from '@/components';
 import { constants } from "@/utils";
 

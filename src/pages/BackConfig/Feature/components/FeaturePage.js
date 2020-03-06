@@ -3,7 +3,7 @@ import { connect } from "dva";
 import cls from "classnames";
 import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
 import { Popconfirm, Button, Card, Tag } from 'antd'
-import { ExtTable, ExtIcon } from 'seid';
+import { ExtTable, ExtIcon } from 'suid';
 import { constants } from '@/utils';
 import FeaturePageFormModal from './FeaturePageFormModal';
 import FeatureItem from './FeatureItem';

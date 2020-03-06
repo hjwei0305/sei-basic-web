@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import cls from "classnames";
 import { Popover } from "antd";
-import { ExtIcon } from 'seid';
+import { ExtIcon } from 'suid';
 import Form from "./Form";
 import styles from "./index.less";
 

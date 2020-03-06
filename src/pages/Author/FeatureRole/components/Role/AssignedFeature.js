@@ -4,7 +4,7 @@ import cls from "classnames";
 import isEqual from 'react-fast-compare';
 import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
 import { Card, Popconfirm, Button, Tag, Drawer } from 'antd'
-import { ExtTable, ExtIcon } from 'seid';
+import { ExtTable, ExtIcon } from 'suid';
 import { constants } from '@/utils';
 import UnAssignFeatureItem from './UnAssignFeatureItem';
 import styles from './AssignedFeature.less';
@@ -133,7 +133,7 @@ class FeaturePage extends Component {
         if (loading.effects["featureRole/removeAssignedFeatureItem"] && delRowId === row.id) {
             return <ExtIcon className="del-loading" type="loading" antd />
         }
-        return <ExtIcon className="del" type="export" antd />;
+        return <ExtIcon className="del" type="minus-circle" antd />;
     };
 
     renderFeatureType = (row) => {

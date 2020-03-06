@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'dva';
 import { Input, Tree, Empty, Popconfirm, Button, message, } from 'antd';
 import { formatMessage, } from "umi-plugin-react/locale";
-import { ToolBar, ScrollBar, } from 'seid';
+import { ToolBar, ScrollBar, } from 'suid';
 import { cloneDeep, isEqual, } from 'lodash';
 import cls from 'classnames';
 import FormModal from './FormModal';

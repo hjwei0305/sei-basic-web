@@ -1,9 +1,9 @@
 import React, { PureComponent, Fragment } from "react";
 import withRouter from "umi/withRouter";
 import { setLocale } from 'umi-plugin-react/locale'
-import zhCN from "seid/lib/locale/zh_CN";
+import zhCN from "suid/lib/locale/zh_CN";
 import enUS from "antd/lib/locale/en_US";
-import { SeidLocaleProvider, utils } from 'seid';
+import { SeidLocaleProvider, utils } from 'suid';
 
 const { storage, constants } = utils;
 

@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { toUpper, trim } from 'lodash'
 import { Form, Input, Tag } from "antd";
 import { formatMessage } from "umi-plugin-react/locale";
-import { ExtModal, ComboList, ComboGrid } from 'seid';
+import { ExtModal, ComboList, ComboGrid } from 'suid';
 import { constants } from "@/utils";
 
 const { SERVER_PATH, FEATURE_TYPE } = constants;

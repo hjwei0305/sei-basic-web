@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { Form, Input, } from "antd";
 import { formatMessage, } from "umi-plugin-react/locale";
-import { ExtModal, ComboGrid } from 'seid';
+import { ExtModal, ComboGrid } from 'suid';
 import { constants } from '@/utils';
 
 const { SERVER_PATH } = constants;

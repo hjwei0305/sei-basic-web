@@ -4,7 +4,7 @@ import { cloneDeep } from 'lodash';
 import isEqual from 'react-fast-compare';
 import { Tree } from "antd";
 import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
-import { ScrollBar, ExtIcon, ExtModal } from 'seid';
+import { ScrollBar, ExtIcon, ExtModal } from 'suid';
 import styles from './MenuMoveModal.less'
 
 const { TreeNode } = Tree;

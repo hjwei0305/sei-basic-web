@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import { formatMessage, } from "umi-plugin-react/locale";
-import { ExtModal } from 'seid';
+import { ExtModal } from 'suid';
 import FormPanel from '../FormPanel';
 
 

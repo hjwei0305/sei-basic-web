@@ -1,7 +1,7 @@
 import React, { Fragment, } from 'react';
 import { connect } from 'dva';
 import { Button, } from 'antd';
-import { ExtTable, ComboTree, } from 'seid';
+import { ExtTable, ComboTree, } from 'suid';
 
 import { constants } from "@/utils";
 import { AssignLayout, ColumnLayout, } from '@/components';

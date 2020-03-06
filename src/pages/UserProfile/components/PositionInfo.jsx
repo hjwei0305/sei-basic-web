@@ -1,5 +1,5 @@
 import React from 'react';
-import { ExtTable, } from 'seid';
+import { ExtTable, } from 'suid';
 import { constants, userUtils, } from '@/utils';
 
 const { getCurrentUser, } = userUtils;

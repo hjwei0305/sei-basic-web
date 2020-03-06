@@ -1,7 +1,7 @@
 import React, { Component, Suspense } from "react";
 import cls from "classnames";
 import { Popover } from "antd";
-import { ExtIcon, ListLoader } from 'seid';
+import { ExtIcon, ListLoader } from 'suid';
 import styles from "./Assign.less";
 
 const ListAssign = React.lazy(() => import("./ListAssign"));

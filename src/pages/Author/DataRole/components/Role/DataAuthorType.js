@@ -3,7 +3,7 @@ import cls from "classnames";
 import { isEqual } from 'lodash';
 import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
 import { Card, Button } from 'antd'
-import { ExtTable, ExtIcon, ComboList } from 'seid';
+import { ExtTable, ExtIcon, ComboList } from 'suid';
 import { constants } from '@/utils';
 import Assign from './Assign';
 import styles from './DataAuthorType.less';

@@ -14,7 +14,7 @@ import {
 } from "./service";
 import { message } from "antd";
 import { formatMessage } from "umi-plugin-react/locale";
-import { utils } from 'seid';
+import { utils } from 'suid';
 
 const { dvaModel } = utils;
 const { modelExtend, model } = dvaModel;

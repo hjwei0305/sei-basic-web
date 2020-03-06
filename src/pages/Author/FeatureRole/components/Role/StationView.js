@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Popover } from "antd";
 import cls from "classnames";
-import { ExtIcon } from 'seid';
+import { ExtIcon } from 'suid';
 import { RoleStation } from '@/components';
 import styles from "./View.less";
 

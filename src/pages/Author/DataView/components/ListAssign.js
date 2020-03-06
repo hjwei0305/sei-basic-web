@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { connect } from "dva";
 import cls from "classnames";
 import { Input } from 'antd';
-import { ListCard } from 'seid';
+import { ListCard } from 'suid';
 import styles from './ListAssign.less';
 
 const Search = Input.Search;

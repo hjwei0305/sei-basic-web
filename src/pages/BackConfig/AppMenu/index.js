@@ -3,7 +3,7 @@ import { connect } from "dva";
 import cls from "classnames";
 import isEqual from 'react-fast-compare';
 import { Button, Row, Col, Card, Input, Tree, Empty } from "antd";
-import { ScrollBar, ExtIcon, ListLoader } from 'seid';
+import { ScrollBar, ExtIcon, ListLoader } from 'suid';
 import empty from "@/assets/item_empty.svg";
 import NodeForm from './components/NodeForm';
 import MenuMoveModal from './components/MenuMoveModal'

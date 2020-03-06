@@ -1,13 +1,13 @@
 /*
 * @Author: zp
 * @Date:   2020-02-02 11:57:38
-* @Last Modified by:   zp
-* @Last Modified time: 2020-02-02 18:27:50
+ * @Last Modified by: Eason
+ * @Last Modified time: 2020-03-06 13:34:47
 */
 import { del, getList, save } from "./service";
 import { message } from "antd";
 import { formatMessage } from "umi-plugin-react/locale";
-import { utils } from 'seid';
+import { utils } from 'suid';
 
 const { pathMatchRegexp, dvaModel } = utils;
 const { modelExtend, model } = dvaModel;

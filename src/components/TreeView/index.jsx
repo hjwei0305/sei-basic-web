@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Input, Tree, Empty, } from 'antd';
-import { ScrollBar, ToolBar } from 'seid';
+import { ScrollBar, ToolBar } from 'suid';
 import { cloneDeep, isEqual, } from 'lodash';
 import cls from 'classnames';
 

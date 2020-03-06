@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { ExtModal } from 'seid';
+import { ExtModal } from 'suid';
 import TreeView from '@/components/TreeView';
 
 class MoveTreeModal extends PureComponent {

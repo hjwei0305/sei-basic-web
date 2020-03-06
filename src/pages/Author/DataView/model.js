@@ -5,7 +5,7 @@ import {
     getAssignedAuthTreeDataList,
 } from "./service";
 import { message } from "antd";
-import { utils } from 'seid';
+import { utils } from 'suid';
 
 const { dvaModel } = utils;
 const { modelExtend, model } = dvaModel;

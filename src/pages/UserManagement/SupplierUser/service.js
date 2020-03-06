@@ -4,7 +4,7 @@
 * @Last Modified by:   zp
 * @Last Modified time: 2020-02-10 16:15:16
 */
-import { utils } from 'seid';
+import { utils } from 'suid';
 import { constants } from '@/utils';
 
 const { request } = utils;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { List, Skeleton } from "antd";
-import { ScrollBar } from 'seid'
+import { ScrollBar } from 'suid'
 
 const RoleStation = ({ stationData = [], loading }) => {
     return (
