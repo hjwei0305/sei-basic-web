@@ -3,7 +3,7 @@ import withRouter from "umi/withRouter";
 import { setLocale } from 'umi-plugin-react/locale'
 import zhCN from "suid/lib/locale/zh_CN";
 import enUS from "antd/lib/locale/en_US";
-import { SeidLocaleProvider, utils } from 'suid';
+import { SuidLocaleProvider, utils } from 'suid';
 
 const { storage, constants } = utils;
 
@@ -26,9 +26,9 @@ class LoginLayout extends PureComponent {
     const { children } = this.props;
     return (
       <Fragment>
-        <SeidLocaleProvider locale={languages[locale]} antdLocale={locale}>
+        <SuidLocaleProvider locale={languages[locale]} antdLocale={locale}>
           {children}
-        </SeidLocaleProvider>
+        </SuidLocaleProvider>
       </Fragment>
     );
   }
