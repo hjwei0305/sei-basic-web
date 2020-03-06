@@ -48,8 +48,8 @@ class FormModal extends PureComponent {
     const { form, rowData, closeFormModal, saving, showModal } = this.props;
     const { getFieldDecorator } = form;
     const title = rowData ? '修改数据权限类型' : '新建数据权限类型';
-    getFieldDecorator("authorizeEntityTypeId", { initialValue: rowData ? rowData.authorizeEntityTypeId : "" });
-    getFieldDecorator("featureId", { initialValue: rowData ? rowData.featureId : "" });
+    getFieldDecorator("authorizeEntityTypeId", { initialValue: rowData ? rowData.authorizeEntityTypeId : null });
+    getFieldDecorator("featureId", { initialValue: rowData ? rowData.featureId : null });
     const authorizeEntityTypeNameProps = {
       form,
       name: 'authorizeEntityTypeName',
@@ -146,7 +146,7 @@ class FormModal extends PureComponent {
           </FormItem>
           <FormItem label="功能项">
             {getFieldDecorator("featureName", {
-              initialValue: rowData ? rowData.featureName : "",
+              initialValue: rowData ? rowData.featureName : null,
             })(
               <ComboGrid {...featureNameProps} />
             )}
