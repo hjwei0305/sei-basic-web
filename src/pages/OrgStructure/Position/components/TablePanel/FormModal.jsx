@@ -83,7 +83,6 @@ class FormModal extends PureComponent {
         confirmLoading={saving}
         maskClosable={false}
         title={title}
-        okText={'保存'}
         onOk={this.onFormSubmit}
       >
         <Form {...formItemLayout} layout="horizontal" >
