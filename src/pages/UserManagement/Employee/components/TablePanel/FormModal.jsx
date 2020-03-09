@@ -79,16 +79,18 @@ class FormModal extends PureComponent {
               }]
             })(<Input />)}
           </FormItem>
-          <FormItem
-            label='冻结'
-          >
-            {getFieldDecorator('frozen', {
-              initialValue: rowData ? rowData.frozen : false,
-              valuePropName: 'checked',
-            })(
-              <Checkbox/>
-            )}
-          </FormItem>
+          { rowData ? (
+            <FormItem
+              label='冻结'
+            >
+              {getFieldDecorator('frozen', {
+                initialValue: rowData ? rowData.frozen : false,
+                valuePropName: 'checked',
+              })(
+                <Checkbox/>
+              )}
+            </FormItem>
+          ) : (null)}
           {/*以下为隐藏的formItem*/}
           <FormItem
             style={{display: "none"}}>
