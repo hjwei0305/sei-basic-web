@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Form, Input, } from "antd";
+import { Form, Input, Checkbox, } from "antd";
 import { formatMessage, } from "umi-plugin-react/locale";
 import { ExtModal } from 'suid';
 
@@ -64,8 +64,11 @@ class FormModal extends PureComponent {
               rules: [{
                 required: true,
                 message: "员工编号不能为空",
+              }, {
+                pattern: '^[A-Za-z0-9]{1,10}$',
+                message: '允许输入字母和数字,且不超过10个字符!',
               }]
-            })(<Input />)}
+            })(<Input disabled={!!rowData} />)}
           </FormItem>
           <FormItem label={formatMessage({ id: "global.name", defaultMessage: "名称" })}>
             {getFieldDecorator("userName", {
@@ -75,6 +78,16 @@ class FormModal extends PureComponent {
                 message: formatMessage({ id: "global.name.required", defaultMessage: "名称不能为空" })
               }]
             })(<Input />)}
+          </FormItem>
+          <FormItem
+            label='冻结'
+          >
+            {getFieldDecorator('frozen', {
+              initialValue: rowData ? rowData.frozen : false,
+              valuePropName: 'checked',
+            })(
+              <Checkbox/>
+            )}
           </FormItem>
           {/*以下为隐藏的formItem*/}
           <FormItem
