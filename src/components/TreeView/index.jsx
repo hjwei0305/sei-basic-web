@@ -162,7 +162,6 @@ class TreeView extends Component {
     return {
       layout,
       right: (<Search
-        allowClear
         placeholder="请输入名称搜索"
         onSearch={this.handleSearch}
         style={{ width: '100%' }}

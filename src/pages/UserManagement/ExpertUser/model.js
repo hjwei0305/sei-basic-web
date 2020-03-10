@@ -2,7 +2,7 @@
 * @Author: zp
 * @Date:   2020-02-02 11:57:38
 * @Last Modified by:   zp
-* @Last Modified time: 2020-02-11 15:12:20
+* @Last Modified time: 2020-03-09 11:25:12
 */
 import {
   freeze,
@@ -45,7 +45,7 @@ export default modelExtend(model, {
       const re = yield call(freeze, payload);
       message.destroy();
       if (re.success) {
-        message.success(formatMessage({ id: "global.delete-success", defaultMessage: "删除成功" }));
+        message.success(re.message);
       } else {
         message.error(re.message);
       }

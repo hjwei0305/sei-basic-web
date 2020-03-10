@@ -122,7 +122,7 @@ class TablePanel extends Component {
             <Popconfirm
               key={APP_MODULE_BTN_KEY.DELETE}
               placement="topLeft"
-              title="确定要冻结吗？"
+              title={record.frozen ? "确定要解冻吗？" : "确定要冻结吗？"}
               onConfirm={_ => this.freeze(record)}
             >
               {

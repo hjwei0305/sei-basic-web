@@ -1,6 +1,6 @@
 import React, { Fragment, } from 'react';
 import { connect } from 'dva';
-import { Button, } from 'antd';
+import { Button, message, } from 'antd';
 import { ExtTable, ComboTree, } from 'suid';
 
 import { constants } from "@/utils";
@@ -33,15 +33,19 @@ class CopyConfig extends React.Component {
     const { dataRoleIds, featureRoleIds, targetEmployeeIds, } = this.state;
     const { dispatch, employee, } = this.props;
     const { rowData, } = employee;
+    // if (!targetEmployeeIds.includes(rowData.id)) {
     dispatch({
-      type: 'employee/copyTo',
-      payload: {
-        dataRoleIds,
-        featureRoleIds,
-        targetEmployeeIds,
-        employeeId: rowData.id,
-      },
-    });
+        type: 'employee/copyTo',
+        payload: {
+          dataRoleIds,
+          featureRoleIds,
+          targetEmployeeIds,
+          employeeId: rowData.id,
+        },
+      });
+    // } else {
+    //   message.warn(`不能复制功能角色和数据角色到当前帐号【${rowData.userName}】`);
+    // }
   }
 
   getComboTreeProps = () => {

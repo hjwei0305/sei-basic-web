@@ -2,7 +2,7 @@ import React, { Component, Fragment, } from 'react';
 import { connect } from 'dva';
 import cls from 'classnames';
 import { isEqual, } from 'lodash';
-import { Button, message, Checkbox, } from "antd";
+import { Button, message, Checkbox, Tag, } from "antd";
 import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
 import { ExtTable, utils, ExtIcon } from 'suid';
 import { constants } from "@/utils";
@@ -232,6 +232,15 @@ class TablePanel extends Component {
         dataIndex: "userName",
         width: 120,
         required: true,
+      },
+      {
+        title: "冻结",
+        dataIndex: "frozen",
+        width: 120,
+        required: true,
+        render: (text) => {
+          return <Tag color={text ? 'red' : 'green'}>{text? '已冻结' : '可用'}</Tag>
+        }
       },
     ];
     const toolBarProps = {
