@@ -34,11 +34,6 @@ export default [
         ],
       },
       {
-        path: '/dataDict',
-        name: 'dataDict',
-        component: 'DataDict',
-      },
-      {
         path: '/userProfile',
         name: 'userProfile',
         component: 'UserProfile',
@@ -80,12 +75,6 @@ export default [
         path: '/regionManagement',
         name: 'regionManagement',
         routes: [{
-          path: '/regionManagement/country',
-          component: 'RegionManagement/Country'
-        }, {
-          path: '/regionManagement/region',
-          component: 'RegionManagement/Region'
-        }, {
           path: '/regionManagement/professionalDomain',
           component: 'RegionManagement/ProfessionalDomain'
         }],
