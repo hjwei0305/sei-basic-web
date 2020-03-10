@@ -42,7 +42,7 @@ export default [
         path: '/orgStructure',
         name: 'orgStructure',
         routes: [{
-          path: '/orgStructure/corporation',
+          path: '/orgStructure/corporation',git
           component: 'OrgStructure/Corporation'
         }, {
           path: '/orgStructure/positionCategory',
