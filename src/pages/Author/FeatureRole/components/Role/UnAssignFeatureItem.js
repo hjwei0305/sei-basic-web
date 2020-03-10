@@ -172,11 +172,7 @@ class UnAssignFeatureItem extends Component {
         return (
             <>
                 {item.name}
-                {
-                    item.tenantCanUse
-                        ? <Tag color='green'>租户可用</Tag>
-                        : null
-                }
+                <Tag color='green'>{item.featureGroupName}</Tag>
             </>
         )
     };
