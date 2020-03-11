@@ -48,7 +48,7 @@ class FormModal extends PureComponent {
   };
 
   render() {
-    const { form, currentPageRow, closePageFormModal, saving, showFormModal } = this.props;
+    const { form, currentPageRow, closePageFormModal, saving, showFormModal, currentFeatureGroup } = this.props;
     const { getFieldDecorator } = form;
     const title = currentPageRow
       ? formatMessage({
@@ -84,7 +84,13 @@ class FormModal extends PureComponent {
                 required: true,
                 message: formatMessage({ id: "global.code.required", defaultMessage: "代码不能为空" })
               }]
-            })(<Input maxLength={50} placeholder={formatMessage({ id: "global.code.tip", defaultMessage: "规则:名称各汉字首字母大写" })} />)}
+            })(
+              <Input
+                addonBefore={`${currentFeatureGroup.code}-`}
+                maxLength={50 - `${currentFeatureGroup.code}-`.length}
+                placeholder={formatMessage({ id: "global.code.tip", defaultMessage: "规则:名称各汉字首字母大写" })}
+              />
+            )}
           </FormItem>
           <FormItem label='页面路由地址'>
             {getFieldDecorator("groupCode", {

@@ -51,7 +51,7 @@ class FeatureGroupForm extends PureComponent {
   };
 
   render() {
-    const { form, featureData, saving } = this.props;
+    const { form, featureData, saving, currentFeatureGroup } = this.props;
     const { getFieldDecorator } = form;
     const title = featureData
       ? formatMessage({
@@ -79,12 +79,16 @@ class FeatureGroupForm extends PureComponent {
             </FormItem>
             <FormItem label={formatMessage({ id: "global.code", defaultMessage: "代码" })}>
               {getFieldDecorator("code", {
-                initialValue: featureData ? featureData.code : "",
+                initialValue: this.getCode(),
                 rules: [{
                   required: true,
                   message: formatMessage({ id: "global.code.required", defaultMessage: "代码不能为空" })
                 }]
-              })(<Input maxLength={50} placeholder={formatMessage({ id: "global.code.tip", defaultMessage: "规则:名称各汉字首字母大写" })} />)}
+              })(<Input
+                addonBefore={`${currentFeatureGroup.code}-`}
+                maxLength={50 - `${currentFeatureGroup.code}-`.length}
+                placeholder={formatMessage({ id: "global.code.tip", defaultMessage: "规则:名称各汉字首字母大写" })}
+              />)}
             </FormItem>
             <FormItem label='功能路径'>
               {getFieldDecorator("url", {

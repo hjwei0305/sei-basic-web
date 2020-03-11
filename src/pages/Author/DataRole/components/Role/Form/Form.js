@@ -136,7 +136,7 @@ class RoleGroupForm extends PureComponent {
                 }]
               })(<Input
                 addonBefore={`${currentRoleGroup.code}-`}
-                maxLength={50}
+                maxLength={50 - `${currentRoleGroup.code}-`.length}
                 placeholder={formatMessage({ id: "global.code.tip", defaultMessage: "规则:名称各汉字首字母大写" })}
               />)}
             </FormItem>
