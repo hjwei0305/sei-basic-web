@@ -1,272 +1,346 @@
 import React, { Component } from "react";
 import cls from 'classnames';
 import isEqual from 'react-fast-compare';
-import { cloneDeep } from 'lodash'
-import { Button, Input, Pagination, List, Skeleton, Checkbox, Drawer, Tag } from "antd";
-import { ScrollBar } from 'suid';
+import { connect } from "dva";
+import { Button, Input, Drawer, Tree, Empty, Tooltip } from "antd";
+import { ScrollBar, ListLoader, ExtIcon, ComboList } from 'suid';
+import { constants } from '@/utils';
 import styles from "./UnAssignFeatureItem.less";
 
+const { FEATURE_TYPE, SERVER_PATH } = constants;
 const Search = Input.Search;
+const { TreeNode } = Tree;
+const childFieldKey = 'children';
+const hightLightColor = '#f50';
 
+@connect(({ featureRole, loading }) => ({ featureRole, loading }))
 class UnAssignFeatureItem extends Component {
-
-    static allValue = '';
-
-    static data = [];
 
     constructor(props) {
         super(props);
-        this.data = [];
-        this.allValue = '';
         this.state = {
-            selectAll: false,
-            selectIndeterminate: false,
-            checkedList: {},
+            allValue: '',
+            appModuleId: '',
+            appModuleName: '',
+            checkedKeys: [],
+            pageKeys: [],
             unAssignListData: [],
-            pagination: {
-                current: 1,
-                pageSize: 30,
-                total: 0,
-            },
         };
     }
 
     componentDidUpdate(prevProps) {
-        const { unAssignListData, showAssignFeature, currentRole } = this.props;
-        if (!isEqual(prevProps.currentRole, currentRole)) {
-            this.allValue = '';
-        }
-        if (!isEqual(this.data, unAssignListData) && showAssignFeature) {
-            const { pagination } = this.state;
-            this.data = [...unAssignListData];
+        const { featureRole, showAssignFeature } = this.props;
+        if (!isEqual(prevProps.featureRole.currentRole, featureRole.currentRole)) {
             this.setState({
-                unAssignListData,
-                checkedList: {},
-                selectAll: false,
-                selectIndeterminate: false,
-                pagination: {
-                    ...pagination,
-                    current: 1,
-                    total: unAssignListData.length,
-                },
+                checkedKeys: [],
+                unAssignListData: [],
             });
         }
-    };
-
-    handlerSearchChange = (v) => {
-        this.allValue = v;
-    };
-
-    handlerSearch = () => {
-        const { pagination, } = this.state;
-        const unAssignListData = this.getLocalFilterData();
-        this.setState({
-            selectAll: false,
-            selectIndeterminate: false,
-            checkedList: {},
-            unAssignListData,
-            pagination: {
-                ...pagination,
-                current: 1,
-                total: unAssignListData.length,
-            },
-        });
-    };
-
-    getLocalFilterData = () => {
-        let listData = [];
-        if (this.allValue) {
-            const valueKey = this.allValue.toLowerCase();
-            listData = this.data.filter(ds => ds.name.toLowerCase().indexOf(valueKey) > -1 || ds.code.toLowerCase().indexOf(valueKey) > -1);
-        } else {
-            listData = [...this.data];
+        if (!isEqual(prevProps.showAssignFeature, showAssignFeature) && showAssignFeature === true) {
+            this.setState({
+                checkedKeys: [],
+                pageKeys: [],
+            }, this.getUnAssignData);
         }
-        return listData;
-    };
+        if (!isEqual(prevProps.featureRole.unAssignListData, featureRole.unAssignListData)) {
+            this.setState({
+                unAssignListData: featureRole.unAssignListData,
+            }, () => {
+                const { allValue } = this.state;
+                if (allValue) {
+                    this.handlerSearch();
+                }
+            });
+        }
+    }
 
-    handlerPageChange = (current, pageSize) => {
-        const { pagination } = this.state;
-        this.setState(
-            {
-                pagination: {
-                    ...pagination,
-                    current,
-                    pageSize,
-                },
-            },
-            () => {
-                const newData = this.getLocalFilterData();
-                const unAssignListData = newData.slice((current - 1) * pageSize, current * pageSize);
-                this.setState({
-                    unAssignListData,
-                });
-            },
-        );
+    getUnAssignData = () => {
+        const { appModuleId } = this.state;
+        const { featureRole, dispatch } = this.props;
+        const { currentRole } = featureRole;
+        if (currentRole && appModuleId) {
+            dispatch({
+                type: 'featureRole/getUnAssignedFeatureItemList',
+                payload: {
+                    appModuleId,
+                    featureRoleId: currentRole.id,
+                }
+            });
+        }
     };
 
     assignFeatureItem = (e) => {
         e && e.stopPropagation();
-        const { assignFeatureItem } = this.props;
-        const { checkedList } = this.state;
-        let childIds = [];
-        if (Object.keys(checkedList).length > 0) {
-            Object.keys(checkedList).forEach(key => childIds.push(key));
-        }
-        if (assignFeatureItem) {
-            assignFeatureItem(childIds);
+        const { featureRole, dispatch } = this.props;
+        const { currentRole } = featureRole;
+        const { checkedKeys, pageKeys } = this.state;
+        if (checkedKeys.length > 0) {
+            const childIds = checkedKeys.concat(pageKeys);
+            dispatch({
+                type: "featureRole/assignFeatureItem",
+                payload: {
+                    parentId: currentRole.id,
+                    childIds,
+                },
+                callback: res => {
+                    if (res.success) {
+                        this.handlerClose(true);
+                    }
+                }
+            });
         }
     };
 
-    handlerClose = () => {
+    handlerClose = (refresh) => {
         const { closeAssignFeatureItem } = this.props;
         if (closeAssignFeatureItem) {
-            closeAssignFeatureItem();
+            closeAssignFeatureItem(refresh);
         }
     };
 
-    handlerItemCheck = (item) => {
-        const { checkedList, unAssignListData } = this.state;
-        const checkedKeys = cloneDeep(checkedList);
-        let selectAll = false;
-        let selectIndeterminate = false;
-        if (checkedList[item.id]) {
-            delete checkedKeys[item.id];
-        } else {
-            checkedKeys[item.id] = item.id;
-        }
-        const keys = Object.keys(checkedKeys);
-        if (keys.length > 0) {
-            selectIndeterminate = true;
-            if (keys.length === unAssignListData.length) {
-                selectAll = true;
-                selectIndeterminate = false;
-            }
-        }
+    handlerSearchChange = (v) => {
+        this.setState({ allValue: v });
+    };
+
+    handlerSearch = () => {
+        const { unAssignListData } = this.getLocalFilterData();
+        this.setState({ unAssignListData });
+    };
+
+    handlerCheckedChange = (checkedKeys, { halfCheckedKeys: pageKeys }) => {
+        this.setState({ checkedKeys, pageKeys });
+    };
+
+    onCancelBatchAssignedFeatureItem = () => {
         this.setState({
-            selectIndeterminate,
-            selectAll,
-            checkedList: checkedKeys,
+            checkedKeys: [],
+            pageKeys: [],
         });
     };
 
-    onSelectAllChange = e => {
-        const { checkedList, unAssignListData } = this.state;
-        let checkedKeys = cloneDeep(checkedList);
-        let selectAll = false;
-        if (e.target.checked) {
-            unAssignListData.forEach(row => {
-                checkedKeys[row.id] = row.id;
-            });
-            selectAll = true;
-        } else {
-            checkedKeys = {};
-        }
-        this.setState({
-            selectAll,
-            selectIndeterminate: false,
-            checkedList: checkedKeys
-        });
-    };
-
-    renderItemTitle = (item) => {
-        return (
-            <>
-                {item.name}
-                <Tag color='green'>{item.featureGroupName}</Tag>
-            </>
-        )
-    };
-
-    renderItemDescription = (item) => {
-        return (
-            <>
-                <div className='desc-box'>
-                    <span className='label'>功能代码</span>
-                    {item.code}
-                </div>
-                {
-                    item.url
-                        ? (
-                            <div className='desc-box'>
-                                <span className='label'>功能路径</span>
-                                {item.url}
-                            </div>
-                        )
-                        : null
+    filterNodes = (valueKey, treeData) => {
+        const newArr = [];
+        treeData.forEach(treeNode => {
+            const nodeChildren = treeNode[childFieldKey];
+            const fieldValue = treeNode.name;
+            if (fieldValue.toLowerCase().indexOf(valueKey) > -1) {
+                newArr.push(treeNode);
+            } else if (nodeChildren && nodeChildren.length > 0) {
+                const ab = this.filterNodes(valueKey, nodeChildren);
+                const obj = {
+                    ...treeNode,
+                    [childFieldKey]: ab,
+                };
+                if (ab && ab.length > 0) {
+                    newArr.push(obj);
                 }
-            </>
+            }
+        });
+        return newArr;
+    };
+
+    getLocalFilterData = () => {
+        const { featureRole } = this.props;
+        const { unAssignListData } = featureRole;
+        const { allValue } = this.state;
+        let newData = [...unAssignListData];
+        const searchValue = allValue;
+        if (searchValue) {
+            newData = this.filterNodes(searchValue.toLowerCase(), newData);
+        }
+        return { unAssignListData: newData };
+    };
+
+    renderNodeIcon = (featureType) => {
+        let icon = null;
+        switch (featureType) {
+            case FEATURE_TYPE.APP_MODULE:
+                icon = <ExtIcon type='appstore' antd style={{ color: '#13c2c2' }} />;
+                break;
+            case FEATURE_TYPE.PAGE:
+                icon = <ExtIcon type='doc' style={{ color: '#722ed1' }} />;
+                break;
+            case FEATURE_TYPE.OPERATE:
+                icon = <ExtIcon type='dian' />;
+                break;
+            default:
+        }
+        return icon;
+    };
+
+    renderTreeNodes = (treeData) => {
+        const { allValue } = this.state;
+        const searchValue = allValue || '';
+        return treeData.map(item => {
+            const readerValue = item.name;
+            const readerChildren = item[childFieldKey];
+            const i = readerValue.toLowerCase().indexOf(searchValue.toLowerCase());
+            const beforeStr = readerValue.substr(0, i);
+            const afterStr = readerValue.substr(i + searchValue.length);
+            const title =
+                i > -1 ? (
+                    <span>
+                        {beforeStr}
+                        <span style={{ color: hightLightColor }}>{searchValue}</span>
+                        {afterStr}
+                    </span>
+                ) : (
+                        <span>{readerValue}</span>
+                    );
+            const nodeTitle = (
+                <Tooltip title={`代码:${item.code}`} placement='right'>
+                    {title}
+                </Tooltip>
+            );
+            if (readerChildren && readerChildren.length > 0) {
+                return (
+                    <TreeNode
+                        title={nodeTitle}
+                        key={item.id}
+                        icon={this.renderNodeIcon(item.featureType)}
+                    >
+                        {this.renderTreeNodes(readerChildren)}
+                    </TreeNode>
+                );
+            }
+            return <TreeNode
+                icon={this.renderNodeIcon(item.featureType)}
+                switcherIcon={<span />}
+                title={nodeTitle}
+                key={item.id}
+            />;
+        });
+    };
+
+    renderTree = () => {
+        const { checkedKeys, unAssignListData } = this.state;
+        if (unAssignListData.length === 0) {
+            return (
+                <div className='blank-empty'>
+                    <Empty
+                        image={Empty.PRESENTED_IMAGE_SIMPLE}
+                        description="暂时没有数据"
+                    />
+                </div>
+            )
+        }
+        return (
+            <Tree
+                className='unassigned-tree'
+                checkable
+                defaultExpandAll
+                blockNode
+                showIcon
+                autoExpandParent={false}
+                switcherIcon={<ExtIcon type="down" antd style={{ fontSize: 12 }} />}
+                onCheck={this.handlerCheckedChange}
+                checkedKeys={checkedKeys}
+            >
+                {this.renderTreeNodes(unAssignListData)}
+            </Tree>
         )
     };
 
     render() {
-        const { showAssignFeature, assigning, loading } = this.props;
-        const { unAssignListData, pagination, checkedList, selectAll, selectIndeterminate } = this.state;
-        const checkCount = Object.keys(checkedList).length;
+        const { showAssignFeature, loading } = this.props;
+        const assigning = loading.effects["featureRole/assignFeatureItem"];
+        const { checkedKeys, appModuleName, allValue, appModuleId } = this.state;
+        const checkCount = checkedKeys.length;
+        const loadingUnAssigned = loading.effects["featureRole/getUnAssignedFeatureItemList"];
+        const appModulePros = {
+            style: { width: 180 },
+            placeholder: '请选择应用模块',
+            store: {
+                url: `${SERVER_PATH}/sei-basic/tenantAppModule/getTenantAppModules`,
+            },
+            value: appModuleName,
+            afterSelect: item => {
+                this.setState({
+                    appModuleId: item.id,
+                    appModuleName: item.name,
+                }, this.getUnAssignData);
+            },
+            reader: {
+                name: 'name',
+                description: 'code',
+            }
+        };
         return (
             <Drawer
-                width={420}
+                width={500}
                 destroyOnClose
                 getContainer={false}
                 placement="right"
                 visible={showAssignFeature}
-                title="未分配的功能项"
+                title="分配功能项"
                 className={cls(styles['feature-item-box'])}
                 onClose={this.handlerClose}
                 style={{ position: 'absolute' }}
             >
                 <div className="header-tool-box">
-                    <Button
-                        loading={assigning}
-                        type='primary'
-                        disabled={checkCount === 0}
-                        onClick={e => this.assignFeatureItem(e)}
-                    >
-                        {`确定 (${checkCount})`}
-                    </Button>
-                    <Search
-                        placeholder="输入名称关键字查询"
-                        defaultValue={this.allValue}
-                        onChange={e => this.handlerSearchChange(e.target.value)}
-                        onSearch={this.handlerSearch}
-                        onPressEnter={this.handlerSearch}
-                        style={{ width: 172 }}
-                    />
-                </div>
-                <div className="list-tool-box">
-                    <Checkbox
-                        checked={selectAll}
-                        indeterminate={selectIndeterminate}
-                        onChange={this.onSelectAllChange}
-                    >
-                        全选
-                    </Checkbox>
-                    <span className='tool-desc'>{`共 ${unAssignListData.length} 项`}</span>
-                </div>
-                <div className="list-body">
-                    <ScrollBar>
-                        <List
-                            dataSource={unAssignListData}
-                            loading={loading}
-                            renderItem={item => (
-                                <List.Item key={item.id} onClick={() => this.handlerItemCheck(item)} className={cls({ 'checked': !!checkedList[item.id] })} actions={[]}>
-                                    <Skeleton avatar loading={loading} active>
-                                        <List.Item.Meta
-                                            avatar={<Checkbox checked={!!checkedList[item.id]} />}
-                                            title={this.renderItemTitle(item)}
-                                            description={this.renderItemDescription(item)}
-                                        />
-                                    </Skeleton>
-                                </List.Item>
-                            )}
+                    <div className='app-box'>
+                        <span className='label'>应用模块</span>
+                        <ComboList {...appModulePros} />
+                    </div>
+                    <div className='tool-search-box'>
+                        <Search
+                            placeholder="输入名称关键字查询"
+                            value={allValue}
+                            onChange={e => this.handlerSearchChange(e.target.value)}
+                            onSearch={this.handlerSearch}
+                            onPressEnter={this.handlerSearch}
+                            style={{ width: 172 }}
                         />
-                    </ScrollBar>
+                        {
+                            appModuleId
+                                ? <ExtIcon
+                                    style={{ marginLeft: 8 }}
+                                    className='refresh'
+                                    type='reload'
+                                    antd
+                                    spin={loadingUnAssigned}
+                                    onClick={this.getUnAssignData}
+                                />
+                                : null
+                        }
+                    </div>
+                    <Drawer
+                        placement="top"
+                        closable={false}
+                        mask={false}
+                        height={44}
+                        getContainer={false}
+                        style={{ position: 'absolute' }}
+                        visible={checkCount > 0}
+                    >
+                        <Button
+                            type="danger"
+                            onClick={this.onCancelBatchAssignedFeatureItem}
+                            disabled={assigning}
+                        >
+                            取消
+                        </Button>
+                        <Button
+                            loading={assigning}
+                            type='primary'
+                            disabled={checkCount === 0}
+                            onClick={e => this.assignFeatureItem(e)}
+                        >
+                            {`确定 (${checkCount})`}
+                        </Button>
+                        <span className={cls("select")}>
+                            {`已选择 ${checkedKeys.length} 项`}
+                        </span>
+                    </Drawer>
                 </div>
-                <div className="list-page-bar">
-                    <Pagination
-                        simple
-                        onChange={this.handlerPageChange}
-                        {...pagination}
-                    />
+                <div className="unassigned-body">
+                    <ScrollBar>
+                        {
+                            loadingUnAssigned
+                                ? <ListLoader />
+                                : this.renderTree()
+                        }
+                    </ScrollBar>
                 </div>
             </Drawer>
         )

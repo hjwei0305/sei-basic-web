@@ -1,57 +1,75 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { connect } from "dva";
 import cls from "classnames";
 import isEqual from 'react-fast-compare';
-import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
-import { Card, Popconfirm, Button, Tag, Drawer } from 'antd'
-import { ExtTable, ExtIcon } from 'suid';
-import { constants } from '@/utils';
+import { FormattedMessage, formatMessage } from "umi-plugin-react/locale";
+import { Card, Popconfirm, Button, Drawer, Empty, Tree, Input, Tooltip } from 'antd'
+import { ScrollBar, ListLoader, ExtIcon } from 'suid';
+import { constants } from '../../../../../utils';
 import UnAssignFeatureItem from './UnAssignFeatureItem';
 import styles from './AssignedFeature.less';
 
-const { SERVER_PATH, FEATURE_TYPE } = constants;
+const { FEATURE_TYPE } = constants;
+
+const Search = Input.Search;
+const { TreeNode } = Tree;
+const childFieldKey = 'children';
+const hightLightColor = '#f50';
 
 @connect(({ featureRole, loading }) => ({ featureRole, loading }))
 class FeaturePage extends Component {
 
-    static assignedTableRef;
-
     constructor(props) {
         super(props);
+        const { featureRole } = props;
+        const { assignListData = [] } = featureRole;
         this.state = {
+            allValue: '',
+            assignListData,
+            checkedKeys: [],
             delRowId: null,
-            selectedRowKeys: [],
         };
     }
 
+    componentDidMount() {
+        this.getAssignData();
+    }
+
     componentDidUpdate(prevProps) {
-        if (!isEqual(prevProps.featureRole.currentRole, this.props.featureRole.currentRole)) {
+        const { featureRole } = this.props;
+        if (!isEqual(prevProps.featureRole.currentRole, featureRole.currentRole)) {
             this.setState({
                 delRowId: null,
-                selectedRowKeys: [],
+                checkedKeys: [],
+            }, this.getAssignData);
+        }
+        if (!isEqual(prevProps.featureRole.assignListData, featureRole.assignListData)) {
+            this.setState({
+                allValue: '',
+                assignListData: featureRole.assignListData,
             });
         }
     }
 
-    reloadData = () => {
-        if (this.assignedTableRef) {
-            this.assignedTableRef.remoteDataRefresh();
+    getAssignData = () => {
+        const { featureRole, dispatch } = this.props;
+        const { currentRole } = featureRole;
+        if (currentRole) {
+            dispatch({
+                type: 'featureRole/getAssignFeatureItem',
+                payload: {
+                    featureRoleId: currentRole.id,
+                }
+            });
         }
     };
 
     showAssignFeature = () => {
-        const { featureRole, dispatch } = this.props;
-        const { currentRole } = featureRole;
+        const { dispatch } = this.props;
         dispatch({
             type: 'featureRole/updateState',
             payload: {
                 showAssignFeature: true,
-            }
-        });
-        dispatch({
-            type: 'featureRole/getUnAssignedFeatureItemList',
-            payload: {
-                parentId: currentRole.id,
             }
         });
     };
@@ -67,7 +85,7 @@ class FeaturePage extends Component {
             },
             callback: res => {
                 if (res.success) {
-                    this.reloadData();
+                    this.getAssignData();
                 }
             }
         });
@@ -91,33 +109,32 @@ class FeaturePage extends Component {
                 if (res.success) {
                     this.setState({
                         delRowId: null,
-                        selectedRowKeys: [],
+                        checkedKeys: [],
                     });
-                    this.reloadData();
+                    this.getAssignData();
                 }
             }
         });
     };
 
     batchRemoveAssignedFeatureItem = () => {
-        const { selectedRowKeys } = this.state;
-        this.removeAssignFeatureItem(selectedRowKeys);
+        const { checkedKeys } = this.state;
+        this.removeAssignFeatureItem(checkedKeys);
     };
 
     onCancelBatchRemoveAssignedFeatureItem = () => {
         this.setState({
-            selectedRowKeys: [],
+            checkedKeys: [],
         });
     };
 
-    handlerSelectRow = (selectedRowKeys) => {
+    handlerSelectRow = (checkedKeys) => {
         this.setState({
-            selectedRowKeys,
+            checkedKeys,
         });
     };
 
-
-    closeAssignFeatureItem = _ => {
+    closeAssignFeatureItem = (refresh) => {
         const { dispatch } = this.props;
         dispatch({
             type: "featureRole/updateState",
@@ -125,159 +142,174 @@ class FeaturePage extends Component {
                 showAssignFeature: false,
             }
         });
+        if (refresh === true) {
+            this.getAssignData();
+        }
     };
 
-    renderRemoveBtn = (row) => {
+    renderRemoveBtn = (item) => {
         const { loading } = this.props;
         const { delRowId } = this.state;
-        if (loading.effects["featureRole/removeAssignedFeatureItem"] && delRowId === row.id) {
-            return <ExtIcon className="del-loading" type="loading" antd />
+        let icon = <ExtIcon className="del" type="minus-circle" antd />;
+        if (loading.effects["featureRole/removeAssignedFeatureItem"] && delRowId === item.id) {
+            icon = <ExtIcon className="del-loading" type="loading" antd />
         }
-        return <ExtIcon className="del" type="minus-circle" antd />;
+        return (
+            <Popconfirm
+                title={formatMessage({ id: "global.remove.confirm", defaultMessage: "确定要移除吗?" })}
+                onConfirm={() => this.removeAssignFeatureItem([item.id])}
+            >
+                {icon}
+            </Popconfirm>
+        );
     };
 
-    renderFeatureType = (row) => {
-        switch (row.featureType) {
+    filterNodes = (valueKey, treeData) => {
+        const newArr = [];
+        treeData.forEach(treeNode => {
+            const nodeChildren = treeNode[childFieldKey];
+            const fieldValue = treeNode.name;
+            if (fieldValue.toLowerCase().indexOf(valueKey) > -1) {
+                newArr.push(treeNode);
+            } else if (nodeChildren && nodeChildren.length > 0) {
+                const ab = this.filterNodes(valueKey, nodeChildren);
+                const obj = {
+                    ...treeNode,
+                    [childFieldKey]: ab,
+                };
+                if (ab && ab.length > 0) {
+                    newArr.push(obj);
+                }
+            }
+        });
+        return newArr;
+    };
+
+    getLocalFilterData = () => {
+        const { featureRole } = this.props;
+        const { assignListData } = featureRole;
+        const { allValue } = this.state;
+        let newData = [...assignListData];
+        const searchValue = allValue;
+        if (searchValue) {
+            newData = this.filterNodes(searchValue.toLowerCase(), newData);
+        }
+        return { assignListData: newData };
+    };
+
+    handlerSearchChange = (v) => {
+        this.setState({ allValue: v });
+    };
+
+    handlerSearch = () => {
+        const { assignListData } = this.getLocalFilterData();
+        this.setState({ assignListData });
+    };
+
+    handlerCheckedChange = (checkedKeys) => {
+        this.setState({ checkedKeys });
+    };
+
+    renderNodeIcon = (featureType) => {
+        let icon = null;
+        switch (featureType) {
+            case FEATURE_TYPE.APP_MODULE:
+                icon = <ExtIcon type='appstore' antd style={{ color: '#13c2c2' }} />;
+                break;
             case FEATURE_TYPE.PAGE:
-                return <Tag color='cyan'>菜单项</Tag>;
+                icon = <ExtIcon type='doc' style={{ color: '#722ed1' }} />;
+                break;
             case FEATURE_TYPE.OPERATE:
-                return <Tag color='blue'>操作项</Tag>;
+                icon = <ExtIcon type='dian' />;
+                break;
             default:
         }
+        return icon;
+    };
+
+    renderTreeNodes = (treeData) => {
+        const { allValue } = this.state;
+        const searchValue = allValue || '';
+        return treeData.map(item => {
+            const readerValue = item.name;
+            const readerChildren = item[childFieldKey];
+            const i = readerValue.toLowerCase().indexOf(searchValue.toLowerCase());
+            const beforeStr = readerValue.substr(0, i);
+            const afterStr = readerValue.substr(i + searchValue.length);
+            const title =
+                i > -1 ? (
+                    <span>
+                        {beforeStr}
+                        <span style={{ color: hightLightColor }}>{searchValue}</span>
+                        {afterStr}
+                    </span>
+                ) : (
+                        <span>{readerValue}</span>
+                    );
+            const nodeTitle = (
+                <Tooltip title={`代码:${item.code}`} placement='right'>
+                    {title}
+                    {this.renderRemoveBtn(item)}
+                </Tooltip>
+            );
+            if (readerChildren && readerChildren.length > 0) {
+                return (
+                    <TreeNode
+                        title={nodeTitle}
+                        key={item.id}
+                        icon={this.renderNodeIcon(item.featureType)}
+                    >
+                        {this.renderTreeNodes(readerChildren)}
+                    </TreeNode>
+                );
+            }
+            return <TreeNode
+                icon={this.renderNodeIcon(item.featureType)}
+                switcherIcon={<span />}
+                title={nodeTitle}
+                key={item.id}
+            />;
+        });
+    };
+
+    renderTree = () => {
+        const { checkedKeys, assignListData } = this.state;
+        if (assignListData.length === 0) {
+            return (
+                <div className='blank-empty'>
+                    <Empty
+                        image={Empty.PRESENTED_IMAGE_SIMPLE}
+                        description="暂时没有数据"
+                    />
+                </div>
+            )
+        }
+        return (
+            <Tree
+                className='assigned-tree'
+                checkable
+                defaultExpandAll
+                blockNode
+                showIcon
+                switcherIcon={<ExtIcon type="down" antd style={{ fontSize: 12 }} />}
+                onCheck={this.handlerCheckedChange}
+                checkedKeys={checkedKeys}
+            >
+                {this.renderTreeNodes(assignListData)}
+            </Tree>
+        )
     };
 
     render() {
         const { featureRole, loading } = this.props;
-        const { currentRole, showAssignFeature, unAssignListData } = featureRole;
-        const { selectedRowKeys } = this.state;
-        const columns = [
-            {
-                title: formatMessage({ id: "global.operation", defaultMessage: "操作" }),
-                key: "operation",
-                width: 60,
-                align: "center",
-                dataIndex: "id",
-                className: "action",
-                required: true,
-                render: (text, record) => (
-                    <span className={cls("action-box")} onClick={e => e.stopPropagation()}>
-                        <Popconfirm
-                            placement="topLeft"
-                            title={formatMessage({ id: "global.remove.confirm", defaultMessage: "确定要移除吗？" })}
-                            onConfirm={_ => this.removeAssignFeatureItem([record.id])}
-                        >
-                            {
-                                this.renderRemoveBtn(record)
-                            }
-                        </Popconfirm>
-                    </span>
-                )
-            },
-            {
-                title: formatMessage({ id: "global.code", defaultMessage: "代码" }),
-                dataIndex: "code",
-                width: 200,
-                optional: true,
-            },
-            {
-                title: formatMessage({ id: "global.name", defaultMessage: "名称" }),
-                dataIndex: "name",
-                width: 220,
-                required: true,
-            },
-            {
-                title: '类别',
-                dataIndex: "featureType",
-                width: 80,
-                required: true,
-                align: 'center',
-                render: (_text, record) => this.renderFeatureType(record),
-            },
-            {
-                title: '租户可用',
-                dataIndex: "tenantCanUse",
-                width: 80,
-                align: 'center',
-                render: (text, record) => {
-                    if (record.tenantCanUse) {
-                        return <ExtIcon type="check" antd />;
-                    }
-                }
-            },
-            {
-                title: '应用模块',
-                dataIndex: "appModuleName",
-                width: 200,
-                optional: true,
-            },
-        ];
-        const hasSelected = selectedRowKeys.length > 0;
-        const toolBarProps = {
-            left: (
-                <Fragment>
-                    <Button
-                        icon='plus'
-                        type="primary"
-                        loading={loading.effects["featureRole/getUnAssignedFeatureItemList"]}
-                        onClick={this.showAssignFeature}
-                    >
-                        我要分配功能项
-                    </Button>
-                    <Button onClick={this.reloadData}>
-                        <FormattedMessage id="global.refresh" defaultMessage="刷新" />
-                    </Button>
-                    <Drawer
-                        placement="top"
-                        closable={false}
-                        mask={false}
-                        height={44}
-                        getContainer={false}
-                        style={{ position: 'absolute' }}
-                        visible={hasSelected}
-                    >
-                        <Button
-                            onClick={this.onCancelBatchRemoveAssignedFeatureItem}
-                            disabled={loading.effects["featureRole/removeAssignedFeatureItem"]}
-                        >
-                            取消
-                         </Button>
-                        <Popconfirm
-                            title="确定要移除选择的项目吗？"
-                            onConfirm={this.batchRemoveAssignedFeatureItem}
-                        >
-                            <Button type="danger" loading={loading.effects["featureRole/removeAssignedFeatureItem"]}>
-                                批量移除
-                         </Button>
-                        </Popconfirm>
-                        <span className={cls("select")}>
-                            {`已选择 ${selectedRowKeys.length} 项`}
-                        </span>
-                    </Drawer>
-                </Fragment >
-            )
-        };
-        const extTableProps = {
-            bordered: false,
-            toolBar: toolBarProps,
-            columns,
-            checkbox: true,
-            cascadeParams: { parentId: currentRole ? currentRole.id : null },
-            onTableRef: ref => this.assignedTableRef = ref,
-            onSelectRow: this.handlerSelectRow,
-            selectedRowKeys,
-            store: {
-                url: `${SERVER_PATH}/sei-basic/featureRoleFeature/getChildrenFromParentId`
-            }
-        };
+        const { showAssignFeature } = featureRole;
+        const { checkedKeys, allValue } = this.state;
+        const hasSelected = checkedKeys.length > 0;
         const unAssignFeatureItemProps = {
-            loading: loading.effects["featureRole/getUnAssignedFeatureItemList"],
-            unAssignListData,
-            assignFeatureItem: this.assignFeatureItem,
             showAssignFeature,
-            currentRole,
             closeAssignFeatureItem: this.closeAssignFeatureItem,
-            assigning: loading.effects["featureRole/assignFeatureItem"],
         };
+        const loadingAssigned = loading.effects["featureRole/getAssignFeatureItem"];
         return (
             <div className={cls(styles['assigned-feature-box'])
             }>
@@ -285,7 +317,65 @@ class FeaturePage extends Component {
                     title="角色功能项管理"
                     bordered={false}
                 >
-                    <ExtTable {...extTableProps} />
+                    <div className={cls('tool-box')}>
+                        <Button
+                            icon='plus'
+                            type="primary"
+                            loading={loading.effects["featureRole/getUnAssignedFeatureItemList"]}
+                            onClick={this.showAssignFeature}
+                        >
+                            我要分配功能项
+                            </Button>
+                        <Button onClick={this.getAssignData} loading={loadingAssigned} icon='reload'>
+                            <FormattedMessage id="global.refresh" defaultMessage="刷新" />
+                        </Button>
+                        <div className='tool-search-box'>
+                            <Search
+                                placeholder="输入名称关键字查询"
+                                value={allValue}
+                                onChange={e => this.handlerSearchChange(e.target.value)}
+                                onSearch={this.handlerSearch}
+                                onPressEnter={this.handlerSearch}
+                                style={{ width: 172 }}
+                            />
+                        </div>
+                        <Drawer
+                            placement="top"
+                            closable={false}
+                            mask={false}
+                            height={44}
+                            getContainer={false}
+                            style={{ position: 'absolute' }}
+                            visible={hasSelected}
+                        >
+                            <Button
+                                onClick={this.onCancelBatchRemoveAssignedFeatureItem}
+                                disabled={loading.effects["featureRole/removeAssignedFeatureItem"]}
+                            >
+                                取消
+                            </Button>
+                            <Popconfirm
+                                title="确定要移除选择的项目吗？"
+                                onConfirm={this.batchRemoveAssignedFeatureItem}
+                            >
+                                <Button type="danger" loading={loading.effects["featureRole/removeAssignedFeatureItem"]}>
+                                    批量移除
+                                </Button>
+                            </Popconfirm>
+                            <span className={cls("select")}>
+                                {`已选择 ${checkedKeys.length} 项`}
+                            </span>
+                        </Drawer>
+                    </div>
+                    <div className="assigned-body">
+                        <ScrollBar>
+                            {
+                                loadingAssigned
+                                    ? <ListLoader />
+                                    : this.renderTree()
+                            }
+                        </ScrollBar>
+                    </div>
                 </Card>
                 <UnAssignFeatureItem {...unAssignFeatureItemProps} />
             </div >

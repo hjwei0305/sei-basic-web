@@ -35,7 +35,7 @@ export default {
   "global.rank.required": "Rank is required",
   "global.delete": "Delete",
   "global.refresh": "Refresh",
-  "global.delete.confirm": "Are you sure to delete it? Note:Can't recover after deleted",
+  "global.delete.confirm": "Are you sure to delete it?",
   "global.remove.confirm": "Are you sure to remove it?",
   "global.save-success": "Save successfully",
   "global.delete-success": "Delete successfully",

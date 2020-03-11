@@ -24,6 +24,14 @@ const SERVER_PATH = getServerPath();
 
 const APP_PREFIX = 'BASIC_BTN_APP_MODULE';
 
+/** 功能类型*/
+const FEATURE_TYPE = {
+  "PAGE": `Page`,
+  "OPERATE": `Operate`,
+  "APP_MODULE": null,
+  'BUSINESS': 'Business',
+};
+
 /** 应用模块功能项*/
 const APP_MODULE_BTN_KEY = {
   "CREATE": `${APP_PREFIX}_CREATE`,
@@ -50,12 +58,6 @@ const LOGIN_STATUS = {
 const ROLE_VIEW = {
   'SATION': 'role-station',
   'USER': 'role-user',
-};
-
-const FEATURE_TYPE = {
-  'PAGE': 'Page',
-  'OPERATE': 'Operate',
-  'BUSINESS': 'Business',
 };
 
 export default {
