@@ -237,7 +237,7 @@ class Corporation extends Component {
     };
     return {
       columns,
-      border:false,
+      bordered: false,
       loading: loading.effects["corporation/queryList"],
       toolBar: toolBarProps,
       dataSource: list,
