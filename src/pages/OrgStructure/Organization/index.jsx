@@ -19,7 +19,7 @@ class Organization extends Component {
     return (
       <PageWrapper className={cls(styles['container-box'])}>
         <Spin spinning={loading.global} wrapperClassName={cls("spin-wrapper")}>
-          <CascadeLayout title={['组织机构', selectedTreeNode && selectedTreeNode.name]} layout={[10, 14]}>
+          <CascadeLayout title={['组织机构test', selectedTreeNode && selectedTreeNode.name]} layout={[10, 14]}>
             <TreePanel slot="left" />
             { selectedTreeNode ? (<FormPanel key={selectedTreeNode.id} slot="right" />) : (<Empty slot="right" className={cls("empty-wrapper")} description="请选择左边的树节点进行操作" />) }
           </CascadeLayout>
