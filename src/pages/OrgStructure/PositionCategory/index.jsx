@@ -191,7 +191,7 @@ class PositionCategory extends Component {
     };
     return {
       columns,
-      border: false,
+      bordered: false,
       loading: loading.effects['positionCategory/queryList'],
       toolBar: toolBarProps,
       dataSource: list,
