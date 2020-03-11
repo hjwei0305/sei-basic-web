@@ -243,7 +243,7 @@ class FeaturePage extends Component {
         return (
             <div className={cls(styles['feature-page-box'])}>
                 <Card
-                    title="菜单项管理"
+                    title="页面功能管理"
                     bordered={false}
                 >
                     <ExtTable {...extTableProps} />
