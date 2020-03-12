@@ -119,6 +119,7 @@ class Feature extends Component {
                     saveFeatureGroup={this.saveFeatureGroup}
                 />
                 <div>
+                    <span style={{ marginRight: 8 }}>{`共 ${total} 项`}</span>
                     <Tooltip
                         trigger={["hover"]}
                         title='输入代码、名称、应用模块关键字查询'
@@ -129,11 +130,9 @@ class Feature extends Component {
                             onChange={e => this.handlerSearchChange(e.target.value)}
                             onSearch={this.handlerSearch}
                             onPressEnter={this.handlerSearch}
-                            searchProperties={['code', 'name', 'appModuleName']}
                             style={{ width: 220 }}
                         />
                     </Tooltip>
-                    <span style={{ marginLeft: 8 }}>{`共 ${total} 项`}</span>
                 </div>
             </>
         );
@@ -190,6 +189,7 @@ class Feature extends Component {
             onSelectChange: this.handlerGroupSelect,
             customTool: this.renderCustomTool,
             onListCardRef: ref => (this.listCardRef = ref),
+            searchProperties: ['code', 'name', 'appModuleName'],
             selectedKeys,
             itemField: {
                 title: this.renderTitle,
@@ -203,10 +203,10 @@ class Feature extends Component {
         return (
             <div className={cls(styles["container-box"])} >
                 <Row gutter={4} className='auto-height'>
-                    <Col span={8} className='auto-height'>
+                    <Col span={7} className='auto-height'>
                         <ListCard {...featureGroupprops} />
                     </Col>
-                    <Col span={16} className={cls("main-content", 'auto-height')}>
+                    <Col span={17} className={cls("main-content", 'auto-height')}>
                         {
                             currentFeatureGroup
                                 ? <PageFeature {...pageFeatureProps} />
