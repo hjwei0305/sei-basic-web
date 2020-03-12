@@ -166,6 +166,15 @@ class Feature extends Component {
         )
     };
 
+    renderTitle = (item) => {
+        return (
+            <>
+                {item.name}
+                <span style={{ marginLeft: 8, fontSize: 12, color: '#999' }}>{item.code}</span>
+            </>
+        )
+    };
+
     render() {
         const { loading, featureGroup } = this.props;
         const { currentFeatureGroup } = featureGroup;
@@ -183,9 +192,8 @@ class Feature extends Component {
             onListCardRef: ref => (this.listCardRef = ref),
             selectedKeys,
             itemField: {
-                title: item => item.name,
-                description: item => item.code,
-                extra: item => <span style={{ marginRight: 8, fontSize: 12 }}>{item.appModuleName}</span>,
+                title: this.renderTitle,
+                description: item => item.appModuleName,
             },
             itemTool: this.renderItemAction,
         };
