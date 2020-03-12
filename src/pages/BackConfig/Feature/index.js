@@ -3,7 +3,7 @@ import { connect } from "dva";
 import cls from "classnames";
 import isEqual from 'react-fast-compare';
 import { formatMessage } from "umi-plugin-react/locale";
-import { Row, Col, Input, Empty, Popconfirm } from "antd";
+import { Row, Col, Input, Empty, Popconfirm, Tooltip } from "antd";
 import { ExtIcon, ListCard } from 'suid';
 import empty from "@/assets/item_empty.svg";
 import GroupAdd from './components/FeatureGroupForm/Add';
@@ -119,13 +119,20 @@ class Feature extends Component {
                     saveFeatureGroup={this.saveFeatureGroup}
                 />
                 <div>
-                    <Search
-                        placeholder="输入关键字查询"
-                        onChange={e => this.handlerSearchChange(e.target.value)}
-                        onSearch={this.handlerSearch}
-                        onPressEnter={this.handlerSearch}
-                        style={{ width: 140 }}
-                    />
+                    <Tooltip
+                        trigger={["hover"]}
+                        title='输入代码、名称、应用模块关键字查询'
+                        placement="top"
+                    >
+                        <Search
+                            placeholder="输入代码、名称、应用模块关键字查询"
+                            onChange={e => this.handlerSearchChange(e.target.value)}
+                            onSearch={this.handlerSearch}
+                            onPressEnter={this.handlerSearch}
+                            searchProperties={['code', 'name', 'appModuleName']}
+                            style={{ width: 220 }}
+                        />
+                    </Tooltip>
                     <span style={{ marginLeft: 8 }}>{`共 ${total} 项`}</span>
                 </div>
             </>
@@ -188,10 +195,10 @@ class Feature extends Component {
         return (
             <div className={cls(styles["container-box"])} >
                 <Row gutter={4} className='auto-height'>
-                    <Col span={6} className='auto-height'>
+                    <Col span={8} className='auto-height'>
                         <ListCard {...featureGroupprops} />
                     </Col>
-                    <Col span={18} className={cls("main-content", 'auto-height')}>
+                    <Col span={16} className={cls("main-content", 'auto-height')}>
                         {
                             currentFeatureGroup
                                 ? <PageFeature {...pageFeatureProps} />

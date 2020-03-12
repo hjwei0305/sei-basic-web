@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import cls from "classnames";
 import { connect } from "dva";
-import { Card, Row, Col, Empty, Input, message, Tag, Button, Tooltip } from 'antd';
+import { Row, Col, Empty, Input, message, Tag, Button, Tooltip } from 'antd';
 import { ListCard } from 'suid';
 import empty from "@/assets/item_empty.svg";
 import DataAuthorType from './components/DataAuthorType';
