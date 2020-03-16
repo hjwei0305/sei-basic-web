@@ -346,13 +346,6 @@ class AppMenu extends Component {
                             className="left-content"
                         >
                             <div className="header-tool-box">
-                                <Button
-                                    icon="plus"
-                                    type='link'
-                                    onClick={e => this.addParent(e)}
-                                >
-                                    根菜单
-                                    </Button>
                                 <Search
                                     placeholder="输入名称关键字查询"
                                     defaultValue={allValue}
@@ -361,6 +354,13 @@ class AppMenu extends Component {
                                     onPressEnter={this.handlerSearch}
                                     style={{ width: 172 }}
                                 />
+                                <Button
+                                    icon="plus"
+                                    type='link'
+                                    onClick={e => this.addParent(e)}
+                                >
+                                    根菜单
+                                </Button>
                             </div>
                             <div className='tree-body'>
                                 <ScrollBar>
