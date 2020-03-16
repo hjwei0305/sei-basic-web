@@ -17,6 +17,7 @@ export default modelExtend(model, {
         roleList: [],
         dataAuthorTypeList: [],
         currentRoleId: null,
+        currentRoleName: null,
         currentDataAuthorType: null,
         assignData: [],
     },

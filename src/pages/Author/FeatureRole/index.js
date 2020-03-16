@@ -168,7 +168,7 @@ class FeatureRole extends Component {
         };
         return (
             <div className={cls(styles["container-box"])} >
-                <Row gutter={4} className='auto-height'>
+                <Row gutter={8} className='auto-height'>
                     <Col span={5} className='auto-height'>
                         <Card
                             title="角色组"

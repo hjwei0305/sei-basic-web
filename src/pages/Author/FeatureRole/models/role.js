@@ -43,11 +43,17 @@ export default modelExtend(model, {
         message.error(re.message);
       }
     },
-    * saveFeatureRole({ payload, callback }, { call }) {
+    * saveFeatureRole({ payload, callback }, { call, put }) {
       const re = yield call(saveFeatureRole, payload);
       message.destroy();
       if (re.success) {
         message.success(formatMessage({ id: "global.save-success", defaultMessage: "保存成功" }));
+        yield put({
+          type: "updateState",
+          payload: {
+            currentRole: re.data,
+          }
+        });
       } else {
         message.error(re.message);
       }

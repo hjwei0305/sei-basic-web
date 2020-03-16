@@ -214,13 +214,13 @@ class FeaturePage extends Component {
         let icon = null;
         switch (featureType) {
             case FEATURE_TYPE.APP_MODULE:
-                icon = <ExtIcon type='appstore' antd style={{ color: '#13c2c2' }} />;
+                icon = <ExtIcon type='appstore' tooltip={{ title: '应用模块' }} antd style={{ color: '#13c2c2' }} />;
                 break;
             case FEATURE_TYPE.PAGE:
-                icon = <ExtIcon type='doc' style={{ color: '#722ed1' }} />;
+                icon = <ExtIcon type='doc' tooltip={{ title: '页面' }} style={{ color: '#722ed1' }} />;
                 break;
             case FEATURE_TYPE.OPERATE:
-                icon = <ExtIcon type='dian' />;
+                icon = <ExtIcon type='dian' tooltip={{ title: '功能项' }} />;
                 break;
             default:
         }
@@ -300,6 +300,17 @@ class FeaturePage extends Component {
         )
     };
 
+    renderTitle = () => {
+        const { featureRole } = this.props;
+        const { currentRole } = featureRole;
+        return (
+            <>
+                {currentRole.name}
+                <span style={{ fontSize: 14, color: "#999", marginLeft: 8 }}>功能权限</span>
+            </>
+        )
+    };
+
     render() {
         const { featureRole, loading } = this.props;
         const { showAssignFeature } = featureRole;
@@ -314,7 +325,7 @@ class FeaturePage extends Component {
             <div className={cls(styles['assigned-feature-box'])
             }>
                 <Card
-                    title="角色功能项管理"
+                    title={this.renderTitle()}
                     bordered={false}
                 >
                     <div className={cls('tool-box')}>

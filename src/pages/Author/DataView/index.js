@@ -37,6 +37,7 @@ class DataView extends PureComponent {
             type: 'dataView/updateState',
             payload: {
                 currentRoleId: keys[0],
+                currentRoleName: items[0].name,
             }
         });
     };
@@ -122,7 +123,7 @@ class DataView extends PureComponent {
 
     render() {
         const { loading, dataView } = this.props;
-        const { currentRoleId, roleList } = dataView;
+        const { currentRoleId, currentRoleName, roleList } = dataView;
         const roleListLoading = loading.effects["dataView/getRoleList"];
         const roleListProps = {
             title: '用户角色列表',
@@ -145,7 +146,7 @@ class DataView extends PureComponent {
                     <Col span={17} className={cls("main-content", 'auto-height')}>
                         {
                             currentRoleId
-                                ? <DataAuthorType currentRoleId={currentRoleId} />
+                                ? <DataAuthorType currentRoleName={currentRoleName} currentRoleId={currentRoleId} />
                                 : <div className='blank-empty'>
                                     <Empty
                                         image={empty}

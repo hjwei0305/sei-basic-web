@@ -143,6 +143,18 @@ class FeaturePage extends Component {
         );
     };
 
+    renderTitle = () => {
+        const { featureGroup } = this.props;
+        const { currentFeatureGroup } = featureGroup;
+        const { appModuleName, name } = currentFeatureGroup;
+        return (
+            <>
+                {`${appModuleName} > ${name}`}
+                <span style={{ fontSize: 14, color: "#999", marginLeft: 8 }}>页面功能管理</span>
+            </>
+        )
+    };
+
     render() {
         const { loading, featureGroup, feature } = this.props;
         const { currentFeatureGroup } = featureGroup;
@@ -243,7 +255,7 @@ class FeaturePage extends Component {
         return (
             <div className={cls(styles['feature-page-box'])}>
                 <Card
-                    title="页面功能管理"
+                    title={this.renderTitle()}
                     bordered={false}
                 >
                     <ExtTable {...extTableProps} />

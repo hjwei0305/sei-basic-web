@@ -202,7 +202,7 @@ class Feature extends Component {
         };
         return (
             <div className={cls(styles["container-box"])} >
-                <Row gutter={4} className='auto-height'>
+                <Row gutter={8} className='auto-height'>
                     <Col span={7} className='auto-height'>
                         <ListCard {...featureGroupprops} />
                     </Col>
