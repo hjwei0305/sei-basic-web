@@ -151,7 +151,7 @@ class Feature extends Component {
                         groupData={item}
                     />
                     <Popconfirm
-                        title={formatMessage({ id: "global.delete.confirm", defaultMessage: "确定要删除吗？提示：删除后不可恢复" })}
+                        title={formatMessage({ id: "global.delete.confirm", defaultMessage: "确定要删除吗?" })}
                         onConfirm={(e) => this.delFeatureGroup(item, e)}
                     >
                         {
