@@ -1,38 +1,44 @@
 @import '../../../themes/vars.less';
 .container-box {
-    height: 100%;
-    padding: 0;
-    overflow: hidden;
-    background-color: @page-background-color;
-    :global {
-        .left-content {
-            position: relative;
-            height: 100%;
-            .ant-card-body {
-                height: calc(100% - 65px);
-                padding: 8px 8px 0 8px;
-                .account-node {
-                    display: flex;
-                    align-items: center;
-                    .title {
-                        margin-right: 16px;
-                    }
-                }
-            }
-            .header-tool-box {
-                display: flex;
-                align-items: center;
-                position: relative;
-                button {
-                    margin-left: 8px;
-                }
-            }
+  height: 100%;
+  padding: 0;
+  overflow: hidden;
+  background-color: @page-background-color;
+  :global {
+    .left-content {
+      position: relative;
+      height: 100%;
+      .ant-card-head {
+        border-bottom-color: transparent;
+      }
+      .header-tool-box {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 42px;
+        padding: 0 16px 0 8px;
+      }
+      .ant-card-body {
+        height: calc(100% - 57px);
+        padding: 0;
+        .tree-body {
+          height: calc(100% - 42px);
+          padding: 0 0 0 16px;
         }
-        .main-content {
-            height: 100%;
-            position: relative;
-            display: flex;
-            justify-content: center;
+        .account-node {
+          display: flex;
+          align-items: center;
+          .title {
+            margin-right: 16px;
+          }
         }
+      }
     }
+    .main-content {
+      height: 100%;
+      position: relative;
+      display: flex;
+      justify-content: center;
+    }
+  }
 }

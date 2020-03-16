@@ -3,7 +3,7 @@ import cls from "classnames";
 import { cloneDeep, get } from "lodash";
 import isEqual from "react-fast-compare";
 import { formatMessage } from "umi-plugin-react/locale";
-import { Button, Form, Input, Popconfirm, InputNumber, Breadcrumb } from "antd";
+import { Button, Form, Input, Popconfirm, InputNumber } from "antd";
 import { ScrollBar, ExtIcon, ComboGrid } from 'suid';
 import { constants } from '@/utils';
 import styles from "./NodeForm.less";
@@ -160,39 +160,14 @@ class NodeForm extends Component {
         }
     };
 
-    renderTitle = (editData) => {
-        if (editData && editData.id) {
-            const namesData = editData.namePath.split("/");
-            const titleStyle = { color: 'rgba(0,0,0,0.85)' };
-            return (
-                <Breadcrumb separator=">" style={{ fontSize: 16, lineHeight: 'inherit' }}>
-                    {
-                        namesData.map((name, index) => {
-                            if (name) {
-                                return (
-                                    <Breadcrumb.Item
-                                        key={`${editData.id}_${name}`}
-                                        style={namesData.length - 1 === index ? { ...titleStyle } : null}>
-                                        {name}
-                                    </Breadcrumb.Item>
-                                )
-                            }
-                            return null;
-                        })
-                    }
-                </Breadcrumb>
-            )
-        }
-    };
-
     getFormTitle = () => {
         const { editData } = this.props;
         let title = '';
         if (editData) {
             if (editData.parentId) {
-                title = editData.id ? this.renderTitle(editData) : "新建子菜单";
+                title = editData.id ? editData.name : "新建子菜单";
             } else {
-                title = editData.id ? this.renderTitle(editData) : "新建根菜单";
+                title = editData.id ? editData.name : "新建根菜单";
             }
         }
         return title;

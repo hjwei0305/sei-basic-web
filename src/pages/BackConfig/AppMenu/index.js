@@ -338,49 +338,49 @@ class AppMenu extends Component {
         };
         return (
             <div className={cls(styles["container-box"])} >
-                <Row gutter={4} className='auto-height'>
+                <Row gutter={8} className='auto-height'>
                     <Col span={8} className='auto-height'>
                         <Card
                             title="应用菜单"
                             bordered={false}
                             className="left-content"
-                            extra={
-                                <div className="header-tool-box">
-                                    <Search
-                                        placeholder="输入名称关键字查询"
-                                        defaultValue={allValue}
-                                        onChange={e => this.handlerSearchChange(e.target.value)}
-                                        onSearch={this.handlerSearch}
-                                        onPressEnter={this.handlerSearch}
-                                        style={{ width: 172 }}
-                                    />
-                                    <Button
-                                        icon="plus"
-                                        type='link'
-                                        onClick={e => this.addParent(e)}
-                                    >
-                                        根菜单
-                                    </Button>
-                                </div>
-                            }
                         >
-                            <ScrollBar>
-                                {
-                                    loading.effects["appMenu/getMenuList"]
-                                        ? <ListLoader />
-                                        : <Tree
-                                            blockNode
-                                            autoExpandParent={autoExpandParent}
-                                            selectedKeys={selectedKeys}
-                                            expandedKeys={expandedKeys}
-                                            switcherIcon={<ExtIcon type="down" antd style={{ fontSize: 12 }} />}
-                                            onSelect={this.handlerSelect}
-                                            onExpand={this.handlerExpand}
-                                        >
-                                            {this.renderTreeNodes(treeData)}
-                                        </Tree>
-                                }
-                            </ScrollBar>
+                            <div className="header-tool-box">
+                                <Button
+                                    icon="plus"
+                                    type='link'
+                                    onClick={e => this.addParent(e)}
+                                >
+                                    根菜单
+                                    </Button>
+                                <Search
+                                    placeholder="输入名称关键字查询"
+                                    defaultValue={allValue}
+                                    onChange={e => this.handlerSearchChange(e.target.value)}
+                                    onSearch={this.handlerSearch}
+                                    onPressEnter={this.handlerSearch}
+                                    style={{ width: 172 }}
+                                />
+                            </div>
+                            <div className='tree-body'>
+                                <ScrollBar>
+                                    {
+                                        loading.effects["appMenu/getMenuList"]
+                                            ? <ListLoader />
+                                            : <Tree
+                                                blockNode
+                                                autoExpandParent={autoExpandParent}
+                                                selectedKeys={selectedKeys}
+                                                expandedKeys={expandedKeys}
+                                                switcherIcon={<ExtIcon type="down" antd style={{ fontSize: 12 }} />}
+                                                onSelect={this.handlerSelect}
+                                                onExpand={this.handlerExpand}
+                                            >
+                                                {this.renderTreeNodes(treeData)}
+                                            </Tree>
+                                    }
+                                </ScrollBar>
+                            </div>
                         </Card>
                     </Col>
                     <Col span={16} className={cls("main-content")}>
