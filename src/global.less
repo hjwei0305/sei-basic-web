@@ -16,9 +16,9 @@ body {
 #sei-basic-web {
   width: 100%;
   height: 100%;
-  >div {
+  > div {
     height: 100%;
-    >div{
+    > div {
       height: 100%;
     }
   }
@@ -48,6 +48,31 @@ li {
 :global {
   .auto-height {
     height: 100% !important;
+  }
+
+  // input-disabled
+  .ant-input[disabled],
+  .ant-input.ant-input-disabled {
+    color: fade(@black, 65%) !important;
+    background-color: #fafafa !important;
+  }
+
+  // select-disabled
+  .ant-select {
+    &.ant-select-disabled {
+      color: fade(@black, 65%) !important;
+      .ant-select-selection {
+        background-color: #fafafa !important;
+      }
+    }
+  }
+
+  //number-disabled
+  .ant-input-number {
+    .ant-input-number-disabled {
+      color: fade(@black, 65%) !important;
+      background-color: #fafafa !important;
+    }
   }
   .ant-table-tbody > tr > td {
     color: fade(@black, 65%);

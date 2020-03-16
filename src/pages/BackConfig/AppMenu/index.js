@@ -344,6 +344,13 @@ class AppMenu extends Component {
                             title="应用菜单"
                             bordered={false}
                             className="left-content"
+                            extra={<Button
+                                icon="plus"
+                                type='link'
+                                onClick={e => this.addParent(e)}
+                            >
+                                根菜单
+                            </Button>}
                         >
                             <div className="header-tool-box">
                                 <Search
@@ -352,15 +359,7 @@ class AppMenu extends Component {
                                     onChange={e => this.handlerSearchChange(e.target.value)}
                                     onSearch={this.handlerSearch}
                                     onPressEnter={this.handlerSearch}
-                                    style={{ width: 172 }}
                                 />
-                                <Button
-                                    icon="plus"
-                                    type='link'
-                                    onClick={e => this.addParent(e)}
-                                >
-                                    根菜单
-                                </Button>
                             </div>
                             <div className='tree-body'>
                                 <ScrollBar>
