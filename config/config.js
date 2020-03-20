@@ -60,9 +60,6 @@ export default {
   alias: {
     '@': resolve(__dirname, './src'),
   },
-  define: {
-    'process.env.MOCK_SERVER': process.env.MOCK_SERVER,
-  },
   extraBabelPlugins: [
     [
       'import',
