@@ -1,8 +1,12 @@
 import { base } from '../../public/app.config.json';
-const { NODE_ENV, MOCK } = process.env;
+
+const BASE_DOMAIN = '/';
+
+const GATEWAY = 'api-gateway';
+
 const getServerPath = function () {
-  if (NODE_ENV !== 'production') {
-    if (MOCK === 'yes') {
+  if (process.env.NODE_ENV !== 'production') {
+    if (process.env.MOCK === 'yes') {
       return '/mocker.api'
     } else {
       return '/service.api'
@@ -10,10 +14,6 @@ const getServerPath = function () {
   }
   return `${BASE_DOMAIN}${GATEWAY}`
 }
-
-const BASE_DOMAIN = '/';
-
-const GATEWAY = 'api-gateway';
 
 const APP_BASE = base;
 
