@@ -234,6 +234,9 @@ class AppModule extends Component {
           toolBar={toolBarProps}
           columns={columns}
           dataSource={list}
+          sort={{
+            field: { rank: 'asc', code: null, name: null }
+        }}
         />
         <FormModal {...formModalProps} />
       </div>
