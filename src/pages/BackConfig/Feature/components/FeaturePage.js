@@ -237,6 +237,9 @@ class FeaturePage extends Component {
             onTableRef: ref => this.pageTableRef = ref,
             store: {
                 url: `${SERVER_PATH}/sei-basic/feature/findByFeatureGroupAndType?featureTypes=Page`
+            },
+            sort: {
+                field: { code: 'asc', name: null, groupCode: null }
             }
         };
         const formModalProps = {
