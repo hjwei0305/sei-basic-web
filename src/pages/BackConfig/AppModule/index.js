@@ -228,7 +228,7 @@ class AppModule extends Component {
     };
     return (
       <div className={cls(styles["container-box"])} >
-        < ExtTable
+        <ExtTable
           bordered={false}
           loading={loading.effects["appModule/queryList"]}
           toolBar={toolBarProps}
@@ -236,7 +236,7 @@ class AppModule extends Component {
           dataSource={list}
           sort={{
             field: { rank: 'asc', code: null, name: null }
-        }}
+          }}
         />
         <FormModal {...formModalProps} />
       </div>

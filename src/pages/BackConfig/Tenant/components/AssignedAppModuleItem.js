@@ -257,6 +257,9 @@ class TenantAssignedAppModuleItem extends Component {
             onTableRef: ref => this.appModuleTableRef = ref,
             store: {
                 url: `${SERVER_PATH}/sei-basic/tenantAppModule/getChildrenFromParentId`
+            },
+            sort: {
+                field: { code: 'asc', name: null, remark: null }
             }
         };
         const unAssignAppModuleItemProps = {
