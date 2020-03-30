@@ -141,6 +141,7 @@ class UserConfig extends Component {
       checkbox: true,
       bordered: false,
       selectedRowKeys: unAssignParentIds,
+      searchProperties: ['code', 'userName'],
       columns: this.getCommonColumns(),
       toolBar: toolBarProps,
       onSelectRow: (rowIds) => {
@@ -179,6 +180,7 @@ class UserConfig extends Component {
       bordered: false,
       selectedRowKeys: assignParentIds,
       columns: this.getCommonColumns(),
+      searchProperties: ['code', 'userName'],
       onSelectRow: (rowIds) => {
         if (rowIds && rowIds.length) {
           this.setState({
