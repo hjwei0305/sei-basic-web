@@ -66,6 +66,18 @@ export async function delFeatureRole(data) {
   });
 }
 
+/** 
+ * 根据功能角色获取已分配功能项树形结构 
+ * @featureRoleId 功能角色Id
+ */
+export async function getAssignFeatureItem(params) {
+  const url = `${SERVER_PATH}/sei-basic/featureRoleFeature/getFeatureTree`;
+  return request({
+    url,
+    params,
+  });
+}
+
 /** 为功能角色分配功能项 */
 export async function assignFeatureItem(data) {
   const url = `${SERVER_PATH}/sei-basic/featureRoleFeature/insertRelations`;
@@ -86,9 +98,13 @@ export async function removeAssignedFeatureItem(data) {
   });
 }
 
-/** 获取功能角色未分配的功能项 */
+/** 
+ * 获取功能角色未分配功能项树形结构 
+ * @appModuleId 应用模块id
+ * @featureRoleId 功能角色id
+ */
 export async function getUnAssignedFeatureItemList(params) {
-  const url = `${SERVER_PATH}/sei-basic/featureRoleFeature/getUnassigned`;
+  const url = `${SERVER_PATH}/sei-basic/featureRoleFeature/getUnassignedFeatureTree`;
   return request({
     url,
     method: "GET",

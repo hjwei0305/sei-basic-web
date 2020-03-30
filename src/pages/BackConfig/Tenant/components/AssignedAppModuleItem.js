@@ -146,6 +146,17 @@ class TenantAssignedAppModuleItem extends Component {
         return <ExtIcon className="del" type="minus-circle" antd />;
     };
 
+    renderTitle = () => {
+        const { tenant } = this.props;
+        const { currentTenant } = tenant;
+        return (
+            <>
+                {`${currentTenant.name}`}
+                <span style={{ fontSize: 14, color: "#999", marginLeft: 8 }}>可以使用的应用模块</span>
+            </>
+        )
+    };
+
     render() {
         const { selectedRowKeys } = this.state;
         const { tenant, loading } = this.props;
@@ -177,7 +188,6 @@ class TenantAssignedAppModuleItem extends Component {
                 title: formatMessage({ id: "global.code", defaultMessage: "代码" }),
                 dataIndex: "code",
                 width: 200,
-                optional: true,
             },
             {
                 title: formatMessage({ id: "global.name", defaultMessage: "名称" }),
@@ -189,6 +199,7 @@ class TenantAssignedAppModuleItem extends Component {
                 title: formatMessage({ id: "global.remark", defaultMessage: "说明" }),
                 dataIndex: "remark",
                 width: 320,
+                optional: true,
             }
         ];
         const hasSelected = selectedRowKeys.length > 0;
@@ -246,6 +257,9 @@ class TenantAssignedAppModuleItem extends Component {
             onTableRef: ref => this.appModuleTableRef = ref,
             store: {
                 url: `${SERVER_PATH}/sei-basic/tenantAppModule/getChildrenFromParentId`
+            },
+            sort: {
+                field: { code: 'asc', name: null, remark: null }
             }
         };
         const unAssignAppModuleItemProps = {
@@ -259,7 +273,7 @@ class TenantAssignedAppModuleItem extends Component {
         return (
             <div className={cls(styles['tenant-app-module-box'])}>
                 <Card
-                    title="可以使用的应用模块"
+                    title={this.renderTitle()}
                     bordered={false}
                 >
                     <ExtTable {...extTableProps} />

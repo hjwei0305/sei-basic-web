@@ -1,19 +1,19 @@
 import { base } from '../../public/app.config.json';
 
+const BASE_DOMAIN = '/';
+
+const GATEWAY = 'api-gateway';
+
 const getServerPath = function () {
   if (process.env.NODE_ENV !== 'production') {
-    if (process.env.MOCK_SERVER === 'none') {
-      return '/service.api'
-    } else {
+    if (process.env.MOCK === 'yes') {
       return '/mocker.api'
+    } else {
+      return '/service.api'
     }
   }
   return `${BASE_DOMAIN}${GATEWAY}`
 }
-
-const BASE_DOMAIN = '/';
-
-const GATEWAY = 'api-gateway';
 
 const APP_BASE = base;
 
@@ -23,6 +23,14 @@ const SERVER_PATH = getServerPath();
 
 
 const APP_PREFIX = 'BASIC_BTN_APP_MODULE';
+
+/** 功能类型*/
+const FEATURE_TYPE = {
+  "PAGE": `Page`,
+  "OPERATE": `Operate`,
+  "APP_MODULE": null,
+  'BUSINESS': 'Business',
+};
 
 /** 应用模块功能项*/
 const APP_MODULE_BTN_KEY = {
@@ -50,12 +58,6 @@ const LOGIN_STATUS = {
 const ROLE_VIEW = {
   'SATION': 'role-station',
   'USER': 'role-user',
-};
-
-const FEATURE_TYPE = {
-  'PAGE': 'Page',
-  'OPERATE': 'Operate',
-  'BUSINESS': 'Business',
 };
 
 export default {

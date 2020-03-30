@@ -3,7 +3,7 @@ import { connect } from "dva";
 import cls from "classnames";
 import isEqual from 'react-fast-compare';
 import { formatMessage } from "umi-plugin-react/locale";
-import { Row, Col, Input, Empty, Popconfirm } from "antd";
+import { Row, Col, Input, Empty, Popconfirm, Tooltip } from "antd";
 import { ExtIcon, ListCard } from 'suid';
 import empty from "@/assets/item_empty.svg";
 import GroupAdd from './components/FeatureGroupForm/Add';
@@ -119,14 +119,20 @@ class Feature extends Component {
                     saveFeatureGroup={this.saveFeatureGroup}
                 />
                 <div>
-                    <Search
-                        placeholder="输入关键字查询"
-                        onChange={e => this.handlerSearchChange(e.target.value)}
-                        onSearch={this.handlerSearch}
-                        onPressEnter={this.handlerSearch}
-                        style={{ width: 140 }}
-                    />
-                    <span style={{ marginLeft: 8 }}>{`共 ${total} 项`}</span>
+                    <span style={{ marginRight: 8 }}>{`共 ${total} 项`}</span>
+                    <Tooltip
+                        trigger={["hover"]}
+                        title='输入代码、名称、应用模块关键字查询'
+                        placement="top"
+                    >
+                        <Search
+                            placeholder="输入代码、名称、应用模块关键字查询"
+                            onChange={e => this.handlerSearchChange(e.target.value)}
+                            onSearch={this.handlerSearch}
+                            onPressEnter={this.handlerSearch}
+                            style={{ width: 220 }}
+                        />
+                    </Tooltip>
                 </div>
             </>
         );
@@ -145,7 +151,7 @@ class Feature extends Component {
                         groupData={item}
                     />
                     <Popconfirm
-                        title={formatMessage({ id: "global.delete.confirm", defaultMessage: "确定要删除吗？提示：删除后不可恢复" })}
+                        title={formatMessage({ id: "global.delete.confirm", defaultMessage: "确定要删除吗?" })}
                         onConfirm={(e) => this.delFeatureGroup(item, e)}
                     >
                         {
@@ -155,6 +161,15 @@ class Feature extends Component {
                         }
                     </Popconfirm>
                 </div>
+            </>
+        )
+    };
+
+    renderTitle = (item) => {
+        return (
+            <>
+                {item.name}
+                <span style={{ marginLeft: 8, fontSize: 12, color: '#999' }}>{item.code}</span>
             </>
         )
     };
@@ -174,11 +189,11 @@ class Feature extends Component {
             onSelectChange: this.handlerGroupSelect,
             customTool: this.renderCustomTool,
             onListCardRef: ref => (this.listCardRef = ref),
+            searchProperties: ['code', 'name', 'appModuleName'],
             selectedKeys,
             itemField: {
-                title: item => item.name,
-                description: item => item.code,
-                extra: item => <span style={{ marginRight: 8, fontSize: 12 }}>{item.appModuleName}</span>,
+                title: this.renderTitle,
+                description: item => item.appModuleName,
             },
             itemTool: this.renderItemAction,
         };
@@ -187,11 +202,11 @@ class Feature extends Component {
         };
         return (
             <div className={cls(styles["container-box"])} >
-                <Row gutter={4} className='auto-height'>
-                    <Col span={6} className='auto-height'>
+                <Row gutter={8} className='auto-height'>
+                    <Col span={7} className='auto-height'>
                         <ListCard {...featureGroupprops} />
                     </Col>
-                    <Col span={18} className={cls("main-content", 'auto-height')}>
+                    <Col span={17} className={cls("main-content", 'auto-height')}>
                         {
                             currentFeatureGroup
                                 ? <PageFeature {...pageFeatureProps} />

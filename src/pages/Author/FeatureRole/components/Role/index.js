@@ -189,6 +189,17 @@ class Role extends Component {
         );
     };
 
+    renderTitle = () => {
+        const { featureRoleGroup } = this.props;
+        const { currentRoleGroup } = featureRoleGroup;
+        return (
+            <>
+                {currentRoleGroup.name}
+                <span style={{ fontSize: 14, color: "#999", marginLeft: 8 }}>角色列表</span>
+            </>
+        )
+    };
+
     render() {
         const { loading, featureRole, featureRoleGroup } = this.props;
         const { currentRole } = featureRole;
@@ -201,96 +212,90 @@ class Role extends Component {
         };
         return (
             <div className={cls(styles['role-box'])}>
-                <Card
-                    title="功能角色管理"
-                    className={cls('auto-height')}
-                    bordered={false}
-                >
-                    <Row gutter={4} className='auto-height'>
-                        <Col span={8} className={cls('left-content', 'auto-height')}>
-                            <Card
-                                title="角色列表"
-                                bordered={false}
-                                className={cls('list-box', 'auto-height')}
-                            >
-                                <div className="header-tool-box">
-                                    <RoleAdd
-                                        currentRoleGroup={currentRoleGroup}
-                                        saving={saving}
-                                        saveFeatureRole={this.saveFeatureRole}
-                                    />
-                                    <Search
-                                        placeholder="输入名称关键字查询"
-                                        onChange={e => this.handlerSearchChange(e.target.value)}
-                                        onSearch={this.handlerSearch}
-                                        onPressEnter={this.handlerSearch}
-                                        style={{ width: 172 }}
-                                    />
-                                </div>
-                                <div className="role-list-body">
-                                    <ScrollBar>
-                                        <List
-                                            dataSource={listData}
-                                            loading={listLoading}
-                                            renderItem={item => (
-                                                <List.Item
-                                                    key={item.id}
-                                                    onClick={(e) => this.handlerRoleSelect(item, e)}
-                                                    className={cls({
-                                                        [cls('row-selected')]: currentRole && item.id === currentRole.id,
-                                                    })}
-                                                >
-                                                    <Skeleton avatar loading={listLoading} active>
-                                                        <List.Item.Meta
-                                                            avatar={<Avatar icon='user' shape='square' />}
-                                                            title={this.renderName(item)}
-                                                            description={this.renderDescription(item)}
-                                                        />
-                                                        <div className='desc'>{item.roleTypeRemark}</div>
-                                                        <div className='arrow-box'>
-                                                            <ExtIcon type="right" antd />
-                                                        </div>
-                                                    </Skeleton>
-                                                    <div className='tool-action' onClick={e => e.stopPropagation()}>
-                                                        <RoleEdit
-                                                            currentRoleGroup={currentRoleGroup}
-                                                            saving={saving}
-                                                            saveFeatureRole={this.saveFeatureRole}
-                                                            roleData={item}
-                                                        />
-                                                        <Popconfirm
-                                                            title={formatMessage({ id: "global.delete.confirm", defaultMessage: "确定要删除吗？提示：删除后不可恢复" })}
-                                                            onConfirm={(e) => this.delFeatureRole(item, e)}
-                                                        >
-                                                            {
-                                                                loading.effects["featureRole/delFeatureRole"] && delRoleId === item.id
-                                                                    ? <ExtIcon className={cls('del', 'action-item')} type="loading" antd />
-                                                                    : <ExtIcon className={cls('del', 'action-item')} type="delete" antd />
-                                                            }
-                                                        </Popconfirm>
-                                                        <ExtAction roleData={item} />
+                <Row gutter={4} className='auto-height'>
+                    <Col span={8} className={cls('left-content', 'auto-height')}>
+                        <Card
+                            title={this.renderTitle()}
+                            bordered={false}
+                            className={cls('list-box', 'auto-height')}
+                        >
+                            <div className="header-tool-box">
+                                <RoleAdd
+                                    currentRoleGroup={currentRoleGroup}
+                                    saving={saving}
+                                    saveFeatureRole={this.saveFeatureRole}
+                                />
+                                <Search
+                                    placeholder="输入名称关键字查询"
+                                    onChange={e => this.handlerSearchChange(e.target.value)}
+                                    onSearch={this.handlerSearch}
+                                    onPressEnter={this.handlerSearch}
+                                    style={{ width: 172 }}
+                                />
+                            </div>
+                            <div className="role-list-body">
+                                <ScrollBar>
+                                    <List
+                                        dataSource={listData}
+                                        loading={listLoading}
+                                        renderItem={item => (
+                                            <List.Item
+                                                key={item.id}
+                                                onClick={(e) => this.handlerRoleSelect(item, e)}
+                                                className={cls({
+                                                    [cls('row-selected')]: currentRole && item.id === currentRole.id,
+                                                })}
+                                            >
+                                                <Skeleton avatar loading={listLoading} active>
+                                                    <List.Item.Meta
+                                                        avatar={<Avatar icon='user' shape='square' />}
+                                                        title={this.renderName(item)}
+                                                        description={this.renderDescription(item)}
+                                                    />
+                                                    <div className='desc'>{item.roleTypeRemark}</div>
+                                                    <div className='arrow-box'>
+                                                        <ExtIcon type="right" antd />
                                                     </div>
-                                                </List.Item>
-                                            )}
-                                        />
-                                    </ScrollBar>
+                                                </Skeleton>
+                                                <div className='tool-action' onClick={e => e.stopPropagation()}>
+                                                    <RoleEdit
+                                                        currentRoleGroup={currentRoleGroup}
+                                                        saving={saving}
+                                                        saveFeatureRole={this.saveFeatureRole}
+                                                        roleData={item}
+                                                    />
+                                                    <Popconfirm
+                                                        title={formatMessage({ id: "global.delete.confirm", defaultMessage: "确定要删除吗？提示：删除后不可恢复" })}
+                                                        onConfirm={(e) => this.delFeatureRole(item, e)}
+                                                    >
+                                                        {
+                                                            loading.effects["featureRole/delFeatureRole"] && delRoleId === item.id
+                                                                ? <ExtIcon className={cls('del', 'action-item')} type="loading" antd />
+                                                                : <ExtIcon className={cls('del', 'action-item')} type="delete" antd />
+                                                        }
+                                                    </Popconfirm>
+                                                    <ExtAction roleData={item} />
+                                                </div>
+                                            </List.Item>
+                                        )}
+                                    />
+                                </ScrollBar>
+                            </div>
+                        </Card>
+                    </Col>
+                    <Col span={16} className={cls("main-content", 'auto-height')}>
+                        {
+                            currentRole
+                                ? <AssignedFeature {...assignedFeatureProps} />
+                                : <div className='blank-empty'>
+                                    <Empty
+                                        image={empty}
+                                        description="选择角色列表项进行功能项配置"
+                                    />
                                 </div>
-                            </Card>
-                        </Col>
-                        <Col span={16} className={cls("main-content", 'auto-height')}>
-                            {
-                                currentRole
-                                    ? <AssignedFeature {...assignedFeatureProps} />
-                                    : <div className='blank-empty'>
-                                        <Empty
-                                            image={empty}
-                                            description="选择角色列表项进行功能项配置"
-                                        />
-                                    </div>
-                            }
-                        </Col>
-                    </Row>
-                </Card>
+                        }
+                    </Col>
+                </Row>
             </div>
         )
     }

@@ -1,56 +1,60 @@
 @import '../../../../themes/vars.less';
 .tenant-app-module-box {
-    height: 100%;
-    width: 100%;
-    padding: 0;
-    overflow: hidden;
-    background-color: @page-background-color;
-    position: relative;
-    :global {
-        .ant-table-bordered.ant-table-empty .ant-table-placeholder {
-            border-right-color: transparent;
-            border-left-color: transparent;
-        }
-        .ant-card {
-            height: 100%;
-            .ant-card-head {
-                background-color: @white;
-            }
-            .ant-card-body {
-                padding: 0;
-                height: calc(100% - 57px);
-                .suid-panel {
-                    height: 100%;
-                    .panel-body {
-                        height: 100% !important;
-                        max-height: 100% !important;
-                        width: 100%;
-                        .left-box {
-                            .ant-drawer-top.ant-drawer-open .ant-drawer-content-wrapper {
-                                box-shadow: none;
-                            }
-                            .ant-drawer-body {
-                                padding: 0 0 0 8px;
-                                display: flex;
-                                align-items: center;
-                                height: 44px;
-                                line-height: 44px;
-                                background-color: @white;
-                                .select {
-                                    color: fade(@black, 65%);
-                                    display: inline-block;
-                                    min-width: 120px;
-                                }
-                            }
-                        }
-                    }
-                }
-                .suid-tool-bar {
-                    button {
-                        margin-right: 8px;
-                    }
-                }
-            }
-        }
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  overflow: hidden;
+  background-color: @page-background-color;
+  position: relative;
+  :global {
+    .ant-card-head-title {
+      display: inline-flex;
+      align-items: center;
     }
+    .ant-table-bordered.ant-table-empty .ant-table-placeholder {
+      border-right-color: transparent;
+      border-left-color: transparent;
+    }
+    .ant-card {
+      height: 100%;
+      .ant-card-head {
+        background-color: @white;
+      }
+      .ant-card-body {
+        padding: 0;
+        height: calc(100% - 57px);
+        .suid-panel {
+          height: 100%;
+          .panel-body {
+            height: 100% !important;
+            max-height: 100% !important;
+            width: 100%;
+            .left-box {
+              .ant-drawer-top.ant-drawer-open .ant-drawer-content-wrapper {
+                box-shadow: none;
+              }
+              .ant-drawer-body {
+                padding: 0 0 0 8px;
+                display: flex;
+                align-items: center;
+                height: 44px;
+                line-height: 44px;
+                background-color: @white;
+                .select {
+                  color: fade(@black, 65%);
+                  display: inline-block;
+                  min-width: 120px;
+                }
+              }
+            }
+          }
+        }
+        .suid-tool-bar {
+          button {
+            margin-right: 8px;
+          }
+        }
+      }
+    }
+  }
 }

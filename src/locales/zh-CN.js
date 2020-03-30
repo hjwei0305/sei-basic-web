@@ -6,6 +6,7 @@ import feature from './zh-CN/feature'
 
 export default {
   "app.request.error": "接口请求异常",
+  "app.request.info": "接口请求提示",
   "app.request.401": "会话异常",
   "app.request.401.message": "当前会话超时或失效，请重新登录",
   ...pwa,
@@ -34,8 +35,8 @@ export default {
   "global.back": "返回",
   "global.delete": "删除",
   "global.refresh": "刷新",
-  "global.delete.confirm": "确定要删除吗？提示：删除后不可恢复",
-  "global.remove.confirm": "确定要移除吗？",
+  "global.delete.confirm": "确定要删除吗?",
+  "global.remove.confirm": "确定要移除吗?",
   "global.save-success": "保存成功",
   "global.delete-success": "删除成功",
   "global.assign-success": "分配成功",

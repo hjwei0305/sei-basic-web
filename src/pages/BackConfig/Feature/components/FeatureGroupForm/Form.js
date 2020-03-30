@@ -116,6 +116,7 @@ class FeatureGroupForm extends PureComponent {
                 }]
               })(
                 <Input
+                  disabled={!!groupData}
                   addonBefore={`${currentAppModuleCode}-`}
                   maxLength={30}
                   placeholder={formatMessage({ id: "global.code.tip", defaultMessage: "规则:名称各汉字首字母大写" })}

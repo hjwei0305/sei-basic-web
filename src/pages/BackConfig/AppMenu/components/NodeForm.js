@@ -165,9 +165,9 @@ class NodeForm extends Component {
         let title = '';
         if (editData) {
             if (editData.parentId) {
-                title = editData.id ? "编辑菜单" : "新建子菜单";
+                title = editData.id ? editData.name : "新建子菜单";
             } else {
-                title = editData.id ? "编辑根菜单" : "新建根菜单";
+                title = editData.id ? editData.name : "新建根菜单";
             }
         }
         return title;
@@ -223,7 +223,7 @@ class NodeForm extends Component {
             <div key="node-form" className={cls(styles["node-form"])}>
                 <div className="base-view-body">
                     <div className="header">
-                        <span className="title">{title}</span>
+                        {title}
                     </div>
                     <div className="tool-bar-box">
                         <div className="tool-action-box">

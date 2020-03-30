@@ -177,7 +177,7 @@ class AuthorType extends Component {
       {
         title: '树形结构',
         dataIndex: "beTree",
-        width: 80,
+        width: 100,
         align: "center",
         required: true,
         render: (text, record) => {
@@ -230,13 +230,16 @@ class AuthorType extends Component {
     };
     return (
       <div className={cls(styles["container-box"])} >
-        < ExtTable
+        <ExtTable
           bordered={false}
           loading={loading.effects["authorType/queryList"]}
           toolBar={toolBarProps}
           columns={columns}
           dataSource={list}
           searchProperties={['name', 'entityClassName', 'apiPath', 'appModuleName']}
+          sort={{
+            field: { appModuleName: 'asc', entityClassName: null, name: null, apiPath: null, beTree: null }
+          }}
         />
         <FormModal {...formModalProps} />
       </div>

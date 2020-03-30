@@ -167,7 +167,7 @@ class DataAuthorType extends Component {
       {
         title: formatMessage({ id: "global.code", defaultMessage: "代码" }),
         dataIndex: "code",
-        width: 160,
+        width: 260,
         optional: true,
       },
       {
@@ -218,13 +218,16 @@ class DataAuthorType extends Component {
     };
     return (
       <div className={cls(styles["container-box"])} >
-        < ExtTable
+        <ExtTable
           bordered={false}
           loading={loading.effects["dataAuthorType/queryList"]}
           toolBar={toolBarProps}
           columns={columns}
           dataSource={list}
           searchProperties={['name', 'entityClassName', 'apiPath', 'appModuleName']}
+          sort={{
+            field: { code: 'asc', name: null, authorizeEntityTypeName: null, featureName: null }
+          }}
         />
         <FormModal {...formModalProps} />
       </div>

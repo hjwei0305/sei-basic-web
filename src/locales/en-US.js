@@ -6,6 +6,7 @@ import feature from './en-US/feature'
 
 export default {
   "app.request.error": "Interface request exception",
+  "app.request.info": "Request info",
   "app.request.401": "Session exception",
   "app.request.401。message": "The current session timed out or failed, Please log in again",
   ...pwa,
@@ -35,7 +36,7 @@ export default {
   "global.rank.required": "Rank is required",
   "global.delete": "Delete",
   "global.refresh": "Refresh",
-  "global.delete.confirm": "Are you sure to delete it? Note:Can't recover after deleted",
+  "global.delete.confirm": "Are you sure to delete it?",
   "global.remove.confirm": "Are you sure to remove it?",
   "global.save-success": "Save successfully",
   "global.delete-success": "Delete successfully",

@@ -44,6 +44,16 @@ class DataAuthorType extends Component {
         )
     };
 
+    renderTitle = () => {
+        const { currentRole } = this.state;
+        return (
+            <>
+                {currentRole.name}
+                <span style={{ fontSize: 14, color: "#999", marginLeft: 8 }}>数据权限类型</span>
+            </>
+        )
+    };
+
     render() {
         const { currentAppModuleId, currentRole } = this.state;
         const columns = [
@@ -146,7 +156,7 @@ class DataAuthorType extends Component {
             <div className={cls(styles['data-author-type-box'])
             }>
                 <Card
-                    title="数据权限类型"
+                    title={this.renderTitle()}
                     bordered={false}
                 >
                     <ExtTable {...extTableProps} />

@@ -3,6 +3,7 @@
   height: 100%;
   padding: 0;
   overflow: hidden;
+  transform: translateX(0) !important;
   :global {
     .ant-drawer-header {
       border-color: transparent;
@@ -14,73 +15,65 @@
     .header-tool-box {
       display: flex;
       align-items: center;
-      height: 42px;
-      line-height: 42px;
-      justify-content: space-between;
+      height: 46px;
+      line-height: 46px;
       position: relative;
       padding: 0 16px;
-      border-bottom: 1px solid @border-color;
-    }
-    .list-tool-box {
-      display: flex;
-      align-items: center;
-      height: 42px;
-      line-height: 42px;
-      justify-content: space-between;
-      position: relative;
-      padding: 0 16px;
-    }
-    .list-body {
-      width: 100%;
-      height: calc(100% - 132px);
       overflow: hidden;
-      .scrollbar-container {
-        width: 100%;
+      button {
+        margin-right: 8px;
       }
-      .ant-list-item {
-        padding: 12px 16px 12px 16px;
-        cursor: pointer;
-        position: relative;
-        &:nth-child(odd) {
-          background-color: @white;
-        }
-        &:nth-child(even) {
-          background-color: fade(@black, 1%);
-        }
-        .ant-list-item-meta-title {
-          margin-bottom: 2px;
-        }
-        .desc-box {
-          color: fade(@black, 45%);
-          font-size: 12px;
-          font-weight: normal;
-          .label {
-            &::after {
-              content: ':';
-              margin: 0 4px;
-            }
+      .app-box {
+        display: inline-block;
+        .label {
+          &:after {
+            content: ':';
+            margin: 0 4px;
           }
         }
-        .ant-tag {
-          margin-left: 8px;
+      }
+      .tool-search-box {
+        display: inline-block;
+        position: absolute;
+        right: 16px;
+        top: 0;
+        .refresh {
+          display: inline-block;
+          width: 32px;
+          height: 32px;
+          line-height: 34px;
+          border-radius: 4px;
+          cursor: pointer;
+          transition: all ease-in 0.2s;
+          &:hover {
+            color: @primary-color;
+            background-color: fade(@black, 5%);
+          }
         }
-        &:hover {
-          background-color: fade(@item-hover-bg, 45%);
-        }
-        &.checked {
-          background-color: @suid-row-select;
+      }
+      .ant-drawer-top.ant-drawer-open .ant-drawer-content-wrapper {
+        box-shadow: none;
+        border-bottom: 1px solid @border-color;
+      }
+      .ant-drawer-body {
+        padding: 0 0 0 16px;
+        display: flex;
+        align-items: center;
+        height: 44px;
+        line-height: 44px;
+        background-color: @white;
+        .select {
+          color: fade(@black, 65%);
+          display: inline-block;
+          min-width: 120px;
         }
       }
     }
-    .list-page-bar {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      height: 48px;
-      background-color: @white;
-      border-top: 1px solid @border-color;
+    .unassigned-body {
+      height: calc(100% - 46px);
+      .unassigned-tree {
+        padding: 0 16px 8px 16px;
+      }
     }
   }
 }

@@ -143,6 +143,18 @@ class FeaturePage extends Component {
         );
     };
 
+    renderTitle = () => {
+        const { featureGroup } = this.props;
+        const { currentFeatureGroup } = featureGroup;
+        const { appModuleName, name } = currentFeatureGroup;
+        return (
+            <>
+                {`${appModuleName} > ${name}`}
+                <span style={{ fontSize: 14, color: "#999", marginLeft: 8 }}>页面功能管理</span>
+            </>
+        )
+    };
+
     render() {
         const { loading, featureGroup, feature } = this.props;
         const { currentFeatureGroup } = featureGroup;
@@ -166,7 +178,7 @@ class FeaturePage extends Component {
                         />
                         <Popconfirm
                             placement="topLeft"
-                            title={formatMessage({ id: "global.delete.confirm", defaultMessage: "确定要删除吗？提示：删除后不可恢复" })}
+                            title={formatMessage({ id: "global.delete.confirm", defaultMessage: "确定要删除吗?" })}
                             onConfirm={_ => this.del(record)}
                         >
                             {
@@ -225,6 +237,9 @@ class FeaturePage extends Component {
             onTableRef: ref => this.pageTableRef = ref,
             store: {
                 url: `${SERVER_PATH}/sei-basic/feature/findByFeatureGroupAndType?featureTypes=Page`
+            },
+            sort: {
+                field: { code: 'asc', name: null, groupCode: null }
             }
         };
         const formModalProps = {
@@ -243,7 +258,7 @@ class FeaturePage extends Component {
         return (
             <div className={cls(styles['feature-page-box'])}>
                 <Card
-                    title="菜单项管理"
+                    title={this.renderTitle()}
                     bordered={false}
                 >
                     <ExtTable {...extTableProps} />
