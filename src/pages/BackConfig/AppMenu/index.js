@@ -339,7 +339,7 @@ class AppMenu extends Component {
         return (
             <div className={cls(styles["container-box"])} >
                 <Row gutter={8} className='auto-height'>
-                    <Col span={8} className='auto-height'>
+                    <Col span={7} className='auto-height'>
                         <Card
                             title="应用菜单"
                             bordered={false}
@@ -382,7 +382,7 @@ class AppMenu extends Component {
                             </div>
                         </Card>
                     </Col>
-                    <Col span={16} className={cls("main-content")}>
+                    <Col span={17} className={cls("main-content")}>
                         {
                             currentNode
                                 ? <NodeForm {...nodeFormProps} />
