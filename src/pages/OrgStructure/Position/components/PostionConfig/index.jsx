@@ -84,7 +84,7 @@ class PostionConfig extends React.Component {
               assginCfg={{ url: `${SERVER_PATH}/sei-basic/positionFeatureRole/getChildrenFromParentId`, }}
             />
           </TabPane>
-          <TabPane tab={`【${rowData.name}】配置用户角色`} key="3">
+          <TabPane tab={`【${rowData.name}】配置数据角色`} key="3">
             <DataRoleAssign
               data={rowData}
               onAssign={(params) => this.handleAssign('DataRole', params)}
