@@ -187,8 +187,8 @@ class AppModule extends Component {
         width: 160,
       },
       {
-        title: formatMessage({ id: "appModule.apiBaseAddress", defaultMessage: "API基地址" }),
-        dataIndex: "API基地址",
+        title: formatMessage({ id: "appModule.apiBaseAddress", defaultMessage: "服务名" }),
+        dataIndex: "apiBaseAddress",
         width: 160,
       },
       {

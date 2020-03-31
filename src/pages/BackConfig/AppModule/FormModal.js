@@ -84,7 +84,7 @@ class FormModal extends PureComponent {
               initialValue: rowData ? rowData.webBaseAddress : ""
             })(<Input />)}
           </FormItem>
-          <FormItem label={formatMessage({ id: "appModule.apiBaseAddress", defaultMessage: "API基地址" })}>
+          <FormItem label={formatMessage({ id: "appModule.apiBaseAddress", defaultMessage: "服务名" })}>
             {getFieldDecorator("apiBaseAddress", {
               initialValue: rowData ? rowData.apiBaseAddress : ""
             })(<Input />)}
