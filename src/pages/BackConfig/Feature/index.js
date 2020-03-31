@@ -109,31 +109,16 @@ class Feature extends Component {
         this.listCardRef.handlerSearch();
     };
 
-    renderCustomTool = ({ total }) => {
-        const { loading } = this.props;
-        const saving = loading.effects["featureGroup/saveFeatureGroup"];
+    renderCustomTool = () => {
         return (
             <>
-                <GroupAdd
-                    saving={saving}
-                    saveFeatureGroup={this.saveFeatureGroup}
+                <Search
+                    placeholder="输入代码、名称、应用模块关键字查询"
+                    onChange={e => this.handlerSearchChange(e.target.value)}
+                    onSearch={this.handlerSearch}
+                    onPressEnter={this.handlerSearch}
+                    style={{ width: '100%' }}
                 />
-                <div>
-                    <span style={{ marginRight: 8 }}>{`共 ${total} 项`}</span>
-                    <Tooltip
-                        trigger={["hover"]}
-                        title='输入代码、名称、应用模块关键字查询'
-                        placement="top"
-                    >
-                        <Search
-                            placeholder="输入代码、名称、应用模块关键字查询"
-                            onChange={e => this.handlerSearchChange(e.target.value)}
-                            onSearch={this.handlerSearch}
-                            onPressEnter={this.handlerSearch}
-                            style={{ width: 220 }}
-                        />
-                    </Tooltip>
-                </div>
             </>
         );
     };
@@ -179,6 +164,7 @@ class Feature extends Component {
         const { currentFeatureGroup } = featureGroup;
         const { listData } = this.state;
         const listLoading = loading.effects["featureGroup/queryFeatureGroupList"];
+        const saving = loading.effects["featureGroup/saveFeatureGroup"];
         const selectedKeys = currentFeatureGroup ? [currentFeatureGroup.id] : [];
         const featureGroupprops = {
             className: 'left-content',
@@ -191,6 +177,12 @@ class Feature extends Component {
             onListCardRef: ref => (this.listCardRef = ref),
             searchProperties: ['code', 'name', 'appModuleName'],
             selectedKeys,
+            extra: (
+                <GroupAdd
+                    saving={saving}
+                    saveFeatureGroup={this.saveFeatureGroup}
+                />
+            ),
             itemField: {
                 title: this.renderTitle,
                 description: item => item.appModuleName,
