@@ -99,17 +99,6 @@ class FeaturePage extends Component {
         });
     };
 
-    add = _ => {
-        const { dispatch } = this.props;
-        dispatch({
-            type: "feature/updateState",
-            payload: {
-                showFormModal: true,
-                currentPageRow: null
-            }
-        });
-    };
-
     closePageFormModal = _ => {
         const { dispatch } = this.props;
         dispatch({
