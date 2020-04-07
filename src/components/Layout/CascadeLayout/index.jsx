@@ -29,7 +29,6 @@ export default class CascadeLayout extends PureComponent {
         }
         if (slot === 'right') {
           return (<Col key={slot} className={cls('layout-col', 'layout-col-right')} span={rightSpan}>
-            <div className="triangle"></div>
             <Card title={rightTitle} bordered={bordered}>
               {child}
             </Card>

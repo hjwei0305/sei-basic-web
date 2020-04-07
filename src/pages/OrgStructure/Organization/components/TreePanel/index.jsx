@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'dva';
-import { Input, Tree, Empty, Popconfirm, Button, message, } from 'antd';
+import { Input, Tree, Empty, Popconfirm, Button, message, Icon, } from 'antd';
 import { formatMessage, } from "umi-plugin-react/locale";
-import { ToolBar, ScrollBar, } from 'suid';
+import { ToolBar, ScrollBar, ExtIcon, } from 'suid';
 import { cloneDeep, isEqual, } from 'lodash';
 import cls from 'classnames';
 import FormModal from './FormModal';
@@ -226,7 +226,7 @@ class TreePanel extends Component {
     }
 
     return (
-      <TreeNode title={name} key={id} dataRef={item} isLeaf/>
+      <TreeNode switcherIcon={<ExtIcon type="dian" />} title={name} key={id} dataRef={item} isLeaf/>
     );
   });
 
@@ -251,6 +251,7 @@ class TreePanel extends Component {
                   checkedKeys={checkedKeys}
                   autoExpandParent={autoExpandParent}
                   selectedKeys={selectedKeys}
+                  switcherIcon={<Icon type="down" />}
                 >
                   {this.getTreeNodes(filterTreeData)}
                 </Tree>
