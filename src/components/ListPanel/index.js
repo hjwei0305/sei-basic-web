@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import cls from 'classnames';
+import { isEqual } from 'lodash';
 import PropTypes from "prop-types";
-import isEqual from 'react-fast-compare';
 import { cloneDeep } from 'lodash'
 import { Input, Pagination, List, Skeleton, Checkbox, Card } from "antd";
 import { ScrollBar, ListLoader } from 'suid';

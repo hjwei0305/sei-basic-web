@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import cls from 'classnames';
-import { cloneDeep } from 'lodash';
-import isEqual from 'react-fast-compare';
+import { cloneDeep,isEqual } from 'lodash';
 import { Tree } from "antd";
 import { ScrollBar, ExtIcon, ExtModal } from 'suid';
 import styles from './MenuMoveModal.less'

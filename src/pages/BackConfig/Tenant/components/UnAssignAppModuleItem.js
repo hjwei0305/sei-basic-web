@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import cls from 'classnames';
-import isEqual from 'react-fast-compare';
+import { isEqual } from 'lodash';
 import { cloneDeep } from 'lodash'
 import { Button, Input, Pagination, List, Skeleton, Checkbox, Drawer } from "antd";
 import { ScrollBar } from 'suid';
