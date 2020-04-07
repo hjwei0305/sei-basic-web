@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { Input, Tree, Empty, } from 'antd';
-import { ScrollBar, ToolBar } from 'suid';
+import { Input, Tree, Empty, Icon, } from 'antd';
+import { ScrollBar, ToolBar, ExtIcon } from 'suid';
 import { cloneDeep, isEqual, } from 'lodash';
 import cls from 'classnames';
+
+import styles from './index.less';
 
 const { TreeNode, } = Tree;
 
@@ -140,7 +142,7 @@ class TreeView extends Component {
     }
 
     return (
-      <TreeNode title={name} key={id} dataRef={item} isLeaf />
+      <TreeNode switcherIcon={<ExtIcon type="dian" />}  title={name} key={id} dataRef={item} isLeaf />
     );
   });
 
@@ -167,6 +169,7 @@ class TreeView extends Component {
         style={{ width: '100%' }}
       />),
       left,
+      rightClassName: left ? null : cls(styles['tool-bar-right'])
     };
   }
 
@@ -189,6 +192,7 @@ class TreeView extends Component {
                 checkedKeys={checkedKeys}
                 autoExpandParent={autoExpandParent}
                 selectedKeys={selectedKeys}
+                switcherIcon={<Icon type="down" />}
               >
                 {this.getTreeNodes(filterTreeData)}
               </Tree>
