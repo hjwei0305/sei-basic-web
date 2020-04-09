@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "dva";
 import cls from "classnames";
-import isEqual from 'react-fast-compare';
+import { isEqual } from 'lodash';
 import { Button, Row, Col, Card, Input, Tree, Empty } from "antd";
 import { ScrollBar, ExtIcon, ListLoader } from 'suid';
 import empty from "@/assets/item_empty.svg";

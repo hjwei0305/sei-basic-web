@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import cls from "classnames";
 import { connect } from "dva";
-import isEqual from 'react-fast-compare';
+import { isEqual } from 'lodash';
 import { Dropdown, Menu } from "antd";
 import { utils, ExtIcon } from 'suid';
 import { constants } from '@/utils';

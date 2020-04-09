@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "dva";
 import cls from "classnames";
-import isEqual from 'react-fast-compare';
+import { isEqual } from 'lodash';
 import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
 import { Popconfirm, Button, Card, Drawer } from 'antd'
 import { ExtTable, ExtIcon } from 'suid';

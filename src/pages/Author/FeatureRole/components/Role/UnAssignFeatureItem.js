@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import cls from 'classnames';
-import isEqual from 'react-fast-compare';
+import { isEqual } from 'lodash';
 import { connect } from "dva";
 import { Button, Input, Drawer, Tree, Empty, Tooltip } from "antd";
 import { ScrollBar, ListLoader, ExtIcon, ComboList } from 'suid';

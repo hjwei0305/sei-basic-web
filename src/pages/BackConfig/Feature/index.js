@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "dva";
 import cls from "classnames";
-import isEqual from 'react-fast-compare';
+import { isEqual } from 'lodash';
 import { formatMessage } from "umi-plugin-react/locale";
-import { Row, Col, Input, Empty, Popconfirm, Tooltip } from "antd";
+import { Row, Col, Input, Empty, Popconfirm } from "antd";
 import { ExtIcon, ListCard } from 'suid';
 import empty from "@/assets/item_empty.svg";
 import GroupAdd from './components/FeatureGroupForm/Add';

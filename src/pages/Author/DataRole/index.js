@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "dva";
 import cls from "classnames";
-import isEqual from 'react-fast-compare';
+import { isEqual } from 'lodash';
 import { formatMessage } from "umi-plugin-react/locale";
 import { Row, Col, Card, Input, Empty, Pagination, List, Skeleton, Popconfirm } from "antd";
 import { ScrollBar, ExtIcon } from 'suid';

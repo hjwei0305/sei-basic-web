@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from "react";
 import cls from "classnames";
-import { cloneDeep, get } from "lodash";
-import isEqual from "react-fast-compare";
+import { cloneDeep, get, isEqual } from "lodash";
 import { formatMessage } from "umi-plugin-react/locale";
 import { Button, Form, Input, Popconfirm, InputNumber } from "antd";
 import { ScrollBar, ExtIcon, ComboGrid } from 'suid';

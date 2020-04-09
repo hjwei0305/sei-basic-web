@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import cls from 'classnames';
+import { isEqual } from 'lodash';
 import PropTypes from "prop-types";
-import isEqual from 'react-fast-compare';
 import { Input, Tree, Card, Empty } from "antd";
 import { ScrollBar, ListLoader, ExtIcon } from 'suid';
 import styles from "./index.less";
