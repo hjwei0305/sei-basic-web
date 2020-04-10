@@ -9,7 +9,7 @@ const getServerPath = function () {
     if (process.env.MOCK === 'yes') {
       return '/mocker.api'
     } else {
-      return '/service.api'
+      return '/api-gateway'
     }
   }
   return `${BASE_DOMAIN}${GATEWAY}`

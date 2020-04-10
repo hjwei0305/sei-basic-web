@@ -2,11 +2,12 @@
 * @Author: zp
 * @Date:   2020-02-17 09:41:03
  * @Last Modified by: Eason
- * @Last Modified time: 2020-03-06 13:35:12
+ * @Last Modified time: 2020-04-10 17:45:04
 */
 import { utils } from 'suid';
 
-const { sessionStorage, localStorage } = utils.storage;
+const { getContextUser, storage } = utils;
+const { sessionStorage, localStorage } = storage;
 const { CONST_GLOBAL } = utils.constants;
 const { CURRENT_USER, TOKEN_KEY, CURRENT_LOCALE, AUTH, POLICY, } = CONST_GLOBAL;
 
@@ -16,7 +17,7 @@ export const setCurrentUser = user => {
 };
 
 /** 获取当前用户信息 */
-export const getCurrentUser = () => sessionStorage.get(CURRENT_USER);
+export const getCurrentUser = () => getContextUser();
 
 export const getCurrentLocale = () => localStorage.get(CURRENT_LOCALE);
 
