@@ -1,8 +1,8 @@
 /*
 * @Author: zp
 * @Date:   2020-02-02 11:57:24
-* @Last Modified by:   zp
-* @Last Modified time: 2020-02-11 14:42:06
+ * @Last Modified by: zp
+ * @Last Modified time: 2020-04-13 11:16:48
 */
 import { utils } from 'suid';
 import { constants } from '@/utils';
@@ -18,6 +18,16 @@ export async function getList(params) {
     url,
     method: "GET",
     params,
+  });
+}
+
+/** 重置密码*/
+export async function resetPass(data) {
+  const url = `${SERVER_PATH}/sei-auth/account/resetPass`;
+  return request({
+    url,
+    method: "POST",
+    params: data,
   });
 }
 
