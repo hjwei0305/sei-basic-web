@@ -27,8 +27,12 @@ class CfgModal extends Component {
       }
       const params = {};
       const { effectiveRange, } = formData;
-      const effectiveFrom = effectiveRange[0].format('YYYY-MM-DD');
-      const effectiveTo = effectiveRange[1].format('YYYY-MM-DD');
+      let effectiveFrom = null;
+      let effectiveTo = null;
+      if (effectiveRange && effectiveRange.length) {
+        effectiveFrom = effectiveRange[0].format('YYYY-MM-DD');
+        effectiveTo = effectiveRange[1].format('YYYY-MM-DD');
+      }
       delete formData.effectiveRange;
       
       Object.assign(params, formData, { effectiveFrom, effectiveTo, });
@@ -54,10 +58,6 @@ class CfgModal extends Component {
           <FormItem label="有效期">
             {getFieldDecorator("effectiveRange", {
               initialValue: [tempEffectiveFrom, tempEffectiveTo],
-              rules: [ 
-                {required: true, message: '请输入有效期间!'},
-                // {validator: this.checkPassword}
-              ]
             })(<RangePicker format="YYYY-MM-DD" />)}
           </FormItem>
           {/*以下为隐藏的formItem*/}
