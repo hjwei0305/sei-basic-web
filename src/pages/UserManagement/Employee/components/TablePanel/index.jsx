@@ -311,12 +311,12 @@ class TablePanel extends Component {
     return {
       bordered: false,
       remotePaging: true,
-      searchProperties: ['code'],
+      searchProperties: ['code', 'userName'],
       columns,
       toolBar: toolBarProps,
       store: {
         type: 'POST',
-        url: `${SERVER_PATH}/sei-basic/employee/findByUserQueryParam`,
+        url: `${SERVER_PATH}/sei-basic/employee/queryEmployees`,
         params: {
           organizationId: currNode && currNode.id,
           includeSubNode,
