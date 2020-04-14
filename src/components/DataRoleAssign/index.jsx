@@ -244,7 +244,7 @@ class DataRoleAssign extends Component {
           </span>
         )
       });
-      columns.push({
+      columns.splice(3, 0, {
         title: '有效期',
         dataIndex: 'effective',
         width: 220,
