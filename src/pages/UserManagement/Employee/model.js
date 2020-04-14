@@ -2,7 +2,7 @@
 * @Author: zp
 * @Date:   2020-02-02 11:57:38
  * @Last Modified by: zp
- * @Last Modified time: 2020-04-13 11:07:44
+ * @Last Modified time: 2020-04-14 10:50:42
 */
 import {
   del,
@@ -17,6 +17,8 @@ import {
   assignDataRole,
   unAssignDataRole,
   resetPass,
+  saveAssignFeatureRoleCfg,
+  saveAssignDataRoleCfg,
 } from "./service";
 import { message } from "antd";
 import { formatMessage } from "umi-plugin-react/locale";
@@ -86,6 +88,28 @@ export default modelExtend(model, {
     },
     * save({ payload }, { call }) {
       const re = yield call(save, payload);
+      message.destroy();
+      if (re.success) {
+        message.success(formatMessage({ id: "global.save-success", defaultMessage: "保存成功" }));
+      } else {
+        message.error(re.message);
+      }
+
+      return re;
+    },
+    * saveCfg({ payload }, { call }) {
+      const re = yield call(saveAssignFeatureRoleCfg, payload);
+      message.destroy();
+      if (re.success) {
+        message.success(formatMessage({ id: "global.save-success", defaultMessage: "保存成功" }));
+      } else {
+        message.error(re.message);
+      }
+
+      return re;
+    },
+    * saveDataRoleCfg({ payload }, { call }) {
+      const re = yield call(saveAssignDataRoleCfg, payload);
       message.destroy();
       if (re.success) {
         message.success(formatMessage({ id: "global.save-success", defaultMessage: "保存成功" }));

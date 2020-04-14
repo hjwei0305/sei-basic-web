@@ -171,7 +171,7 @@ class TablePanel extends Component {
     if (loading.effects["position/del"] && delRowId === row.id) {
       return <ExtIcon className="del-loading" type="loading" antd />
     }
-    return <ExtIcon className="del" type="delete" antd />;
+    return <ExtIcon className="del" type="delete" tooltip={{ title: '删除' }} antd />;
   };
 
   getExtableProps = () => {
@@ -196,6 +196,9 @@ class TablePanel extends Component {
                   className="edit"
                   onClick={_ => this.edit(record)}
                   type="edit"
+                  tooltip={
+                    { title: '编辑' }
+                  }
                   ignore='true'
                   antd
                 />
@@ -215,12 +218,18 @@ class TablePanel extends Component {
               className="copy"
               onClick={_ => this.handlCopy(record)}
               type="copy"
+              tooltip={
+                { title: '复制岗位' }
+              }
               antd
             />
             <ExtIcon
               className="tool"
               onClick={_ => this.handleConfig(record)}
               type="tool"
+              tooltip={
+                { title: '配置岗位' }
+              }
               antd
             />
           </span>

@@ -128,4 +128,12 @@ export async function unAssignDataRole(data){
   });
 }
 
+/**
+ * 保存已经分配功能角色的有效期
+ */
+export async function saveAssignFeatureRoleCfg(data){
+  const url = `${SERVER_PATH}/sei-basic/userFeatureRole/saveEffective`;
+  return request.post(url, data);
+}
+
 

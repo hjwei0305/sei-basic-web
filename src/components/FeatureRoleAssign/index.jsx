@@ -1,7 +1,9 @@
 import React, { Component, Fragment, } from 'react';
 import { Button, } from "antd";
-import { ExtTable, ComboGrid, } from 'suid';
+import { ExtTable, ComboGrid, ExtIcon, } from 'suid';
+import cls from 'classnames';
 import { AssignLayout } from '@/components';
+import CfgModal from './CfgModal';
 import { constants } from "@/utils";
 
 const { SERVER_PATH } = constants;
@@ -19,6 +21,7 @@ class FeatureRoleConfig extends Component {
       unAssignUrl: unAssignedUrl,
       assignChildIds: [],
       unAssignChildIds: [],
+      cfgModalVisible: false,
     };
   }
 
@@ -144,6 +147,13 @@ class FeatureRoleConfig extends Component {
     }
   }
 
+  handleConfig = (record) => {
+    this.setState({
+      cfgModalVisible: true,
+      editData: record,
+    });
+  }
+
   /** 未分配表格属性 */
   getUnAssignTableProps = () => {
     const { featureRoleGroupId, unAssignUrl, unAssignChildIds } = this.state;
@@ -195,16 +205,51 @@ class FeatureRoleConfig extends Component {
 
   /** 已分配表格属性 */
   getAssignTableProps = () => {
-    const { data, assginCfg, } = this.props;
+    const { data, assginCfg, cfged, } = this.props;
     const { assignChildIds, } = this.state;
     const { url } = assginCfg;
     const { id, } = data || {};
+    const columns = this.getCommonColumns();
+    if (cfged) {
+      columns.unshift({
+        title: '操作',
+        width: 60,
+        className: "action",
+        dataIndex: 'id',
+        required: true,
+        render: (_, record) => (
+          <span className={cls("action-box")}>
+            <ExtIcon
+              className="tool"
+              onClick={e => {this.handleConfig(record); e.stopPropagation();}}
+              type="tool"
+              tooltip={
+                { title: '配置有效期' }
+              }
+              antd
+            />
+          </span>
+        )
+      });
+      columns.push({
+        title: '有效期',
+        dataIndex: 'effective',
+        width: 220,
+        render: (_, record) => {
+          const { effectiveFrom, effectiveTo, } = record;
+          if (effectiveFrom) {
+            return `${effectiveFrom} ~ ${effectiveTo}`;
+          }
+          return ``;
+        }
+      });
+    }
 
     return {
       checkbox: true,
       bordered: false,
       selectedRowKeys: assignChildIds,
-      columns: this.getCommonColumns(),
+      columns,
       onSelectRow: (rowIds) => {
         if (rowIds && rowIds.length) {
           this.setState({
@@ -228,8 +273,41 @@ class FeatureRoleConfig extends Component {
     };
   }
 
+  getCfgModalProps = () => {
+    const { cfgModalVisible: visible, editData,  } = this.state;
+    const { onSaveCfg, cfgLoading } = this.props;
+
+    return  {
+      editData,
+      visible,
+      saving: cfgLoading,
+      onSave: (data) => {
+        if (onSaveCfg) {
+          onSaveCfg(data).then(result => {
+            const { success, } = result || {};
+            if (success) {
+              this.setState({
+                editData: null,
+                cfgModalVisible: false,
+              }, () => {
+                this.refreshTableData();
+              });
+            }
+          });
+        }
+      },
+      onCancel: () => {
+        this.setState({
+          editData: null,
+          cfgModalVisible: false,
+        });
+      }
+    };
+  }
+
   render() {
-    const { assignBtnDisabled, unAssignBtnDisabled, } = this.state;
+    const { cfged } = this.props;
+    const { assignBtnDisabled, unAssignBtnDisabled, cfgModalVisible, } = this.state;
     return (
       <AssignLayout>
         <ExtTable onTableRef={inst => this.unAssignTable = inst } slot="left" {...this.getUnAssignTableProps()} />
@@ -252,8 +330,10 @@ class FeatureRoleConfig extends Component {
               />
             </p>
           </Fragment>
+        { cfged && cfgModalVisible ? (<CfgModal {...this.getCfgModalProps()} />) : null }
         </div>
         <ExtTable onTableRef={inst => this.assignTable = inst } slot="right" {...this.getAssignTableProps()} />
+        
       </AssignLayout>
     );
   }

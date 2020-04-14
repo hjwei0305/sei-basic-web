@@ -2,7 +2,7 @@
 * @Author: zp
 * @Date:   2020-02-02 11:57:24
  * @Last Modified by: zp
- * @Last Modified time: 2020-04-13 11:16:48
+ * @Last Modified time: 2020-04-14 10:49:57
 */
 import { utils } from 'suid';
 import { constants } from '@/utils';
@@ -152,6 +152,22 @@ export async function unAssignDataRole(data){
     method: 'DELETE',
     data,
   });
+}
+
+/**
+ * 保存已经分配功能角色的有效期
+ */
+export async function saveAssignFeatureRoleCfg(data){
+  const url = `${SERVER_PATH}/sei-basic/userFeatureRole/saveEffective`;
+  return request.post(url, data);
+}
+
+/**
+ * 保存已经分配数据角色的有效期
+ */
+export async function saveAssignDataRoleCfg(data){
+  const url = `${SERVER_PATH}/sei-basic/userDataRole/saveEffective`;
+  return request.post(url, data);
 }
 
 
