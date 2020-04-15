@@ -51,6 +51,14 @@ class PostionConfig extends React.Component {
     });
   }
 
+  handleSaveCfg = (params) => {
+    const { dispatch, } = this.props;
+    return dispatch({
+      type: 'position/saveCfg',
+      payload: params,
+    });
+  }
+
   getTabExtra = () => {
     return (
       <Button onClick={this.handleBack}>返回</Button>
@@ -58,7 +66,7 @@ class PostionConfig extends React.Component {
   }
 
   render() {
-    const { style, position, } = this.props;
+    const { style, position, loading, } = this.props;
     const { rowData, } = position;
 
     return (
@@ -73,6 +81,10 @@ class PostionConfig extends React.Component {
           </TabPane>
           <TabPane tab={`【${rowData.name}】配置功能角色`} key="2">
             <FeatureRoleAssign
+              onSaveCfg={(data) => {
+                return this.handleSaveCfg(data);
+              }}
+              cfgLoading={loading.effects['position/saveCfg']}
               data={rowData}
               onAssign={(params) => this.handleAssign('FeatureRole', params)}
               onUnAssign={(params) => this.handleUnAssign('FeatureRole', params)}

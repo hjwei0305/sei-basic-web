@@ -2,11 +2,13 @@ import React, { Component, Fragment, } from 'react';
 import { connect } from 'dva';
 import cls from 'classnames';
 import { isEqual, } from 'lodash';
+import md5 from "md5";
 import { Button, message, Checkbox, Tag, } from "antd";
 import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
 import { ExtTable, utils, ExtIcon } from 'suid';
 import { constants } from "@/utils";
 import FormModal from "./FormModal";
+import ResetFormModal from './ResetModal';
 import styles from "../../index.less";
 
 const { APP_MODULE_BTN_KEY, SERVER_PATH, } = constants;
@@ -132,8 +134,15 @@ class TablePanel extends Component {
     });
   }
 
-  handlResetPassword = (rowData) => {
-
+  handleReset = (rowData) => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: "employee/updateState",
+      payload: {
+        showResetModal: true,
+        rowData,
+      }
+    });
   }
 
   closeFormModal = _ => {
@@ -146,6 +155,17 @@ class TablePanel extends Component {
       }
     });
   };
+
+  closeResetFormModal = () => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: "employee/updateState",
+      payload: {
+        showResetModal: false,
+        rowData: null
+      }
+    });
+  }
 
   renderDelBtn = (row) => {
     const { loading } = this.props;
@@ -162,6 +182,26 @@ class TablePanel extends Component {
       includeSubNode: checked,
     }, () => {
       this.reloadData();
+    });
+  }
+
+  resetPassword = (data) => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: "employee/resetPass",
+      payload: {
+        ...data,
+        password: md5(data.password)
+      },
+    }).then(res => {
+      if (res.success) {
+        dispatch({
+          type: "employee/updateState",
+          payload: {
+            showResetModal: false,
+          }
+        });
+      }
     });
   }
 
@@ -194,12 +234,6 @@ class TablePanel extends Component {
                 />
               )
             }
-{/*            <ExtIcon
-              className="from"
-              onClick={_ => this.handlResetPassword(record)}
-              type="form"
-              antd
-            />*/}
             <ExtIcon
               className="copy"
               onClick={_ => this.handlCopy(record)}
@@ -215,6 +249,15 @@ class TablePanel extends Component {
               type="tool"
               tooltip={
                 { title: '配置角色' }
+              }
+              antd
+            />
+            <ExtIcon
+              className="form"
+              onClick={_ => this.handleReset(record)}
+              type="form"
+              tooltip={
+                { title: '重置密码' }
               }
               antd
             />
@@ -268,12 +311,12 @@ class TablePanel extends Component {
     return {
       bordered: false,
       remotePaging: true,
-      searchProperties: ['code'],
+      searchProperties: ['code', 'userName'],
       columns,
       toolBar: toolBarProps,
       store: {
         type: 'POST',
-        url: `${SERVER_PATH}/sei-basic/employee/findByUserQueryParam`,
+        url: `${SERVER_PATH}/sei-basic/employee/queryEmployees`,
         params: {
           organizationId: currNode && currNode.id,
           includeSubNode,
@@ -297,9 +340,24 @@ class TablePanel extends Component {
     };
   };
 
+  getResetModalProps = () => {
+    const { currNode, } = this.state;
+    const { loading, employee, } = this.props;
+    const { showResetModal, rowData, } = employee;
+
+    return {
+      save: this.resetPassword,
+      rowData,
+      showModal: showResetModal,
+      parentData: currNode,
+      closeFormModal: this.closeResetFormModal,
+      saving: loading.effects["employee/resetPass"]
+    };
+  }
+
   render() {
     const { employee, } = this.props;
-    const { showModal, } = employee;
+    const { showModal, showResetModal, } = employee;
 
     return (
       <div className={cls(styles["container-box"])} >
@@ -308,6 +366,9 @@ class TablePanel extends Component {
           showModal
             ? <FormModal {...this.getFormModalProps()} />
             : null
+        }
+        {
+          showResetModal ? <ResetFormModal {... this.getResetModalProps()} /> : null
         }
       </div>
     );

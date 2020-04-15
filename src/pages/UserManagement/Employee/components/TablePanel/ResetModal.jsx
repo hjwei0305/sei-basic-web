@@ -1,6 +1,5 @@
 import React, { PureComponent } from "react";
 import { Form, Input, } from "antd";
-import { formatMessage, } from "umi-plugin-react/locale";
 import { ExtModal, } from 'suid';
 
 const FormItem = Form.Item;
@@ -23,11 +22,31 @@ class FormModal extends PureComponent {
         return;
       }
       let params = {};
-      Object.assign(params, rowData || {});
-      Object.assign(params);
       Object.assign(params, formData);
       save(params);
     });
+  };
+
+  checkPassword = (rule, password, callback) => {
+    if(!password || password.length < 8){
+      callback("密码须包含字母、数字、特殊字符至少2种,密码长度不能小于8位");
+      return false
+    }
+    let iNow = 0;
+    if(password.match(/[0-9]/g)){
+      iNow++;
+    }
+    if(password.match(/[a-z]/ig)){
+      iNow++;
+    }
+    if(password.match(/[~!@#$%^&*]/g)){
+      iNow++;
+    }
+    if(iNow < 2){
+      callback("密码须包含字母、数字、特殊字符至少2种,密码长度不能小于8位");
+      return false;
+    }
+    callback();
   };
 
   render() {
@@ -48,34 +67,26 @@ class FormModal extends PureComponent {
         onOk={this.onFormSubmit}
       >
         <Form {...formItemLayout} layout="horizontal" >
-          <FormItem label="组织机构">
-            {getFieldDecorator("organizationName", {
-              initialValue: parentData && parentData.name,
-            })(<Input  disabled={!!parentData} />)}
-          </FormItem>
-          <FormItem label="员工编号">
-            {getFieldDecorator("code", {
-              initialValue: rowData ? rowData.code : "",
-              rules: [{
-                required: true,
-                message: "员工编号不能为空",
-              }]
-            })(<Input />)}
-          </FormItem>
-          <FormItem label={formatMessage({ id: "global.name", defaultMessage: "名称" })}>
-            {getFieldDecorator("userName", {
-              initialValue: rowData ? rowData.userName : "",
-              rules: [{
-                required: true,
-                message: formatMessage({ id: "global.name.required", defaultMessage: "名称不能为空" })
-              }]
-            })(<Input />)}
+          <FormItem label="新密码">
+            {getFieldDecorator("password", {
+              initialValue: "",
+              rules: [ 
+                {required: true, message: '请填写新密码!'},
+                {validator: this.checkPassword}
+              ]
+            })(<Input.Password visibilityToggle={true} />)}
           </FormItem>
           {/*以下为隐藏的formItem*/}
           <FormItem
             style={{display: "none"}}>
-            {getFieldDecorator('organizationId', {
-              initialValue: parentData && parentData.id,
+            {getFieldDecorator('tenant', {
+              initialValue: rowData && rowData.tenantCode,
+            })(<Input />)}
+          </FormItem>
+          <FormItem
+            style={{display: "none"}}>
+            {getFieldDecorator('account', {
+              initialValue: rowData && rowData.code,
             })(<Input />)}
           </FormItem>
         </Form>

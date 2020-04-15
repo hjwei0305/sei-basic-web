@@ -1,8 +1,8 @@
 /*
 * @Author: zp
 * @Date:   2020-02-02 11:57:38
- * @Last Modified by: Eason
- * @Last Modified time: 2020-03-06 13:35:02
+ * @Last Modified by: zp
+ * @Last Modified time: 2020-04-14 10:50:42
 */
 import {
   del,
@@ -16,6 +16,9 @@ import {
   unAssignFeatureRole,
   assignDataRole,
   unAssignDataRole,
+  resetPass,
+  saveAssignFeatureRoleCfg,
+  saveAssignDataRoleCfg,
 } from "./service";
 import { message } from "antd";
 import { formatMessage } from "umi-plugin-react/locale";
@@ -32,6 +35,7 @@ export default modelExtend(model, {
     rowData: null,
     showModal: false,
     showCopyConfig: false,
+    showResetModal: false,
     treeData: [],
     currNode: null,
     showEmployeeConfig: false,
@@ -87,6 +91,39 @@ export default modelExtend(model, {
       message.destroy();
       if (re.success) {
         message.success(formatMessage({ id: "global.save-success", defaultMessage: "保存成功" }));
+      } else {
+        message.error(re.message);
+      }
+
+      return re;
+    },
+    * saveCfg({ payload }, { call }) {
+      const re = yield call(saveAssignFeatureRoleCfg, payload);
+      message.destroy();
+      if (re.success) {
+        message.success(formatMessage({ id: "global.save-success", defaultMessage: "保存成功" }));
+      } else {
+        message.error(re.message);
+      }
+
+      return re;
+    },
+    * saveDataRoleCfg({ payload }, { call }) {
+      const re = yield call(saveAssignDataRoleCfg, payload);
+      message.destroy();
+      if (re.success) {
+        message.success(formatMessage({ id: "global.save-success", defaultMessage: "保存成功" }));
+      } else {
+        message.error(re.message);
+      }
+
+      return re;
+    },
+    * resetPass({ payload }, { call }) {
+      const re = yield call(resetPass, payload);
+      message.destroy();
+      if (re.success) {
+        message.success("重置成功");
       } else {
         message.error(re.message);
       }

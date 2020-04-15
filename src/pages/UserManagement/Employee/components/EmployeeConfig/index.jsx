@@ -41,6 +41,22 @@ class PostionConfig extends React.Component {
     });
   }
 
+  handleSaveCfg = (params) => {
+    const { dispatch, } = this.props;
+    return dispatch({
+      type: 'employee/saveCfg',
+      payload: params,
+    });
+  }
+
+  handleSaveDataRoleCfg = (params) => {
+    const { dispatch, } = this.props;
+    return dispatch({
+      type: 'employee/saveDataRoleCfg',
+      payload: params,
+    });
+  }
+
   handleBack = () => {
     const { dispatch, } = this.props;
     dispatch({
@@ -58,7 +74,7 @@ class PostionConfig extends React.Component {
   }
 
   render() {
-    const { style, employee, } = this.props;
+    const { style, employee, loading, } = this.props;
     const { rowData, } = employee;
 
     return (
@@ -74,6 +90,11 @@ class PostionConfig extends React.Component {
           <TabPane tab={`【${rowData.userName}】配置功能角色`} key="2">
             <FeatureRoleAssign
               data={rowData}
+              cfged={true}
+              onSaveCfg={(data) => {
+                return this.handleSaveCfg(data);
+              }}
+              cfgLoading={loading.effects['employee/saveCfg']}
               onAssign={(params) => this.handleAssign('FeatureRole', params)}
               onUnAssign={(params) => this.handleUnAssign('FeatureRole', params)}
               unAssignCfg={{
@@ -87,6 +108,11 @@ class PostionConfig extends React.Component {
           <TabPane tab={`【${rowData.userName}】配置数据角色`} key="3">
             <DataRoleAssign
               data={rowData}
+              cfged={true}
+              onSaveCfg={(data) => {
+                return this.handleSaveDataRoleCfg(data);
+              }}
+              cfgLoading={loading.effects['employee/saveDataRoleCfg']}
               onAssign={(params) => this.handleAssign('DataRole', params)}
               onUnAssign={(params) => this.handleUnAssign('DataRole', params)}
               unAssignCfg={{
