@@ -4,10 +4,11 @@ import { toUpper, trim } from 'lodash'
 import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
 import { Button, Form, Input } from "antd";
 import { utils } from "suid";
-import { getCurrentUserContext } from "@/utils";
+import { userUtils } from "@/utils";
 import styles from "./Form.less";
 
 const { objectAssignAppend } = utils;
+const { getCurrentUser } = userUtils;
 const FormItem = Form.Item;
 const formItemLayout = {
   labelCol: {
@@ -23,7 +24,7 @@ class RoleGroupForm extends PureComponent {
 
   constructor(props) {
     super(props);
-    const user = getCurrentUserContext();
+    const user = getCurrentUser();
     const { tenantCode = '' } = user || {};
     this.state = {
       tenantCode: toUpper(tenantCode),
