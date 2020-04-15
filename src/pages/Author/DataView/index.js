@@ -102,8 +102,8 @@ class DataView extends PureComponent {
                         placement="top"
                     >
                         <Input
-                            style={{ width: 220, marginRight: 8 }}
-                            placeholder='输入查询的用户账号'
+                            style={{ width: 140, marginRight: 8 }}
+                            placeholder='输入用户账号'
                             onChange={e => this.handlerAccountChange(e.target.value)}
                             onPressEnter={e => this.getRoleList(e)}
                         />
