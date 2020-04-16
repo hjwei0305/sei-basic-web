@@ -16,11 +16,11 @@ export default class AssignLayout extends PureComponent {
     }
 
     return [].concat(children).map((child) => {
-      const { slot, } = child.props;
+      const { slot, slotClassName, } = child.props;
       if (['left', 'center', 'right'].includes(slot)) {
         if (slot === 'left') {
           return (
-            <Col key={slot} className={cls('layout-col')} span={leftSpan}>
+            <Col key={slot} className={cls('layout-col', slotClassName)} span={leftSpan}>
               <Card title={leftTitle} bordered={bordered} extra={leftExtra} >
                 {child}
               </Card>
@@ -28,14 +28,14 @@ export default class AssignLayout extends PureComponent {
           );
         }
         if (slot === 'center') {
-          return (<Col key={slot} className={cls('layout-col', 'layout-col-center')} span={centerSpan}>
+          return (<Col key={slot} className={cls('layout-col', 'layout-col-center', slotClassName)} span={centerSpan}>
             <div className={cls('opt-wrapper')}>
               {child}
             </div>
           </Col>);
         }
         if (slot === 'right') {
-          return (<Col key={slot} className={cls('layout-col')} span={rightSpan}>
+          return (<Col key={slot} className={cls('layout-col', slotClassName)} span={rightSpan}>
             <Card title={rightTitle} bordered={bordered} extra={rightExtra}>
               {child}
             </Card>

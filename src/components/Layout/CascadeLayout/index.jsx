@@ -16,11 +16,11 @@ export default class CascadeLayout extends PureComponent {
     }
 
     return [].concat(children).map((child) => {
-      const { slot, } = child.props;
+      const { slot, slotClassName } = child.props;
       if (['left', 'right'].includes(slot)) {
         if (slot === 'left') {
           return (
-            <Col key={slot} className={cls('layout-col')} span={leftSpan}>
+            <Col key={slot} className={cls('layout-col', slotClassName)} span={leftSpan}>
               <Card title={leftTitle} bordered={bordered} >
                 {child}
               </Card>
@@ -28,7 +28,7 @@ export default class CascadeLayout extends PureComponent {
           );
         }
         if (slot === 'right') {
-          return (<Col key={slot} className={cls('layout-col', 'layout-col-right')} span={rightSpan}>
+          return (<Col key={slot} className={cls('layout-col', 'layout-col-right', slotClassName)} span={rightSpan}>
             <Card title={rightTitle} bordered={bordered}>
               {child}
             </Card>

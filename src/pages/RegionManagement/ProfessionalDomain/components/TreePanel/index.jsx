@@ -160,6 +160,8 @@ class TreePanel extends Component {
 
   getToolBarProps = () => {
     return {
+      /** 左部占用一行 */
+      rowLeft: true, 
       left: (<Fragment>
         <Button style={{ marginRight: 8}} type="primary" onClick={() => {this.handleTreeOpt('addRootNode')}}>新增根节点</Button>
         <Button.Group onChange={(e) => { this.handleTreeOpt(e.target.value) }} >

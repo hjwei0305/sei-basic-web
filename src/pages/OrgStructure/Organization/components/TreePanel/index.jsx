@@ -6,6 +6,7 @@ import { ToolBar, ScrollBar, ExtIcon, } from 'suid';
 import { cloneDeep, isEqual, } from 'lodash';
 import cls from 'classnames';
 import FormModal from './FormModal';
+import styles from './index.less';
 
 const { TreeNode, } = Tree;
 
@@ -185,6 +186,7 @@ class TreePanel extends Component {
     }).filter((treeNode, i, self) => treeNode);
 
   getToolBarProps = () => ({
+    className: cls(styles['tool-bar-customer-wrapper']),
     left: (<Fragment>
       <Button style={{ marginRight: 8}} type="primary" onClick={this.handleCreate}>创建节点</Button>
       <Popconfirm
