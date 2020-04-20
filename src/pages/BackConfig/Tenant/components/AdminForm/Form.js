@@ -32,7 +32,8 @@ class TenantAdminForm extends PureComponent {
       if (errors) {
         return;
       }
-      const data = Object.assign(tenantAdmin || { tenantCode: code, organizationId: organizationDto.id }, getFieldsValue());
+      const data = Object.assign(tenantAdmin || { organizationId: organizationDto.id }, getFieldsValue());
+      data.tenantCode = code;
       saveTenantAdmin(data, handlerPopoverHide);
     });
   };
