@@ -25,13 +25,14 @@ class TenantAdminForm extends PureComponent {
       tenantAdmin,
       handlerPopoverHide
     } = this.props;
-    const { organizationDto } = tenantData;
+    console.log(tenantData)
+    const { organizationDto, code } = tenantData;
     const { validateFields, getFieldsValue } = form;
     validateFields(errors => {
       if (errors) {
         return;
       }
-      const data = Object.assign(tenantAdmin || { organizationId: organizationDto.id }, getFieldsValue());
+      const data = Object.assign(tenantAdmin || { tenantCode: code, organizationId: organizationDto.id }, getFieldsValue());
       saveTenantAdmin(data, handlerPopoverHide);
     });
   };
