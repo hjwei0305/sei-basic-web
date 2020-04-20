@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { ExtModal, } from 'suid';
-import { DatePicker, Input, } from 'antd';
+import { ExtModal, ScopeDatePicker } from 'suid';
+import { Input, } from 'antd';
 import { Form, } from 'antd';
 import moment from 'moment';
 
-const { RangePicker,} = DatePicker;
 const FormItem = Form.Item;
 const formItemLayout = {
   labelCol: {
@@ -19,6 +18,14 @@ const formItemLayout = {
 @Form.create()
 class CfgModal extends Component {
 
+  checkRange = (_, effectiveRange, callback) => {
+    if ((effectiveRange[0] && effectiveRange[1]) || (!effectiveRange[0] && !effectiveRange[1])) {
+      callback();
+    } else {
+      callback('开始日期和结束日期，必须同时有值或者同时没有值');
+    }
+  }
+
   handleOk = () => {
     const { form, onSave, } = this.props;
     form.validateFields((err, formData) => {
@@ -30,10 +37,10 @@ class CfgModal extends Component {
       let effectiveFrom = null;
       let effectiveTo = null;
       if (effectiveRange && effectiveRange.length) {
-        effectiveFrom = effectiveRange[0].format('YYYY-MM-DD');
-        effectiveTo = effectiveRange[1].format('YYYY-MM-DD');
+        effectiveFrom = effectiveRange[0];
+        effectiveTo = effectiveRange[1];
       }
-      
+
       delete formData.effectiveRange;
       Object.assign(params, formData, { effectiveFrom, effectiveTo, });
       onSave(params);
@@ -44,8 +51,8 @@ class CfgModal extends Component {
     const { visible, saving, form, onCancel, editData, } = this.props;
     const { getFieldDecorator, } = form;
     const { effectiveFrom, effectiveTo, relationId } = editData || {};
-    const tempEffectiveFrom = effectiveFrom ? moment(effectiveFrom) : moment();
-    const tempEffectiveTo = effectiveTo ? moment(effectiveTo) : moment();
+    const tempEffectiveFrom = effectiveFrom ? moment(effectiveFrom).format('YYYY-MM-DD') : moment().format('YYYY-MM-DD');
+    const tempEffectiveTo = effectiveTo ? moment(effectiveTo).format('YYYY-MM-DD') : moment().format('YYYY-MM-DD');
     return (
       <ExtModal
         title="配置有效期"
@@ -58,7 +65,10 @@ class CfgModal extends Component {
           <FormItem label="有效期">
             {getFieldDecorator("effectiveRange", {
               initialValue: [tempEffectiveFrom, tempEffectiveTo],
-            })(<RangePicker format="YYYY-MM-DD" />)}
+              rules: [
+                {validator: this.checkRange}
+              ]
+            })(<ScopeDatePicker />)}
           </FormItem>
           {/*以下为隐藏的formItem*/}
           <FormItem

@@ -148,12 +148,12 @@ class TreeView extends Component {
 
   getToolBarProps = () => {
     const { toolBar = {}, } = this.props;
-    const { layout: customLayout, left = null, } = toolBar;
+    const { layout: customLayout, left = null, rowLeft=false} = toolBar;
     let layout = {
       leftSpan: 0,
       rightSpan: 24,
     };
-    if (left) {
+    if (left && !rowLeft) {
       layout = {
         leftSpan: 12,
         rightSpan: 12,
@@ -163,23 +163,28 @@ class TreeView extends Component {
 
     return {
       layout,
+      className: styles['tool-bar-customer-wrapper'],
       right: (<Search
         placeholder="请输入名称搜索"
         onSearch={this.handleSearch}
         style={{ width: '100%' }}
       />),
-      left,
-      rightClassName: left ? null : cls(styles['tool-bar-right'])
+      left: rowLeft ? null : left,
+      rightClassName: left && !rowLeft ? null : cls('tool-bar-right')
     };
   }
 
   render() {
     const { expandedKeys, autoExpandParent, checkedKeys, selectedKeys, filterTreeData, } = this.state;
-    const { height = '100%' } = this.props;
+    const { height = '100%', toolBar = {},  } = this.props;
+    const { left = null, rowLeft=false} = toolBar;
     return (
       <div style={{ height, }}>
+        {rowLeft && left ? (
+          <div>{left}</div>
+        ) : null}
         <ToolBar {...this.getToolBarProps()} />
-        <div style={{ height: 'calc(100% - 46px)', }}>
+        <div style={{ height: `${rowLeft && left ? 'calc(100% - 78px)': 'calc(100% - 46px)'}`, }}>
           <ScrollBar>
             {filterTreeData && filterTreeData.length ? (
               <Tree

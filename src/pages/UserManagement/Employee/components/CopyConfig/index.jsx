@@ -2,11 +2,14 @@ import React, { Fragment, } from 'react';
 import { connect } from 'dva';
 import { Button, message, } from 'antd';
 import { ExtTable, ComboTree, } from 'suid';
+import cls from 'classnames';
 
 import { constants } from "@/utils";
 import { AssignLayout, ColumnLayout, } from '@/components';
+import styles from './index.less'
 
 const { SERVER_PATH, } = constants;
+
 
 @connect(({ employee, }) => ({ employee, }))
 class CopyConfig extends React.Component {
@@ -220,7 +223,7 @@ class CopyConfig extends React.Component {
         layout={[7, 1, 16]}
         extra={[null, (<Button type="primary" onClick={this.handleBack}>返回</Button>)]}
       >
-        <ExtTable slot="left" onTableRef={inst => this.userTableRef=inst } {...this.getUserExtableProps()} />
+        <ExtTable slot="left" slotClassName={cls(styles['slot-container'])} onTableRef={inst => this.userTableRef=inst } {...this.getUserExtableProps()} />
         <div slot="center">
           <Button
             onClick={this.handleCopy}
@@ -229,7 +232,7 @@ class CopyConfig extends React.Component {
             icon="left"
           />
         </div>
-        <ColumnLayout slot="right" title={['功能角色', '数据角色']} layout={[12, 12]} >
+        <ColumnLayout slot="right" slotClassName={cls(styles['slot-container'])} title={['功能角色', '数据角色']} layout={[12, 12]} >
           <ExtTable slot="left" onTableRef={inst => this.featureRoleTableRef=inst } {...this.getFeatureRoleExtableProps()} />
           <ExtTable slot="right" onTableRef={inst => this.userRoleTableRef=inst } {...this.getUserRoleExtableProps()} />
         </ColumnLayout>

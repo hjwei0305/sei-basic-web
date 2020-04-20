@@ -37,7 +37,7 @@ class Employee extends Component {
           <div style={{ height: '100%', display: !showEmployeeConfig && !showCopyConfig ? '' : 'none', }}>
             <CascadeLayout title={['组织机构', currNode && currNode.name]} layout={[8, 16]}>
               <TreeView slot="left" treeData={treeData} onSelect={this.handleSelect} />
-              { currNode ? (<TablePanel slot="right" />) : (<Empty slot="right" className={cls("empty-wrapper")} description="请选择左边的树节点进行操作" />) }
+              { currNode ? (<TablePanel slotClassName={cls('table-slot-container')} slot="right" />) : (<Empty slot="right" className={cls("empty-wrapper")} description="请选择左边的树节点进行操作" />) }
             </CascadeLayout>
           </div>
           { rowData && showEmployeeConfig ? (<EmployeeConfig style={{ display: showEmployeeConfig ? '' : 'none', }} />) : (null)}

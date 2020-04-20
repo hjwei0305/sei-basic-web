@@ -43,7 +43,7 @@ class Position extends Component {
           <div style={{ height: '100%', display: !showPosionConfig ? '' : 'none', }}>
             <CascadeLayout title={['组织机构', currNode && currNode.name]} layout={[8, 16]}>
               <TreeView slot="left" treeData={treeData} onSelect={this.handleSelect} />
-              { currNode ? (<TablePanel slot="right" />) : (<Empty slot="right" className={cls("empty-wrapper")} description="请选择左边的树节点进行操作" />) }
+              { currNode ? (<TablePanel slot="right" slotClassName={cls('table-slot-container')} />) : (<Empty slot="right" className={cls("empty-wrapper")} description="请选择左边的树节点进行操作" />) }
             </CascadeLayout>
           </div>
           { rowData && showPosionConfig ? (<PostionConfig style={{ display: showPosionConfig ? '' : 'none', }} />) : (null)}

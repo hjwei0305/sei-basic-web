@@ -6,7 +6,7 @@ import styles from './index.less';
 export default class ColumnLayout extends PureComponent {
 
   renderChildren = () => {
-    const { children, title=['左标题', '右标题'], layout=[10, 14] } = this.props;
+    const { children, title=['左标题', '右标题'], layout=[10, 14], } = this.props;
     const [leftTitle, rightTitle,] = title;
     const [leftSpan, rightSpan,] = layout;
     const bordered = false;
@@ -16,11 +16,11 @@ export default class ColumnLayout extends PureComponent {
     }
 
     return [].concat(children).map((child) => {
-      const { slot, } = child.props;
+      const { slot, slotClassName, } = child.props;
       if (['left', 'right'].includes(slot)) {
         if (slot === 'left') {
           return (
-            <Col key={slot} className={cls('layout-col')} span={leftSpan}>
+            <Col key={slot} className={cls('layout-col', slotClassName)} span={leftSpan}>
               <Card title={leftTitle} bordered={bordered} >
                 {child}
               </Card>
@@ -28,7 +28,7 @@ export default class ColumnLayout extends PureComponent {
           );
         }
         if (slot === 'right') {
-          return (<Col key={slot} className={cls('layout-col')} span={rightSpan}>
+          return (<Col key={slot} className={cls('layout-col', slotClassName)} span={rightSpan}>
             <Card title={rightTitle} bordered={bordered}>
               {child}
             </Card>
