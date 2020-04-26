@@ -15,7 +15,7 @@ const formItemLayout = {
 @Form.create()
 class MailInfo extends React.Component {
   handleSave = () => {
-    const { form, dispatch, userProfile} = this.props;
+    const { form, dispatch, userProfile   } = this.props;
     const { mailAlert } = userProfile;
     const user = getCurrentUser();
     form.validateFields((err, formData) => {
