@@ -195,41 +195,41 @@ class FeatureRole extends Component {
                       loading={listLoading}
                       renderItem={(item) => (
                         <List.Item
-                            key={item.id}
-                            onClick={(e) => this.handlerGroupSelect(item, e)}
-                            className={cls({
-                                [cls('row-selected')]: currentRoleGroup && item.id === currentRoleGroup.id,
-                              })}
-                          >
-                            <Skeleton loading={listLoading} active>
-                                <List.Item.Meta
-                                    title={item.name}
-                                    description={item.code}
-                                  />
-                                <div className="desc">{item.appModuleName}</div>
-                                <div className="arrow-box">
-                                    <ExtIcon type="right" antd />
-                                  </div>
-                              </Skeleton>
-                            <div className="tool-action" onClick={(e) => e.stopPropagation()}>
-                                <RoleGroupEdit
-                                    saving={saving}
-                                    saveRoleGroup={this.saveRoleGroup}
-                                    groupData={item}
-                                  />
-                                <Popconfirm
-                                    placement="topLeft"
-                                    title={formatMessage({ id: 'global.delete.confirm', defaultMessage: '确定要删除吗？提示：删除后不可恢复' })}
-                                    onConfirm={(e) => this.delRoleGroup(item, e)}
-                                  >
-                                    {
+                          key={item.id}
+                          onClick={(e) => this.handlerGroupSelect(item, e)}
+                          className={cls({
+                            [cls('row-selected')]: currentRoleGroup && item.id === currentRoleGroup.id,
+                          })}
+                        >
+                          <Skeleton loading={listLoading} active>
+                            <List.Item.Meta
+                              title={item.name}
+                              description={item.code}
+                            />
+                            <div className="desc">{item.appModuleName}</div>
+                            <div className="arrow-box">
+                              <ExtIcon type="right" antd />
+                            </div>
+                          </Skeleton>
+                          <div className="tool-action" onClick={(e) => e.stopPropagation()}>
+                            <RoleGroupEdit
+                              saving={saving}
+                              saveRoleGroup={this.saveRoleGroup}
+                              groupData={item}
+                            />
+                            <Popconfirm
+                              placement="topLeft"
+                              title={formatMessage({ id: 'global.delete.confirm', defaultMessage: '确定要删除吗？提示：删除后不可恢复' })}
+                              onConfirm={(e) => this.delRoleGroup(item, e)}
+                            >
+                              {
                                                             loading.effects['featureRoleGroup/delRoleGroup'] && delGroupId === item.id
                                                               ? <ExtIcon className={cls('del', 'action-item')} type="loading" antd />
                                                               : <ExtIcon className={cls('del', 'action-item')} type="delete" antd />
                                                         }
-                                  </Popconfirm>
-                              </div>
-                          </List.Item>
+                            </Popconfirm>
+                          </div>
+                        </List.Item>
                       )}
                     />
                   </ScrollBar>

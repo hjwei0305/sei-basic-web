@@ -243,50 +243,50 @@ class Tenant extends Component {
                       loading={listLoading}
                       renderItem={(item) => (
                         <List.Item
-                            key={item.id}
-                            onClick={(e) => this.handlerGroupSelect(item, e)}
-                            className={cls({
-                                [cls('row-selected')]: currentTenant && item.id === currentTenant.id,
-                              })}
-                          >
-                            <Skeleton loading={listLoading} active>
-                                <List.Item.Meta
-                                    title={item.name}
-                                    description={item.code}
-                                  />
-                                <div className="desc">
-                                    {
+                          key={item.id}
+                          onClick={(e) => this.handlerGroupSelect(item, e)}
+                          className={cls({
+                            [cls('row-selected')]: currentTenant && item.id === currentTenant.id,
+                          })}
+                        >
+                          <Skeleton loading={listLoading} active>
+                            <List.Item.Meta
+                              title={item.name}
+                              description={item.code}
+                            />
+                            <div className="desc">
+                              {
                                                             item.frozen
                                                               ? <Tag color="red">已冻结</Tag>
                                                               : null
                                                         }
-                                  </div>
-                                <div className="arrow-box">
-                                    <ExtIcon type="right" antd />
-                                  </div>
-                              </Skeleton>
-                            <div className="tool-action" onClick={(e) => e.stopPropagation()}>
-                                <TenantEdit
-                                    saving={saving}
-                                    saveTenant={this.saveTenant}
-                                    tenantRootOrganization={item.organizationDto}
-                                    tenantData={item}
-                                  />
-                                <Popconfirm
-                                    title={formatMessage({ id: 'global.delete.confirm', defaultMessage: '确定要删除吗？提示：删除后不可恢复' })}
-                                    onConfirm={(e) => this.delTenant(item, e)}
-                                  >
-                                    {
+                            </div>
+                            <div className="arrow-box">
+                              <ExtIcon type="right" antd />
+                            </div>
+                          </Skeleton>
+                          <div className="tool-action" onClick={(e) => e.stopPropagation()}>
+                            <TenantEdit
+                              saving={saving}
+                              saveTenant={this.saveTenant}
+                              tenantRootOrganization={item.organizationDto}
+                              tenantData={item}
+                            />
+                            <Popconfirm
+                              title={formatMessage({ id: 'global.delete.confirm', defaultMessage: '确定要删除吗？提示：删除后不可恢复' })}
+                              onConfirm={(e) => this.delTenant(item, e)}
+                            >
+                              {
                                                             loading.effects['tenant/delTenant'] && delTenantId === item.id
                                                               ? <ExtIcon className={cls('del', 'action-item')} type="loading" antd />
                                                               : <ExtIcon className={cls('del', 'action-item')} type="delete" antd />
                                                         }
-                                  </Popconfirm>
-                                {
+                            </Popconfirm>
+                            {
                                                         this.renderAdmin(item)
                                                     }
-                              </div>
-                          </List.Item>
+                          </div>
+                        </List.Item>
                       )}
                     />
                   </ScrollBar>

@@ -241,43 +241,43 @@ class Role extends Component {
                       loading={listLoading}
                       renderItem={(item) => (
                         <List.Item
-                            key={item.id}
-                            onClick={(e) => this.handlerRoleSelect(item, e)}
-                            className={cls({
-                                [cls('row-selected')]: currentRole && item.id === currentRole.id,
-                              })}
-                          >
-                            <Skeleton avatar loading={listLoading} active>
-                                <List.Item.Meta
-                                    avatar={<Avatar icon="user" shape="square" />}
-                                    title={this.renderName(item)}
-                                    description={this.renderDescription(item)}
-                                  />
-                                <div className="desc">{item.roleTypeRemark}</div>
-                                <div className="arrow-box">
-                                    <ExtIcon type="right" antd />
-                                  </div>
-                              </Skeleton>
-                            <div className="tool-action" onClick={(e) => e.stopPropagation()}>
-                                <RoleEdit
-                                    currentRoleGroup={currentRoleGroup}
-                                    saving={saving}
-                                    saveFeatureRole={this.saveFeatureRole}
-                                    roleData={item}
-                                  />
-                                <Popconfirm
-                                    title={formatMessage({ id: 'global.delete.confirm', defaultMessage: '确定要删除吗？提示：删除后不可恢复' })}
-                                    onConfirm={(e) => this.delFeatureRole(item, e)}
-                                  >
-                                    {
+                          key={item.id}
+                          onClick={(e) => this.handlerRoleSelect(item, e)}
+                          className={cls({
+                            [cls('row-selected')]: currentRole && item.id === currentRole.id,
+                          })}
+                        >
+                          <Skeleton avatar loading={listLoading} active>
+                            <List.Item.Meta
+                              avatar={<Avatar icon="user" shape="square" />}
+                              title={this.renderName(item)}
+                              description={this.renderDescription(item)}
+                            />
+                            <div className="desc">{item.roleTypeRemark}</div>
+                            <div className="arrow-box">
+                              <ExtIcon type="right" antd />
+                            </div>
+                          </Skeleton>
+                          <div className="tool-action" onClick={(e) => e.stopPropagation()}>
+                            <RoleEdit
+                              currentRoleGroup={currentRoleGroup}
+                              saving={saving}
+                              saveFeatureRole={this.saveFeatureRole}
+                              roleData={item}
+                            />
+                            <Popconfirm
+                              title={formatMessage({ id: 'global.delete.confirm', defaultMessage: '确定要删除吗？提示：删除后不可恢复' })}
+                              onConfirm={(e) => this.delFeatureRole(item, e)}
+                            >
+                              {
                                                             loading.effects['featureRole/delFeatureRole'] && delRoleId === item.id
                                                               ? <ExtIcon className={cls('del', 'action-item')} type="loading" antd />
                                                               : <ExtIcon className={cls('del', 'action-item')} type="delete" antd />
                                                         }
-                                  </Popconfirm>
-                                <ExtAction roleData={item} />
-                              </div>
-                          </List.Item>
+                            </Popconfirm>
+                            <ExtAction roleData={item} />
+                          </div>
+                        </List.Item>
                       )}
                     />
                   </ScrollBar>
