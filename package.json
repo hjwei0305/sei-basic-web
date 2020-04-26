@@ -53,7 +53,6 @@
     "eslint-tinker": "^0.5.0",
     "husky": "^4.2.5",
     "prettier": "^1.17.1",
-    "pretty-quick": "^2.0.1",
     "react-test-renderer": "^16.7.0",
     "sei-tools": "^1.0.10",
     "umi": "^2.7.7"

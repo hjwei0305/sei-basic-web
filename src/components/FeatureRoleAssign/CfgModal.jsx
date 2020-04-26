@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { omit } from 'loadsh';
+import { omit } from 'lodash';
+import moment from 'moment';
 import { ExtModal, ScopeDatePicker } from 'suid';
 import { Input, Form } from 'antd';
-
-import moment from 'moment';
 
 const FormItem = Form.Item;
 const formItemLayout = {

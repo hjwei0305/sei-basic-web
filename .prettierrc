@@ -2,10 +2,18 @@
   "singleQuote": true,
   "trailingComma": "all",
   "printWidth": 100,
+  "semi": true,
+  "bracketSpacing": true,
+  "jsxBracketSameLine": false,
+  "arrowParens": "avoid",
+  "requirePragma": false,
+  "proseWrap": "preserve",
   "overrides": [
     {
       "files": ".prettierrc",
-      "options": { "parser": "json" }
+      "options": {
+        "parser": "json"
+      }
     }
   ]
 }
