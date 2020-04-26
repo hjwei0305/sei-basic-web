@@ -59,7 +59,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn pretty-quick --staged"
+      "pre-commit": "npm run pretty-quick --staged"
     }
   },
   "optionalDependencies": {
