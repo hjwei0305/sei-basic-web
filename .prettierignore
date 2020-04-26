@@ -12,7 +12,10 @@ yarn.lock
 .stylelintrc.js
 dist
 public
+docker
 node_modules
+.env
+.idea
 .gitignore
 .npmignore
 .prettierignore
