@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'dva';
 import cls from 'classnames';
-import { Tabs, Button, } from 'antd';
-import { constants } from "@/utils";
+import { Tabs, Button } from 'antd';
+import { constants } from '@/utils';
 import DataRoleAssign from '@/components/DataRoleAssign';
 import FeatureRoleAssign from '@/components/FeatureRoleAssign';
 import PositionConfig from './PositionConfig';
@@ -12,11 +12,10 @@ import styles from './index.less';
 const { SERVER_PATH } = constants;
 const { TabPane } = Tabs;
 
-@connect(({ employee, loading, }) => ({ employee, loading, }))
+@connect(({ employee, loading }) => ({ employee, loading }))
 class PostionConfig extends React.Component {
-
   handleAssign = (type, params) => {
-    const { dispatch, } = this.props;
+    const { dispatch } = this.props;
     // switch (type) {
     //   case 'Employee':
     //     break;
@@ -28,21 +27,21 @@ class PostionConfig extends React.Component {
 
     return dispatch({
       type: `employee/assign${type}`,
-      payload: params
+      payload: params,
     });
   }
 
   handleUnAssign = (type, params) => {
-    const { dispatch, } = this.props;
+    const { dispatch } = this.props;
 
     return dispatch({
       type: `employee/unAssign${type}`,
-      payload: params
+      payload: params,
     });
   }
 
   handleSaveCfg = (params) => {
-    const { dispatch, } = this.props;
+    const { dispatch } = this.props;
     return dispatch({
       type: 'employee/saveCfg',
       payload: params,
@@ -50,7 +49,7 @@ class PostionConfig extends React.Component {
   }
 
   handleSaveDataRoleCfg = (params) => {
-    const { dispatch, } = this.props;
+    const { dispatch } = this.props;
     return dispatch({
       type: 'employee/saveDataRoleCfg',
       payload: params,
@@ -58,24 +57,22 @@ class PostionConfig extends React.Component {
   }
 
   handleBack = () => {
-    const { dispatch, } = this.props;
+    const { dispatch } = this.props;
     dispatch({
-      type: "employee/updateState",
+      type: 'employee/updateState',
       payload: {
         showEmployeeConfig: false,
-      }
+      },
     });
   }
 
-  getTabExtra = () => {
-    return (
-      <Button type="primary" onClick={this.handleBack}>返回</Button>
-    );
-  }
+  getTabExtra = () => (
+    <Button type="primary" onClick={this.handleBack}>返回</Button>
+  )
 
   render() {
-    const { style, employee, loading, } = this.props;
-    const { rowData, } = employee;
+    const { style, employee, loading } = this.props;
+    const { rowData } = employee;
 
     return (
       <div className={cls(styles['page-box'])} style={style}>
@@ -90,10 +87,8 @@ class PostionConfig extends React.Component {
           <TabPane tab={`【${rowData.userName}】配置功能角色`} key="2">
             <FeatureRoleAssign
               data={rowData}
-              cfged={true}
-              onSaveCfg={(data) => {
-                return this.handleSaveCfg(data);
-              }}
+              cfged
+              onSaveCfg={(data) => this.handleSaveCfg(data)}
               cfgLoading={loading.effects['employee/saveCfg']}
               onAssign={(params) => this.handleAssign('FeatureRole', params)}
               onUnAssign={(params) => this.handleUnAssign('FeatureRole', params)}
@@ -102,16 +97,14 @@ class PostionConfig extends React.Component {
                 unAssignedByIdUrl: `${SERVER_PATH}/sei-basic/employee/getCanAssignedFeatureRoles`,
                 byIdKey: 'userId',
               }}
-              assginCfg={{ url: `${SERVER_PATH}/sei-basic/userFeatureRole/getChildrenFromParentId`, }}
+              assginCfg={{ url: `${SERVER_PATH}/sei-basic/userFeatureRole/getChildrenFromParentId` }}
             />
           </TabPane>
           <TabPane tab={`【${rowData.userName}】配置数据角色`} key="3">
             <DataRoleAssign
               data={rowData}
-              cfged={true}
-              onSaveCfg={(data) => {
-                return this.handleSaveDataRoleCfg(data);
-              }}
+              cfged
+              onSaveCfg={(data) => this.handleSaveDataRoleCfg(data)}
               cfgLoading={loading.effects['employee/saveDataRoleCfg']}
               onAssign={(params) => this.handleAssign('DataRole', params)}
               onUnAssign={(params) => this.handleUnAssign('DataRole', params)}
@@ -120,7 +113,7 @@ class PostionConfig extends React.Component {
                 unAssignedByIdUrl: `${SERVER_PATH}/sei-basic/employee/getCanAssignedDataRoles`,
                 byIdKey: 'userId',
               }}
-              assginCfg={{ url: `${SERVER_PATH}/sei-basic/userDataRole/getChildrenFromParentId`, }}
+              assginCfg={{ url: `${SERVER_PATH}/sei-basic/userDataRole/getChildrenFromParentId` }}
             />
           </TabPane>
         </Tabs>

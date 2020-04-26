@@ -1,9 +1,8 @@
-import React, { PureComponent } from "react";
+import React, { PureComponent } from 'react';
 import { ExtModal } from 'suid';
 import TreeView from '@/components/TreeView';
 
 class MoveTreeModal extends PureComponent {
-
   render() {
     const { visible, onCancel, onChange, treeData, onMove, title } = this.props;
     return (
@@ -15,10 +14,10 @@ class MoveTreeModal extends PureComponent {
         maskClosable={false}
         title={title}
         onOk={onMove}
-        okText='移动'
+        okText="移动"
         width={400}
       >
-        <TreeView height={300} onChange={onChange} treeData={treeData}/>
+        <TreeView height={300} onChange={onChange} treeData={treeData} />
       </ExtModal>
     );
   }

@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Tabs, Button, } from 'antd';
-import { constants } from "@/utils";
+import { Tabs, Button } from 'antd';
 import cls from 'classnames';
+import { constants } from '@/utils';
 import DataRoleAssign from '@/components/DataRoleAssign';
 import FeatureRoleAssign from '@/components/FeatureRoleAssign';
 
@@ -11,11 +11,10 @@ import styles from './index.less';
 const { SERVER_PATH } = constants;
 const { TabPane } = Tabs;
 
-@connect(({ expertUser, loading, }) => ({ expertUser, loading, }))
+@connect(({ expertUser, loading }) => ({ expertUser, loading }))
 class ExpertUserConfig extends React.PureComponent {
-
   handleAssign = (type, params) => {
-    const { dispatch, } = this.props;
+    const { dispatch } = this.props;
     // switch (type) {
     //   case 'DataRole':
     //     break;
@@ -25,38 +24,36 @@ class ExpertUserConfig extends React.PureComponent {
 
     return dispatch({
       type: `expertUser/assign${type}`,
-      payload: params
+      payload: params,
     });
   }
 
   handleUnAssign = (type, params) => {
-    const { dispatch, } = this.props;
+    const { dispatch } = this.props;
 
     return dispatch({
       type: `expertUser/unAssign${type}`,
-      payload: params
+      payload: params,
     });
   }
 
   handleBack = () => {
-    const { dispatch, } = this.props;
+    const { dispatch } = this.props;
     dispatch({
-      type: "expertUser/updateState",
+      type: 'expertUser/updateState',
       payload: {
         showConfig: false,
-      }
+      },
     });
   }
 
-  getTabExtra = () => {
-    return (
-      <Button onClick={this.handleBack}>返回</Button>
-    );
-  }
+  getTabExtra = () => (
+    <Button onClick={this.handleBack}>返回</Button>
+  )
 
   render() {
-    const { style, expertUser, } = this.props;
-    const { rowData, } = expertUser;
+    const { style, expertUser } = this.props;
+    const { rowData } = expertUser;
 
     return (
       <div className={cls(styles['page-box'])} style={style}>
@@ -71,7 +68,7 @@ class ExpertUserConfig extends React.PureComponent {
                 unAssignedByIdUrl: `${SERVER_PATH}/sei-basic/employee/getCanAssignedFeatureRoles`,
                 byIdKey: 'userId',
               }}
-              assginCfg={{ url: `${SERVER_PATH}/sei-basic/userFeatureRole/getChildrenFromParentId`, }}
+              assginCfg={{ url: `${SERVER_PATH}/sei-basic/userFeatureRole/getChildrenFromParentId` }}
             />
           </TabPane>
           <TabPane tab={`【${rowData.name}】配置用户角色`} key="2">
@@ -84,7 +81,7 @@ class ExpertUserConfig extends React.PureComponent {
                 unAssignedByIdUrl: `${SERVER_PATH}/sei-basic/employee/getCanAssignedDataRoles`,
                 byIdKey: 'userId',
               }}
-              assginCfg={{ url: `${SERVER_PATH}/sei-basic/userDataRole/getChildrenFromParentId`, }}
+              assginCfg={{ url: `${SERVER_PATH}/sei-basic/userDataRole/getChildrenFromParentId` }}
             />
           </TabPane>
         </Tabs>

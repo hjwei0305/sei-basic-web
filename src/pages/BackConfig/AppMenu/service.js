@@ -5,12 +5,12 @@ const { request } = utils;
 
 const { SERVER_PATH } = constants;
 
-/** 获取所有菜单*/
+/** 获取所有菜单 */
 export async function getMenuList(params) {
   const url = `${SERVER_PATH}/sei-basic/menu/getMenuTree`;
   return request({
     url,
-    method: "GET",
+    method: 'GET',
     params,
   });
 }
@@ -20,7 +20,7 @@ export async function save(data) {
   const url = `${SERVER_PATH}/sei-basic/menu/save`;
   return request({
     url,
-    method: "POST",
+    method: 'POST',
     data,
   });
 }
@@ -30,7 +30,7 @@ export async function del(params) {
   const url = `${SERVER_PATH}/sei-basic/menu/delete/${params.id}`;
   return request({
     url,
-    method: "DELETE",
+    method: 'DELETE',
   });
 }
 
@@ -39,7 +39,7 @@ export async function move(data) {
   const url = `${SERVER_PATH}/sei-basic/menu/move`;
   return request({
     url,
-    method: "POST",
+    method: 'POST',
     data,
   });
 }

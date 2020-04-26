@@ -1,23 +1,22 @@
 import React, { Component } from 'react';
 import { ExtModal, ScopeDatePicker } from 'suid';
-import { Input, } from 'antd';
-import { Form, } from 'antd';
+import { Input  Form, } from 'antd';
+
 import moment from 'moment';
 
 const FormItem = Form.Item;
 const formItemLayout = {
   labelCol: {
-    span: 6
+    span: 6,
   },
   wrapperCol: {
-    span: 18
-  }
+    span: 18,
+  },
 };
 
 
 @Form.create()
 class CfgModal extends Component {
-
   checkRange = (_, effectiveRange, callback) => {
     if ((effectiveRange[0] && effectiveRange[1]) || (!effectiveRange[0] && !effectiveRange[1])) {
       callback();
@@ -27,13 +26,13 @@ class CfgModal extends Component {
   }
 
   handleOk = () => {
-    const { form, onSave, } = this.props;
+    const { form, onSave } = this.props;
     form.validateFields((err, formData) => {
       if (err) {
         return;
       }
       const params = {};
-      const { effectiveRange, } = formData;
+      const { effectiveRange } = formData;
       let effectiveFrom = null;
       let effectiveTo = null;
       if (effectiveRange && effectiveRange.length) {
@@ -42,14 +41,14 @@ class CfgModal extends Component {
       }
 
       delete formData.effectiveRange;
-      Object.assign(params, formData, { effectiveFrom, effectiveTo, });
+      Object.assign(params, formData, { effectiveFrom, effectiveTo });
       onSave(params);
     });
   }
 
   render() {
-    const { visible, saving, form, onCancel, editData, } = this.props;
-    const { getFieldDecorator, } = form;
+    const { visible, saving, form, onCancel, editData } = this.props;
+    const { getFieldDecorator } = form;
     const { effectiveFrom, effectiveTo, relationId } = editData || {};
     const tempEffectiveFrom = effectiveFrom ? moment(effectiveFrom).format('YYYY-MM-DD') : moment().format('YYYY-MM-DD');
     const tempEffectiveTo = effectiveTo ? moment(effectiveTo).format('YYYY-MM-DD') : moment().format('YYYY-MM-DD');
@@ -61,23 +60,24 @@ class CfgModal extends Component {
         onOk={this.handleOk}
         onCancel={onCancel}
       >
-         <Form {...formItemLayout} layout="horizontal" >
-          <FormItem label="有效期">
-            {getFieldDecorator("effectiveRange", {
+        <Form {...formItemLayout} layout="horizontal">
+           <FormItem label="有效期">
+            {getFieldDecorator('effectiveRange', {
               initialValue: [tempEffectiveFrom, tempEffectiveTo],
               rules: [
-                {validator: this.checkRange}
-              ]
+                { validator: this.checkRange },
+              ],
             })(<ScopeDatePicker />)}
           </FormItem>
-          {/*以下为隐藏的formItem*/}
-          <FormItem
-            style={{display: "none"}}>
+           {/* 以下为隐藏的formItem */}
+           <FormItem
+            style={{ display: 'none'}}
+          >
             {getFieldDecorator('id', {
               initialValue: relationId,
             })(<Input />)}
           </FormItem>
-        </Form>
+         </Form>
       </ExtModal>
     );
   }

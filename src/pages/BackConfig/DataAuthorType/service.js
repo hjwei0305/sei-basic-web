@@ -5,12 +5,12 @@ const { request } = utils;
 
 const { SERVER_PATH } = constants;
 
-/** 获取数据权限类型列表*/
+/** 获取数据权限类型列表 */
 export async function getList(params) {
   const url = `${SERVER_PATH}/sei-basic/dataAuthorizeType/findAll`;
   return request({
     url,
-    method: "GET",
+    method: 'GET',
     params,
   });
 }
@@ -20,7 +20,7 @@ export async function save(data) {
   const url = `${SERVER_PATH}/sei-basic/dataAuthorizeType/save`;
   return request({
     url,
-    method: "POST",
+    method: 'POST',
     data,
   });
 }
@@ -30,6 +30,6 @@ export async function del(params) {
   const url = `${SERVER_PATH}/sei-basic/dataAuthorizeType/delete/${params.id}`;
   return request({
     url,
-    method: "DELETE",
+    method: 'DELETE',
   });
 }

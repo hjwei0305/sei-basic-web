@@ -1,12 +1,12 @@
-import React, { PureComponent } from "react";
-import md5 from "md5";
-import { connect } from "dva";
-import withRouter from "umi/withRouter";
-import { formatMessage } from 'umi-plugin-react/locale'
-import { Button, Form, Input, Select } from "antd";
+import React, { PureComponent } from 'react';
+import md5 from 'md5';
+import { connect } from 'dva';
+import withRouter from 'umi/withRouter';
+import { formatMessage } from 'umi-plugin-react/locale';
+import { Button, Form, Input, Select } from 'antd';
 import { utils, ExtIcon } from 'suid';
-import { title } from '../../../package.json'
-import styles from "./index.less";
+import { title } from '../../../package.json';
+import styles from './index.less';
 
 const { Item } = Form;
 const { Option } = Select;
@@ -15,7 +15,6 @@ const { Option } = Select;
 @connect(({ global, loading }) => ({ global, loading }))
 @Form.create()
 class LoginForm extends PureComponent {
-
   static loginReqId = '';
 
   componentDidMount() {
@@ -28,14 +27,14 @@ class LoginForm extends PureComponent {
     e.preventDefault();
     this.props.form.validateFields((err, user) => {
       if (!err) {
-        const { dispatch, } = this.props;
+        const { dispatch } = this.props;
         user.password = md5(user.password);
         user.reqId = this.loginReqId;
         dispatch({
-          type: "global/login",
+          type: 'global/login',
           payload: {
-            ...user
-          }
+            ...user,
+          },
         });
       }
     });
@@ -54,11 +53,11 @@ class LoginForm extends PureComponent {
   handlerLocaleChange = (locale) => {
     const { dispatch } = this.props;
     dispatch({
-      type: "global/changeLocale",
+      type: 'global/changeLocale',
       payload: {
-        locale
-      }
-    })
+        locale,
+      },
+    });
   };
 
   render() {
@@ -66,55 +65,60 @@ class LoginForm extends PureComponent {
     const { getFieldDecorator } = form;
     const { showTenant, locale, verifyCode, showVertifCode } = global;
     return (
-      <div className={styles["login-form"]}>
-        <div className={"login-form"}>
+      <div className={styles['login-form']}>
+        <div className="login-form">
           <div className="login-logo">
-            <div className="login-name">{title}-用户登录</div>
+            <div className="login-name">
+              {title}
+-用户登录
+            </div>
           </div>
-          <Form style={{ maxWidth: "300px" }}>
+          <Form style={{ maxWidth: '300px' }}>
             {
-              showTenant && <Item>
+              showTenant && (
+              <Item>
                 {
-                  getFieldDecorator("tenant", {
-                    rules: [{ required: false, message: formatMessage({ id: "login.tenant.required", defaultMessage: "请输入租户账号" }) }]
+                  getFieldDecorator('tenant', {
+                    rules: [{ required: false, message: formatMessage({ id: 'login.tenant.required', defaultMessage: '请输入租户账号' }) }],
                   })(
                     <Input
                       autoFocus="autoFocus"
                       size="large"
-                      prefix={<ExtIcon antd type="safety" style={{ color: "rgba(0,0,0,.25)" }} />}
+                      prefix={<ExtIcon antd type="safety" style={{ color: 'rgba(0,0,0,.25)' }} />}
                       placeholder="租户账号"
-                    />
+                    />,
                   )
                 }
               </Item>
+              )
             }
             <Item>
               {
-                getFieldDecorator("account", {
-                  rules: [{ required: true, message: formatMessage({ id: "login.account.required", defaultMessage: "请输入用户名" }) }]
+                getFieldDecorator('account', {
+                  rules: [{ required: true, message: formatMessage({ id: 'login.account.required', defaultMessage: '请输入用户名' }) }],
                 })(
                   <Input
                     ref={(inst) => {
                       this.userInput = inst;
                     }}
                     size="large"
-                    prefix={<ExtIcon antd type="user" style={{ color: "rgba(0,0,0,.25)" }} />}
-                    placeholder={formatMessage({ id: "login.account", defaultMessage: "用户名" })}
-                  />
+                    prefix={<ExtIcon antd type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                    placeholder={formatMessage({ id: 'login.account', defaultMessage: '用户名' })}
+                  />,
                 )
               }
             </Item>
             <Item>
               {
-                getFieldDecorator("password", {
-                  rules: [{ required: true, message: "请输入密码!" }]
+                getFieldDecorator('password', {
+                  rules: [{ required: true, message: '请输入密码!' }],
                 })(
                   <Input
-                    prefix={<ExtIcon antd type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
+                    prefix={<ExtIcon antd type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
                     size="large"
                     type="password"
                     placeholder="密码"
-                  />
+                  />,
                 )
               }
             </Item>
@@ -134,10 +138,10 @@ class LoginForm extends PureComponent {
                       <Input
                         size="large"
                         disabled={loading.global}
-                        prefix={<ExtIcon antd type="code" style={{ color: "rgba(0,0,0,.25)" }} />}
+                        prefix={<ExtIcon antd type="code" style={{ color: 'rgba(0,0,0,.25)' }} />}
                         placeholder="验证码"
                         addonAfter={<img alt="验证码" onClick={this.handleVertify} src={verifyCode} />}
-                      />
+                      />,
                     )}
                   </Item>
                 )
@@ -145,14 +149,14 @@ class LoginForm extends PureComponent {
             }
             <Item>
               {
-                getFieldDecorator("locale", {
+                getFieldDecorator('locale', {
                   initialValue: locale,
-                  rules: [{ required: true }]
+                  rules: [{ required: true }],
                 })(
                   <Select size="large" onChange={this.handlerLocaleChange}>
-                    <Option value='zh-CN'>简体中文</Option>
-                    <Option value='en-US'>English</Option>
-                  </Select>
+                    <Option value="zh-CN">简体中文</Option>
+                    <Option value="en-US">English</Option>
+                  </Select>,
                 )
               }
             </Item>
@@ -163,7 +167,7 @@ class LoginForm extends PureComponent {
                 size="large"
                 className="login-form-button"
                 onClick={this.handlerSubmit}
-                style={{ width: "100%" }}
+                style={{ width: '100%' }}
                 loading={loading.global}
               >
                 登录

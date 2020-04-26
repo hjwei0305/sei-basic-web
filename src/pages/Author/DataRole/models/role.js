@@ -1,3 +1,6 @@
+import { message } from 'antd';
+import { formatMessage } from 'umi-plugin-react/locale';
+import { utils } from 'suid';
 import {
   delDataRole,
   saveDataRole,
@@ -8,16 +11,13 @@ import {
   getUnassignedAuthTreeDataList,
   saveAssignRelations,
   removeAssignRelations,
-} from "../service";
-import { message } from "antd";
-import { formatMessage } from "umi-plugin-react/locale";
-import { utils } from 'suid';
+} from '../service';
 
 const { dvaModel } = utils;
 const { modelExtend, model } = dvaModel;
 
 export default modelExtend(model, {
-  namespace: "dataRole",
+  namespace: 'dataRole',
 
   state: {
     listData: [],
@@ -30,10 +30,10 @@ export default modelExtend(model, {
       const re = yield call(getDataRoleList, payload);
       if (re.success) {
         yield put({
-          type: "updateState",
+          type: 'updateState',
           payload: {
-            listData: re.data
-          }
+            listData: re.data,
+          },
         });
       } else {
         message.error(re.message);
@@ -43,7 +43,7 @@ export default modelExtend(model, {
       const re = yield call(saveDataRole, payload);
       message.destroy();
       if (re.success) {
-        message.success(formatMessage({ id: "global.save-success", defaultMessage: "保存成功" }));
+        message.success(formatMessage({ id: 'global.save-success', defaultMessage: '保存成功' }));
       } else {
         message.error(re.message);
       }
@@ -55,12 +55,12 @@ export default modelExtend(model, {
       const re = yield call(delDataRole, payload);
       message.destroy();
       if (re.success) {
-        message.success(formatMessage({ id: "global.delete-success", defaultMessage: "删除成功" }));
+        message.success(formatMessage({ id: 'global.delete-success', defaultMessage: '删除成功' }));
         yield put({
-          type: "updateState",
+          type: 'updateState',
           payload: {
             currentRole: null,
-          }
+          },
         });
       } else {
         message.error(re.message);
@@ -73,7 +73,7 @@ export default modelExtend(model, {
       const re = yield call(saveAssignRelations, payload);
       message.destroy();
       if (re.success) {
-        message.success(formatMessage({ id: "global.assign-success", defaultMessage: "分配成功" }));
+        message.success(formatMessage({ id: 'global.assign-success', defaultMessage: '分配成功' }));
       } else {
         message.error(re.message);
       }
@@ -85,7 +85,7 @@ export default modelExtend(model, {
       const re = yield call(removeAssignRelations, payload);
       message.destroy();
       if (re.success) {
-        message.success(formatMessage({ id: "global.remove-success", defaultMessage: "移除成功" }));
+        message.success(formatMessage({ id: 'global.remove-success', defaultMessage: '移除成功' }));
       } else {
         message.error(re.message);
       }
@@ -97,10 +97,10 @@ export default modelExtend(model, {
       const re = yield call(getAssignedAuthDataList, payload);
       if (re.success) {
         yield put({
-          type: "updateState",
+          type: 'updateState',
           payload: {
-            assignData: re.data
-          }
+            assignData: re.data,
+          },
         });
       } else {
         message.error(re.message);
@@ -110,10 +110,10 @@ export default modelExtend(model, {
       const re = yield call(getUnassignedAuthDataList, payload);
       if (re.success) {
         yield put({
-          type: "updateState",
+          type: 'updateState',
           payload: {
-            unAssignData: re.data
-          }
+            unAssignData: re.data,
+          },
         });
       } else {
         message.error(re.message);
@@ -123,10 +123,10 @@ export default modelExtend(model, {
       const re = yield call(getAssignedAuthTreeDataList, payload);
       if (re.success) {
         yield put({
-          type: "updateState",
+          type: 'updateState',
           payload: {
-            assignData: re.data
-          }
+            assignData: re.data,
+          },
         });
       } else {
         message.error(re.message);
@@ -136,14 +136,14 @@ export default modelExtend(model, {
       const re = yield call(getUnassignedAuthTreeDataList, payload);
       if (re.success) {
         yield put({
-          type: "updateState",
+          type: 'updateState',
           payload: {
-            unAssignData: re.data
-          }
+            unAssignData: re.data,
+          },
         });
       } else {
         message.error(re.message);
       }
     },
-  }
+  },
 });

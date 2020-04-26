@@ -1,13 +1,13 @@
-import { del, getMenuList, save, move } from "./service";
-import { message } from "antd";
-import { formatMessage } from "umi-plugin-react/locale";
+import { message } from 'antd';
+import { formatMessage } from 'umi-plugin-react/locale';
 import { utils } from 'suid';
+import { del, getMenuList, save, move } from './service';
 
 const { pathMatchRegexp, dvaModel } = utils;
 const { modelExtend, model } = dvaModel;
 
 export default modelExtend(model, {
-  namespace: "appMenu",
+  namespace: 'appMenu',
 
   state: {
     treeData: [],
@@ -16,26 +16,26 @@ export default modelExtend(model, {
   },
   subscriptions: {
     setup({ dispatch, history }) {
-      history.listen(location => {
-        if (pathMatchRegexp("/backConfig/appMenu", location.pathname)) {
+      history.listen((location) => {
+        if (pathMatchRegexp('/backConfig/appMenu', location.pathname)) {
           dispatch({
-            type: "getMenuList"
+            type: 'getMenuList',
           });
         }
       });
-    }
+    },
   },
   effects: {
     * getMenuList({ payload }, { call, put, select }) {
-      const { currentNode } = yield select(s => s.appMenu);
+      const { currentNode } = yield select((s) => s.appMenu);
       const re = yield call(getMenuList, payload);
       if (re.success) {
         yield put({
-          type: "updateState",
+          type: 'updateState',
           payload: {
             treeData: re.data,
             currentNode,
-          }
+          },
         });
       } else {
         message.error(re.message);
@@ -45,12 +45,12 @@ export default modelExtend(model, {
       const re = yield call(save, payload);
       message.destroy();
       if (re.success) {
-        message.success(formatMessage({ id: "global.save-success", defaultMessage: "保存成功" }));
+        message.success(formatMessage({ id: 'global.save-success', defaultMessage: '保存成功' }));
         yield put({
-          type: "updateState",
+          type: 'updateState',
           payload: {
             currentNode: re.data,
-          }
+          },
         });
       } else {
         message.error(re.message);
@@ -63,12 +63,12 @@ export default modelExtend(model, {
       const re = yield call(del, payload);
       message.destroy();
       if (re.success) {
-        message.success(formatMessage({ id: "global.delete-success", defaultMessage: "删除成功" }));
+        message.success(formatMessage({ id: 'global.delete-success', defaultMessage: '删除成功' }));
         yield put({
-          type: "updateState",
+          type: 'updateState',
           payload: {
             currentNode: null,
-          }
+          },
         });
       } else {
         message.error(re.message);
@@ -81,12 +81,12 @@ export default modelExtend(model, {
       const re = yield call(move, payload);
       message.destroy();
       if (re.success) {
-        message.success(formatMessage({ id: "menu.move-success", defaultMessage: "菜单移动成功" }));
+        message.success(formatMessage({ id: 'menu.move-success', defaultMessage: '菜单移动成功' }));
         yield put({
-          type: "updateState",
+          type: 'updateState',
           payload: {
             showMove: false,
-          }
+          },
         });
       } else {
         message.error(re.message);
@@ -95,5 +95,5 @@ export default modelExtend(model, {
         callback(re);
       }
     },
-  }
+  },
 });

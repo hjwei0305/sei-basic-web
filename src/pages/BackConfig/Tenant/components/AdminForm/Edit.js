@@ -1,27 +1,26 @@
-import React, { Component } from "react";
-import cls from "classnames";
-import { Popover, Tooltip } from "antd";
+import React, { Component } from 'react';
+import cls from 'classnames';
+import { Popover, Tooltip } from 'antd';
 import { ExtIcon } from 'suid';
-import Form from "./Form";
-import styles from "./index.less";
+import Form from './Form';
+import styles from './index.less';
 
 
 class GroupEdit extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
-      visible: false
+      visible: false,
     };
   }
 
   handlerPopoverHide = () => {
     this.setState({
-      visible: false
+      visible: false,
     });
   };
 
-  handlerShowChange = visible => {
+  handlerShowChange = (visible) => {
     this.setState({ visible });
   };
 
@@ -29,7 +28,7 @@ class GroupEdit extends Component {
     const { visible } = this.state;
     const popoverProps = {
       handlerPopoverHide: this.handlerPopoverHide,
-      ...this.props
+      ...this.props,
     };
     return (
       <Popover
@@ -38,12 +37,12 @@ class GroupEdit extends Component {
         visible={visible}
         key="form-popover-box"
         destroyTooltipOnHide
-        onVisibleChange={visible => this.handlerShowChange(visible)}
-        overlayClassName={cls(styles["form-popover-box"])}
+        onVisibleChange={(visible) => this.handlerShowChange(visible)}
+        overlayClassName={cls(styles['form-popover-box'])}
         content={<Form {...popoverProps} />}
       >
-        <Tooltip title='管理员'>
-          <span className={cls("form-popover-box-trigger", 'action-item')}>
+        <Tooltip title="管理员">
+          <span className={cls('form-popover-box-trigger', 'action-item')}>
             <ExtIcon type="user" antd />
           </span>
         </Tooltip>

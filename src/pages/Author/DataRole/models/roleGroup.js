@@ -1,13 +1,13 @@
-import { delRoleGroup, getRoleGroupList, saveRoleGroup } from "../service";
-import { message } from "antd";
-import { formatMessage } from "umi-plugin-react/locale";
+import { message } from 'antd';
+import { formatMessage } from 'umi-plugin-react/locale';
 import { utils } from 'suid';
+import { delRoleGroup, getRoleGroupList, saveRoleGroup } from '../service';
 
 const { pathMatchRegexp, dvaModel } = utils;
 const { modelExtend, model } = dvaModel;
 
 export default modelExtend(model, {
-  namespace: "dataRoleGroup",
+  namespace: 'dataRoleGroup',
 
   state: {
     listData: [],
@@ -15,24 +15,24 @@ export default modelExtend(model, {
   },
   subscriptions: {
     setup({ dispatch, history }) {
-      history.listen(location => {
-        if (pathMatchRegexp("/author/dataRole", location.pathname)) {
+      history.listen((location) => {
+        if (pathMatchRegexp('/author/dataRole', location.pathname)) {
           dispatch({
-            type: "getRoleGroupList"
+            type: 'getRoleGroupList',
           });
         }
       });
-    }
+    },
   },
   effects: {
     * getRoleGroupList({ payload }, { call, put }) {
       const re = yield call(getRoleGroupList, payload);
       if (re.success) {
         yield put({
-          type: "updateState",
+          type: 'updateState',
           payload: {
-            listData: re.data
-          }
+            listData: re.data,
+          },
         });
       } else {
         message.error(re.message);
@@ -42,12 +42,12 @@ export default modelExtend(model, {
       const re = yield call(saveRoleGroup, payload);
       message.destroy();
       if (re.success) {
-        message.success(formatMessage({ id: "global.save-success", defaultMessage: "保存成功" }));
+        message.success(formatMessage({ id: 'global.save-success', defaultMessage: '保存成功' }));
         yield put({
-          type: "updateState",
+          type: 'updateState',
           payload: {
-            currentRoleGroup: re.data
-          }
+            currentRoleGroup: re.data,
+          },
         });
       } else {
         message.error(re.message);
@@ -60,12 +60,12 @@ export default modelExtend(model, {
       const re = yield call(delRoleGroup, payload);
       message.destroy();
       if (re.success) {
-        message.success(formatMessage({ id: "global.delete-success", defaultMessage: "删除成功" }));
+        message.success(formatMessage({ id: 'global.delete-success', defaultMessage: '删除成功' }));
         yield put({
-          type: "updateState",
+          type: 'updateState',
           payload: {
-            currentRoleGroup: null
-          }
+            currentRoleGroup: null,
+          },
         });
       } else {
         message.error(re.message);
@@ -73,6 +73,6 @@ export default modelExtend(model, {
       if (callback && callback instanceof Function) {
         callback(re);
       }
-    }
-  }
+    },
+  },
 });

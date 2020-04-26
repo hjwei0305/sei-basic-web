@@ -1,28 +1,27 @@
-import React, { PureComponent, } from "react";
-import { Form, Input, InputNumber, Button, } from "antd";
-import { formatMessage, FormattedMessage, } from "umi-plugin-react/locale";
-import { ScrollBar, } from 'suid';
-import { utils } from 'suid';
-import { isEqual, } from 'lodash';
+import React, { PureComponent } from 'react';
+import { Form, Input, InputNumber, Button } from 'antd';
+import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale';
+import { ScrollBar, utils } from 'suid';
+
+import { isEqual } from 'lodash';
 import { connect } from 'dva';
 
 const { objectAssignHave } = utils;
 const FormItem = Form.Item;
 const buttonWrapper = { span: 18, offset: 6 };
 
-@connect(({ professionalDomain, loading, }) => ({ professionalDomain, loading, }))
+@connect(({ professionalDomain, loading }) => ({ professionalDomain, loading }))
 @Form.create()
 class FormModal extends PureComponent {
-
   componentDidMount() {
     const { onRef } = this.props;
-    if(onRef) {
+    if (onRef) {
       onRef(this);
     }
   }
 
   componentDidUpdate(_prevProps) {
-    const { form, professionalDomain, } = this.props;
+    const { form, professionalDomain } = this.props;
     const { selectedTreeNode } = _prevProps.professionalDomain;
     if (!isEqual(selectedTreeNode, professionalDomain.selectedTreeNode)) {
       form.setFieldsValue(this.getInitialValueObj());
@@ -30,7 +29,7 @@ class FormModal extends PureComponent {
   }
 
   onFormSubmit = _ => {
-    const { form, } = this.props;
+    const { form } = this.props;
     form.validateFields((err, formData) => {
       if (err) {
         return;
@@ -42,104 +41,118 @@ class FormModal extends PureComponent {
   save = data => {
     const { dispatch } = this.props;
     dispatch({
-      type: "professionalDomain/save",
+      type: 'professionalDomain/save',
       payload: {
-        ...data
+        ...data,
       },
     }).then(res => {
       if (res.success) {
         dispatch({
-          type: "professionalDomain/queryTree",
+          type: 'professionalDomain/queryTree',
         });
       }
     });
   };
 
   getInitialValueObj = () => {
-    const { formType, professionalDomain, } = this.props;
-    const { selectedTreeNode, } = professionalDomain;
-    let initialValueObj = { id: null, code: '', name: '', parentId: '', rank: 0, parentName: '',};
+    const { formType, professionalDomain } = this.props;
+    const { selectedTreeNode } = professionalDomain;
+    let initialValueObj = { id: null, code: '', name: '', parentId: '', rank: 0, parentName: '' };
     if (formType === 'addRootNode') {
       initialValueObj = objectAssignHave(initialValueObj, {});
-    } else if(formType === 'addChildNode') {
-      initialValueObj = objectAssignHave(initialValueObj, { parentId: selectedTreeNode.id, parentName: selectedTreeNode.name });
+    } else if (formType === 'addChildNode') {
+      initialValueObj = objectAssignHave(initialValueObj, {
+        parentId: selectedTreeNode.id,
+        parentName: selectedTreeNode.name,
+      });
     } else {
       initialValueObj = objectAssignHave(initialValueObj, selectedTreeNode || {});
     }
 
     return initialValueObj;
-  }
+  };
 
   render() {
     const { form, professionalDomain, formType } = this.props;
     const { getFieldDecorator } = form;
     const formItemLayout = {
       labelCol: {
-        span: 6
+        span: 6,
       },
       wrapperCol: {
         span: formType ? 18 : 10,
-      }
+      },
     };
 
-    const { id, parentId, parentName, rank=0, name, code, } = this.getInitialValueObj();
+    const { id, parentId, parentName, rank = 0, name, code } = this.getInitialValueObj();
 
     return (
       <ScrollBar>
         <Form {...formItemLayout} layout="horizontal">
           <FormItem label="父节点" style={{ display: formType === 'addChildNode' ? '' : 'none' }}>
-            {getFieldDecorator("parentName", {
+            {getFieldDecorator('parentName', {
               initialValue: parentName,
-            })(<Input disabled={true}/>)}
+            })(<Input disabled />)}
           </FormItem>
-          <FormItem label={formatMessage({ id: "global.code", defaultMessage: "代码" })}>
-            {getFieldDecorator("code", {
+          <FormItem label={formatMessage({ id: 'global.code', defaultMessage: '代码' })}>
+            {getFieldDecorator('code', {
               initialValue: code,
-              rules: [{
-                required: true,
-                message: formatMessage({ id: "global.code.required", defaultMessage: "代码不能为空" })
-              }]
-            })(<Input/>)}
+              rules: [
+                {
+                  required: true,
+                  message: formatMessage({
+                    id: 'global.code.required',
+                    defaultMessage: '代码不能为空',
+                  }),
+                },
+              ],
+            })(<Input />)}
           </FormItem>
-          <FormItem label={formatMessage({ id: "global.name", defaultMessage: "名称" })}>
-            {getFieldDecorator("name", {
+          <FormItem label={formatMessage({ id: 'global.name', defaultMessage: '名称' })}>
+            {getFieldDecorator('name', {
               initialValue: name,
-              rules: [{
-                required: true,
-                message: formatMessage({ id: "global.name.required", defaultMessage: "名称不能为空" })
-              }]
+              rules: [
+                {
+                  required: true,
+                  message: formatMessage({
+                    id: 'global.name.required',
+                    defaultMessage: '名称不能为空',
+                  }),
+                },
+              ],
             })(<Input />)}
           </FormItem>
           <FormItem label="排序">
-            {getFieldDecorator("rank", {
+            {getFieldDecorator('rank', {
               initialValue: rank,
-              rules: [{
-                required: true,
-                message: formatMessage({ id: "global.rank.required", defaultMessage: "序号不能为空" })
-              }]
-            })(<InputNumber style={{ width: '100%', }} precision={0} />)}
+              rules: [
+                {
+                  required: true,
+                  message: formatMessage({
+                    id: 'global.rank.required',
+                    defaultMessage: '序号不能为空',
+                  }),
+                },
+              ],
+            })(<InputNumber style={{ width: '100%' }} precision={0} />)}
           </FormItem>
           <FormItem style={{ display: 'none' }}>
-            {getFieldDecorator("id", {
+            {getFieldDecorator('id', {
               initialValue: id,
             })(<Input />)}
           </FormItem>
           <FormItem style={{ display: 'none' }}>
-            {getFieldDecorator("parentId", {
+            {getFieldDecorator('parentId', {
               initialValue: parentId,
             })(<Input />)}
           </FormItem>
           {!formType ? (
             <FormItem wrapperCol={buttonWrapper}>
-              <Button
-                type="primary"
-                onClick={this.onFormSubmit}
-              >
+              <Button type="primary" onClick={this.onFormSubmit}>
                 <FormattedMessage id="global.ok" defaultMessage="确定" />
               </Button>
             </FormItem>
-          ) : (null)
-          }
+          ) : null}
         </Form>
       </ScrollBar>
     );

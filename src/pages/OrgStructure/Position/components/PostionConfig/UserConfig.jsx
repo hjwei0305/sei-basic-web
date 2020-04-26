@@ -1,13 +1,12 @@
-import React, { Component, Fragment, } from 'react';
-import { ExtTable, ComboTree, } from 'suid';
-import { Button, Checkbox, } from "antd";
-import { constants } from "@/utils";
+import React, { Component, Fragment } from 'react';
+import { ExtTable, ComboTree } from 'suid';
+import { Button, Checkbox } from 'antd';
+import { constants } from '@/utils';
 import { AssignLayout } from '@/components';
 
 const { SERVER_PATH } = constants;
 
 class UserConfig extends Component {
-
   state = {
     assignBtnDisabled: true,
     unAssignBtnDisabled: true,
@@ -29,11 +28,11 @@ class UserConfig extends Component {
   }
 
   handleUnAssign = () => {
-    const { onUnAssign, data, } = this.props;
-    const { assignParentIds, } = this.state;
-    const { id: childId, } = data;
+    const { onUnAssign, data } = this.props;
+    const { assignParentIds } = this.state;
+    const { id: childId } = data;
     if (onUnAssign) {
-      onUnAssign({ childId, parentIds: assignParentIds, }).then(_ => {
+      onUnAssign({ childId, parentIds: assignParentIds }).then((_) => {
         this.setState({
           unAssignBtnDisabled: true,
           assignParentIds: [],
@@ -44,11 +43,11 @@ class UserConfig extends Component {
   }
 
   handleAssign = () => {
-    const { onAssign, data, } = this.props;
-    const { unAssignParentIds, } = this.state;
-    const { id: childId, } = data;
+    const { onAssign, data } = this.props;
+    const { unAssignParentIds } = this.state;
+    const { id: childId } = data;
     if (onAssign) {
-      onAssign({ childId, parentIds: unAssignParentIds, }).then(_ => {
+      onAssign({ childId, parentIds: unAssignParentIds }).then((_) => {
         this.setState({
           assignBtnDisabled: true,
           unAssignParentIds: [],
@@ -71,11 +70,11 @@ class UserConfig extends Component {
         name: 'name',
       },
       placeholder: '请选择组织机构',
-      style: { width: 240, marginRight: 15, },
+      style: { width: 240, marginRight: 15 },
       afterSelect: (node) => {
         if (node) {
           this.setState({
-            organizationId: node.id
+            organizationId: node.id,
           }, () => {
             if (this.unAssignTable) {
               this.unAssignTable.remoteDataRefresh();
@@ -86,29 +85,26 @@ class UserConfig extends Component {
     };
   }
 
-  getCommonColumns = () => {
-
-    return [
-      {
-        title: "员工编号",
-        dataIndex: "code",
-        width: 180,
-        required: true,
-      },
-      {
-        title: "员工姓名",
-        dataIndex: "userName",
-        width: 180,
-        required: true,
-      },
-      {
-        title: "冻结",
-        dataIndex: "frozen",
-        width: 100,
-        required: true,
-      },
-    ];
-  }
+  getCommonColumns = () => [
+    {
+      title: '员工编号',
+      dataIndex: 'code',
+      width: 180,
+      required: true,
+    },
+    {
+      title: '员工姓名',
+      dataIndex: 'userName',
+      width: 180,
+      required: true,
+    },
+    {
+      title: '冻结',
+      dataIndex: 'frozen',
+      width: 100,
+      required: true,
+    },
+  ]
 
   refreshTableData = () => {
     if (this.unAssignTable) {
@@ -121,20 +117,20 @@ class UserConfig extends Component {
 
   /** 未分配表格属性 */
   getUnAssignTableProps = () => {
-    const { includeSubNode, organizationId: orgId, unAssignParentIds, } = this.state;
-    const { data, } = this.props;
-    const { id, organizationId, } = data || {};
+    const { includeSubNode, organizationId: orgId, unAssignParentIds } = this.state;
+    const { data } = this.props;
+    const { id, organizationId } = data || {};
     const toolBarProps = {
       layout: {
         leftSpan: 16,
         rightSpan: 8,
       },
       left: (
-        <Fragment>
-          <ComboTree {...this.getComboTreeProps()}/>
+        <>
+          <ComboTree {...this.getComboTreeProps()} />
           <Checkbox onChange={this.handleCheck}>包含子节点</Checkbox>
-        </Fragment>
-      )
+        </>
+      ),
     };
 
     return {
@@ -173,9 +169,9 @@ class UserConfig extends Component {
 
   /** 已分配表格属性 */
   getAssignTableProps = () => {
-    const { data, } = this.props;
-    const { assignParentIds, } = this.state;
-    const { id, } = data || {};
+    const { data } = this.props;
+    const { assignParentIds } = this.state;
+    const { id } = data || {};
 
     return {
       checkbox: true,
@@ -207,13 +203,13 @@ class UserConfig extends Component {
   }
 
   render() {
-    const { assignBtnDisabled, unAssignBtnDisabled, } = this.state;
+    const { assignBtnDisabled, unAssignBtnDisabled } = this.state;
 
     return (
       <AssignLayout>
-        <ExtTable onTableRef={inst => this.unAssignTable = inst } slot="left" {...this.getUnAssignTableProps()} />
+        <ExtTable onTableRef={(inst) => this.unAssignTable = inst} slot="left" {...this.getUnAssignTableProps()} />
         <div slot="center">
-          <Fragment>
+          <>
             <p>
               <Button
                 onClick={this.handleUnAssign}
@@ -230,9 +226,9 @@ class UserConfig extends Component {
                 icon="right"
               />
             </p>
-          </Fragment>
+          </>
         </div>
-        <ExtTable onTableRef={inst => this.assignTable = inst } slot="right" {...this.getAssignTableProps()} />
+        <ExtTable onTableRef={(inst) => this.assignTable = inst} slot="right" {...this.getAssignTableProps()} />
       </AssignLayout>
     );
   }

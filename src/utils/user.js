@@ -26,8 +26,8 @@ export const getCurrentUser = () => getContextUser();
 
 export const getCurrentLocale = () => localStorage.get(CURRENT_LOCALE);
 
-export const setCurrentAuth = auths => sessionStorage.set(AUTH, auths);
-export const setCurrentPolicy = policy => sessionStorage.set(POLICY, policy);
+export const setCurrentAuth = (auths) => sessionStorage.set(AUTH, auths);
+export const setCurrentPolicy = (policy) => sessionStorage.set(POLICY, policy);
 
 export const setCurrentLocale = (locale) => {
   localStorage.set(CURRENT_LOCALE, locale);

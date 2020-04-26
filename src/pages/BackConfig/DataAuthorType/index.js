@@ -1,13 +1,13 @@
-import React, { Component, Fragment } from "react";
-import { connect } from "dva";
-import cls from "classnames";
+import React, { Component, Fragment } from 'react';
+import { connect } from 'dva';
+import cls from 'classnames';
 import { isEqual } from 'lodash';
-import { Button, Popconfirm } from "antd";
-import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
-import { ExtTable, utils, ExtIcon } from 'suid'
-import { constants } from "@/utils";
-import FormModal from "./FormModal";
-import styles from "./index.less";
+import { Button, Popconfirm } from 'antd';
+import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale';
+import { ExtTable, utils, ExtIcon } from 'suid';
+import { constants } from '@/utils';
+import FormModal from './FormModal';
+import styles from './index.less';
 
 const { APP_MODULE_BTN_KEY } = constants;
 const { authAction } = utils;
@@ -15,7 +15,6 @@ const { authAction } = utils;
 
 @connect(({ dataAuthorType, loading }) => ({ dataAuthorType, loading }))
 class DataAuthorType extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -27,99 +26,99 @@ class DataAuthorType extends Component {
   componentDidUpdate(_prevProps, prevState) {
     if (!isEqual(prevState.list, this.props.dataAuthorType.list)) {
       this.setState({
-        list: this.props.dataAuthorType.list
+        list: this.props.dataAuthorType.list,
       });
     }
   }
 
-  reloadData = _ => {
+  reloadData = (_) => {
     const { dispatch } = this.props;
     dispatch({
-      type: "dataAuthorType/queryList"
+      type: 'dataAuthorType/queryList',
     });
   };
 
-  add = _ => {
+  add = (_) => {
     const { dispatch } = this.props;
     dispatch({
-      type: "dataAuthorType/updateState",
+      type: 'dataAuthorType/updateState',
       payload: {
         showModal: true,
-        rowData: null
-      }
-    });
-  };
-
-  edit = rowData => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: "dataAuthorType/updateState",
-      payload: {
-        showModal: true,
-        rowData: rowData
-      }
-    });
-  };
-
-  save = data => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: "dataAuthorType/save",
-      payload: {
-        ...data
+        rowData: null,
       },
-      callback: res => {
+    });
+  };
+
+  edit = (rowData) => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'dataAuthorType/updateState',
+      payload: {
+        showModal: true,
+        rowData,
+      },
+    });
+  };
+
+  save = (data) => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'dataAuthorType/save',
+      payload: {
+        ...data,
+      },
+      callback: (res) => {
         if (res.success) {
           dispatch({
-            type: "dataAuthorType/updateState",
+            type: 'dataAuthorType/updateState',
             payload: {
-              showModal: false
-            }
+              showModal: false,
+            },
           });
           this.reloadData();
         }
-      }
+      },
     });
   };
 
-  del = record => {
+  del = (record) => {
     const { dispatch } = this.props;
     this.setState({
-      delRowId: record.id
-    }, _ => {
+      delRowId: record.id,
+    }, (_) => {
       dispatch({
-        type: "dataAuthorType/del",
+        type: 'dataAuthorType/del',
         payload: {
-          id: record.id
+          id: record.id,
         },
-        callback: res => {
+        callback: (res) => {
           if (res.success) {
             this.setState({
-              delRowId: null
+              delRowId: null,
             });
             this.reloadData();
           }
-        }
+        },
       });
     });
   };
 
-  closeFormModal = _ => {
+  closeFormModal = (_) => {
     const { dispatch } = this.props;
     dispatch({
-      type: "dataAuthorType/updateState",
+      type: 'dataAuthorType/updateState',
       payload: {
         showModal: false,
-        rowData: null
-      }
+        rowData: null,
+      },
     });
   };
 
   renderDelBtn = (row) => {
     const { loading } = this.props;
     const { delRowId } = this.state;
-    if (loading.effects["dataAuthorType/del"] && delRowId === row.id) {
-      return <ExtIcon className="del-loading" type="loading" antd />
+    if (loading.effects['dataAuthorType/del'] && delRowId === row.id) {
+      return <ExtIcon className="del-loading" type="loading" antd />;
     }
     return <ExtIcon className="del" type="delete" antd />;
   };
@@ -130,61 +129,61 @@ class DataAuthorType extends Component {
     const { showModal, rowData } = dataAuthorType;
     const columns = [
       {
-        title: formatMessage({ id: "global.operation", defaultMessage: "操作" }),
-        key: "operation",
+        title: formatMessage({ id: 'global.operation', defaultMessage: '操作' }),
+        key: 'operation',
         width: 100,
-        align: "center",
-        dataIndex: "id",
-        className: "action",
+        align: 'center',
+        dataIndex: 'id',
+        className: 'action',
         required: true,
         render: (text, record) => (
-          <span className={cls("action-box")}>
+          <span className={cls('action-box')}>
             {
               authAction(
                 <ExtIcon
                   key={APP_MODULE_BTN_KEY.EDIT}
                   className="edit"
-                  onClick={_ => this.edit(record)}
+                  onClick={(_) => this.edit(record)}
                   type="edit"
-                  ignore='true'
+                  ignore="true"
                   antd
-                />
+                />,
               )
             }
             <Popconfirm
               key={APP_MODULE_BTN_KEY.DELETE}
               placement="topLeft"
-              title={formatMessage({ id: "global.delete.confirm", defaultMessage: "确定要删除吗？提示：删除后不可恢复" })}
-              onConfirm={_ => this.del(record)}
+              title={formatMessage({ id: 'global.delete.confirm', defaultMessage: '确定要删除吗？提示：删除后不可恢复' })}
+              onConfirm={(_) => this.del(record)}
             >
               {
                 this.renderDelBtn(record)
               }
             </Popconfirm>
           </span>
-        )
+        ),
       },
       {
-        title: formatMessage({ id: "global.code", defaultMessage: "代码" }),
-        dataIndex: "code",
+        title: formatMessage({ id: 'global.code', defaultMessage: '代码' }),
+        dataIndex: 'code',
         width: 260,
         optional: true,
       },
       {
-        title: formatMessage({ id: "global.name", defaultMessage: "名称" }),
-        dataIndex: "name",
+        title: formatMessage({ id: 'global.name', defaultMessage: '名称' }),
+        dataIndex: 'name',
         width: 220,
         required: true,
       },
       {
         title: '权限对象类型',
-        dataIndex: "authorizeEntityTypeName",
+        dataIndex: 'authorizeEntityTypeName',
         width: 160,
         required: true,
       },
       {
         title: '功能项',
-        dataIndex: "featureName",
+        dataIndex: 'featureName',
         width: 140,
       },
     ];
@@ -193,40 +192,40 @@ class DataAuthorType extends Component {
       rowData,
       showModal,
       closeFormModal: this.closeFormModal,
-      saving: loading.effects["dataAuthorType/save"]
+      saving: loading.effects['dataAuthorType/save'],
     };
     const toolBarProps = {
       left: (
-        <Fragment>
+        <>
           {
             authAction(
               <Button
                 key={APP_MODULE_BTN_KEY.CREATE}
                 type="primary"
                 onClick={this.add}
-                ignore='true'
+                ignore="true"
               >
                 <FormattedMessage id="global.add" defaultMessage="新建" />
-              </Button>
+              </Button>,
             )
           }
           <Button onClick={this.reloadData}>
             <FormattedMessage id="global.refresh" defaultMessage="刷新" />
           </Button>
-        </Fragment>
-      )
+        </>
+      ),
     };
     return (
-      <div className={cls(styles["container-box"])} >
+      <div className={cls(styles['container-box'])}>
         <ExtTable
           bordered={false}
-          loading={loading.effects["dataAuthorType/queryList"]}
+          loading={loading.effects['dataAuthorType/queryList']}
           toolBar={toolBarProps}
           columns={columns}
           dataSource={list}
           searchProperties={['name', 'entityClassName', 'apiPath', 'appModuleName']}
           sort={{
-            field: { code: 'asc', name: null, authorizeEntityTypeName: null, featureName: null }
+            field: { code: 'asc', name: null, authorizeEntityTypeName: null, featureName: null },
           }}
         />
         <FormModal {...formModalProps} />

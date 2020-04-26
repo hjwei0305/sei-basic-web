@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Icon, Menu,Layout} from 'antd';
+import { Icon, Menu, Layout } from 'antd';
 import Link from 'umi/link';
 import cls from 'classnames';
 import { ScrollBar } from 'suid';
 import styles from './index.less';
 
-const {Header,Content}=Layout;
+const { Header, Content } = Layout;
 const { SubMenu } = Menu;
 
 const menuData = [
@@ -130,12 +130,12 @@ export default class Home extends Component {
         <Header className={cls('menu-header')}>应用路由列表</Header>
         <Content className={cls('menu-box')}>
           <ScrollBar>
-            <Menu key="Menu" mode={'inline'} theme={'light'}>
+            <Menu key="Menu" mode="inline" theme="light">
               {this.getNavMenuItems(menuData)}
             </Menu>
           </ScrollBar>
         </Content>
-        </Layout>
+      </Layout>
     );
   }
 }

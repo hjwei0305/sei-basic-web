@@ -19,5 +19,5 @@ export {
   AssignLayout,
   CascadeLayout,
   ColumnLayout,
-  PageWrapper
+  PageWrapper,
 };

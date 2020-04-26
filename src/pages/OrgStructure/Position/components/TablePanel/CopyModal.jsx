@@ -1,5 +1,5 @@
-import React, { PureComponent } from "react";
-import { Form, Input, Checkbox,} from "antd";
+import React, { PureComponent } from 'react';
+import { Form, Input, Checkbox } from 'antd';
 import { ExtModal, ComboTree, utils } from 'suid';
 import { constants } from '@/utils';
 
@@ -9,18 +9,17 @@ const { SERVER_PATH } = constants;
 const FormItem = Form.Item;
 const formItemLayout = {
   labelCol: {
-    span: 6
+    span: 6,
   },
   wrapperCol: {
-    span: 18
-  }
+    span: 18,
+  },
 };
 
 @Form.create()
 class CopyModal extends PureComponent {
-
-  onFormSubmit = _ => {
-    const { form, save, } = this.props;
+  onFormSubmit = (_) => {
+    const { form, save } = this.props;
     form.validateFields((err, formData) => {
       if (err) {
         return;
@@ -28,14 +27,14 @@ class CopyModal extends PureComponent {
       const params = {
         positionId: '',
         copyFeatureRole: false,
-        targetOrgIds: [formData.orgId]
+        targetOrgIds: [formData.orgId],
       };
       save(objectAssignHave(params, formData));
     });
   };
 
   getComboGridProps = () => {
-    const { form, } = this.props;
+    const { form } = this.props;
     return {
       form,
       name: 'positionCategoryName',
@@ -57,7 +56,7 @@ class CopyModal extends PureComponent {
         },
       ],
       searchProperties: ['code', 'name'],
-      rowKey: "id",
+      rowKey: 'id',
       reader: {
         name: 'name',
         field: ['id', 'code'],
@@ -66,19 +65,19 @@ class CopyModal extends PureComponent {
   }
 
   getComboTreeProps = () => {
-    const { form, } = this.props;
+    const { form } = this.props;
 
     return {
       form,
       name: 'orgName',
-      field: ['orgId',],
+      field: ['orgId'],
       store: {
         url: `${SERVER_PATH}/sei-basic/organization/findOrgTreeWithoutFrozen`,
       },
       reader: {
         name: 'name',
-        field: ['id',],
-      }
+        field: ['id'],
+      },
     };
   }
 
@@ -94,40 +93,40 @@ class CopyModal extends PureComponent {
         centered
         confirmLoading={saving}
         maskClosable={false}
-        title={'复制岗位到指定组织机构'}
-        okText={'保存'}
+        title="复制岗位到指定组织机构"
+        okText="保存"
         onOk={this.onFormSubmit}
       >
-        <Form {...formItemLayout} layout="horizontal" >
-          <FormItem label="源岗位Id" style={{ display: 'none', }}>
-            {getFieldDecorator("positionId", {
-              initialValue: rowData ? rowData.id : "",
+        <Form {...formItemLayout} layout="horizontal">
+          <FormItem label="源岗位Id" style={{ display: 'none' }}>
+            {getFieldDecorator('positionId', {
+              initialValue: rowData ? rowData.id : '',
             })(<Input />)}
           </FormItem>
           <FormItem label="源岗位">
-            {getFieldDecorator("positionName", {
-              initialValue: rowData ? rowData.name : "",
+            {getFieldDecorator('positionName', {
+              initialValue: rowData ? rowData.name : '',
               rules: [{
                 required: true,
-              }]
-            })(<Input disabled={true}/>)}
+              }],
+            })(<Input disabled />)}
           </FormItem>
           <FormItem label="目标组织机构id" style={{ display: 'none' }}>
-            {getFieldDecorator("orgId", {
-              initialValue: "",
+            {getFieldDecorator('orgId', {
+              initialValue: '',
             })(<Input />)}
           </FormItem>
           <FormItem label="目标组织机构">
-            {getFieldDecorator("orgName", {
-              initialValue: "",
+            {getFieldDecorator('orgName', {
+              initialValue: '',
               rules: [{
                 required: true,
-                message: "目标组织机构不能为空",
-              }]
-            })(<ComboTree {...this.getComboTreeProps()}/>)}
+                message: '目标组织机构不能为空',
+              }],
+            })(<ComboTree {...this.getComboTreeProps()} />)}
           </FormItem>
           <FormItem label="复制功能角色">
-            {getFieldDecorator("copyFeatureRole", {
+            {getFieldDecorator('copyFeatureRole', {
               valuePropName: 'checked',
               initialValue: false,
             })(<Checkbox />)}

@@ -5,5 +5,5 @@
 * @Last Modified time: 2020-02-08 22:29:44
 */
 export default {
-  "employee": "employee",
-}
+  employee: 'employee',
+};

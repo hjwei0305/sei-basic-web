@@ -1,39 +1,38 @@
-import React, { PureComponent } from "react";
-import cls from "classnames";
-import { omit } from 'lodash'
-import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
-import { Button, Form, Input, Switch } from "antd";
-import styles from "./Form.less";
+import React, { PureComponent } from 'react';
+import cls from 'classnames';
+import { omit } from 'lodash';
+import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale';
+import { Button, Form, Input, Switch } from 'antd';
+import styles from './Form.less';
 
 const FormItem = Form.Item;
 const formItemLayout = {
   labelCol: {
-    span: 5
+    span: 5,
   },
   wrapperCol: {
-    span: 19
-  }
+    span: 19,
+  },
 };
 
 @Form.create()
 class TenantForm extends PureComponent {
-
-  handlerFormSubmit = _ => {
+  handlerFormSubmit = (_) => {
     const {
       form,
       saveTenant,
       tenantData: originTenantData,
       tenantRootOrganization: originTenantRootOrganization,
-      handlerPopoverHide
+      handlerPopoverHide,
     } = this.props;
     const { validateFields, getFieldsValue } = form;
-    validateFields(errors => {
+    validateFields((errors) => {
       if (errors) {
         return;
       }
       const formData = getFieldsValue();
       const tenantData = omit(Object.assign(originTenantData || {}, formData), ['tenantRootOrganizationName']);
-      const tenantRootOrganization = Object.assign({ ...originTenantRootOrganization || {} }, { name: formData.tenantRootOrganizationName });
+      const tenantRootOrganization = { ...originTenantRootOrganization || {}, name: formData.tenantRootOrganizationName };
       if (!originTenantRootOrganization) {
         Object.assign(tenantRootOrganization, {
           tenantCode: formData.code,
@@ -56,7 +55,7 @@ class TenantForm extends PureComponent {
       codeProps.disabled = true;
     }
     return (
-      <div key="form-box" className={cls(styles["form-box"])}>
+      <div key="form-box" className={cls(styles['form-box'])}>
         <div className="base-view-body">
           <div className="header">
             <span className="title">
@@ -65,44 +64,44 @@ class TenantForm extends PureComponent {
           </div>
           <Form {...formItemLayout}>
             <FormItem label="租户代码">
-              {getFieldDecorator("code", {
-                initialValue: tenantData ? tenantData.code : "",
+              {getFieldDecorator('code', {
+                initialValue: tenantData ? tenantData.code : '',
                 rules: [{
                   required: true,
-                  message: formatMessage({ id: "global.code.required", defaultMessage: "代码不能为空" })
-                }]
-              })(<Input {...codeProps} />)
-              }
+                  message: formatMessage({ id: 'global.code.required', defaultMessage: '代码不能为空' }),
+                }],
+              })(<Input {...codeProps} />)}
             </FormItem>
-            <FormItem label='租户名称'>
-              {getFieldDecorator("name", {
-                initialValue: tenantData ? tenantData.name : "",
+            <FormItem label="租户名称">
+              {getFieldDecorator('name', {
+                initialValue: tenantData ? tenantData.name : '',
                 rules: [{
                   required: true,
-                  message: formatMessage({ id: "global.name.required", defaultMessage: "名称不能为空" })
-                }]
-              })(<Input />)
-              }
+                  message: formatMessage({ id: 'global.name.required', defaultMessage: '名称不能为空' }),
+                }],
+              })(<Input />)}
             </FormItem>
-            <FormItem label='组织机构'>
-              {getFieldDecorator("tenantRootOrganizationName", {
-                initialValue: tenantRootOrganization ? tenantRootOrganization.name : "",
+            <FormItem label="组织机构">
+              {getFieldDecorator('tenantRootOrganizationName', {
+                initialValue: tenantRootOrganization ? tenantRootOrganization.name : '',
                 rules: [{
                   required: true,
                   message: '组织机构不能为空',
-                }]
+                }],
               })(
-                <Input addonBefore={tenantRootOrganization ? tenantRootOrganization.code : ""} />
+                <Input addonBefore={tenantRootOrganization ? tenantRootOrganization.code : ''} />,
               )}
             </FormItem>
             {
               tenantData && tenantData.id
-                ? <FormItem label='冻结'>
-                  {getFieldDecorator("frozen", {
-                    initialValue: tenantData ? tenantData.frozen || false : false,
-                    valuePropName: "checked"
-                  })(<Switch size="small" />)}
-                </FormItem>
+                ? (
+                  <FormItem label="冻结">
+                    {getFieldDecorator('frozen', {
+                      initialValue: tenantData ? tenantData.frozen || false : false,
+                      valuePropName: 'checked',
+                    })(<Switch size="small" />)}
+                  </FormItem>
+                )
                 : null
             }
             <FormItem wrapperCol={{ span: 4, offset: 5 }} className="btn-submit">
@@ -111,7 +110,7 @@ class TenantForm extends PureComponent {
                 loading={saving}
                 onClick={this.handlerFormSubmit}
               >
-                <FormattedMessage id='global.save' defaultMessage='保存' />
+                <FormattedMessage id="global.save" defaultMessage="保存" />
               </Button>
             </FormItem>
           </Form>

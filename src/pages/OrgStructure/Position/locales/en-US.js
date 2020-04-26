@@ -5,5 +5,5 @@
 * @Last Modified time: 2020-02-02 17:23:14
 */
 export default {
-  "position": "position",
-}
+  position: 'position',
+};

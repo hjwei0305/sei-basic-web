@@ -1,28 +1,27 @@
-import React, { Component, } from 'react';
+import React, { Component } from 'react';
 import withRouter from 'umi/withRouter';
 import { connect } from 'dva';
 import cls from 'classnames';
-import { Spin, } from "antd";
+import { Spin } from 'antd';
 import TablePanel from './components/TablePanel';
-import { PageWrapper, } from '@/components';
+import { PageWrapper } from '@/components';
 import SupplierUserConfig from './components/SupplierUserConfig';
-import styles from "./index.less";
+import styles from './index.less';
 
 @withRouter
-@connect(({ supplierUser, loading, }) => ({ supplierUser, loading, }))
+@connect(({ supplierUser, loading }) => ({ supplierUser, loading }))
 class SupplierUser extends Component {
-
   render() {
-    const { supplierUser, loading,  } = this.props;
-    const { showConfig, rowData, } = supplierUser;
+    const { supplierUser, loading } = this.props;
+    const { showConfig, rowData } = supplierUser;
 
     return (
       <PageWrapper className={cls(styles['container-box'])}>
-        <Spin spinning={loading.global} wrapperClassName={cls("spin-wrapper")}>
-          <div style={{ height: '100%', display: !showConfig ? '' : 'none', }}>
+        <Spin spinning={loading.global} wrapperClassName={cls('spin-wrapper')}>
+          <div style={{ height: '100%', display: !showConfig ? '' : 'none' }}>
             <TablePanel />
           </div>
-          { rowData && showConfig ? (<SupplierUserConfig style={{ display: showConfig ? '' : 'none', }} />) : (null)}
+          { rowData && showConfig ? (<SupplierUserConfig style={{ display: showConfig ? '' : 'none' }} />) : (null)}
         </Spin>
       </PageWrapper>
     );

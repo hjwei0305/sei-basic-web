@@ -1,27 +1,26 @@
-import React, { PureComponent } from "react";
-import cls from "classnames";
-import { toUpper, trim } from 'lodash'
-import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
-import { Button, Form, Input } from "antd";
-import { ComboList, utils } from "suid";
-import { constants } from "@/utils";
-import styles from "./Form.less";
+import React, { PureComponent } from 'react';
+import cls from 'classnames';
+import { toUpper, trim } from 'lodash';
+import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale';
+import { Button, Form, Input } from 'antd';
+import { ComboList, utils } from 'suid';
+import { constants } from '@/utils';
+import styles from './Form.less';
 
 const { objectAssignAppend } = utils;
 const { SERVER_PATH } = constants;
 const FormItem = Form.Item;
 const formItemLayout = {
   labelCol: {
-    span: 5
+    span: 5,
   },
   wrapperCol: {
-    span: 19
-  }
+    span: 19,
+  },
 };
 
 @Form.create()
 class FeatureGroupForm extends PureComponent {
-
   constructor(props) {
     super(props);
     const { groupData } = this.props;
@@ -30,10 +29,10 @@ class FeatureGroupForm extends PureComponent {
     };
   }
 
-  handlerFormSubmit = _ => {
+  handlerFormSubmit = (_) => {
     const { form, saveFeatureGroup, groupData, handlerPopoverHide } = this.props;
     const { validateFields, getFieldsValue } = form;
-    validateFields(errors => {
+    validateFields((errors) => {
       if (errors) {
         return;
       }
@@ -58,26 +57,26 @@ class FeatureGroupForm extends PureComponent {
     const { form, groupData, saving } = this.props;
     const { getFieldDecorator } = form;
     const title = groupData ? '编辑功能项组' : '新建功能项组';
-    getFieldDecorator("appModuleId", { initialValue: groupData ? groupData.appModuleId : "" });
-    getFieldDecorator("appModuleCode", { initialValue: groupData ? groupData.appModuleCode : "" });
+    getFieldDecorator('appModuleId', { initialValue: groupData ? groupData.appModuleId : '' });
+    getFieldDecorator('appModuleCode', { initialValue: groupData ? groupData.appModuleCode : '' });
     const appModuleProps = {
       form,
       name: 'appModuleName',
       field: ['appModuleId', 'appModuleCode'],
-      searchPlaceHolder: "输入名称关键字查询",
+      searchPlaceHolder: '输入名称关键字查询',
       store: {
-        url: `${SERVER_PATH}/sei-basic/appModule/findAllUnfrozen`
+        url: `${SERVER_PATH}/sei-basic/appModule/findAllUnfrozen`,
       },
-      afterSelect: item => {
+      afterSelect: (item) => {
         this.setState({ currentAppModuleCode: item.code });
       },
       reader: {
         name: 'name',
-        field: ['id', 'code']
-      }
+        field: ['id', 'code'],
+      },
     };
     return (
-      <div key="form-box" className={cls(styles["form-box"])}>
+      <div key="form-box" className={cls(styles['form-box'])}>
         <div className="base-view-body">
           <div className="header">
             <span className="title">
@@ -86,41 +85,41 @@ class FeatureGroupForm extends PureComponent {
           </div>
           <Form {...formItemLayout}>
             <FormItem label="应用模块">
-              {getFieldDecorator("appModuleName", {
-                initialValue: groupData ? groupData.appModuleName : "",
+              {getFieldDecorator('appModuleName', {
+                initialValue: groupData ? groupData.appModuleName : '',
                 rules: [{
                   required: true,
-                  message: formatMessage({ id: "feature.group.appModule.required", defaultMessage: "请选择应用模块" })
-                }]
+                  message: formatMessage({ id: 'feature.group.appModule.required', defaultMessage: '请选择应用模块' }),
+                }],
               })(
-                <ComboList {...appModuleProps} />
+                <ComboList {...appModuleProps} />,
               )}
             </FormItem>
-            <FormItem label={formatMessage({ id: "global.name", defaultMessage: "名称" })}>
-              {getFieldDecorator("name", {
-                initialValue: groupData ? groupData.name : "",
+            <FormItem label={formatMessage({ id: 'global.name', defaultMessage: '名称' })}>
+              {getFieldDecorator('name', {
+                initialValue: groupData ? groupData.name : '',
                 rules: [{
                   required: true,
-                  message: formatMessage({ id: "global.name.required", defaultMessage: "名称不能为空" })
-                }]
+                  message: formatMessage({ id: 'global.name.required', defaultMessage: '名称不能为空' }),
+                }],
               })(
-                <Input />
+                <Input />,
               )}
             </FormItem>
             <FormItem label="代码">
-              {getFieldDecorator("code", {
+              {getFieldDecorator('code', {
                 initialValue: this.getCode(),
                 rules: [{
                   required: true,
-                  message: formatMessage({ id: "global.code.required", defaultMessage: "代码不能为空" })
-                }]
+                  message: formatMessage({ id: 'global.code.required', defaultMessage: '代码不能为空' }),
+                }],
               })(
                 <Input
                   disabled={!!groupData}
                   addonBefore={`${currentAppModuleCode}-`}
                   maxLength={30}
-                  placeholder={formatMessage({ id: "global.code.tip", defaultMessage: "规则:名称各汉字首字母大写" })}
-                />
+                  placeholder={formatMessage({ id: 'global.code.tip', defaultMessage: '规则:名称各汉字首字母大写' })}
+                />,
               )}
             </FormItem>
             <FormItem wrapperCol={{ span: 4, offset: 5 }} className="btn-submit">
@@ -129,7 +128,7 @@ class FeatureGroupForm extends PureComponent {
                 loading={saving}
                 onClick={this.handlerFormSubmit}
               >
-                <FormattedMessage id='global.save' defaultMessage='保存' />
+                <FormattedMessage id="global.save" defaultMessage="保存" />
               </Button>
             </FormItem>
           </Form>

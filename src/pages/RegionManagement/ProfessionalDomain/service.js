@@ -16,7 +16,7 @@ export async function getTree() {
   const url = `${SERVER_PATH}/sei-basic/professionalDomain/getDomainTree`;
   return request({
     url,
-    method: "GET",
+    method: 'GET',
   });
 }
 
@@ -25,7 +25,7 @@ export async function save(data) {
   const url = `${SERVER_PATH}/sei-basic/professionalDomain/save`;
   return request({
     url,
-    method: "POST",
+    method: 'POST',
     data,
   });
 }
@@ -35,7 +35,7 @@ export async function del(params) {
   const url = `${SERVER_PATH}/sei-basic/professionalDomain/delete/${params.id}`;
   return request({
     url,
-    method: "DELETE",
+    method: 'DELETE',
   });
 }
 
@@ -44,7 +44,7 @@ export async function move(data) {
   const url = `${SERVER_PATH}/sei-basic/professionalDomain/move`;
   return request({
     url,
-    method: "POST",
+    method: 'POST',
     data,
   });
 }

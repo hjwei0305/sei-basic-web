@@ -1,69 +1,68 @@
-import React, { PureComponent } from "react";
-import { Form, Input, } from "antd";
-import { formatMessage, } from "umi-plugin-react/locale";
+import React, { PureComponent } from 'react';
+import { Form, Input } from 'antd';
+import { formatMessage } from 'umi-plugin-react/locale';
 import { ExtModal } from 'suid';
-import md5 from "md5";
-import { userUtils, } from '@/utils';
+import md5 from 'md5';
+import { userUtils } from '@/utils';
 
-const { getCurrentUser, } = userUtils;
+const { getCurrentUser } = userUtils;
 const FormItem = Form.Item;
 const formItemLayout = {
   labelCol: {
-    span: 6
+    span: 6,
   },
   wrapperCol: {
-    span: 18
-  }
+    span: 18,
+  },
 };
 
 @Form.create()
 class ResetPwdModal extends PureComponent {
-
-  onFormSubmit = _ => {
-    const { form, save, } = this.props;
-    const { tenantCode, } = getCurrentUser() || {};
+  onFormSubmit = (_) => {
+    const { form, save } = this.props;
+    const { tenantCode } = getCurrentUser() || {};
     form.validateFields((err, formData) => {
       if (err) {
         return;
       }
-      const { oldPassword, newPassword, confirmNewPassword, } = formData;
-      let params = {};
-      Object.assign(params, { tenant: tenantCode, });
+      const { oldPassword, newPassword, confirmNewPassword } = formData;
+      const params = {};
+      Object.assign(params, { tenant: tenantCode });
       Object.assign(params, formData, {
         oldPassword: md5(oldPassword),
         newPassword: md5(newPassword),
-        confirmNewPassword: md5(confirmNewPassword)
+        confirmNewPassword: md5(confirmNewPassword),
       });
       save(params);
     });
   };
 
   checkPassword = (rule, password, callback) => {
-    if(!password || password.length < 8){
-      callback("密码须包含字母、数字、特殊字符至少2种,密码长度不能小于8位");
-      return false
+    if (!password || password.length < 8) {
+      callback('密码须包含字母、数字、特殊字符至少2种,密码长度不能小于8位');
+      return false;
     }
     let iNow = 0;
-    if(password.match(/[0-9]/g)){
+    if (password.match(/[0-9]/g)) {
       iNow++;
     }
-    if(password.match(/[a-z]/ig)){
+    if (password.match(/[a-z]/ig)) {
       iNow++;
     }
-    if(password.match(/[~!@#$%^&*]/g)){
+    if (password.match(/[~!@#$%^&*]/g)) {
       iNow++;
     }
-    if(iNow < 2){
-      callback("密码须包含字母、数字、特殊字符至少2种,密码长度不能小于8位");
+    if (iNow < 2) {
+      callback('密码须包含字母、数字、特殊字符至少2种,密码长度不能小于8位');
       return false;
     }
     callback();
   };
 
   render() {
-    const { form, editData, onClose, saving, visible, } = this.props;
+    const { form, editData, onClose, saving, visible } = this.props;
     const { getFieldDecorator } = form;
-    const title = "更新密码";
+    const title = '更新密码';
 
     return (
       <ExtModal
@@ -74,27 +73,28 @@ class ResetPwdModal extends PureComponent {
         confirmLoading={saving}
         maskClosable={false}
         title={title}
-        okText={'保存'}
+        okText="保存"
         onOk={this.onFormSubmit}
       >
-        <Form {...formItemLayout} layout="horizontal" >
+        <Form {...formItemLayout} layout="horizontal">
           <FormItem label="帐号">
-            {getFieldDecorator("account", {
+            {getFieldDecorator('account', {
               initialValue: editData.account,
               rules: [{
                 required: true,
-                message: "帐号不能为空",
-              }]
+                message: '帐号不能为空',
+              }],
             })(<Input disabled />)}
           </FormItem>
           <FormItem
             {...formItemLayout}
-            label="旧密码">
+            label="旧密码"
+          >
             {getFieldDecorator('oldPassword', {
-              initialValue: "",
-              rules: [{required: true, message: '请填写旧密码!'}]
+              initialValue: '',
+              rules: [{ required: true, message: '请填写旧密码!' }],
             })(
-              <Input.Password visibilityToggle={true}/>
+              <Input.Password visibilityToggle />,
             )}
           </FormItem>
           <FormItem
@@ -102,12 +102,12 @@ class ResetPwdModal extends PureComponent {
             label="新密码"
           >
             {getFieldDecorator('newPassword', {
-              initialValue: "",
+              initialValue: '',
               rules: [
-                {required: true, message: '请填写新密码!'},
-                {validator: this.checkPassword}]
+                { required: true, message: '请填写新密码!' },
+                { validator: this.checkPassword }],
             })(
-              <Input.Password visibilityToggle={true}/>
+              <Input.Password visibilityToggle />,
             )}
           </FormItem>
           <FormItem
@@ -115,11 +115,11 @@ class ResetPwdModal extends PureComponent {
             label="确认新密码"
           >
             {getFieldDecorator('confirmNewPassword', {
-              initialValue: "",
-              rules: [{required: true, message: '请填写确认新密码!'},
-                {validator: this.checkPassword}]
+              initialValue: '',
+              rules: [{ required: true, message: '请填写确认新密码!' },
+                { validator: this.checkPassword }],
             })(
-              <Input.Password visibilityToggle={true}/>
+              <Input.Password visibilityToggle />,
             )}
           </FormItem>
 

@@ -1,39 +1,39 @@
-import { del, getList, save } from "./service";
-import { message } from "antd";
-import { formatMessage } from "umi-plugin-react/locale";
+import { message } from 'antd';
+import { formatMessage } from 'umi-plugin-react/locale';
 import { utils } from 'suid';
+import { del, getList, save } from './service';
 
 const { pathMatchRegexp, dvaModel } = utils;
 const { modelExtend, model } = dvaModel;
 
 export default modelExtend(model, {
-  namespace: "appModule",
+  namespace: 'appModule',
 
   state: {
     list: [],
     rowData: null,
-    showModal: false
+    showModal: false,
   },
   subscriptions: {
     setup({ dispatch, history }) {
-      history.listen(location => {
-        if (pathMatchRegexp("/backConfig/appModule", location.pathname)) {
+      history.listen((location) => {
+        if (pathMatchRegexp('/backConfig/appModule', location.pathname)) {
           dispatch({
-            type: "queryList"
+            type: 'queryList',
           });
         }
       });
-    }
+    },
   },
   effects: {
     * queryList({ payload }, { call, put }) {
       const re = yield call(getList, payload);
       if (re.success) {
         yield put({
-          type: "updateState",
+          type: 'updateState',
           payload: {
-            list: re.data
-          }
+            list: re.data,
+          },
         });
       } else {
         message.error(re.message);
@@ -43,7 +43,7 @@ export default modelExtend(model, {
       const re = yield call(save, payload);
       message.destroy();
       if (re.success) {
-        message.success(formatMessage({ id: "global.save-success", defaultMessage: "保存成功" }));
+        message.success(formatMessage({ id: 'global.save-success', defaultMessage: '保存成功' }));
       } else {
         message.error(re.message);
       }
@@ -55,13 +55,13 @@ export default modelExtend(model, {
       const re = yield call(del, payload);
       message.destroy();
       if (re.success) {
-        message.success(formatMessage({ id: "global.delete-success", defaultMessage: "删除成功" }));
+        message.success(formatMessage({ id: 'global.delete-success', defaultMessage: '删除成功' }));
       } else {
         message.error(re.message);
       }
       if (callback && callback instanceof Function) {
         callback(re);
       }
-    }
-  }
+    },
+  },
 });

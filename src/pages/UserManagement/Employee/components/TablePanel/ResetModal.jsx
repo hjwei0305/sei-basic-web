@@ -1,49 +1,48 @@
-import React, { PureComponent } from "react";
-import { Form, Input, } from "antd";
-import { ExtModal, } from 'suid';
+import React, { PureComponent } from 'react';
+import { Form, Input } from 'antd';
+import { ExtModal } from 'suid';
 
 const FormItem = Form.Item;
 const formItemLayout = {
   labelCol: {
-    span: 6
+    span: 6,
   },
   wrapperCol: {
-    span: 18
-  }
+    span: 18,
+  },
 };
 
 @Form.create()
 class FormModal extends PureComponent {
-
-  onFormSubmit = _ => {
+  onFormSubmit = (_) => {
     const { form, save, rowData } = this.props;
     form.validateFields((err, formData) => {
       if (err) {
         return;
       }
-      let params = {};
+      const params = {};
       Object.assign(params, formData);
       save(params);
     });
   };
 
   checkPassword = (rule, password, callback) => {
-    if(!password || password.length < 8){
-      callback("密码须包含字母、数字、特殊字符至少2种,密码长度不能小于8位");
-      return false
+    if (!password || password.length < 8) {
+      callback('密码须包含字母、数字、特殊字符至少2种,密码长度不能小于8位');
+      return false;
     }
     let iNow = 0;
-    if(password.match(/[0-9]/g)){
+    if (password.match(/[0-9]/g)) {
       iNow++;
     }
-    if(password.match(/[a-z]/ig)){
+    if (password.match(/[a-z]/ig)) {
       iNow++;
     }
-    if(password.match(/[~!@#$%^&*]/g)){
+    if (password.match(/[~!@#$%^&*]/g)) {
       iNow++;
     }
-    if(iNow < 2){
-      callback("密码须包含字母、数字、特殊字符至少2种,密码长度不能小于8位");
+    if (iNow < 2) {
+      callback('密码须包含字母、数字、特殊字符至少2种,密码长度不能小于8位');
       return false;
     }
     callback();
@@ -63,28 +62,30 @@ class FormModal extends PureComponent {
         confirmLoading={saving}
         maskClosable={false}
         title={title}
-        okText={'重置'}
+        okText="重置"
         onOk={this.onFormSubmit}
       >
-        <Form {...formItemLayout} layout="horizontal" >
+        <Form {...formItemLayout} layout="horizontal">
           <FormItem label="新密码">
-            {getFieldDecorator("password", {
-              initialValue: "",
-              rules: [ 
-                {required: true, message: '请填写新密码!'},
-                {validator: this.checkPassword}
-              ]
-            })(<Input.Password visibilityToggle={true} />)}
+            {getFieldDecorator('password', {
+              initialValue: '',
+              rules: [
+                { required: true, message: '请填写新密码!' },
+                { validator: this.checkPassword },
+              ],
+            })(<Input.Password visibilityToggle />)}
           </FormItem>
-          {/*以下为隐藏的formItem*/}
+          {/* 以下为隐藏的formItem */}
           <FormItem
-            style={{display: "none"}}>
+            style={{ display: 'none' }}
+          >
             {getFieldDecorator('tenant', {
               initialValue: rowData && rowData.tenantCode,
             })(<Input />)}
           </FormItem>
           <FormItem
-            style={{display: "none"}}>
+            style={{ display: 'none' }}
+          >
             {getFieldDecorator('account', {
               initialValue: rowData && rowData.code,
             })(<Input />)}

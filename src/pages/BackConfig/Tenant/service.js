@@ -5,12 +5,12 @@ const { request } = utils;
 
 const { SERVER_PATH } = constants;
 
-/** 获取租户列表*/
+/** 获取租户列表 */
 export async function getTenantList(params) {
   const url = `${SERVER_PATH}/sei-basic/tenant/findAll`;
   return request({
     url,
-    method: "GET",
+    method: 'GET',
     params,
   });
 }
@@ -20,7 +20,7 @@ export async function saveTenant(data) {
   const url = `${SERVER_PATH}/sei-basic/tenant/save`;
   return request({
     url,
-    method: "POST",
+    method: 'POST',
     data,
   });
 }
@@ -30,11 +30,11 @@ export async function delTenant(params) {
   const url = `${SERVER_PATH}/sei-basic/tenant/delete/${params.id}`;
   return request({
     url,
-    method: "DELETE",
+    method: 'DELETE',
   });
 }
 
-/** 
+/**
  * 获取租户根组织机构
  * params tenantCode
 */
@@ -42,7 +42,7 @@ export async function getTenantRootOrganization(params) {
   const url = `${SERVER_PATH}/sei-basic/organization/findRootByTenantCode`;
   return request({
     url,
-    method: "GET",
+    method: 'GET',
     params,
   });
 }
@@ -52,7 +52,7 @@ export async function saveTenantRootOrganization(data) {
   const url = `${SERVER_PATH}/sei-basic/organization/save`;
   return request({
     url,
-    method: "POST",
+    method: 'POST',
     data,
   });
 }
@@ -62,7 +62,7 @@ export async function saveTenantAdmin(data) {
   const url = `${SERVER_PATH}/sei-basic/employee/saveTenantAdmin`;
   return request({
     url,
-    method: "POST",
+    method: 'POST',
     data,
   });
 }
@@ -73,7 +73,7 @@ export async function assignAppModuleItem(data) {
   const url = `${SERVER_PATH}/sei-basic/tenantAppModule/insertRelations`;
   return request({
     url,
-    method: "POST",
+    method: 'POST',
     data,
   });
 }
@@ -83,12 +83,12 @@ export async function removeAssignedAppModuleItem(data) {
   const url = `${SERVER_PATH}/sei-basic/tenantAppModule/removeRelations`;
   return request({
     url,
-    method: "DELETE",
+    method: 'DELETE',
     data,
   });
 }
 
-/** 
+/**
  * 获取租户未分配的应用模块
  * params parentId
  */
@@ -96,7 +96,7 @@ export async function getUnAssignedAppModuleItemList(params) {
   const url = `${SERVER_PATH}/sei-basic/tenantAppModule/getUnassigned`;
   return request({
     url,
-    method: "GET",
+    method: 'GET',
     params,
   });
 }

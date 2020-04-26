@@ -5,5 +5,5 @@
 * @Last Modified time: 2020-02-02 15:13:47
 */
 export default {
-  "positionCategory": "positionCategory",
-}
+  positionCategory: 'positionCategory',
+};

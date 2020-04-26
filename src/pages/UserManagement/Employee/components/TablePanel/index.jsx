@@ -1,35 +1,34 @@
-import React, { Component, Fragment, } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'dva';
 import cls from 'classnames';
-import { isEqual, } from 'lodash';
-import md5 from "md5";
-import { Button, message, Checkbox, Tag, } from "antd";
-import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
+import { isEqual } from 'lodash';
+import md5 from 'md5';
+import { Button, message, Checkbox, Tag } from 'antd';
+import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale';
 import { ExtTable, utils, ExtIcon } from 'suid';
-import { constants } from "@/utils";
-import FormModal from "./FormModal";
+import { constants } from '@/utils';
+import FormModal from './FormModal';
 import ResetFormModal from './ResetModal';
-import styles from "../../index.less";
+import styles from '../../index.less';
 
-const { APP_MODULE_BTN_KEY, SERVER_PATH, } = constants;
+const { APP_MODULE_BTN_KEY, SERVER_PATH } = constants;
 const { authAction } = utils;
 
-@connect(({ employee, loading, }) => ({ employee, loading, }))
+@connect(({ employee, loading }) => ({ employee, loading }))
 class TablePanel extends Component {
-
   constructor(props) {
     super(props);
-    const { currNode, } = props.employee;
+    const { currNode } = props.employee;
     this.state = {
       delRowId: null,
       list: [],
       includeSubNode: false,
-      currNode: currNode,
-    }
+      currNode,
+    };
   }
 
   componentDidUpdate(_prevProps, prevState) {
-    const { currNode, } = this.props.employee;
+    const { currNode } = this.props.employee;
     if (!isEqual(this.state.currNode, currNode)) {
       this.setState({
         currNode,
@@ -39,72 +38,72 @@ class TablePanel extends Component {
     }
   }
 
-  reloadData = _ => {
+  reloadData = (_) => {
     if (this.tableRef) {
       this.tableRef.remoteDataRefresh();
     }
   };
 
-  add = _ => {
-    const { dispatch, employee, } = this.props;
+  add = (_) => {
+    const { dispatch, employee } = this.props;
     if (employee.currNode) {
       dispatch({
-        type: "employee/updateState",
+        type: 'employee/updateState',
         payload: {
           showModal: true,
-          rowData: null
-        }
+          rowData: null,
+        },
       });
     } else {
       message.warn('请选择组织机构');
     }
   };
 
-  edit = rowData => {
+  edit = (rowData) => {
     const { dispatch } = this.props;
     dispatch({
-      type: "employee/updateState",
+      type: 'employee/updateState',
       payload: {
         showModal: true,
-        rowData: rowData
-      }
+        rowData,
+      },
     });
   };
 
-  save = data => {
+  save = (data) => {
     const { dispatch } = this.props;
     dispatch({
-      type: "employee/save",
+      type: 'employee/save',
       payload: {
-        ...data
+        ...data,
       },
-    }).then(res => {
+    }).then((res) => {
       if (res.success) {
         dispatch({
-          type: "employee/updateState",
+          type: 'employee/updateState',
           payload: {
-            showModal: false
-          }
+            showModal: false,
+          },
         });
         this.reloadData();
       }
     });
   };
 
-  del = record => {
+  del = (record) => {
     const { dispatch } = this.props;
     this.setState({
-      delRowId: record.id
-    }, _ => {
+      delRowId: record.id,
+    }, (_) => {
       dispatch({
-        type: "employee/del",
+        type: 'employee/del',
         payload: {
-          id: record.id
+          id: record.id,
         },
-      }).then(res => {
+      }).then((res) => {
         if (res.success) {
           this.setState({
-            delRowId: null
+            delRowId: null,
           });
           this.reloadData();
         }
@@ -115,69 +114,69 @@ class TablePanel extends Component {
   handlCopy = (rowData) => {
     const { dispatch } = this.props;
     dispatch({
-      type: "employee/updateState",
+      type: 'employee/updateState',
       payload: {
         showCopyConfig: true,
         rowData,
-      }
+      },
     });
   }
 
   handleConfig = (rowData) => {
     const { dispatch } = this.props;
     dispatch({
-      type: "employee/updateState",
+      type: 'employee/updateState',
       payload: {
         showEmployeeConfig: true,
         rowData,
-      }
+      },
     });
   }
 
   handleReset = (rowData) => {
     const { dispatch } = this.props;
     dispatch({
-      type: "employee/updateState",
+      type: 'employee/updateState',
       payload: {
         showResetModal: true,
         rowData,
-      }
+      },
     });
   }
 
-  closeFormModal = _ => {
+  closeFormModal = (_) => {
     const { dispatch } = this.props;
     dispatch({
-      type: "employee/updateState",
+      type: 'employee/updateState',
       payload: {
         showModal: false,
-        rowData: null
-      }
+        rowData: null,
+      },
     });
   };
 
   closeResetFormModal = () => {
     const { dispatch } = this.props;
     dispatch({
-      type: "employee/updateState",
+      type: 'employee/updateState',
       payload: {
         showResetModal: false,
-        rowData: null
-      }
+        rowData: null,
+      },
     });
   }
 
   renderDelBtn = (row) => {
     const { loading } = this.props;
     const { delRowId } = this.state;
-    if (loading.effects["employee/del"] && delRowId === row.id) {
-      return <ExtIcon className="del-loading" type="loading" antd />
+    if (loading.effects['employee/del'] && delRowId === row.id) {
+      return <ExtIcon className="del-loading" type="loading" antd />;
     }
     return <ExtIcon className="del" type="delete" antd />;
   };
 
   handleCheck = (e) => {
-    const { checked, } = e.target;
+    const { checked } = e.target;
     this.setState({
       includeSubNode: checked,
     }, () => {
@@ -188,18 +187,18 @@ class TablePanel extends Component {
   resetPassword = (data) => {
     const { dispatch } = this.props;
     dispatch({
-      type: "employee/resetPass",
+      type: 'employee/resetPass',
       payload: {
         ...data,
-        password: md5(data.password)
+        password: md5(data.password),
       },
-    }).then(res => {
+    }).then((res) => {
       if (res.success) {
         dispatch({
-          type: "employee/updateState",
+          type: 'employee/updateState',
           payload: {
             showResetModal: false,
-          }
+          },
         });
       }
     });
@@ -210,33 +209,33 @@ class TablePanel extends Component {
 
     const columns = [
       {
-        title: formatMessage({ id: "global.operation", defaultMessage: "操作" }),
-        key: "operation",
+        title: formatMessage({ id: 'global.operation', defaultMessage: '操作' }),
+        key: 'operation',
         width: 150,
-        align: "center",
-        dataIndex: "id",
-        className: "action",
+        align: 'center',
+        dataIndex: 'id',
+        className: 'action',
         required: true,
         render: (text, record) => (
-          <span className={cls("action-box")}>
+          <span className={cls('action-box')}>
             {
               authAction(
                 <ExtIcon
                   key={APP_MODULE_BTN_KEY.EDIT}
                   className="edit"
-                  onClick={_ => this.edit(record)}
+                  onClick={(_) => this.edit(record)}
                   type="edit"
                   tooltip={
                     { title: '编辑' }
                   }
-                  ignore='true'
+                  ignore="true"
                   antd
-                />
+                />,
               )
             }
             <ExtIcon
               className="copy"
-              onClick={_ => this.handlCopy(record)}
+              onClick={(_) => this.handlCopy(record)}
               type="copy"
               tooltip={
                 { title: '复制角色' }
@@ -245,7 +244,7 @@ class TablePanel extends Component {
             />
             <ExtIcon
               className="tool"
-              onClick={_ => this.handleConfig(record)}
+              onClick={(_) => this.handleConfig(record)}
               type="tool"
               tooltip={
                 { title: '配置角色' }
@@ -254,7 +253,7 @@ class TablePanel extends Component {
             />
             <ExtIcon
               className="form"
-              onClick={_ => this.handleReset(record)}
+              onClick={(_) => this.handleReset(record)}
               type="form"
               tooltip={
                 { title: '重置密码' }
@@ -262,51 +261,49 @@ class TablePanel extends Component {
               antd
             />
           </span>
-        )
+        ),
       },
       {
-        title: "员工编号",
-        dataIndex: "code",
+        title: '员工编号',
+        dataIndex: 'code',
         width: 120,
         required: true,
       },
       {
-        title: "员工名称",
-        dataIndex: "userName",
+        title: '员工名称',
+        dataIndex: 'userName',
         width: 120,
         required: true,
       },
       {
-        title: "冻结",
-        dataIndex: "frozen",
+        title: '冻结',
+        dataIndex: 'frozen',
         width: 120,
         required: true,
-        render: (text) => {
-          return <Tag color={text ? 'red' : 'green'}>{text? '已冻结' : '可用'}</Tag>
-        }
+        render: (text) => <Tag color={text ? 'red' : 'green'}>{text ? '已冻结' : '可用'}</Tag>,
       },
     ];
     const toolBarProps = {
       left: (
-        <Fragment>
+        <>
           {
             authAction(
               <Button
                 key={APP_MODULE_BTN_KEY.CREATE}
                 type="primary"
                 onClick={this.add}
-                ignore='true'
+                ignore="true"
               >
                 <FormattedMessage id="global.add" defaultMessage="新建" />
-              </Button>
+              </Button>,
             )
           }
           <Button onClick={this.reloadData}>
             <FormattedMessage id="global.refresh" defaultMessage="刷新" />
           </Button>
           <Checkbox onChange={this.handleCheck}>包含子节点：</Checkbox>
-        </Fragment>
-      )
+        </>
+      ),
     };
     return {
       bordered: false,
@@ -326,9 +323,9 @@ class TablePanel extends Component {
   };
 
   getFormModalProps = () => {
-    const { currNode, } = this.state;
-    const { loading, employee, } = this.props;
-    const { showModal, rowData, } = employee;
+    const { currNode } = this.state;
+    const { loading, employee } = this.props;
+    const { showModal, rowData } = employee;
 
     return {
       save: this.save,
@@ -336,14 +333,14 @@ class TablePanel extends Component {
       showModal,
       parentData: currNode,
       closeFormModal: this.closeFormModal,
-      saving: loading.effects["employee/save"]
+      saving: loading.effects['employee/save'],
     };
   };
 
   getResetModalProps = () => {
-    const { currNode, } = this.state;
-    const { loading, employee, } = this.props;
-    const { showResetModal, rowData, } = employee;
+    const { currNode } = this.state;
+    const { loading, employee } = this.props;
+    const { showResetModal, rowData } = employee;
 
     return {
       save: this.resetPassword,
@@ -351,17 +348,17 @@ class TablePanel extends Component {
       showModal: showResetModal,
       parentData: currNode,
       closeFormModal: this.closeResetFormModal,
-      saving: loading.effects["employee/resetPass"]
+      saving: loading.effects['employee/resetPass'],
     };
   }
 
   render() {
-    const { employee, } = this.props;
-    const { showModal, showResetModal, } = employee;
+    const { employee } = this.props;
+    const { showModal, showResetModal } = employee;
 
     return (
-      <div className={cls(styles["container-box"])} >
-        <ExtTable onTableRef={inst => this.tableRef=inst } {...this.getExtableProps()} />
+      <div className={cls(styles['container-box'])}>
+        <ExtTable onTableRef={(inst) => this.tableRef = inst} {...this.getExtableProps()} />
         {
           showModal
             ? <FormModal {...this.getFormModalProps()} />

@@ -1,19 +1,18 @@
 import React, { Component } from 'react';
-import { Input, Tree, Empty, Icon, } from 'antd';
+import { Input, Tree, Empty, Icon } from 'antd';
 import { ScrollBar, ToolBar, ExtIcon } from 'suid';
-import { cloneDeep, isEqual, } from 'lodash';
+import { cloneDeep, isEqual } from 'lodash';
 import cls from 'classnames';
 
 import styles from './index.less';
 
-const { TreeNode, } = Tree;
+const { TreeNode } = Tree;
 
 const { Search } = Input;
 
 class TreeView extends Component {
-
   constructor(props) {
-    super(props)
+    super(props);
     this.treeData = props.treeData;
     this.state = {
       expandedKeys: [],
@@ -25,7 +24,7 @@ class TreeView extends Component {
     };
   }
 
-  onExpand = expandedKeys => {
+  onExpand = (expandedKeys) => {
     this.setState({
       expandedKeys,
       autoExpandParent: false,
@@ -33,8 +32,8 @@ class TreeView extends Component {
   };
 
   componentDidUpdate() {
-    const { treeData, } = this.props;
-    const { searchValue, } = this.state;
+    const { treeData } = this.props;
+    const { searchValue } = this.state;
     if (!isEqual(this.treeData, treeData)) {
       this.treeData = treeData;
       this.updateTreeState(searchValue, treeData);
@@ -45,13 +44,13 @@ class TreeView extends Component {
     const expandedKeys = [];
     const filterTreeData = this.findNode(searchValue, cloneDeep(treeData));
     this.getExpandedKeys(filterTreeData, expandedKeys);
-    const autoExpandParent = searchValue === "" ? false : true;
+    const autoExpandParent = searchValue !== '';
     this.setState({
       filterTreeData,
       searchValue,
       autoExpandParent,
       expandedKeys,
-    })
+    });
   }
 
   handleSearch = (value) => {
@@ -66,7 +65,7 @@ class TreeView extends Component {
     });
 
     this.setState({
-      checkedKeys
+      checkedKeys,
     }, () => {
       if (onChange) {
         onChange(checkedItems[0]);
@@ -76,14 +75,14 @@ class TreeView extends Component {
 
   handleSelect = (selectedKeys, info) => {
     if (selectedKeys && selectedKeys.length) {
-      const { onSelect, onChange, } = this.props;
+      const { onSelect, onChange } = this.props;
       const selectedItems = [];
       info.selectedNodes.forEach((item, index) => {
         selectedItems.push(item.props.dataRef);
       });
 
       this.setState({
-        selectedKeys
+        selectedKeys,
       }, () => {
         if (onChange) {
           onChange(selectedItems[0]);
@@ -95,42 +94,39 @@ class TreeView extends Component {
     }
   }
 
-  //查找关键字节点
-  findNode = (value, tree) => {
-    return tree.map(treeNode => {
-      const isInclude = treeNode.name.includes(value);
-      // 如果有子节点
+  // 查找关键字节点
+  findNode = (value, tree) => tree.map((treeNode) => {
+    const isInclude = treeNode.name.includes(value);
+    // 如果有子节点
+    if (treeNode.children && treeNode.children.length > 0) {
+      treeNode.children = this.findNode(value, treeNode.children);
+      // 如果标题匹配
+      if (isInclude) {
+        return treeNode;
+      } // 如果标题不匹配，则查看子节点是否有匹配标题
+      treeNode.children = this.findNode(value, treeNode.children);
       if (treeNode.children && treeNode.children.length > 0) {
-        treeNode.children = this.findNode(value, treeNode.children);
-        //如果标题匹配
-        if (isInclude) {
-          return treeNode;
-        } else {//如果标题不匹配，则查看子节点是否有匹配标题
-          treeNode.children = this.findNode(value, treeNode.children);
-          if (treeNode.children && treeNode.children.length > 0) {
-            return treeNode;
-          }
-        }
-      } else {//没子节点
-        if (isInclude) {
-          return treeNode;
-        }
+        return treeNode;
       }
-    }).filter((treeNode) => treeNode);
-  }
+    } else { // 没子节点
+      if (isInclude) {
+        return treeNode;
+      }
+    }
+  }).filter((treeNode) => treeNode)
 
   getExpandedKeys = (data, result = []) => {
     for (const item of data) {
       result.push(item.id);
       if (item.children && item.children.length > 0) {
-        this.getExpandedKeys(item.children, result)
+        this.getExpandedKeys(item.children, result);
       }
     }
     return result;
   }
 
-  getTreeNodes = data => data.map(item => {
-    const { children, name, id, } = item;
+  getTreeNodes = (data) => data.map((item) => {
+    const { children, name, id } = item;
     const { selectable } = this.props;
 
     if (children && children.length > 0) {
@@ -142,13 +138,13 @@ class TreeView extends Component {
     }
 
     return (
-      <TreeNode switcherIcon={<ExtIcon type="dian" />}  title={name} key={id} dataRef={item} isLeaf />
+      <TreeNode switcherIcon={<ExtIcon type="dian" />} title={name} key={id} dataRef={item} isLeaf />
     );
   });
 
   getToolBarProps = () => {
-    const { toolBar = {}, } = this.props;
-    const { layout: customLayout, left = null, rowLeft=false} = toolBar;
+    const { toolBar = {} } = this.props;
+    const { layout: customLayout, left = null, rowLeft = false } = toolBar;
     let layout = {
       leftSpan: 0,
       rightSpan: 24,
@@ -170,28 +166,28 @@ class TreeView extends Component {
         style={{ width: '100%' }}
       />),
       left: rowLeft ? null : left,
-      rightClassName: left && !rowLeft ? null : cls('tool-bar-right')
+      rightClassName: left && !rowLeft ? null : cls('tool-bar-right'),
     };
   }
 
   render() {
-    const { expandedKeys, autoExpandParent, checkedKeys, selectedKeys, filterTreeData, } = this.state;
-    const { height = '100%', toolBar = {},  } = this.props;
-    const { left = null, rowLeft=false} = toolBar;
+    const { expandedKeys, autoExpandParent, checkedKeys, selectedKeys, filterTreeData } = this.state;
+    const { height = '100%', toolBar = {} } = this.props;
+    const { left = null, rowLeft = false } = toolBar;
     return (
-      <div style={{ height, }}>
+      <div style={{ height }}>
         {rowLeft && left ? (
           <div>{left}</div>
         ) : null}
         <ToolBar {...this.getToolBarProps()} />
-        <div style={{ height: `${rowLeft && left ? 'calc(100% - 78px)': 'calc(100% - 46px)'}`, }}>
+        <div style={{ height: `${rowLeft && left ? 'calc(100% - 78px)' : 'calc(100% - 46px)'}` }}>
           <ScrollBar>
             {filterTreeData && filterTreeData.length ? (
               <Tree
                 onCheck={this.handleCheck}
                 onSelect={this.handleSelect}
                 checkable={false}
-                blockNode={true}
+                blockNode
                 onExpand={this.onExpand}
                 expandedKeys={expandedKeys}
                 checkedKeys={checkedKeys}
@@ -202,9 +198,8 @@ class TreeView extends Component {
                 {this.getTreeNodes(filterTreeData)}
               </Tree>
             ) : (
-                <Empty className={cls("empty-wrapper")} description="暂无数据"/>
-              )
-            }
+              <Empty className={cls('empty-wrapper')} description="暂无数据" />
+            )}
           </ScrollBar>
         </div>
       </div>

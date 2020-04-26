@@ -5,12 +5,12 @@ const { request } = utils;
 
 const { SERVER_PATH } = constants;
 
-/** 获取功能角色组列表*/
+/** 获取功能角色组列表 */
 export async function getRoleGroupList(params) {
   const url = `${SERVER_PATH}/sei-basic/featureRoleGroup/findAll`;
   return request({
     url,
-    method: "GET",
+    method: 'GET',
     params,
   });
 }
@@ -20,7 +20,7 @@ export async function saveRoleGroup(data) {
   const url = `${SERVER_PATH}/sei-basic/featureRoleGroup/save`;
   return request({
     url,
-    method: "POST",
+    method: 'POST',
     data,
   });
 }
@@ -30,11 +30,11 @@ export async function delRoleGroup(data) {
   const url = `${SERVER_PATH}/sei-basic/featureRoleGroup/delete/${data.id}`;
   return request({
     url,
-    method: "DELETE",
+    method: 'DELETE',
   });
 }
 
-/** 
+/**
  * 根据角色组id获取功能角色列表
  * param roleGroupId
 */
@@ -42,7 +42,7 @@ export async function getFeatureRoleList(params) {
   const url = `${SERVER_PATH}/sei-basic/featureRole/findByFeatureRoleGroup`;
   return request({
     url,
-    method: "GET",
+    method: 'GET',
     params,
   });
 }
@@ -52,7 +52,7 @@ export async function saveFeatureRole(data) {
   const url = `${SERVER_PATH}/sei-basic/featureRole/save`;
   return request({
     url,
-    method: "POST",
+    method: 'POST',
     data,
   });
 }
@@ -62,12 +62,12 @@ export async function delFeatureRole(data) {
   const url = `${SERVER_PATH}/sei-basic/featureRole/delete/${data.id}`;
   return request({
     url,
-    method: "DELETE",
+    method: 'DELETE',
   });
 }
 
-/** 
- * 根据功能角色获取已分配功能项树形结构 
+/**
+ * 根据功能角色获取已分配功能项树形结构
  * @featureRoleId 功能角色Id
  */
 export async function getAssignFeatureItem(params) {
@@ -83,7 +83,7 @@ export async function assignFeatureItem(data) {
   const url = `${SERVER_PATH}/sei-basic/featureRoleFeature/insertRelations`;
   return request({
     url,
-    method: "POST",
+    method: 'POST',
     data,
   });
 }
@@ -93,13 +93,13 @@ export async function removeAssignedFeatureItem(data) {
   const url = `${SERVER_PATH}/sei-basic/featureRoleFeature/removeRelations`;
   return request({
     url,
-    method: "DELETE",
+    method: 'DELETE',
     data,
   });
 }
 
-/** 
- * 获取功能角色未分配功能项树形结构 
+/**
+ * 获取功能角色未分配功能项树形结构
  * @appModuleId 应用模块id
  * @featureRoleId 功能角色id
  */
@@ -107,12 +107,12 @@ export async function getUnAssignedFeatureItemList(params) {
   const url = `${SERVER_PATH}/sei-basic/featureRoleFeature/getUnassignedFeatureTree`;
   return request({
     url,
-    method: "GET",
+    method: 'GET',
     params,
   });
 }
 
-/** 
+/**
  * 根据功能角色的id获取已分配的用户
  * params featureRoleId
  */
@@ -120,12 +120,12 @@ export async function getAssignedEmployeesByFeatureRole(params) {
   const url = `${SERVER_PATH}/sei-basic/featureRole/getAssignedEmployeesByFeatureRole`;
   return request({
     url,
-    method: "GET",
+    method: 'GET',
     params,
   });
 }
 
-/** 
+/**
  * 根据功能角色的id获取已分配的岗位
  * params featureRoleId
 */
@@ -133,9 +133,7 @@ export async function getAssignedPositionsByFeatureRole(params) {
   const url = `${SERVER_PATH}/sei-basic/featureRole/getAssignedPositionsByFeatureRole`;
   return request({
     url,
-    method: "GET",
+    method: 'GET',
     params,
   });
 }
-
-

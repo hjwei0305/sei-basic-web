@@ -1,12 +1,11 @@
-import React, { Component } from "react";
-import { Popover } from "antd";
-import cls from "classnames";
+import React, { Component } from 'react';
+import { Popover } from 'antd';
+import cls from 'classnames';
 import { ExtIcon } from 'suid';
 import { RoleStation } from '@/components';
-import styles from "./View.less";
+import styles from './View.less';
 
 class UserView extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -14,7 +13,7 @@ class UserView extends Component {
     };
   }
 
-  handlerShowChange = visible => {
+  handlerShowChange = (visible) => {
     this.setState({ visible });
   };
 
@@ -33,11 +32,11 @@ class UserView extends Component {
         key="role-station-view-popover-box"
         destroyTooltipOnHide
         getPopupContainer={() => document.getElementById(menuId)}
-        onVisibleChange={visible => this.handlerShowChange(visible)}
-        overlayClassName={cls(styles["view-popover-box"])}
+        onVisibleChange={(visible) => this.handlerShowChange(visible)}
+        overlayClassName={cls(styles['view-popover-box'])}
         content={<RoleStation {...roleStationProps} />}
       >
-        <span className={cls("view-popover-box-trigger")}>
+        <span className={cls('view-popover-box-trigger')}>
           <ExtIcon type={icon} antd />
           {title}
         </span>

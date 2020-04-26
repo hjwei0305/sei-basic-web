@@ -1,43 +1,40 @@
-import React, { Component, Fragment } from "react";
-import cls from "classnames";
-import { connect } from "dva";
+import React, { Component, Fragment } from 'react';
+import cls from 'classnames';
+import { connect } from 'dva';
 import { isEqual } from 'lodash';
-import { Dropdown, Menu } from "antd";
+import { Dropdown, Menu } from 'antd';
 import { utils, ExtIcon } from 'suid';
 import { constants } from '@/utils';
 import UserView from './UserView';
 import StationView from './StationView';
-import styles from "./ExtAction.less";
+import styles from './ExtAction.less';
 
 const { getUUID } = utils;
 const { ROLE_VIEW } = constants;
 const { Item } = Menu;
 
-const menuData = () => {
-  return [
-    {
-      title: '查看岗位',
-      key: ROLE_VIEW.SATION,
-      disabled: false,
-      icon: 'flag',
-    },
-    {
-      title: '查看用户',
-      key: ROLE_VIEW.USER,
-      disabled: false,
-      icon: 'user'
-    }
-  ];
-};
+const menuData = () => [
+  {
+    title: '查看岗位',
+    key: ROLE_VIEW.SATION,
+    disabled: false,
+    icon: 'flag',
+  },
+  {
+    title: '查看用户',
+    key: ROLE_VIEW.USER,
+    disabled: false,
+    icon: 'user',
+  },
+];
 
 @connect(({ featureRole, loading }) => ({ featureRole, loading }))
 class ExtAction extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
       menuShow: false,
-      selectedKeys: "",
+      selectedKeys: '',
       assignUserData: [],
       assinStationData: [],
     };
@@ -47,12 +44,12 @@ class ExtAction extends Component {
     const { featureRole } = this.props;
     if (!isEqual(this.state.assignUserData, featureRole.assignUserData)) {
       this.setState({
-        assignUserData: featureRole.assignUserData
+        assignUserData: featureRole.assignUserData,
       });
     }
     if (!isEqual(this.state.assinStationData, featureRole.assinStationData)) {
       this.setState({
-        assinStationData: featureRole.assinStationData
+        assinStationData: featureRole.assinStationData,
       });
     }
   }
@@ -64,7 +61,7 @@ class ExtAction extends Component {
         type: 'featureRole/getAssignedEmployeesByFeatureRole',
         payload: {
           featureRoleId: roleData.id,
-        }
+        },
       });
     }
   };
@@ -76,7 +73,7 @@ class ExtAction extends Component {
         type: 'featureRole/getAssignedPositionsByFeatureRole',
         payload: {
           featureRoleId: roleData.id,
-        }
+        },
       });
     }
   };
@@ -86,7 +83,7 @@ class ExtAction extends Component {
     if (e.key === ROLE_VIEW.SATION || e.key === ROLE_VIEW.USER) {
       this.setState({
         selectedKeys: e.key,
-        menuShow: true
+        menuShow: true,
       }, () => {
         if (e.key === ROLE_VIEW.USER) {
           this.getUserData();
@@ -97,7 +94,7 @@ class ExtAction extends Component {
       });
     } else {
       this.setState({
-        selectedKeys: "",
+        selectedKeys: '',
         menuShow: false,
       });
     }
@@ -110,12 +107,12 @@ class ExtAction extends Component {
     return (
       <Menu
         id={menuId}
-        className={cls(styles["action-menu-box"])}
-        onClick={e => this.onActionOperation(e, record)}
+        className={cls(styles['action-menu-box'])}
+        onClick={(e) => this.onActionOperation(e, record)}
         selectedKeys={[selectedKeys]}
       >
         {
-          menus.map(m => {
+          menus.map((m) => {
             if (m.key === ROLE_VIEW.USER) {
               return (
                 <Item key={m.key}>
@@ -158,10 +155,10 @@ class ExtAction extends Component {
     );
   };
 
-  onVisibleChange = v => {
+  onVisibleChange = (v) => {
     this.setState({
       menuShow: v,
-      selectedKeys: !v ? "" : this.state.selectedKeys,
+      selectedKeys: !v ? '' : this.state.selectedKeys,
     });
   };
 
@@ -170,22 +167,24 @@ class ExtAction extends Component {
     const { menuShow } = this.state;
     const menusData = menuData();
     return (
-      <Fragment>
+      <>
         {
           menusData.length > 0
-            ? <Dropdown
-              trigger={["click"]}
-              overlay={this.getMenu(menusData, roleData)}
-              className="action-drop-down"
-              placement="bottomLeft"
-              visible={menuShow}
-              onVisibleChange={this.onVisibleChange}
-            >
-              <ExtIcon className={cls('action-item')} type="more" antd />
-            </Dropdown>
+            ? (
+              <Dropdown
+                trigger={['click']}
+                overlay={this.getMenu(menusData, roleData)}
+                className="action-drop-down"
+                placement="bottomLeft"
+                visible={menuShow}
+                onVisibleChange={this.onVisibleChange}
+              >
+                <ExtIcon className={cls('action-item')} type="more" antd />
+              </Dropdown>
+            )
             : null
         }
-      </Fragment>
+      </>
     );
   }
 }

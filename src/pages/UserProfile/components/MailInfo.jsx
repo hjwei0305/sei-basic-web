@@ -1,20 +1,19 @@
 import React from 'react';
-import { connect, } from 'dva';
-import { Form, Input, Button, } from 'antd';
-import { userUtils, } from '@/utils';
+import { connect } from 'dva';
+import { Form, Input, Button } from 'antd';
+import { userUtils } from '@/utils';
 
-const { getCurrentUser, } = userUtils;
+const { getCurrentUser } = userUtils;
 
 const FormItem = Form.Item;
 const formItemLayout = {
-  labelCol: {span: 8},
-  wrapperCol: {span: 12}
-}
+  labelCol: { span: 8 },
+  wrapperCol: { span: 12 },
+};
 
-@connect(({ userProfile, }) => ({ userProfile, }))
+@connect(({ userProfile }) => ({ userProfile }))
 @Form.create()
 class MailInfo extends React.Component {
-
   handleSave = () => {
     const { form, dispatch, userProfile } = this.props;
     const { mailAlert } = userProfile;
@@ -23,37 +22,37 @@ class MailInfo extends React.Component {
       if (err) {
         return;
       }
-      let params = {};
+      const params = {};
       Object.assign(params, mailAlert);
       Object.assign(params, formData);
       Object.assign(params, { userId: user.userId });
       dispatch({
-        type: "userProfile/saveEmailAlert",
+        type: 'userProfile/saveEmailAlert',
         payload: params,
       });
     });
   }
 
   componentDidMount() {
-    const { dispatch, } = this.props;
+    const { dispatch } = this.props;
     dispatch({
       type: 'userProfile/getEmailAlert',
     });
   }
 
   render() {
-    const { form, userProfile, } = this.props;
+    const { form, userProfile } = this.props;
     const { getFieldDecorator } = form;
     const { mailAlert } = userProfile;
 
     const {
-      hours="",
-      toDoAmount="",
-      lastTime="",
+      hours = '',
+      toDoAmount = '',
+      lastTime = '',
     } = mailAlert || {};
 
     return (
-      <Form style={{width: 600}}>
+      <Form style={{ width: 600 }}>
         <FormItem
           label="间隔时间(小时)"
           {...formItemLayout}
@@ -63,9 +62,9 @@ class MailInfo extends React.Component {
             rules: [{
               required: true,
               message: '请填写间隔时间(小时)!',
-            }]
+            }],
           })(
-            <Input />
+            <Input />,
           )}
         </FormItem>
         <FormItem
@@ -77,9 +76,9 @@ class MailInfo extends React.Component {
             rules: [{
               required: true,
               message: '待办工作数量(个)!',
-            }]
+            }],
           })(
-            <Input />
+            <Input />,
           )}
         </FormItem>
         <FormItem
@@ -89,7 +88,7 @@ class MailInfo extends React.Component {
           {getFieldDecorator('lastTime', {
             initialValue: lastTime,
           })(
-            <Input disabled/>
+            <Input disabled />,
           )}
         </FormItem>
         <FormItem
@@ -100,9 +99,8 @@ class MailInfo extends React.Component {
           <Button type="primary" onClick={this.handleSave}>更新</Button>
         </FormItem>
       </Form>
-    )
+    );
   }
 }
 
 export default MailInfo;
-

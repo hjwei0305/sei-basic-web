@@ -1,20 +1,18 @@
-import React, { Fragment, } from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'dva';
-import { Button, message, } from 'antd';
-import { ExtTable, ComboTree, } from 'suid';
+import { Button, message } from 'antd';
+import { ExtTable, ComboTree } from 'suid';
 import cls from 'classnames';
 
-import { constants } from "@/utils";
-import { AssignLayout, ColumnLayout, } from '@/components';
-import styles from './index.less'
+import { constants } from '@/utils';
+import { AssignLayout, ColumnLayout } from '@/components';
+import styles from './index.less';
 
-const { SERVER_PATH, } = constants;
+const { SERVER_PATH } = constants;
 
 
-@connect(({ employee, }) => ({ employee, }))
+@connect(({ employee }) => ({ employee }))
 class CopyConfig extends React.Component {
-
-
   state = {
     userCurrNode: null,
     dataRoleIds: [],
@@ -23,7 +21,7 @@ class CopyConfig extends React.Component {
   };
 
   handleBack = () => {
-    const { dispatch, } = this.props;
+    const { dispatch } = this.props;
     dispatch({
       type: 'employee/updateState',
       payload: {
@@ -33,27 +31,27 @@ class CopyConfig extends React.Component {
   }
 
   handleCopy = () => {
-    const { dataRoleIds, featureRoleIds, targetEmployeeIds, } = this.state;
-    const { dispatch, employee, } = this.props;
-    const { rowData, } = employee;
+    const { dataRoleIds, featureRoleIds, targetEmployeeIds } = this.state;
+    const { dispatch, employee } = this.props;
+    const { rowData } = employee;
     // if (!targetEmployeeIds.includes(rowData.id)) {
     dispatch({
-        type: 'employee/copyTo',
-        payload: {
-          dataRoleIds,
-          featureRoleIds,
-          targetEmployeeIds,
-          employeeId: rowData.id,
-        },
-      });
+      type: 'employee/copyTo',
+      payload: {
+        dataRoleIds,
+        featureRoleIds,
+        targetEmployeeIds,
+        employeeId: rowData.id,
+      },
+    });
     // } else {
     //   message.warn(`不能复制功能角色和数据角色到当前帐号【${rowData.userName}】`);
     // }
   }
 
   getComboTreeProps = () => {
-    const { employee, } = this.props;
-    const { currNode, } = employee;
+    const { employee } = this.props;
+    const { currNode } = employee;
 
     return {
       defaultValue: currNode.name || '',
@@ -65,11 +63,11 @@ class CopyConfig extends React.Component {
         name: 'name',
       },
       placeholder: '请选择组织机构',
-      style: { width: 200, },
+      style: { width: 200 },
       afterSelect: (node) => {
         if (node) {
           this.setState({
-            organizationId: node.id
+            organizationId: node.id,
           }, () => {
             if (this.userTableRef) {
               this.userTableRef.remoteDataRefresh();
@@ -82,28 +80,28 @@ class CopyConfig extends React.Component {
 
   getUserExtableProps = () => {
     const { organizationId } = this.state;
-    const { employee,  } = this.props;
-    const { currNode, } = employee;
+    const { employee } = this.props;
+    const { currNode } = employee;
     const columns = [
       {
-        title: "员工编号",
-        dataIndex: "code",
+        title: '员工编号',
+        dataIndex: 'code',
         width: 120,
         required: true,
       },
       {
-        title: "员工名称",
-        dataIndex: "userName",
+        title: '员工名称',
+        dataIndex: 'userName',
         width: 120,
         required: true,
       },
     ];
     const toolBarProps = {
       left: (
-        <Fragment>
-          <ComboTree {...this.getComboTreeProps()}/>
-        </Fragment>
-      )
+        <>
+          <ComboTree {...this.getComboTreeProps()} />
+        </>
+      ),
     };
     return {
       bordered: false,
@@ -111,7 +109,7 @@ class CopyConfig extends React.Component {
       checkbox: true,
       columns,
       toolBar: toolBarProps,
-      searchProperties: ['code', ],
+      searchProperties: ['code'],
       store: {
         type: 'POST',
         url: `${SERVER_PATH}/sei-basic/employee/findByUserQueryParam`,
@@ -127,23 +125,23 @@ class CopyConfig extends React.Component {
         this.setState({
           targetEmployeeIds,
         });
-      }
+      },
     };
   }
 
   getFeatureRoleExtableProps = () => {
-    const { employee,  } = this.props;
-    const { rowData, } = employee;
+    const { employee } = this.props;
+    const { rowData } = employee;
     const columns = [
       {
-        title: "角色代码",
-        dataIndex: "code",
+        title: '角色代码',
+        dataIndex: 'code',
         width: 120,
         required: true,
       },
       {
-        title: "角色名称",
-        dataIndex: "name",
+        title: '角色名称',
+        dataIndex: 'name',
         width: 120,
         required: true,
       },
@@ -167,23 +165,23 @@ class CopyConfig extends React.Component {
         this.setState({
           featureRoleIds,
         });
-      }
+      },
     };
   }
 
   getUserRoleExtableProps = () => {
-    const { employee,  } = this.props;
-    const { rowData, } = employee;
+    const { employee } = this.props;
+    const { rowData } = employee;
     const columns = [
       {
-        title: "角色代码",
-        dataIndex: "code",
+        title: '角色代码',
+        dataIndex: 'code',
         width: 120,
         required: true,
       },
       {
-        title: "角色名称",
-        dataIndex: "name",
+        title: '角色名称',
+        dataIndex: 'name',
         width: 120,
         required: true,
       },
@@ -207,14 +205,14 @@ class CopyConfig extends React.Component {
         this.setState({
           dataRoleIds,
         });
-      }
+      },
     };
   }
 
   render() {
     const { dataRoleIds, featureRoleIds, targetEmployeeIds } = this.state;
-    const { employee, } = this.props;
-    const { rowData, } = employee;
+    const { employee } = this.props;
+    const { rowData } = employee;
     const copyBtnEnabled = targetEmployeeIds.length && (featureRoleIds.length || dataRoleIds.length);
 
     return (
@@ -223,7 +221,7 @@ class CopyConfig extends React.Component {
         layout={[7, 1, 16]}
         extra={[null, (<Button type="primary" onClick={this.handleBack}>返回</Button>)]}
       >
-        <ExtTable slot="left" slotClassName={cls(styles['slot-container'])} onTableRef={inst => this.userTableRef=inst } {...this.getUserExtableProps()} />
+        <ExtTable slot="left" slotClassName={cls(styles['slot-container'])} onTableRef={(inst) => this.userTableRef = inst} {...this.getUserExtableProps()} />
         <div slot="center">
           <Button
             onClick={this.handleCopy}
@@ -232,9 +230,9 @@ class CopyConfig extends React.Component {
             icon="left"
           />
         </div>
-        <ColumnLayout slot="right" slotClassName={cls(styles['slot-container'])} title={['功能角色', '数据角色']} layout={[12, 12]} >
-          <ExtTable slot="left" onTableRef={inst => this.featureRoleTableRef=inst } {...this.getFeatureRoleExtableProps()} />
-          <ExtTable slot="right" onTableRef={inst => this.userRoleTableRef=inst } {...this.getUserRoleExtableProps()} />
+        <ColumnLayout slot="right" slotClassName={cls(styles['slot-container'])} title={['功能角色', '数据角色']} layout={[12, 12]}>
+          <ExtTable slot="left" onTableRef={(inst) => this.featureRoleTableRef = inst} {...this.getFeatureRoleExtableProps()} />
+          <ExtTable slot="right" onTableRef={(inst) => this.userRoleTableRef = inst} {...this.getUserRoleExtableProps()} />
         </ColumnLayout>
       </AssignLayout>
     );

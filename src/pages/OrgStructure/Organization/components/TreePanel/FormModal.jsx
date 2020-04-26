@@ -1,14 +1,13 @@
-import React, { PureComponent } from "react";
-import { formatMessage, } from "umi-plugin-react/locale";
+import React, { PureComponent } from 'react';
+import { formatMessage } from 'umi-plugin-react/locale';
 import { ExtModal } from 'suid';
 import FormPanel from '../FormPanel';
 
 
 class FormModal extends PureComponent {
-
   render() {
     const { visible, onCancel } = this.props;
-    const title = formatMessage({ id: "global.add", defaultMessage: "新建" });
+    const title = formatMessage({ id: 'global.add', defaultMessage: '新建' });
 
     return (
       <ExtModal
@@ -18,10 +17,10 @@ class FormModal extends PureComponent {
         onCancel={onCancel}
         maskClosable={false}
         title={title}
-        onOk={() => {this.formRef.onFormSubmit()}}
+        onOk={() => { this.formRef.onFormSubmit(); }}
         width={600}
       >
-        <FormPanel onRef={inst => this.formRef = inst} isCreate={true}/>
+        <FormPanel onRef={(inst) => this.formRef = inst} isCreate />
       </ExtModal>
     );
   }

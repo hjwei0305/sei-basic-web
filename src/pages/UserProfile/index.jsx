@@ -1,8 +1,8 @@
 import React from 'react';
-import { connect, } from 'dva';
-import { Tabs, Card, } from "antd";
+import { connect } from 'dva';
+import { Tabs, Card } from 'antd';
 import cls from 'classnames';
-import { PageWrapper, } from '@/components';
+import { PageWrapper } from '@/components';
 import BasicInfo from './components/BasicInfo';
 import PositionInfo from './components/PositionInfo';
 import MailInfo from './components/MailInfo';
@@ -10,13 +10,12 @@ import AccountInfo from './components/AccountInfo';
 
 import styles from './index.less';
 
-const { TabPane, } = Tabs;
+const { TabPane } = Tabs;
 
-@connect(({ userProfile, loading, }) => ({ userProfile, loading, }))
+@connect(({ userProfile, loading }) => ({ userProfile, loading }))
 class UserProfile extends React.Component {
-
   handleActiveChange = (activeTabKey) => {
-    const { dispatch, } = this.props;
+    const { dispatch } = this.props;
     dispatch({
       type: 'userProfile/updateState',
       payload: {
@@ -26,14 +25,14 @@ class UserProfile extends React.Component {
   }
 
   render() {
-    const { loading, userProfile, } = this.props;
-    const { activeTabKey, } = userProfile;
+    const { loading, userProfile } = this.props;
+    const { activeTabKey } = userProfile;
 
     return (
       <PageWrapper loading={loading.global} className={cls(styles['container-box'])}>
         <Tabs
           activeKey={activeTabKey}
-          tabPosition={"left"}
+          tabPosition="left"
           onChange={this.handleActiveChange}
         >
           <TabPane tab="基本信息" key="baiscInfo">
@@ -51,8 +50,8 @@ class UserProfile extends React.Component {
               <PositionInfo />
             </Card>
           </TabPane>
-{/*          <TabPane tab="支付信息" key="payInfo">
-          </TabPane>*/}
+          {/*          <TabPane tab="支付信息" key="payInfo">
+          </TabPane> */}
           <TabPane tab="邮件提醒" key="mailInfo">
             <Card title="邮件提醒" bordered={false}>
               <MailInfo />

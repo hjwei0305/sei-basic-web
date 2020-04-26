@@ -4,6 +4,9 @@
 * @Last Modified by:   zp
 * @Last Modified time: 2020-02-18 09:12:35
 */
+import { message } from 'antd';
+import { formatMessage } from 'umi-plugin-react/locale';
+import { utils } from 'suid';
 import {
   findByUserId,
   saveProfile,
@@ -12,18 +15,15 @@ import {
   createAccount,
   updateAccount,
   updatePwd,
-} from "./service";
-import { message } from "antd";
-import { formatMessage } from "umi-plugin-react/locale";
-import { utils } from 'suid';
-import { userUtils, } from '@/utils';
+} from './service';
+import { userUtils } from '@/utils';
 
 const { dvaModel, pathMatchRegexp } = utils;
 const { modelExtend, model } = dvaModel;
-const { getCurrentUser, } = userUtils;
+const { getCurrentUser } = userUtils;
 
 export default modelExtend(model, {
-  namespace: "userProfile",
+  namespace: 'userProfile',
   state: {
     basicInfo: null,
     activeTabKey: 'baiscInfo',
@@ -34,18 +34,18 @@ export default modelExtend(model, {
   },
   subscriptions: {
     setup({ dispatch, history }) {
-      history.listen(location => {
+      history.listen((location) => {
         const user = getCurrentUser();
-        if (pathMatchRegexp("/userProfile", location.pathname)) {
+        if (pathMatchRegexp('/userProfile', location.pathname)) {
           dispatch({
-            type: "getUserInfo",
+            type: 'getUserInfo',
             payload: {
               userId: user.userId,
-            }
+            },
           });
         }
       });
-    }
+    },
   },
   effects: {
     * save({ payload }, { call, put }) {
@@ -136,5 +136,5 @@ export default modelExtend(model, {
 
       return res;
     },
-  }
+  },
 });

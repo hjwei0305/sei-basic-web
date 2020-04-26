@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Tabs, Button, } from 'antd';
+import { Tabs, Button } from 'antd';
 import cls from 'classnames';
 import DataRoleAssign from '@/components/DataRoleAssign';
 import FeatureRoleAssign from '@/components/FeatureRoleAssign';
-import { constants } from "@/utils";
+import { constants } from '@/utils';
 import UserConfig from './UserConfig';
 
 import styles from './index.less';
@@ -12,11 +12,10 @@ import styles from './index.less';
 const { SERVER_PATH } = constants;
 const { TabPane } = Tabs;
 
-@connect(({ position, loading, }) => ({ position, loading, }))
+@connect(({ position, loading }) => ({ position, loading }))
 class PostionConfig extends React.Component {
-
   handleAssign = (type, params) => {
-    const { dispatch, } = this.props;
+    const { dispatch } = this.props;
     // switch (type) {
     //   case 'Employee':
     //     break;
@@ -28,46 +27,44 @@ class PostionConfig extends React.Component {
 
     return dispatch({
       type: `position/assign${type}`,
-      payload: params
+      payload: params,
     });
   }
 
   handleUnAssign = (type, params) => {
-    const { dispatch, } = this.props;
+    const { dispatch } = this.props;
 
     return dispatch({
       type: `position/unAssign${type}`,
-      payload: params
+      payload: params,
     });
   }
 
   handleBack = () => {
-    const { dispatch, } = this.props;
+    const { dispatch } = this.props;
     dispatch({
-      type: "position/updateState",
+      type: 'position/updateState',
       payload: {
         showPosionConfig: false,
-      }
+      },
     });
   }
 
   handleSaveCfg = (params) => {
-    const { dispatch, } = this.props;
+    const { dispatch } = this.props;
     return dispatch({
       type: 'position/saveCfg',
       payload: params,
     });
   }
 
-  getTabExtra = () => {
-    return (
-      <Button onClick={this.handleBack}>返回</Button>
-    );
-  }
+  getTabExtra = () => (
+    <Button onClick={this.handleBack}>返回</Button>
+  )
 
   render() {
-    const { style, position, loading, } = this.props;
-    const { rowData, } = position;
+    const { style, position, loading } = this.props;
+    const { rowData } = position;
 
     return (
       <div className={cls(styles['page-box'])} style={style}>
@@ -81,9 +78,7 @@ class PostionConfig extends React.Component {
           </TabPane>
           <TabPane tab={`【${rowData.name}】配置功能角色`} key="2">
             <FeatureRoleAssign
-              onSaveCfg={(data) => {
-                return this.handleSaveCfg(data);
-              }}
+              onSaveCfg={(data) => this.handleSaveCfg(data)}
               cfgLoading={loading.effects['position/saveCfg']}
               data={rowData}
               onAssign={(params) => this.handleAssign('FeatureRole', params)}
@@ -93,7 +88,7 @@ class PostionConfig extends React.Component {
                 unAssignedByIdUrl: `${SERVER_PATH}/sei-basic/position/getCanAssignedFeatureRoles`,
                 byIdKey: 'positionId',
               }}
-              assginCfg={{ url: `${SERVER_PATH}/sei-basic/positionFeatureRole/getChildrenFromParentId`, }}
+              assginCfg={{ url: `${SERVER_PATH}/sei-basic/positionFeatureRole/getChildrenFromParentId` }}
             />
           </TabPane>
           <TabPane tab={`【${rowData.name}】配置数据角色`} key="3">
@@ -106,7 +101,7 @@ class PostionConfig extends React.Component {
                 unAssignedByIdUrl: `${SERVER_PATH}/sei-basic/position/getCanAssignedDataRoles`,
                 byIdKey: 'positionId',
               }}
-              assginCfg={{ url: `${SERVER_PATH}/sei-basic/positionDataRole/getChildrenFromParentId`, }}
+              assginCfg={{ url: `${SERVER_PATH}/sei-basic/positionDataRole/getChildrenFromParentId` }}
             />
           </TabPane>
         </Tabs>

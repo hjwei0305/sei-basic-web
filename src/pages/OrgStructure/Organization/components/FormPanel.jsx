@@ -1,29 +1,28 @@
-import React, { PureComponent } from "react";
-import { Form, Input, Checkbox, InputNumber, Button, } from "antd";
-import { formatMessage, FormattedMessage, } from "umi-plugin-react/locale";
+import React, { PureComponent } from 'react';
+import { Form, Input, Checkbox, InputNumber, Button } from 'antd';
+import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale';
 import { connect } from 'dva';
 
 const FormItem = Form.Item;
 const buttonWrapper = { span: 18, offset: 6 };
 
-@connect(({ organization, loading, }) => ({ organization, loading, }))
+@connect(({ organization, loading }) => ({ organization, loading }))
 @Form.create()
 class FormModal extends PureComponent {
-
   componentDidMount() {
     const { onRef } = this.props;
-    if(onRef) {
+    if (onRef) {
       onRef(this);
     }
   }
 
-  onFormSubmit = _ => {
+  onFormSubmit = (_) => {
     const { form, organization, isCreate } = this.props;
     form.validateFields((err, formData) => {
       if (err) {
         return;
       }
-      let params = {};
+      const params = {};
       const selectedTreeNode = organization.selectedTreeNode || {};
       if (isCreate) {
         Object.assign(params, { parentId: selectedTreeNode.id });
@@ -35,17 +34,17 @@ class FormModal extends PureComponent {
     });
   };
 
-  save = data => {
+  save = (data) => {
     const { dispatch } = this.props;
     dispatch({
-      type: "organization/save",
+      type: 'organization/save',
       payload: {
-        ...data
+        ...data,
       },
-    }).then(res => {
+    }).then((res) => {
       if (res.success) {
         dispatch({
-          type: "organization/queryTree",
+          type: 'organization/queryTree',
         });
       }
     });
@@ -56,62 +55,62 @@ class FormModal extends PureComponent {
     const { getFieldDecorator } = form;
     const formItemLayout = {
       labelCol: {
-        span: 6
+        span: 6,
       },
       wrapperCol: {
         span: isCreate ? 18 : 10,
-      }
+      },
     };
     let tempSelectedNode = organization.selectedTreeNode || {};
     if (isCreate) {
       tempSelectedNode = { parentName: tempSelectedNode.name };
     }
-    const { code='', parentName='', name='', shortName='', rank='', frozen=false} = tempSelectedNode;
+    const { code = '', parentName = '', name = '', shortName = '', rank = '', frozen = false } = tempSelectedNode;
 
     return (
       <Form {...formItemLayout} layout="horizontal">
         {!isCreate ? (
-          <FormItem label={formatMessage({ id: "global.code", defaultMessage: "代码" })}>
-            {getFieldDecorator("code", {
+          <FormItem label={formatMessage({ id: 'global.code', defaultMessage: '代码' })}>
+            {getFieldDecorator('code', {
               initialValue: code,
               rules: [{
                 required: true,
-                message: formatMessage({ id: "global.code.required", defaultMessage: "代码不能为空" })
-              }]
-            })(<Input  disabled={true} />)}
+                message: formatMessage({ id: 'global.code.required', defaultMessage: '代码不能为空' }),
+              }],
+            })(<Input disabled />)}
           </FormItem>
         ) : (
           <FormItem label="父亲节点">
-            {getFieldDecorator("parentName", {
+            {getFieldDecorator('parentName', {
               initialValue: parentName,
-            })(<Input  disabled={true} />)}
+            })(<Input disabled />)}
           </FormItem>
         )}
-        <FormItem label={formatMessage({ id: "global.name", defaultMessage: "名称" })}>
-          {getFieldDecorator("name", {
+        <FormItem label={formatMessage({ id: 'global.name', defaultMessage: '名称' })}>
+          {getFieldDecorator('name', {
             initialValue: name,
             rules: [{
               required: true,
-              message: formatMessage({ id: "global.name.required", defaultMessage: "名称不能为空" })
-            }]
+              message: formatMessage({ id: 'global.name.required', defaultMessage: '名称不能为空' }),
+            }],
           })(<Input />)}
         </FormItem>
         <FormItem label="简称">
-          {getFieldDecorator("shortName", {
+          {getFieldDecorator('shortName', {
             initialValue: shortName,
           })(<Input />)}
         </FormItem>
         <FormItem label="排序">
-          {getFieldDecorator("rank", {
+          {getFieldDecorator('rank', {
             initialValue: rank,
             rules: [{
               required: true,
-              message: formatMessage({ id: "global.rank.required", defaultMessage: "序号不能为空" })
-            }]
-          })(<InputNumber style={{ width: '100%', }} precision={0} />)}
+              message: formatMessage({ id: 'global.rank.required', defaultMessage: '序号不能为空' }),
+            }],
+          })(<InputNumber style={{ width: '100%' }} precision={0} />)}
         </FormItem>
         <FormItem label="冻结">
-          {getFieldDecorator("frozen", {
+          {getFieldDecorator('frozen', {
             valuePropName: 'checked',
             initialValue: frozen,
           })(<Checkbox />)}
@@ -125,8 +124,7 @@ class FormModal extends PureComponent {
               <FormattedMessage id="global.ok" defaultMessage="确定" />
             </Button>
           </FormItem>
-        ) : (null)
-        }
+        ) : (null)}
       </Form>
     );
   }

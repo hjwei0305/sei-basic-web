@@ -16,13 +16,13 @@ const formItemLayout = {
 
 @Form.create()
 class FormModal extends PureComponent {
-  onFormSubmit = _ => {
+  onFormSubmit = (_) => {
     const { form, save, rowData } = this.props;
     form.validateFields((err, formData) => {
       if (err) {
         return;
       }
-      let params = {};
+      const params = {};
       Object.assign(params, rowData || {});
       Object.assign(params);
       Object.assign(params, formData);
@@ -35,9 +35,9 @@ class FormModal extends PureComponent {
     const { getFieldDecorator } = form;
     const title = rowData
       ? formatMessage({
-          id: 'global.edit',
-          defaultMessage: '编辑',
-        })
+        id: 'global.edit',
+        defaultMessage: '编辑',
+      })
       : formatMessage({ id: 'global.add', defaultMessage: '新建' });
 
     return (
@@ -49,7 +49,7 @@ class FormModal extends PureComponent {
         confirmLoading={saving}
         maskClosable={false}
         title={title}
-        okText={'保存'}
+        okText="保存"
         onOk={this.onFormSubmit}
       >
         <Form {...formItemLayout} layout="horizontal">
@@ -95,7 +95,7 @@ class FormModal extends PureComponent {
               })(<Checkbox />)}
             </FormItem>
           ) : null}
-          {/*以下为隐藏的formItem*/}
+          {/* 以下为隐藏的formItem */}
           <FormItem style={{ display: 'none' }}>
             {getFieldDecorator('organizationId', {
               initialValue: get(rowData, 'organizationId', parentData && parentData.id),
@@ -106,7 +106,7 @@ class FormModal extends PureComponent {
             {getFieldDecorator('organizationCode', {
               initialValue: parentData && parentData.code,
             })(<Input />)}
-          </FormItem>*/}
+          </FormItem> */}
         </Form>
       </ExtModal>
     );

@@ -16,7 +16,7 @@ export async function getTree() {
   const url = `${SERVER_PATH}/sei-basic/organization/findOrgTree`;
   return request({
     url,
-    method: "GET",
+    method: 'GET',
   });
 }
 
@@ -25,7 +25,7 @@ export async function save(data) {
   const url = `${SERVER_PATH}/sei-basic/organization/save`;
   return request({
     url,
-    method: "POST",
+    method: 'POST',
     data,
   });
 }
@@ -35,6 +35,6 @@ export async function del(params) {
   const url = `${SERVER_PATH}/sei-basic/organization/delete/${params.id}`;
   return request({
     url,
-    method: "DELETE",
+    method: 'DELETE',
   });
 }

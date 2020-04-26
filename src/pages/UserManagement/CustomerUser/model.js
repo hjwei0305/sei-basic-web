@@ -4,6 +4,9 @@
  * @Last Modified by: Eason
  * @Last Modified time: 2020-03-06 13:34:57
 */
+import { message } from 'antd';
+import { formatMessage } from 'umi-plugin-react/locale';
+import { utils } from 'suid';
 import {
   freeze,
   save,
@@ -11,16 +14,13 @@ import {
   unAssignFeatureRole,
   assignDataRole,
   unAssignDataRole,
-} from "./service";
-import { message } from "antd";
-import { formatMessage } from "umi-plugin-react/locale";
-import { utils } from 'suid';
+} from './service';
 
 const { dvaModel } = utils;
 const { modelExtend, model } = dvaModel;
 
 export default modelExtend(model, {
-  namespace: "customerUser",
+  namespace: 'customerUser',
 
   state: {
     list: [],
@@ -34,7 +34,7 @@ export default modelExtend(model, {
       const re = yield call(save, payload);
       message.destroy();
       if (re.success) {
-        message.success(formatMessage({ id: "global.save-success", defaultMessage: "保存成功" }));
+        message.success(formatMessage({ id: 'global.save-success', defaultMessage: '保存成功' }));
       } else {
         message.error(re.message);
       }
@@ -45,14 +45,14 @@ export default modelExtend(model, {
       const re = yield call(freeze, payload);
       message.destroy();
       if (re.success) {
-        message.success(formatMessage({ id: "global.delete-success", defaultMessage: "删除成功" }));
+        message.success(formatMessage({ id: 'global.delete-success', defaultMessage: '删除成功' }));
       } else {
         message.error(re.message);
       }
 
       return re;
     },
-    * assignFeatureRole({ payload, }, { call, }) {
+    * assignFeatureRole({ payload }, { call }) {
       const re = yield call(assignFeatureRole, payload);
       message.destroy();
       if (re.success) {
@@ -62,7 +62,7 @@ export default modelExtend(model, {
       }
       return re;
     },
-    * unAssignFeatureRole({ payload, }, { call, }) {
+    * unAssignFeatureRole({ payload }, { call }) {
       const re = yield call(unAssignFeatureRole, payload);
       message.destroy();
       if (re.success) {
@@ -72,7 +72,7 @@ export default modelExtend(model, {
       }
       return re;
     },
-    * assignDataRole({ payload, }, { call, }) {
+    * assignDataRole({ payload }, { call }) {
       const re = yield call(assignDataRole, payload);
       message.destroy();
       if (re.success) {
@@ -82,7 +82,7 @@ export default modelExtend(model, {
       }
       return re;
     },
-    * unAssignDataRole({ payload, }, { call, }) {
+    * unAssignDataRole({ payload }, { call }) {
       const re = yield call(unAssignDataRole, payload);
       message.destroy();
       if (re.success) {
@@ -92,5 +92,5 @@ export default modelExtend(model, {
       }
       return re;
     },
-  }
+  },
 });

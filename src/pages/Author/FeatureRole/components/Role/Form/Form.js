@@ -1,26 +1,25 @@
-import React, { PureComponent } from "react";
-import cls from "classnames";
-import { toUpper, trim } from 'lodash'
-import { formatMessage, FormattedMessage } from "umi-plugin-react/locale";
-import { Button, Form, Input, Switch } from "antd";
-import { ComboList, ComboTree } from "suid";
-import { constants } from "@/utils";
-import styles from "./Form.less";
+import React, { PureComponent } from 'react';
+import cls from 'classnames';
+import { toUpper, trim } from 'lodash';
+import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale';
+import { Button, Form, Input, Switch } from 'antd';
+import { ComboList, ComboTree } from 'suid';
+import { constants } from '@/utils';
+import styles from './Form.less';
 
 const { SERVER_PATH } = constants;
 const FormItem = Form.Item;
 const formItemLayout = {
   labelCol: {
-    span: 5
+    span: 5,
   },
   wrapperCol: {
-    span: 19
-  }
+    span: 19,
+  },
 };
 
 @Form.create()
 class RoleGroupForm extends PureComponent {
-
   constructor(props) {
     super(props);
     const { roleData } = this.props;
@@ -29,18 +28,16 @@ class RoleGroupForm extends PureComponent {
     };
   }
 
-  getIsPublicRole = (role) => {
-    return role && (!!role.publicUserType || !!role.publicOrgId);
-  };
+  getIsPublicRole = (role) => role && (!!role.publicUserType || !!role.publicOrgId);
 
-  onFormSubmit = _ => {
+  onFormSubmit = (_) => {
     const { form, saveFeatureRole, roleData, handlerPopoverHide, currentRoleGroup } = this.props;
     form.validateFields((err, formData) => {
       if (err) {
         return;
       }
       const { isPublicRole } = this.state;
-      let params = {
+      const params = {
         featureGroupId: currentRoleGroup.id,
         featureRoleGroupCode: currentRoleGroup.code,
         featureRoleGroupName: currentRoleGroup.name,
@@ -104,8 +101,8 @@ class RoleGroupForm extends PureComponent {
       },
       reader: {
         name: 'remark',
-        field: ['name']
-      }
+        field: ['name'],
+      },
     };
     const publicUserTypeProps = {
       form,
@@ -118,7 +115,7 @@ class RoleGroupForm extends PureComponent {
       reader: {
         name: 'remark',
         field: ['name'],
-      }
+      },
     };
     const publicOrgNameProps = {
       form,
@@ -130,10 +127,10 @@ class RoleGroupForm extends PureComponent {
       reader: {
         name: 'name',
         field: ['id', 'code'],
-      }
+      },
     };
     return (
-      <div key="form-box" className={cls(styles["form-box"])}>
+      <div key="form-box" className={cls(styles['form-box'])}>
         <div className="base-view-body">
           <div className="header">
             <span className="title">
@@ -141,61 +138,63 @@ class RoleGroupForm extends PureComponent {
             </span>
           </div>
           <Form {...formItemLayout}>
-            <FormItem label={formatMessage({ id: "global.name", defaultMessage: "名称" })}>
-              {getFieldDecorator("name", {
-                initialValue: roleData ? roleData.name : "",
+            <FormItem label={formatMessage({ id: 'global.name', defaultMessage: '名称' })}>
+              {getFieldDecorator('name', {
+                initialValue: roleData ? roleData.name : '',
                 rules: [{
                   required: true,
-                  message: formatMessage({ id: "global.name.required", defaultMessage: "名称不能为空" })
-                }]
+                  message: formatMessage({ id: 'global.name.required', defaultMessage: '名称不能为空' }),
+                }],
               })(<Input />)}
             </FormItem>
-            <FormItem label={formatMessage({ id: "global.code", defaultMessage: "代码" })}>
-              {getFieldDecorator("code", {
+            <FormItem label={formatMessage({ id: 'global.code', defaultMessage: '代码' })}>
+              {getFieldDecorator('code', {
                 initialValue: this.getCode(),
                 rules: [{
                   required: true,
-                  message: formatMessage({ id: "global.code.required", defaultMessage: "代码不能为空" })
-                }]
+                  message: formatMessage({ id: 'global.code.required', defaultMessage: '代码不能为空' }),
+                }],
               })(<Input
                 addonBefore={`${currentRoleGroup.code}-`}
                 maxLength={50}
-                placeholder={formatMessage({ id: "global.code.tip", defaultMessage: "规则:名称各汉字首字母大写" })}
+                placeholder={formatMessage({ id: 'global.code.tip', defaultMessage: '规则:名称各汉字首字母大写' })}
               />)}
             </FormItem>
-            <FormItem label='角色类型'>
-              {getFieldDecorator("roleTypeRemark", {
+            <FormItem label="角色类型">
+              {getFieldDecorator('roleTypeRemark', {
                 initialValue: roleData ? roleData.roleTypeRemark : null,
               })(<ComboList {...roleTypeProps} />)}
             </FormItem>
-            <FormItem label='公共角色'>
-              {getFieldDecorator("isPublicRole", {
+            <FormItem label="公共角色">
+              {getFieldDecorator('isPublicRole', {
                 initialValue: this.getIsPublicRole(roleData),
-                valuePropName: "checked"
+                valuePropName: 'checked',
               })(<Switch size="small" onChange={(checked, e) => this.handlerPubRoleChange(checked, e)} />)}
             </FormItem>
             {
               isPublicRole
-                ? <>
-                  <FormItem label='用户类型'>
-                    {getFieldDecorator("userTypeRemark", {
-                      initialValue: roleData ? roleData.userTypeRemark : null,
-                      rules: [{
-                        required: false,
-                        message: '用户类型不能为空'
-                      }]
-                    })(<ComboList {...publicUserTypeProps} />)}
-                  </FormItem>
-                  <FormItem label='组织机构'>
-                    {getFieldDecorator("publicOrgName", {
-                      initialValue: roleData ? roleData.publicOrgName : null,
-                      rules: [{
-                        required: false,
-                        message: '组织机构不能为空'
-                      }]
-                    })(<ComboTree {...publicOrgNameProps} />)}
-                  </FormItem>
-                </>
+                ? (
+                  <>
+                    <FormItem label="用户类型">
+                      {getFieldDecorator('userTypeRemark', {
+                        initialValue: roleData ? roleData.userTypeRemark : null,
+                        rules: [{
+                          required: false,
+                          message: '用户类型不能为空',
+                        }],
+                      })(<ComboList {...publicUserTypeProps} />)}
+                    </FormItem>
+                    <FormItem label="组织机构">
+                      {getFieldDecorator('publicOrgName', {
+                        initialValue: roleData ? roleData.publicOrgName : null,
+                        rules: [{
+                          required: false,
+                          message: '组织机构不能为空',
+                        }],
+                      })(<ComboTree {...publicOrgNameProps} />)}
+                    </FormItem>
+                  </>
+                )
                 : null
             }
             <FormItem wrapperCol={{ span: 4, offset: 5 }} className="btn-submit">
@@ -204,7 +203,7 @@ class RoleGroupForm extends PureComponent {
                 loading={saving}
                 onClick={this.onFormSubmit}
               >
-                <FormattedMessage id='global.save' defaultMessage='保存' />
+                <FormattedMessage id="global.save" defaultMessage="保存" />
               </Button>
             </FormItem>
           </Form>

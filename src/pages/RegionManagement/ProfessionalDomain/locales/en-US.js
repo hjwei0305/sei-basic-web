@@ -5,5 +5,5 @@
 * @Last Modified time: 2020-02-05 14:38:36
 */
 export default {
-  "region": "region",
-}
+  region: 'region',
+};

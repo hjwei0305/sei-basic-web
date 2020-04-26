@@ -31,14 +31,14 @@ class PositionCategory extends Component {
     }
   }
 
-  reloadData = _ => {
+  reloadData = (_) => {
     const { dispatch } = this.props;
     dispatch({
       type: 'positionCategory/queryList',
     });
   };
 
-  add = _ => {
+  add = (_) => {
     const { dispatch } = this.props;
     dispatch({
       type: 'positionCategory/updateState',
@@ -49,25 +49,25 @@ class PositionCategory extends Component {
     });
   };
 
-  edit = rowData => {
+  edit = (rowData) => {
     const { dispatch } = this.props;
     dispatch({
       type: 'positionCategory/updateState',
       payload: {
         showModal: true,
-        rowData: rowData,
+        rowData,
       },
     });
   };
 
-  save = data => {
+  save = (data) => {
     const { dispatch } = this.props;
     dispatch({
       type: 'positionCategory/save',
       payload: {
         ...data,
       },
-    }).then(res => {
+    }).then((res) => {
       if (res.success) {
         dispatch({
           type: 'positionCategory/updateState',
@@ -80,19 +80,19 @@ class PositionCategory extends Component {
     });
   };
 
-  del = record => {
+  del = (record) => {
     const { dispatch } = this.props;
     this.setState(
       {
         delRowId: record.id,
       },
-      _ => {
+      (_) => {
         dispatch({
           type: 'positionCategory/del',
           payload: {
             id: record.id,
           },
-        }).then(res => {
+        }).then((res) => {
           if (res.success) {
             this.setState({
               delRowId: null,
@@ -104,7 +104,7 @@ class PositionCategory extends Component {
     );
   };
 
-  closeFormModal = _ => {
+  closeFormModal = (_) => {
     const { dispatch } = this.props;
     dispatch({
       type: 'positionCategory/updateState',
@@ -115,7 +115,7 @@ class PositionCategory extends Component {
     });
   };
 
-  renderDelBtn = row => {
+  renderDelBtn = (row) => {
     const { loading } = this.props;
     const { delRowId } = this.state;
     if (loading.effects['positionCategory/del'] && delRowId === row.id) {
@@ -142,7 +142,7 @@ class PositionCategory extends Component {
               <ExtIcon
                 key={APP_MODULE_BTN_KEY.EDIT}
                 className="edit"
-                onClick={_ => this.edit(record)}
+                onClick={(_) => this.edit(record)}
                 type="edit"
                 ignore="true"
                 antd
@@ -155,7 +155,7 @@ class PositionCategory extends Component {
                 id: 'global.delete.confirm',
                 defaultMessage: '确定要删除吗？提示：删除后不可恢复',
               })}
-              onConfirm={_ => this.del(record)}
+              onConfirm={(_) => this.del(record)}
             >
               {this.renderDelBtn(record)}
             </Popconfirm>
@@ -177,7 +177,7 @@ class PositionCategory extends Component {
     ];
     const toolBarProps = {
       left: (
-        <Fragment>
+        <>
           {authAction(
             <Button key={APP_MODULE_BTN_KEY.CREATE} type="primary" onClick={this.add} ignore="true">
               <FormattedMessage id="global.add" defaultMessage="新建" />
@@ -186,7 +186,7 @@ class PositionCategory extends Component {
           <Button onClick={this.reloadData}>
             <FormattedMessage id="global.refresh" defaultMessage="刷新" />
           </Button>
-        </Fragment>
+        </>
       ),
     };
     return {

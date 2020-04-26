@@ -1,20 +1,19 @@
 import React from 'react';
-import { connect, } from 'dva';
-import { Form, Radio, Input, Button, Select, Row, Col, } from 'antd';
-import { userUtils, } from '@/utils';
+import { connect } from 'dva';
+import { Form, Radio, Input, Button, Select, Row, Col } from 'antd';
+import { userUtils } from '@/utils';
 
-const { getCurrentUser, } = userUtils;
+const { getCurrentUser } = userUtils;
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
 const formItemLayout = {
-  labelCol: {span: 8},
-  wrapperCol: {span: 12}
-}
+  labelCol: { span: 8 },
+  wrapperCol: { span: 12 },
+};
 
-@connect(({ userProfile, }) => ({ userProfile, }))
+@connect(({ userProfile }) => ({ userProfile }))
 @Form.create()
 class BasicInfo extends React.Component {
-
   handleSave = () => {
     const { form, dispatch, userProfile } = this.props;
     const { basicInfo } = userProfile;
@@ -22,47 +21,46 @@ class BasicInfo extends React.Component {
       if (err) {
         return;
       }
-      let params = {};
+      const params = {};
       Object.assign(params, basicInfo);
       Object.assign(params, formData);
       dispatch({
-        type: "userProfile/save",
+        type: 'userProfile/save',
         payload: params,
-      }).then(res => {
+      }).then((res) => {
         if (res.success) {
           const user = getCurrentUser();
           dispatch({
-            type: "userProfile/getUserInfo",
+            type: 'userProfile/getUserInfo',
             payload: {
               userId: user.userId,
             },
-          })
+          });
         }
       });
     });
-
   }
 
   render() {
-    const { form, userProfile, } = this.props;
+    const { form, userProfile } = this.props;
     const { getFieldDecorator } = form;
     const { basicInfo } = userProfile;
 
     const {
-      userName="",
-      userTypeRemark="",
-      organizationName="",
-      employeeCode="",
-      gender=false,
-      idCard="",
-      email="",
-      mobile="",
-      accountor="",
-      languageCode="zh_CN",
+      userName = '',
+      userTypeRemark = '',
+      organizationName = '',
+      employeeCode = '',
+      gender = false,
+      idCard = '',
+      email = '',
+      mobile = '',
+      accountor = '',
+      languageCode = 'zh_CN',
     } = basicInfo || {};
 
     return (
-      <Form style={{ width: 1000, }}>
+      <Form style={{ width: 1000 }}>
         <Row>
           <Col span={12}>
             <FormItem
@@ -72,7 +70,7 @@ class BasicInfo extends React.Component {
               {getFieldDecorator('userName', {
                 initialValue: userName,
               })(
-                <Input disabled/>
+                <Input disabled />,
               )}
             </FormItem>
           </Col>
@@ -84,7 +82,7 @@ class BasicInfo extends React.Component {
               {getFieldDecorator('userTypeRemark', {
                 initialValue: userTypeRemark,
               })(
-                <Input disabled/>
+                <Input disabled />,
               )}
             </FormItem>
           </Col>
@@ -98,7 +96,7 @@ class BasicInfo extends React.Component {
               {getFieldDecorator('organizationName', {
                 initialValue: organizationName,
               })(
-                <Input disabled/>
+                <Input disabled />,
               )}
             </FormItem>
           </Col>
@@ -110,7 +108,7 @@ class BasicInfo extends React.Component {
               {getFieldDecorator('employeeCode', {
                 initialValue: employeeCode,
               })(
-                <Input disabled/>
+                <Input disabled />,
               )}
             </FormItem>
           </Col>
@@ -125,9 +123,9 @@ class BasicInfo extends React.Component {
                 initialValue: gender,
               })(
                 <RadioGroup>
-                  <Radio value={true}>男</Radio>
+                  <Radio value>男</Radio>
                   <Radio value={false}>女</Radio>
-                </RadioGroup>
+                </RadioGroup>,
               )}
             </FormItem>
           </Col>
@@ -139,7 +137,7 @@ class BasicInfo extends React.Component {
               {getFieldDecorator('idCard', {
                 initialValue: idCard,
               })(
-                <Input/>
+                <Input />,
               )}
             </FormItem>
           </Col>
@@ -153,7 +151,7 @@ class BasicInfo extends React.Component {
               {getFieldDecorator('email', {
                 initialValue: email,
               })(
-                <Input/>
+                <Input />,
               )}
             </FormItem>
           </Col>
@@ -165,7 +163,7 @@ class BasicInfo extends React.Component {
               {getFieldDecorator('mobile', {
                 initialValue: mobile,
               })(
-                <Input/>
+                <Input />,
               )}
             </FormItem>
           </Col>
@@ -182,7 +180,7 @@ class BasicInfo extends React.Component {
                 <Select>
                   <Select.Option value="zh_CN" key="zh_CN">简体中文</Select.Option>
                   <Select.Option value="en_US" key="en_US">English</Select.Option>
-                </Select>
+                </Select>,
               )}
             </FormItem>
           </Col>
@@ -194,7 +192,7 @@ class BasicInfo extends React.Component {
               {getFieldDecorator('accountor', {
                 initialValue: accountor,
               })(
-                <Input/>
+                <Input />,
               )}
             </FormItem>
           </Col>
@@ -211,7 +209,7 @@ class BasicInfo extends React.Component {
           </Col>
         </Row>
       </Form>
-    )
+    );
   }
 }
 
