@@ -1,5 +1,5 @@
 {
-  "extends": "airbnb",
+  "extends": ["airbnb", "prettier"],
   "parser": "babel-eslint",
   "env": {
     "browser": true,
@@ -10,7 +10,7 @@
     "Babel": true,
     "React": true
   },
-  "plugins": ["react"],
+  "plugins": ["react", "prettier"],
   "rules": {
     "global-require": 0,
     "no-underscore-dangle": 0,
