@@ -15,7 +15,7 @@ const formItemLayout = {
 @Form.create()
 class MailInfo extends React.Component {
   handleSave = () => {
-    const { form, dispatch, userProfile }   = this.props;
+    const { form, dispatch, userProfile } = this.props;
     const { mailAlert } = userProfile;
     const user = getCurrentUser();
     form.validateFields((err, formData) => {
@@ -31,7 +31,7 @@ class MailInfo extends React.Component {
         payload: params,
       });
     });
-  }
+  };
 
   componentDidMount() {
     const { dispatch } = this.props;
@@ -45,58 +45,45 @@ class MailInfo extends React.Component {
     const { getFieldDecorator } = form;
     const { mailAlert } = userProfile;
 
-    const {
-      hours = '',
-      toDoAmount = '',
-      lastTime = '',
-    } = mailAlert || {};
+    const { hours = '', toDoAmount = '', lastTime = '' } = mailAlert || {};
 
     return (
       <Form style={{ width: 600 }}>
-        <FormItem
-          label="间隔时间(小时)"
-          {...formItemLayout}
-        >
+        <FormItem label="间隔时间(小时)" {...formItemLayout}>
           {getFieldDecorator('hours', {
             initialValue: hours,
-            rules: [{
-              required: true,
-              message: '请填写间隔时间(小时)!',
-            }],
-          })(
-            <Input />,
-          )}
+            rules: [
+              {
+                required: true,
+                message: '请填写间隔时间(小时)!',
+              },
+            ],
+          })(<Input />)}
         </FormItem>
-        <FormItem
-          label="待办工作数量(个)"
-          {...formItemLayout}
-        >
+        <FormItem label="待办工作数量(个)" {...formItemLayout}>
           {getFieldDecorator('toDoAmount', {
             initialValue: toDoAmount,
-            rules: [{
-              required: true,
-              message: '待办工作数量(个)!',
-            }],
-          })(
-            <Input />,
-          )}
+            rules: [
+              {
+                required: true,
+                message: '待办工作数量(个)!',
+              },
+            ],
+          })(<Input />)}
         </FormItem>
-        <FormItem
-          label="最后提醒时间"
-          {...formItemLayout}
-        >
+        <FormItem label="最后提醒时间" {...formItemLayout}>
           {getFieldDecorator('lastTime', {
             initialValue: lastTime,
-          })(
-            <Input disabled />,
-          )}
+          })(<Input disabled />)}
         </FormItem>
         <FormItem
           wrapperCol={{
             offset: 8,
           }}
         >
-          <Button type="primary" onClick={this.handleSave}>更新</Button>
+          <Button type="primary" onClick={this.handleSave}>
+            更新
+          </Button>
         </FormItem>
       </Form>
     );
