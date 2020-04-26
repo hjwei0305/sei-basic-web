@@ -3,7 +3,6 @@ import { formatMessage } from 'umi-plugin-react/locale';
 import { ExtModal } from 'suid';
 import FormPanel from '../FormPanel';
 
-
 class FormModal extends PureComponent {
   render() {
     const { visible, onCancel } = this.props;
@@ -17,10 +16,12 @@ class FormModal extends PureComponent {
         onCancel={onCancel}
         maskClosable={false}
         title={title}
-        onOk={() => { this.formRef.onFormSubmit(); }}
+        onOk={() => {
+          this.formRef.onFormSubmit();
+        }}
         width={600}
       >
-        <FormPanel onRef={(inst) => this.formRef = inst} isCreate />
+        <FormPanel onRef={inst => (this.formRef = inst)} isCreate />
       </ExtModal>
     );
   }

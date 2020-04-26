@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'dva';
 import cls from 'classnames';
 import { Button, Popconfirm, Tag } from 'antd';
@@ -12,17 +12,20 @@ const { APP_MODULE_BTN_KEY, SERVER_PATH } = constants;
 
 @connect(({ expertUser, loading }) => ({ expertUser, loading }))
 class TablePanel extends Component {
-  state = {
-    delRowId: null,
+  constructor(props) {
+    super(props);
+    this.state = {
+      delRowId: null,
+    };
   }
 
-  reloadData = (_) => {
+  reloadData = () => {
     if (this.tableRef) {
       this.tableRef.remoteDataRefresh();
     }
   };
 
-  add = (_) => {
+  add = () => {
     const { dispatch } = this.props;
     dispatch({
       type: 'expertUser/updateState',
@@ -33,7 +36,7 @@ class TablePanel extends Component {
     });
   };
 
-  edit = (rowData) => {
+  edit = rowData => {
     const { dispatch } = this.props;
     dispatch({
       type: 'expertUser/updateState',
@@ -44,14 +47,14 @@ class TablePanel extends Component {
     });
   };
 
-  save = (data) => {
+  save = data => {
     const { dispatch } = this.props;
     dispatch({
       type: 'expertUser/save',
       payload: {
         ...data,
       },
-    }).then((res) => {
+    }).then(res => {
       if (res.success) {
         dispatch({
           type: 'expertUser/updateState',
@@ -64,29 +67,32 @@ class TablePanel extends Component {
     });
   };
 
-  freeze = (record) => {
+  freeze = record => {
     const { dispatch } = this.props;
-    this.setState({
-      delRowId: record.id,
-    }, (_) => {
-      dispatch({
-        type: 'expertUser/freeze',
-        payload: {
-          id: record.id,
-          frozen: !record.frozen,
-        },
-      }).then((res) => {
-        if (res.success) {
-          this.setState({
-            delRowId: null,
-          });
-          this.reloadData();
-        }
-      });
-    });
+    this.setState(
+      {
+        delRowId: record.id,
+      },
+      () => {
+        dispatch({
+          type: 'expertUser/freeze',
+          payload: {
+            id: record.id,
+            frozen: !record.frozen,
+          },
+        }).then(res => {
+          if (res.success) {
+            this.setState({
+              delRowId: null,
+            });
+            this.reloadData();
+          }
+        });
+      },
+    );
   };
 
-  handleConfig = (rowData) => {
+  handleConfig = rowData => {
     const { dispatch } = this.props;
     dispatch({
       type: 'expertUser/updateState',
@@ -95,9 +101,9 @@ class TablePanel extends Component {
         rowData,
       },
     });
-  }
+  };
 
-  renderDelBtn = (row) => {
+  renderDelBtn = row => {
     const { loading } = this.props;
     const { delRowId } = this.state;
     if (loading.effects['expertUser/freeze'] && delRowId === row.id) {
@@ -122,18 +128,11 @@ class TablePanel extends Component {
               key={APP_MODULE_BTN_KEY.DELETE}
               placement="topLeft"
               title={record.frozen ? '确定要解冻吗？' : '确定要冻结吗？'}
-              onConfirm={(_) => this.freeze(record)}
+              onConfirm={() => this.freeze(record)}
             >
-              {
-                this.renderDelBtn(record)
-              }
+              {this.renderDelBtn(record)}
             </Popconfirm>
-            <ExtIcon
-              className="tool"
-              onClick={(_) => this.handleConfig(record)}
-              type="tool"
-              antd
-            />
+            <ExtIcon className="tool" onClick={() => this.handleConfig(record)} type="tool" antd />
           </span>
         ),
       },
@@ -166,7 +165,7 @@ class TablePanel extends Component {
         dataIndex: 'frozen',
         width: 120,
         required: true,
-        render: (text) => <Tag color={text ? 'red' : 'green'}>{text ? '冻结' : '可用'}</Tag>,
+        render: text => <Tag color={text ? 'red' : 'green'}>{text ? '冻结' : '可用'}</Tag>,
       },
     ];
     const toolBarProps = {
@@ -192,7 +191,7 @@ class TablePanel extends Component {
   render() {
     return (
       <div className={cls(styles['container-box'])}>
-        <ExtTable onTableRef={(inst) => this.tableRef = inst} {...this.getExtableProps()} />
+        <ExtTable onTableRef={inst => (this.tableRef = inst)} {...this.getExtableProps()} />
       </div>
     );
   }

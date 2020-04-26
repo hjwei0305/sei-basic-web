@@ -7,13 +7,10 @@ const RoleStation = ({ stationData = [], loading }) => (
     <List
       dataSource={stationData}
       loading={loading}
-      renderItem={(item) => (
+      renderItem={item => (
         <List.Item key={item.id}>
           <Skeleton loading={loading} active>
-            <List.Item.Meta
-              title={item.name}
-              description={item.positionCategoryName}
-            />
+            <List.Item.Meta title={item.name} description={item.positionCategoryName} />
           </Skeleton>
         </List.Item>
       )}

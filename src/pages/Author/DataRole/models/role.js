@@ -26,7 +26,7 @@ export default modelExtend(model, {
     unAssignData: [],
   },
   effects: {
-    * getDataRoleList({ payload }, { call, put }) {
+    *getDataRoleList({ payload }, { call, put }) {
       const re = yield call(getDataRoleList, payload);
       if (re.success) {
         yield put({
@@ -39,7 +39,7 @@ export default modelExtend(model, {
         message.error(re.message);
       }
     },
-    * saveDataRole({ payload, callback }, { call }) {
+    *saveDataRole({ payload, callback }, { call }) {
       const re = yield call(saveDataRole, payload);
       message.destroy();
       if (re.success) {
@@ -51,7 +51,7 @@ export default modelExtend(model, {
         callback(re);
       }
     },
-    * delDataRole({ payload, callback }, { call, put }) {
+    *delDataRole({ payload, callback }, { call, put }) {
       const re = yield call(delDataRole, payload);
       message.destroy();
       if (re.success) {
@@ -69,7 +69,7 @@ export default modelExtend(model, {
         callback(re);
       }
     },
-    * saveAssignRelations({ payload, callback }, { call }) {
+    *saveAssignRelations({ payload, callback }, { call }) {
       const re = yield call(saveAssignRelations, payload);
       message.destroy();
       if (re.success) {
@@ -81,7 +81,7 @@ export default modelExtend(model, {
         callback(re);
       }
     },
-    * removeAssignRelations({ payload, callback }, { call }) {
+    *removeAssignRelations({ payload, callback }, { call }) {
       const re = yield call(removeAssignRelations, payload);
       message.destroy();
       if (re.success) {
@@ -93,7 +93,7 @@ export default modelExtend(model, {
         callback(re);
       }
     },
-    * getAssignedAuthDataList({ payload }, { call, put }) {
+    *getAssignedAuthDataList({ payload }, { call, put }) {
       const re = yield call(getAssignedAuthDataList, payload);
       if (re.success) {
         yield put({
@@ -106,7 +106,7 @@ export default modelExtend(model, {
         message.error(re.message);
       }
     },
-    * getUnassignedAuthDataList({ payload }, { call, put }) {
+    *getUnassignedAuthDataList({ payload }, { call, put }) {
       const re = yield call(getUnassignedAuthDataList, payload);
       if (re.success) {
         yield put({
@@ -119,7 +119,7 @@ export default modelExtend(model, {
         message.error(re.message);
       }
     },
-    * getAssignedAuthTreeDataList({ payload }, { call, put }) {
+    *getAssignedAuthTreeDataList({ payload }, { call, put }) {
       const re = yield call(getAssignedAuthTreeDataList, payload);
       if (re.success) {
         yield put({
@@ -132,7 +132,7 @@ export default modelExtend(model, {
         message.error(re.message);
       }
     },
-    * getUnassignedAuthTreeDataList({ payload }, { call, put }) {
+    *getUnassignedAuthTreeDataList({ payload }, { call, put }) {
       const re = yield call(getUnassignedAuthTreeDataList, payload);
       if (re.success) {
         yield put({

@@ -15,7 +15,7 @@ const formItemLayout = {
 
 @Form.create()
 class FormModal extends PureComponent {
-  onFormSubmit = (_) => {
+  onFormSubmit = () => {
     const { form, save, rowData } = this.props;
     form.validateFields((err, formData) => {
       if (err) {
@@ -34,9 +34,9 @@ class FormModal extends PureComponent {
     const { getFieldDecorator } = form;
     const title = rowData
       ? formatMessage({
-        id: 'global.edit',
-        defaultMessage: '编辑',
-      })
+          id: 'global.edit',
+          defaultMessage: '编辑',
+        })
       : formatMessage({ id: 'global.add', defaultMessage: '新建' });
 
     return (
@@ -55,19 +55,26 @@ class FormModal extends PureComponent {
           <FormItem label="帐号">
             {getFieldDecorator('code', {
               initialValue: rowData ? rowData.code : '',
-              rules: [{
-                required: true,
-                message: '帐号不能为空',
-              }],
+              rules: [
+                {
+                  required: true,
+                  message: '帐号不能为空',
+                },
+              ],
             })(<Input />)}
           </FormItem>
           <FormItem label={formatMessage({ id: 'global.name', defaultMessage: '名称' })}>
             {getFieldDecorator('name', {
               initialValue: rowData ? rowData.name : '',
-              rules: [{
-                required: true,
-                message: formatMessage({ id: 'global.name.required', defaultMessage: '名称不能为空' }),
-              }],
+              rules: [
+                {
+                  required: true,
+                  message: formatMessage({
+                    id: 'global.name.required',
+                    defaultMessage: '名称不能为空',
+                  }),
+                },
+              ],
             })(<Input />)}
           </FormItem>
           <FormItem label="冻结">

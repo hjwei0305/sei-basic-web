@@ -13,7 +13,7 @@ class UserView extends Component {
     };
   }
 
-  handlerShowChange = (visible) => {
+  handlerShowChange = visible => {
     this.setState({ visible });
   };
 
@@ -32,7 +32,7 @@ class UserView extends Component {
         key="role-user-view-popover-box"
         destroyTooltipOnHide
         getPopupContainer={() => document.getElementById(menuId)}
-        onVisibleChange={(visible) => this.handlerShowChange(visible)}
+        onVisibleChange={v => this.handlerShowChange(v)}
         overlayClassName={cls(styles['view-popover-box'])}
         content={<RoleUser {...roleUserProps} />}
       >

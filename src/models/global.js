@@ -5,12 +5,7 @@ import { utils } from 'suid';
 import { userUtils, constants as localConstants } from '@/utils';
 import { login, getAuthorizedFeatures, getVerifyCode } from '@/services/api';
 
-const {
-  setCurrentAuth,
-  setCurrentPolicy,
-  setSessionId,
-  setCurrentUser,
-} = userUtils;
+const { setCurrentAuth, setCurrentPolicy, setSessionId, setCurrentUser } = userUtils;
 
 const { constants, storage } = utils;
 const { CONST_GLOBAL } = constants;
@@ -30,7 +25,7 @@ export default {
   },
   subscriptions: {
     setupHistory({ dispatch, history }) {
-      history.listen((location) => {
+      history.listen(location => {
         dispatch({
           type: 'updateState',
           payload: {
@@ -42,8 +37,8 @@ export default {
     },
   },
   effects: {
-    * redirectLogin({ select }) {
-      const global = yield select((_) => _.global);
+    *redirectLogin({ select }) {
+      const global = yield select(_ => _.global);
       const { locationPathName, locationQuery } = global;
       let location = locationPathName;
       if (location.indexOf('/user/login') !== -1) {
@@ -56,14 +51,12 @@ export default {
         }),
       });
     },
-    * login({ payload }, { call, put, select }) {
-      const global = yield select((_) => _.global);
+    *login({ payload }, { call, put, select }) {
+      const global = yield select(_ => _.global);
       const { locationQuery } = global;
       const res = yield call(login, payload);
       const { success, data, message: msg } = res || {};
-      const {
-        loginStatus, authorityPolicy, sessionId, userId,
-      } = data || {};
+      const { loginStatus, authorityPolicy, sessionId, userId } = data || {};
       message.destroy();
       storage.sessionStorage.clear();
       if (success) {
@@ -119,7 +112,7 @@ export default {
         message.error(msg || '登录失败');
       }
     },
-    * getVerifyCode({ payload }, { call, put }) {
+    *getVerifyCode({ payload }, { call, put }) {
       const result = yield call(getVerifyCode, payload.reqId);
       const { success, data, message: msg } = result || {};
       if (success) {
@@ -133,9 +126,9 @@ export default {
         message.error(msg);
       }
     },
-    * changeLocale({ payload }, { put, select }) {
+    *changeLocale({ payload }, { put, select }) {
       const { locale } = payload;
-      const { locationQuery } = yield select((_) => _.global);
+      const { locationQuery } = yield select(_ => _.global);
       storage.sessionStorage.set(CONST_GLOBAL.CURRENT_LOCALE, locale);
       yield put({
         type: 'updateState',

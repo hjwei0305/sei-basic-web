@@ -3,8 +3,8 @@ import withRouter from 'umi/withRouter';
 import { connect } from 'dva';
 import cls from 'classnames';
 import { Spin } from 'antd';
-import TablePanel from './components/TablePanel';
 import { PageWrapper } from '@/components';
+import TablePanel from './components/TablePanel';
 import CustomerUserConfig from './components/CustomerUserConfig';
 import styles from './index.less';
 
@@ -21,7 +21,9 @@ class CustomerUser extends Component {
           <div style={{ height: '100%', display: !showConfig ? '' : 'none' }}>
             <TablePanel />
           </div>
-          { rowData && showConfig ? (<CustomerUserConfig style={{ display: showConfig ? '' : 'none' }} />) : (null)}
+          {rowData && showConfig ? (
+            <CustomerUserConfig style={{ display: showConfig ? '' : 'none' }} />
+          ) : null}
         </Spin>
       </PageWrapper>
     );

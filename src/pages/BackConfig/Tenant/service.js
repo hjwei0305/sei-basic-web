@@ -37,7 +37,7 @@ export async function delTenant(params) {
 /**
  * 获取租户根组织机构
  * params tenantCode
-*/
+ */
 export async function getTenantRootOrganization(params) {
   const url = `${SERVER_PATH}/sei-basic/organization/findRootByTenantCode`;
   return request({
@@ -66,7 +66,6 @@ export async function saveTenantAdmin(data) {
     data,
   });
 }
-
 
 /** 为租户分配应用模块 */
 export async function assignAppModuleItem(data) {

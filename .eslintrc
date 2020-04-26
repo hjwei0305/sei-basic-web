@@ -34,6 +34,11 @@
     "import/no-dynamic-require": 0,
     "react/prop-types": 0,
     "react/jsx-props-no-spreading": 0,
+    "react/static-property-placement": 0,
+    "react/forbid-prop-types": 0,
+    "react/require-default-props": 0,
+    "react/no-did-update-set-state": 0,
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "no-return-assign": 0,
     "jsx-a11y/label-has-associated-control": 0,
     "jsx-a11y/control-has-associated-label": 0,
@@ -43,7 +48,8 @@
     "jsx-a11y/anchor-has-content": 0,
     "jsx-a11y/anchor-is-valid": 0,
     "object-curly-newline": 0,
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-    "implicit-arrow-linebreak": 0
+    "implicit-arrow-linebreak": 0,
+    "no-unused-expressions": 0,
+    "consistent-return": 0
   }
 }

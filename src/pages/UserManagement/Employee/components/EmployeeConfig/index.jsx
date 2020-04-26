@@ -29,7 +29,7 @@ class PostionConfig extends React.Component {
       type: `employee/assign${type}`,
       payload: params,
     });
-  }
+  };
 
   handleUnAssign = (type, params) => {
     const { dispatch } = this.props;
@@ -38,23 +38,23 @@ class PostionConfig extends React.Component {
       type: `employee/unAssign${type}`,
       payload: params,
     });
-  }
+  };
 
-  handleSaveCfg = (params) => {
+  handleSaveCfg = params => {
     const { dispatch } = this.props;
     return dispatch({
       type: 'employee/saveCfg',
       payload: params,
     });
-  }
+  };
 
-  handleSaveDataRoleCfg = (params) => {
+  handleSaveDataRoleCfg = params => {
     const { dispatch } = this.props;
     return dispatch({
       type: 'employee/saveDataRoleCfg',
       payload: params,
     });
-  }
+  };
 
   handleBack = () => {
     const { dispatch } = this.props;
@@ -64,11 +64,13 @@ class PostionConfig extends React.Component {
         showEmployeeConfig: false,
       },
     });
-  }
+  };
 
   getTabExtra = () => (
-    <Button type="primary" onClick={this.handleBack}>返回</Button>
-  )
+    <Button type="primary" onClick={this.handleBack}>
+      返回
+    </Button>
+  );
 
   render() {
     const { style, employee, loading } = this.props;
@@ -80,34 +82,36 @@ class PostionConfig extends React.Component {
           <TabPane tab={`【${rowData.userName}】配置岗位`} key="1">
             <PositionConfig
               data={rowData}
-              onAssign={(params) => this.handleAssign('Employee', params)}
-              onUnAssign={(params) => this.handleUnAssign('Employee', params)}
+              onAssign={params => this.handleAssign('Employee', params)}
+              onUnAssign={params => this.handleUnAssign('Employee', params)}
             />
           </TabPane>
           <TabPane tab={`【${rowData.userName}】配置功能角色`} key="2">
             <FeatureRoleAssign
               data={rowData}
               cfged
-              onSaveCfg={(data) => this.handleSaveCfg(data)}
+              onSaveCfg={data => this.handleSaveCfg(data)}
               cfgLoading={loading.effects['employee/saveCfg']}
-              onAssign={(params) => this.handleAssign('FeatureRole', params)}
-              onUnAssign={(params) => this.handleUnAssign('FeatureRole', params)}
+              onAssign={params => this.handleAssign('FeatureRole', params)}
+              onUnAssign={params => this.handleUnAssign('FeatureRole', params)}
               unAssignCfg={{
                 unAssignedUrl: `${SERVER_PATH}/sei-basic/userFeatureRole/getUnassigned`,
                 unAssignedByIdUrl: `${SERVER_PATH}/sei-basic/employee/getCanAssignedFeatureRoles`,
                 byIdKey: 'userId',
               }}
-              assginCfg={{ url: `${SERVER_PATH}/sei-basic/userFeatureRole/getChildrenFromParentId` }}
+              assginCfg={{
+                url: `${SERVER_PATH}/sei-basic/userFeatureRole/getChildrenFromParentId`,
+              }}
             />
           </TabPane>
           <TabPane tab={`【${rowData.userName}】配置数据角色`} key="3">
             <DataRoleAssign
               data={rowData}
               cfged
-              onSaveCfg={(data) => this.handleSaveDataRoleCfg(data)}
+              onSaveCfg={data => this.handleSaveDataRoleCfg(data)}
               cfgLoading={loading.effects['employee/saveDataRoleCfg']}
-              onAssign={(params) => this.handleAssign('DataRole', params)}
-              onUnAssign={(params) => this.handleUnAssign('DataRole', params)}
+              onAssign={params => this.handleAssign('DataRole', params)}
+              onUnAssign={params => this.handleUnAssign('DataRole', params)}
               unAssignCfg={{
                 unAssignedUrl: `${SERVER_PATH}/sei-basic/userDataRole/getUnassigned`,
                 unAssignedByIdUrl: `${SERVER_PATH}/sei-basic/employee/getCanAssignedDataRoles`,

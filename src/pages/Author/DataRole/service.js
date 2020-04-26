@@ -37,7 +37,7 @@ export async function delRoleGroup(data) {
 /**
  * 根据角色组id获取数据角色列表
  * param roleGroupId
-*/
+ */
 export async function getDataRoleList(params) {
   const url = `${SERVER_PATH}/sei-basic/dataRole/findByDataRoleGroup`;
   return request({
@@ -65,7 +65,6 @@ export async function delDataRole(data) {
     method: 'DELETE',
   });
 }
-
 
 /**
  * 数据角色Id和数据权限类型Id分配业务实体数据
@@ -97,12 +96,11 @@ export async function removeAssignRelations(data) {
   });
 }
 
-
 /**
  * 通过数据角色Id和数据权限类型Id获取已分配的业务实体数据
  * param authTypeId
  * param roleId
-*/
+ */
 export async function getAssignedAuthDataList(params) {
   const url = `${SERVER_PATH}/sei-basic/dataRoleAuthTypeValue/getAssignedAuthDatas`;
   return request({
@@ -116,7 +114,7 @@ export async function getAssignedAuthDataList(params) {
  * 通过数据角色Id和数据权限类型Id获取未分配的业务实体数据
  * param authTypeId
  * param roleId
-*/
+ */
 export async function getUnassignedAuthDataList(params) {
   const url = `${SERVER_PATH}/sei-basic/dataRoleAuthTypeValue/getUnassignedAuthDataList`;
   return request({
@@ -130,7 +128,7 @@ export async function getUnassignedAuthDataList(params) {
  * 通过数据角色Id和数据权限类型Id获取已分配的树形业务实体数据
  * param authTypeId
  * param roleId
-*/
+ */
 export async function getAssignedAuthTreeDataList(params) {
   const url = `${SERVER_PATH}/sei-basic/dataRoleAuthTypeValue/getAssignedAuthTreeDataList`;
   return request({
@@ -144,7 +142,7 @@ export async function getAssignedAuthTreeDataList(params) {
  * 通过数据角色Id和数据权限类型Id获取未分配的业务实体数据
  * param authTypeId
  * param roleId
-*/
+ */
 export async function getUnassignedAuthTreeDataList(params) {
   const url = `${SERVER_PATH}/sei-basic/dataRoleAuthTypeValue/getUnassignedAuthTreeDataList`;
   return request({

@@ -16,22 +16,18 @@ const formItemLayout = {
 
 @Form.create()
 class TenantAdminForm extends PureComponent {
-  onFormSubmit = (_) => {
-    const {
-      form,
-      saveTenantAdmin,
-      tenantData,
-      tenantAdmin,
-      handlerPopoverHide,
-    } = this.props;
-    console.log(tenantData);
+  onFormSubmit = () => {
+    const { form, saveTenantAdmin, tenantData, tenantAdmin, handlerPopoverHide } = this.props;
     const { organizationDto, code } = tenantData;
     const { validateFields, getFieldsValue } = form;
-    validateFields((errors) => {
+    validateFields(errors => {
       if (errors) {
         return;
       }
-      const data = Object.assign(tenantAdmin || { organizationId: organizationDto.id }, getFieldsValue());
+      const data = Object.assign(
+        tenantAdmin || { organizationId: organizationDto.id },
+        getFieldsValue(),
+      );
       data.tenantCode = code;
       saveTenantAdmin(data, handlerPopoverHide);
     });
@@ -46,49 +42,51 @@ class TenantAdminForm extends PureComponent {
       <div key="form-box" className={cls(styles['form-box'])}>
         <div className="base-view-body">
           <div className="header">
-            <span className="title">
-              {title}
-            </span>
+            <span className="title">{title}</span>
           </div>
           <Form {...formItemLayout}>
             <FormItem label="组织机构">
               {getFieldDecorator('tenantRootOrganizationName', {
                 initialValue: organizationDto ? organizationDto.name : '',
-                rules: [{
-                  required: true,
-                  message: '组织机构不能为空',
-                }],
-              })(
-                <Input disabled addonBefore={organizationDto ? organizationDto.code : ''} />,
-              )}
+                rules: [
+                  {
+                    required: true,
+                    message: '组织机构不能为空',
+                  },
+                ],
+              })(<Input disabled addonBefore={organizationDto ? organizationDto.code : ''} />)}
             </FormItem>
             <FormItem label="员工编号">
               {getFieldDecorator('code', {
                 initialValue: tenantAdmin ? tenantAdmin.code : '',
-                rules: [{
-                  required: true,
-                  message: '员工编号不能为空',
-                }],
-              })(
-                <Input maxLength={10} />,
-              )}
+                rules: [
+                  {
+                    required: true,
+                    message: '员工编号不能为空',
+                  },
+                ],
+              })(<Input maxLength={10} />)}
             </FormItem>
             <FormItem label="用户名称">
               {getFieldDecorator('userName', {
                 initialValue: tenantAdmin ? tenantAdmin.userName : '',
-                rules: [{
-                  required: true,
-                  message: '用户名称不能为空',
-                }],
+                rules: [
+                  {
+                    required: true,
+                    message: '用户名称不能为空',
+                  },
+                ],
               })(<Input />)}
             </FormItem>
             <FormItem label="电子邮箱">
               {getFieldDecorator('email', {
                 initialValue: tenantAdmin ? tenantAdmin.email : '',
-                rules: [{
-                  required: true,
-                  message: '电子邮箱不能为空',
-                }],
+                rules: [
+                  {
+                    required: true,
+                    message: '电子邮箱不能为空',
+                  },
+                ],
               })(<Input />)}
             </FormItem>
             <FormItem label="手机号">
@@ -97,11 +95,7 @@ class TenantAdminForm extends PureComponent {
               })(<Input />)}
             </FormItem>
             <FormItem wrapperCol={{ span: 4, offset: 5 }} className="btn-submit">
-              <Button
-                type="primary"
-                loading={saving}
-                onClick={this.onFormSubmit}
-              >
+              <Button type="primary" loading={saving} onClick={this.onFormSubmit}>
                 <FormattedMessage id="global.save" defaultMessage="保存" />
               </Button>
             </FormItem>

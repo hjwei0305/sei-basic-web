@@ -21,7 +21,7 @@ export async function getRoleList(params) {
 /**
  * 通过数据角色Id获取此角色中所包含的数据权限类型清单
  * @param roleId
-*/
+ */
 export async function getDataAuthorTypeList(params) {
   const url = `${SERVER_PATH}/sei-basic/dataRoleAuthTypeValue/getAuthorizeTypesByRoleId`;
   return request({
@@ -35,7 +35,7 @@ export async function getDataAuthorTypeList(params) {
  * 通过数据角色Id和数据权限类型Id获取已分配的业务实体数据
  * @param authTypeId
  * @param roleId
-*/
+ */
 export async function getAssignedAuthDataList(params) {
   const url = `${SERVER_PATH}/sei-basic/dataRoleAuthTypeValue/getAssignedAuthDatas`;
   return request({
@@ -49,7 +49,7 @@ export async function getAssignedAuthDataList(params) {
  * 通过数据角色Id和数据权限类型Id获取已分配的树形业务实体数据
  * @param authTypeId
  * @param roleId
-*/
+ */
 export async function getAssignedAuthTreeDataList(params) {
   const url = `${SERVER_PATH}/sei-basic/dataRoleAuthTypeValue/getAssignedAuthTreeDataList`;
   return request({

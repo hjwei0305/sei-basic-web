@@ -1,9 +1,9 @@
 /*
-* @Author: zp
-* @Date:   2020-02-02 11:57:24
+ * @Author: zp
+ * @Date:   2020-02-02 11:57:24
  * @Last Modified by: zp
  * @Last Modified time: 2020-04-14 10:49:57
-*/
+ */
 import { utils } from 'suid';
 import { constants } from '@/utils';
 
@@ -83,7 +83,6 @@ export async function findByUserQueryParam(data) {
     data,
   });
 }
-
 
 /**
  * 把一个企业用户的功能角色和数据角色复制到多个企业用户

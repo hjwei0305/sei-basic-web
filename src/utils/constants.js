@@ -20,7 +20,6 @@ const LOCAL_PATH = process.env.NODE_ENV !== 'production' ? '..' : `../${APP_BASE
 
 const SERVER_PATH = getServerPath();
 
-
 const APP_PREFIX = 'BASIC_BTN_APP_MODULE';
 
 /** 功能类型 */

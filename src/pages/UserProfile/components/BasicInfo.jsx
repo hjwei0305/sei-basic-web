@@ -27,7 +27,7 @@ class BasicInfo extends React.Component {
       dispatch({
         type: 'userProfile/save',
         payload: params,
-      }).then((res) => {
+      }).then(res => {
         if (res.success) {
           const user = getCurrentUser();
           dispatch({
@@ -39,7 +39,7 @@ class BasicInfo extends React.Component {
         }
       });
     });
-  }
+  };
 
   render() {
     const { form, userProfile } = this.props;
@@ -63,62 +63,39 @@ class BasicInfo extends React.Component {
       <Form style={{ width: 1000 }}>
         <Row>
           <Col span={12}>
-            <FormItem
-              label="姓名"
-              {...formItemLayout}
-            >
+            <FormItem label="姓名" {...formItemLayout}>
               {getFieldDecorator('userName', {
                 initialValue: userName,
-              })(
-                <Input disabled />,
-              )}
+              })(<Input disabled />)}
             </FormItem>
           </Col>
           <Col span={12}>
-            <FormItem
-              label="用户类型"
-              {...formItemLayout}
-            >
+            <FormItem label="用户类型" {...formItemLayout}>
               {getFieldDecorator('userTypeRemark', {
                 initialValue: userTypeRemark,
-              })(
-                <Input disabled />,
-              )}
+              })(<Input disabled />)}
             </FormItem>
           </Col>
         </Row>
         <Row>
           <Col span={12}>
-            <FormItem
-              label="组织机构"
-              {...formItemLayout}
-            >
+            <FormItem label="组织机构" {...formItemLayout}>
               {getFieldDecorator('organizationName', {
                 initialValue: organizationName,
-              })(
-                <Input disabled />,
-              )}
+              })(<Input disabled />)}
             </FormItem>
           </Col>
           <Col span={12}>
-            <FormItem
-              label="员工编号"
-              {...formItemLayout}
-            >
+            <FormItem label="员工编号" {...formItemLayout}>
               {getFieldDecorator('employeeCode', {
                 initialValue: employeeCode,
-              })(
-                <Input disabled />,
-              )}
+              })(<Input disabled />)}
             </FormItem>
           </Col>
         </Row>
         <Row>
           <Col span={12}>
-            <FormItem
-              {...formItemLayout}
-              label="性别"
-            >
+            <FormItem {...formItemLayout} label="性别">
               {getFieldDecorator('gender', {
                 initialValue: gender,
               })(
@@ -130,70 +107,51 @@ class BasicInfo extends React.Component {
             </FormItem>
           </Col>
           <Col span={12}>
-            <FormItem
-              {...formItemLayout}
-              label="身份证号"
-            >
+            <FormItem {...formItemLayout} label="身份证号">
               {getFieldDecorator('idCard', {
                 initialValue: idCard,
-              })(
-                <Input />,
-              )}
+              })(<Input />)}
             </FormItem>
           </Col>
         </Row>
         <Row>
           <Col span={12}>
-            <FormItem
-              {...formItemLayout}
-              label="邮箱"
-            >
+            <FormItem {...formItemLayout} label="邮箱">
               {getFieldDecorator('email', {
                 initialValue: email,
-              })(
-                <Input />,
-              )}
+              })(<Input />)}
             </FormItem>
           </Col>
           <Col span={12}>
-            <FormItem
-              {...formItemLayout}
-              label="移动电话"
-            >
+            <FormItem {...formItemLayout} label="移动电话">
               {getFieldDecorator('mobile', {
                 initialValue: mobile,
-              })(
-                <Input />,
-              )}
+              })(<Input />)}
             </FormItem>
           </Col>
         </Row>
         <Row>
           <Col span={12}>
-            <FormItem
-              {...formItemLayout}
-              label="语言代码"
-            >
+            <FormItem {...formItemLayout} label="语言代码">
               {getFieldDecorator('languageCode', {
                 initialValue: languageCode,
               })(
                 <Select>
-                  <Select.Option value="zh_CN" key="zh_CN">简体中文</Select.Option>
-                  <Select.Option value="en_US" key="en_US">English</Select.Option>
+                  <Select.Option value="zh_CN" key="zh_CN">
+                    简体中文
+                  </Select.Option>
+                  <Select.Option value="en_US" key="en_US">
+                    English
+                  </Select.Option>
                 </Select>,
               )}
             </FormItem>
           </Col>
           <Col span={12}>
-            <FormItem
-              {...formItemLayout}
-              label="记账用户"
-            >
+            <FormItem {...formItemLayout} label="记账用户">
               {getFieldDecorator('accountor', {
                 initialValue: accountor,
-              })(
-                <Input />,
-              )}
+              })(<Input />)}
             </FormItem>
           </Col>
         </Row>
@@ -204,7 +162,9 @@ class BasicInfo extends React.Component {
                 offset: 8,
               }}
             >
-              <Button type="primary" onClick={this.handleSave}>更新信息</Button>
+              <Button type="primary" onClick={this.handleSave}>
+                更新信息
+              </Button>
             </FormItem>
           </Col>
         </Row>

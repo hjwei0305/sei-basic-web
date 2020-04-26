@@ -3,8 +3,8 @@ import { ExtTable, ComboGrid, ExtIcon } from 'suid';
 import { Button } from 'antd';
 import cls from 'classnames';
 import { AssignLayout } from '@/components';
-import CfgModal from './CfgModal';
 import { constants } from '@/utils';
+import CfgModal from './CfgModal';
 
 const { SERVER_PATH } = constants;
 

@@ -3,8 +3,8 @@ import { Button } from 'antd';
 import { ExtTable, ComboGrid, ExtIcon } from 'suid';
 import cls from 'classnames';
 import { AssignLayout } from '@/components';
-import CfgModal from './CfgModal';
 import { constants } from '@/utils';
+import CfgModal from './CfgModal';
 
 const { SERVER_PATH } = constants;
 
@@ -24,17 +24,6 @@ class FeatureRoleConfig extends Component {
     };
   }
 
-  handleCheck = (e) => {
-    const { checked } = e.target;
-    this.setState({
-      includeSubNode: checked,
-    }, () => {
-      if (this.unAssignTable) {
-        this.unAssignTable.remoteDataRefresh();
-      }
-    });
-  }
-
   handleUnAssign = () => {
     const { onUnAssign, data } = this.props;
     const { assignChildIds } = this.state;
@@ -48,7 +37,7 @@ class FeatureRoleConfig extends Component {
         this.refreshTableData();
       });
     }
-  }
+  };
 
   handleAssign = () => {
     const { onAssign, data } = this.props;
@@ -63,7 +52,7 @@ class FeatureRoleConfig extends Component {
         this.refreshTableData();
       });
     }
-  }
+  };
 
   getComboGridProps = () => {
     const { unAssignCfg } = this.props;
@@ -94,30 +83,36 @@ class FeatureRoleConfig extends Component {
       ],
       searchProperties: ['code', 'name'],
       style: { width: 240, marginRight: 15 },
-      afterSelect: (rowData) => {
+      afterSelect: rowData => {
         if (rowData) {
-          this.setState({
-            featureRoleGroupId: rowData.id,
-            unAssignUrl: unAssignedByIdUrl,
-          }, () => {
-            if (this.unAssignTable) {
-              this.unAssignTable.remoteDataRefresh();
-            }
-          });
+          this.setState(
+            {
+              featureRoleGroupId: rowData.id,
+              unAssignUrl: unAssignedByIdUrl,
+            },
+            () => {
+              if (this.unAssignTable) {
+                this.unAssignTable.remoteDataRefresh();
+              }
+            },
+          );
         }
       },
       afterClear: () => {
-        this.setState({
-          unAssignUrl: unAssignedUrl,
-          featureRoleGroupId: undefined,
-        }, () => {
-          if (this.unAssignTable) {
-            this.unAssignTable.remoteDataRefresh();
-          }
-        });
+        this.setState(
+          {
+            unAssignUrl: unAssignedUrl,
+            featureRoleGroupId: undefined,
+          },
+          () => {
+            if (this.unAssignTable) {
+              this.unAssignTable.remoteDataRefresh();
+            }
+          },
+        );
       },
     };
-  }
+  };
 
   getCommonColumns = () => [
     {
@@ -132,7 +127,7 @@ class FeatureRoleConfig extends Component {
       width: 180,
       required: true,
     },
-  ]
+  ];
 
   refreshTableData = () => {
     if (this.unAssignTable) {
@@ -141,14 +136,14 @@ class FeatureRoleConfig extends Component {
     if (this.assignTable) {
       this.assignTable.remoteDataRefresh();
     }
-  }
+  };
 
-  handleConfig = (record) => {
+  handleConfig = record => {
     this.setState({
       cfgModalVisible: true,
       editData: record,
     });
-  }
+  };
 
   /** 未分配表格属性 */
   getUnAssignTableProps = () => {
@@ -174,7 +169,7 @@ class FeatureRoleConfig extends Component {
       selectedRowKeys: unAssignChildIds,
       columns: this.getCommonColumns(),
       toolBar: toolBarProps,
-      onSelectRow: (rowIds) => {
+      onSelectRow: rowIds => {
         if (rowIds && rowIds.length) {
           this.setState({
             assignBtnDisabled: false,
@@ -188,16 +183,19 @@ class FeatureRoleConfig extends Component {
         }
       },
       store: {
-        params: unAssignUrl === unAssignedUrl ? {
-          parentId: id,
-        } : {
-          [byIdKey]: id,
-          featureRoleGroupId,
-        },
+        params:
+          unAssignUrl === unAssignedUrl
+            ? {
+                parentId: id,
+              }
+            : {
+                [byIdKey]: id,
+                featureRoleGroupId,
+              },
         url: unAssignUrl,
       },
     };
-  }
+  };
 
   /** 已分配表格属性 */
   getAssignTableProps = () => {
@@ -217,11 +215,12 @@ class FeatureRoleConfig extends Component {
           <span className={cls('action-box')}>
             <ExtIcon
               className="tool"
-              onClick={(e) => { this.handleConfig(record); e.stopPropagation(); }}
+              onClick={e => {
+                this.handleConfig(record);
+                e.stopPropagation();
+              }}
               type="tool"
-              tooltip={
-                { title: '配置有效期' }
-              }
+              tooltip={{ title: '配置有效期' }}
               antd
             />
           </span>
@@ -246,7 +245,7 @@ class FeatureRoleConfig extends Component {
       bordered: false,
       selectedRowKeys: assignChildIds,
       columns,
-      onSelectRow: (rowIds) => {
+      onSelectRow: rowIds => {
         if (rowIds && rowIds.length) {
           this.setState({
             unAssignBtnDisabled: false,
@@ -267,7 +266,7 @@ class FeatureRoleConfig extends Component {
         url,
       },
     };
-  }
+  };
 
   getCfgModalProps = () => {
     const { cfgModalVisible: visible, editData } = this.state;
@@ -277,17 +276,20 @@ class FeatureRoleConfig extends Component {
       editData,
       visible,
       saving: cfgLoading,
-      onSave: (data) => {
+      onSave: data => {
         if (onSaveCfg) {
-          onSaveCfg(data).then((result) => {
+          onSaveCfg(data).then(result => {
             const { success } = result || {};
             if (success) {
-              this.setState({
-                editData: null,
-                cfgModalVisible: false,
-              }, () => {
-                this.refreshTableData();
-              });
+              this.setState(
+                {
+                  editData: null,
+                  cfgModalVisible: false,
+                },
+                () => {
+                  this.refreshTableData();
+                },
+              );
             }
           });
         }
@@ -299,14 +301,18 @@ class FeatureRoleConfig extends Component {
         });
       },
     };
-  }
+  };
 
   render() {
     const { cfged } = this.props;
     const { assignBtnDisabled, unAssignBtnDisabled, cfgModalVisible } = this.state;
     return (
       <AssignLayout>
-        <ExtTable onTableRef={(inst) => this.unAssignTable = inst} slot="left" {...this.getUnAssignTableProps()} />
+        <ExtTable
+          onTableRef={inst => (this.unAssignTable = inst)}
+          slot="left"
+          {...this.getUnAssignTableProps()}
+        />
         <div slot="center">
           <>
             <p>
@@ -326,10 +332,13 @@ class FeatureRoleConfig extends Component {
               />
             </p>
           </>
-          { cfged && cfgModalVisible ? (<CfgModal {...this.getCfgModalProps()} />) : null }
+          {cfged && cfgModalVisible ? <CfgModal {...this.getCfgModalProps()} /> : null}
         </div>
-        <ExtTable onTableRef={(inst) => this.assignTable = inst} slot="right" {...this.getAssignTableProps()} />
-
+        <ExtTable
+          onTableRef={inst => (this.assignTable = inst)}
+          slot="right"
+          {...this.getAssignTableProps()}
+        />
       </AssignLayout>
     );
   }

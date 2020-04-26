@@ -3,7 +3,7 @@ import cls from 'classnames';
 import { Spin } from 'antd';
 import styles from './index.less';
 
-const PageWrapper = (props) => {
+const PageWrapper = props => {
   const { children, className, loading = false } = props;
   return (
     <div className={cls(styles['sei-page-warpper'], className)}>

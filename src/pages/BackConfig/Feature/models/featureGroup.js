@@ -15,7 +15,7 @@ export default modelExtend(model, {
   },
   subscriptions: {
     setup({ dispatch, history }) {
-      history.listen((location) => {
+      history.listen(location => {
         if (pathMatchRegexp('/backConfig/feature', location.pathname)) {
           dispatch({
             type: 'queryFeatureGroupList',
@@ -25,7 +25,7 @@ export default modelExtend(model, {
     },
   },
   effects: {
-    * queryFeatureGroupList({ payload }, { call, put }) {
+    *queryFeatureGroupList({ payload }, { call, put }) {
       const re = yield call(getFeatureGroupList, payload);
       if (re.success) {
         yield put({
@@ -38,7 +38,7 @@ export default modelExtend(model, {
         message.error(re.message);
       }
     },
-    * saveFeatureGroup({ payload, callback }, { call, put }) {
+    *saveFeatureGroup({ payload, callback }, { call, put }) {
       const re = yield call(saveFeatureGroup, payload);
       message.destroy();
       if (re.success) {
@@ -56,7 +56,7 @@ export default modelExtend(model, {
         callback(re);
       }
     },
-    * delFeatureGroup({ payload, callback }, { call, put }) {
+    *delFeatureGroup({ payload, callback }, { call, put }) {
       const re = yield call(delFeatureGroup, payload);
       message.destroy();
       if (re.success) {

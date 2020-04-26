@@ -18,7 +18,7 @@ const formItemLayout = {
 
 @Form.create()
 class FormModal extends PureComponent {
-  handlerFormSubmit = (_) => {
+  handlerFormSubmit = () => {
     const { form, save, rowData } = this.props;
     form.validateFields((err, formData) => {
       if (err) {
@@ -66,39 +66,51 @@ class FormModal extends PureComponent {
           <FormItem label="应用模块">
             {getFieldDecorator('appModuleName', {
               initialValue: rowData ? rowData.appModuleName : '',
-              rules: [{
-                required: true,
-                message: formatMessage({ id: 'feature.group.appModule.required', defaultMessage: '请选择应用模块' }),
-              }],
-            })(
-              <ComboList {...appModuleProps} />,
-            )}
+              rules: [
+                {
+                  required: true,
+                  message: formatMessage({
+                    id: 'feature.group.appModule.required',
+                    defaultMessage: '请选择应用模块',
+                  }),
+                },
+              ],
+            })(<ComboList {...appModuleProps} />)}
           </FormItem>
           <FormItem label={formatMessage({ id: 'global.name', defaultMessage: '名称' })}>
             {getFieldDecorator('name', {
               initialValue: rowData ? rowData.name : '',
-              rules: [{
-                required: true,
-                message: formatMessage({ id: 'global.name.required', defaultMessage: '名称不能为空' }),
-              }],
+              rules: [
+                {
+                  required: true,
+                  message: formatMessage({
+                    id: 'global.name.required',
+                    defaultMessage: '名称不能为空',
+                  }),
+                },
+              ],
             })(<Input />)}
           </FormItem>
           <FormItem label="实体类名">
             {getFieldDecorator('entityClassName', {
               initialValue: rowData ? rowData.entityClassName : '',
-              rules: [{
-                required: true,
-                message: '实体类名不能为空',
-              }],
+              rules: [
+                {
+                  required: true,
+                  message: '实体类名不能为空',
+                },
+              ],
             })(<Input />)}
           </FormItem>
           <FormItem label="API服务路径">
             {getFieldDecorator('apiPath', {
               initialValue: rowData ? rowData.apiPath : '',
-              rules: [{
-                required: true,
-                message: 'API服务路径不能为空',
-              }],
+              rules: [
+                {
+                  required: true,
+                  message: 'API服务路径不能为空',
+                },
+              ],
             })(<Input />)}
           </FormItem>
           <FormItem label="树形结构">

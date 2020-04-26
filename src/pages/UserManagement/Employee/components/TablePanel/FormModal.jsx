@@ -16,7 +16,7 @@ const formItemLayout = {
 
 @Form.create()
 class FormModal extends PureComponent {
-  onFormSubmit = (_) => {
+  onFormSubmit = () => {
     const { form, save, rowData } = this.props;
     form.validateFields((err, formData) => {
       if (err) {
@@ -35,9 +35,9 @@ class FormModal extends PureComponent {
     const { getFieldDecorator } = form;
     const title = rowData
       ? formatMessage({
-        id: 'global.edit',
-        defaultMessage: '编辑',
-      })
+          id: 'global.edit',
+          defaultMessage: '编辑',
+        })
       : formatMessage({ id: 'global.add', defaultMessage: '新建' });
 
     return (

@@ -1,9 +1,9 @@
 /*
-* @Author: zp
-* @Date:   2020-02-02 14:55:02
-* @Last Modified by:   zp
-* @Last Modified time: 2020-02-02 15:29:59
-*/
+ * @Author: zp
+ * @Date:   2020-02-02 14:55:02
+ * @Last Modified by:   zp
+ * @Last Modified time: 2020-02-02 15:29:59
+ */
 export default {
   corporation: 'corporation',
   'corporation.shortName': '简称',

@@ -15,56 +15,60 @@ class Assign extends Component {
     };
   }
 
-    handlerPopoverHide = () => {
-      this.setState({
-        visible: false,
-      });
-    };
+  handlerPopoverHide = () => {
+    this.setState({
+      visible: false,
+    });
+  };
 
-    handlerShowChange = (visible) => {
-      this.setState({ visible });
-    };
+  handlerShowChange = visible => {
+    this.setState({ visible });
+  };
 
-    renderPopoverContent = () => {
-      const { currentDataAuthorType, ...rest } = this.props;
-      const assignProps = {
-        handlerPopoverHide: this.handlerPopoverHide,
-        currentDataAuthorType,
-        ...rest,
-      };
-      if (currentDataAuthorType.authorizeEntityTypeBeTree) {
-        return (
-          <Suspense fallback={<ListLoader />}>
-            <TreeAssign {...assignProps} />
-          </Suspense>
-        );
-      }
+  renderPopoverContent = () => {
+    const { currentDataAuthorType, ...rest } = this.props;
+    const assignProps = {
+      handlerPopoverHide: this.handlerPopoverHide,
+      currentDataAuthorType,
+      ...rest,
+    };
+    if (currentDataAuthorType.authorizeEntityTypeBeTree) {
       return (
         <Suspense fallback={<ListLoader />}>
-          <ListAssign {...assignProps} />
+          <TreeAssign {...assignProps} />
         </Suspense>
       );
-    };
-
-    render() {
-      const { visible } = this.state;
-      return (
-        <Popover
-          trigger="click"
-          placement="leftTop"
-          visible={visible}
-          key="assign-popover-box"
-          destroyTooltipOnHide
-          onVisibleChange={(visible) => this.handlerShowChange(visible)}
-          overlayClassName={cls(styles['assign-popover-box'])}
-          content={this.renderPopoverContent()}
-        >
-          <span className={cls('assign-popover-box-trigger')}>
-            <ExtIcon type="security-scan" antd tooltip={{ title: '权限数据查看', placement: 'right' }} />
-          </span>
-        </Popover>
-      );
     }
+    return (
+      <Suspense fallback={<ListLoader />}>
+        <ListAssign {...assignProps} />
+      </Suspense>
+    );
+  };
+
+  render() {
+    const { visible } = this.state;
+    return (
+      <Popover
+        trigger="click"
+        placement="leftTop"
+        visible={visible}
+        key="assign-popover-box"
+        destroyTooltipOnHide
+        onVisibleChange={v => this.handlerShowChange(v)}
+        overlayClassName={cls(styles['assign-popover-box'])}
+        content={this.renderPopoverContent()}
+      >
+        <span className={cls('assign-popover-box-trigger')}>
+          <ExtIcon
+            type="security-scan"
+            antd
+            tooltip={{ title: '权限数据查看', placement: 'right' }}
+          />
+        </span>
+      </Popover>
+    );
+  }
 }
 
 export default Assign;

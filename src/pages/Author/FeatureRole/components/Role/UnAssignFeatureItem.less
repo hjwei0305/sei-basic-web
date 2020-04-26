@@ -9,34 +9,34 @@
       border-color: transparent;
     }
     .ant-drawer-body {
-      padding: 0;
       height: calc(100% - 55px);
+      padding: 0;
     }
     .header-tool-box {
+      position: relative;
       display: flex;
       align-items: center;
       height: 46px;
-      line-height: 46px;
-      position: relative;
       padding: 0 24px;
       overflow: hidden;
+      line-height: 46px;
       button {
         margin-right: 8px;
       }
       .app-box {
         display: inline-block;
         .label {
-          &:after {
-            content: ':';
+          &::after {
             margin: 0 4px;
+            content: ':';
           }
         }
       }
       .tool-search-box {
-        display: inline-block;
         position: absolute;
-        right: 16px;
         top: 0;
+        right: 16px;
+        display: inline-block;
         .refresh {
           display: inline-block;
           width: 32px;
@@ -52,20 +52,20 @@
         }
       }
       .ant-drawer-top.ant-drawer-open .ant-drawer-content-wrapper {
-        box-shadow: none;
         border-bottom: 1px solid @border-color;
+        box-shadow: none;
       }
       .ant-drawer-body {
-        padding: 0 0 0 24px;
         display: flex;
         align-items: center;
         height: 44px;
+        padding: 0 0 0 24px;
         line-height: 44px;
         background-color: @white;
         .select {
-          color: fade(@black, 65%);
           display: inline-block;
           min-width: 120px;
+          color: fade(@black, 65%);
         }
       }
     }

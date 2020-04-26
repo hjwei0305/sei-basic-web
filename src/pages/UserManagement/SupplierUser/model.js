@@ -1,9 +1,9 @@
 /*
-* @Author: zp
-* @Date:   2020-02-02 11:57:38
+ * @Author: zp
+ * @Date:   2020-02-02 11:57:38
  * @Last Modified by: Eason
  * @Last Modified time: 2020-03-06 13:35:06
-*/
+ */
 import { message } from 'antd';
 import { formatMessage } from 'umi-plugin-react/locale';
 import { utils } from 'suid';
@@ -32,7 +32,7 @@ export default modelExtend(model, {
     showConfig: false,
   },
   effects: {
-    * save({ payload }, { call }) {
+    *save({ payload }, { call }) {
       const re = yield call(save, payload);
       message.destroy();
       if (re.success) {
@@ -43,7 +43,7 @@ export default modelExtend(model, {
 
       return re;
     },
-    * del({ payload }, { call }) {
+    *del({ payload }, { call }) {
       const re = yield call(del, payload);
       message.destroy();
       if (re.success) {
@@ -54,7 +54,7 @@ export default modelExtend(model, {
 
       return re;
     },
-    * assignFeatureRole({ payload }, { call }) {
+    *assignFeatureRole({ payload }, { call }) {
       const re = yield call(assignFeatureRole, payload);
       message.destroy();
       if (re.success) {
@@ -64,7 +64,7 @@ export default modelExtend(model, {
       }
       return re;
     },
-    * unAssignFeatureRole({ payload }, { call }) {
+    *unAssignFeatureRole({ payload }, { call }) {
       const re = yield call(unAssignFeatureRole, payload);
       message.destroy();
       if (re.success) {
@@ -74,7 +74,7 @@ export default modelExtend(model, {
       }
       return re;
     },
-    * assignDataRole({ payload }, { call }) {
+    *assignDataRole({ payload }, { call }) {
       const re = yield call(assignDataRole, payload);
       message.destroy();
       if (re.success) {
@@ -84,7 +84,7 @@ export default modelExtend(model, {
       }
       return re;
     },
-    * unAssignDataRole({ payload }, { call }) {
+    *unAssignDataRole({ payload }, { call }) {
       const re = yield call(unAssignDataRole, payload);
       message.destroy();
       if (re.success) {

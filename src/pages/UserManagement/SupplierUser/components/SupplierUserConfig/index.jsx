@@ -26,7 +26,7 @@ class PostionConfig extends React.PureComponent {
       type: `supplierUser/assign${type}`,
       payload: params,
     });
-  }
+  };
 
   handleUnAssign = (type, params) => {
     const { dispatch } = this.props;
@@ -35,7 +35,7 @@ class PostionConfig extends React.PureComponent {
       type: `supplierUser/unAssign${type}`,
       payload: params,
     });
-  }
+  };
 
   handleBack = () => {
     const { dispatch } = this.props;
@@ -45,11 +45,9 @@ class PostionConfig extends React.PureComponent {
         showConfig: false,
       },
     });
-  }
+  };
 
-  getTabExtra = () => (
-    <Button onClick={this.handleBack}>返回</Button>
-  )
+  getTabExtra = () => <Button onClick={this.handleBack}>返回</Button>;
 
   render() {
     const { style, supplierUser } = this.props;
@@ -61,21 +59,23 @@ class PostionConfig extends React.PureComponent {
           <TabPane tab={`【${rowData.name}】配置功能角色`} key="1">
             <FeatureRoleAssign
               data={rowData}
-              onAssign={(params) => this.handleAssign('FeatureRole', params)}
-              onUnAssign={(params) => this.handleUnAssign('FeatureRole', params)}
+              onAssign={params => this.handleAssign('FeatureRole', params)}
+              onUnAssign={params => this.handleUnAssign('FeatureRole', params)}
               unAssignCfg={{
                 unAssignedUrl: `${SERVER_PATH}/sei-basic/userFeatureRole/getUnassigned`,
                 unAssignedByIdUrl: `${SERVER_PATH}/sei-basic/employee/getCanAssignedFeatureRoles`,
                 byIdKey: 'userId',
               }}
-              assginCfg={{ url: `${SERVER_PATH}/sei-basic/userFeatureRole/getChildrenFromParentId` }}
+              assginCfg={{
+                url: `${SERVER_PATH}/sei-basic/userFeatureRole/getChildrenFromParentId`,
+              }}
             />
           </TabPane>
           <TabPane tab={`【${rowData.name}】配置用户角色`} key="2">
             <DataRoleAssign
               data={rowData}
-              onAssign={(params) => this.handleAssign('DataRole', params)}
-              onUnAssign={(params) => this.handleUnAssign('DataRole', params)}
+              onAssign={params => this.handleAssign('DataRole', params)}
+              onUnAssign={params => this.handleUnAssign('DataRole', params)}
               unAssignCfg={{
                 unAssignedUrl: `${SERVER_PATH}/sei-basic/userDataRole/getUnassigned`,
                 unAssignedByIdUrl: `${SERVER_PATH}/sei-basic/employee/getCanAssignedDataRoles`,

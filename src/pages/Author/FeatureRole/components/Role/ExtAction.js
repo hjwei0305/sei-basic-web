@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import cls from 'classnames';
 import { connect } from 'dva';
 import { isEqual } from 'lodash';
@@ -42,12 +42,13 @@ class ExtAction extends Component {
 
   componentDidUpdate() {
     const { featureRole } = this.props;
-    if (!isEqual(this.state.assignUserData, featureRole.assignUserData)) {
+    const { assignUserData: stateAssignUserData } = this.state;
+    if (!isEqual(stateAssignUserData, featureRole.assignUserData)) {
       this.setState({
         assignUserData: featureRole.assignUserData,
       });
     }
-    if (!isEqual(this.state.assinStationData, featureRole.assinStationData)) {
+    if (!isEqual(stateAssignUserData, featureRole.assinStationData)) {
       this.setState({
         assinStationData: featureRole.assinStationData,
       });
@@ -78,20 +79,23 @@ class ExtAction extends Component {
     }
   };
 
-  onActionOperation = (e, record) => {
+  onActionOperation = e => {
     e.domEvent.stopPropagation();
     if (e.key === ROLE_VIEW.SATION || e.key === ROLE_VIEW.USER) {
-      this.setState({
-        selectedKeys: e.key,
-        menuShow: true,
-      }, () => {
-        if (e.key === ROLE_VIEW.USER) {
-          this.getUserData();
-        }
-        if (e.key === ROLE_VIEW.SATION) {
-          this.getStationData();
-        }
-      });
+      this.setState(
+        {
+          selectedKeys: e.key,
+          menuShow: true,
+        },
+        () => {
+          if (e.key === ROLE_VIEW.USER) {
+            this.getUserData();
+          }
+          if (e.key === ROLE_VIEW.SATION) {
+            this.getStationData();
+          }
+        },
+      );
     } else {
       this.setState({
         selectedKeys: '',
@@ -108,57 +112,53 @@ class ExtAction extends Component {
       <Menu
         id={menuId}
         className={cls(styles['action-menu-box'])}
-        onClick={(e) => this.onActionOperation(e, record)}
+        onClick={e => this.onActionOperation(e, record)}
         selectedKeys={[selectedKeys]}
       >
-        {
-          menus.map((m) => {
-            if (m.key === ROLE_VIEW.USER) {
-              return (
-                <Item key={m.key}>
-                  <UserView
-                    key={`user-${m.key}`}
-                    loading={loading.effects['featureRole/getAssignedEmployeesByFeatureRole']}
-                    assignUserData={assignUserData}
-                    menuId={menuId}
-                    title={m.title}
-                    icon={m.icon}
-                  />
-                </Item>
-              );
-            }
-            if (m.key === ROLE_VIEW.SATION) {
-              return (
-                <Item key={m.key}>
-                  <StationView
-                    loading={loading.effects['featureRole/getAssignedPositionsByFeatureRole']}
-                    assinStationData={assinStationData}
-                    menuId={menuId}
-                    title={m.title}
-                    icon={m.icon}
-                  />
-                </Item>
-              );
-            }
+        {menus.map(m => {
+          if (m.key === ROLE_VIEW.USER) {
             return (
-              <Item
-                key={m.key}
-                disabled={m.disabled}
-              >
-                <ExtIcon type={m.icon} antd />
-                {m.title}
+              <Item key={m.key}>
+                <UserView
+                  key={`user-${m.key}`}
+                  loading={loading.effects['featureRole/getAssignedEmployeesByFeatureRole']}
+                  assignUserData={assignUserData}
+                  menuId={menuId}
+                  title={m.title}
+                  icon={m.icon}
+                />
               </Item>
             );
-          })
-        }
+          }
+          if (m.key === ROLE_VIEW.SATION) {
+            return (
+              <Item key={m.key}>
+                <StationView
+                  loading={loading.effects['featureRole/getAssignedPositionsByFeatureRole']}
+                  assinStationData={assinStationData}
+                  menuId={menuId}
+                  title={m.title}
+                  icon={m.icon}
+                />
+              </Item>
+            );
+          }
+          return (
+            <Item key={m.key} disabled={m.disabled}>
+              <ExtIcon type={m.icon} antd />
+              {m.title}
+            </Item>
+          );
+        })}
       </Menu>
     );
   };
 
-  onVisibleChange = (v) => {
+  onVisibleChange = v => {
+    const { selectedKeys } = this.state;
     this.setState({
       menuShow: v,
-      selectedKeys: !v ? '' : this.state.selectedKeys,
+      selectedKeys: !v ? '' : selectedKeys,
     });
   };
 
@@ -168,22 +168,18 @@ class ExtAction extends Component {
     const menusData = menuData();
     return (
       <>
-        {
-          menusData.length > 0
-            ? (
-              <Dropdown
-                trigger={['click']}
-                overlay={this.getMenu(menusData, roleData)}
-                className="action-drop-down"
-                placement="bottomLeft"
-                visible={menuShow}
-                onVisibleChange={this.onVisibleChange}
-              >
-                <ExtIcon className={cls('action-item')} type="more" antd />
-              </Dropdown>
-            )
-            : null
-        }
+        {menusData.length > 0 ? (
+          <Dropdown
+            trigger={['click']}
+            overlay={this.getMenu(menusData, roleData)}
+            className="action-drop-down"
+            placement="bottomLeft"
+            visible={menuShow}
+            onVisibleChange={this.onVisibleChange}
+          >
+            <ExtIcon className={cls('action-item')} type="more" antd />
+          </Dropdown>
+        ) : null}
       </>
     );
   }

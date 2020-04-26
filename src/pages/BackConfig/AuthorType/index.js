@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'dva';
 import cls from 'classnames';
 import { isEqual } from 'lodash';
@@ -12,7 +12,6 @@ import styles from './index.less';
 const { APP_MODULE_BTN_KEY } = constants;
 const { authAction } = utils;
 
-
 @connect(({ authorType, loading }) => ({ authorType, loading }))
 class AuthorType extends Component {
   constructor(props) {
@@ -24,21 +23,24 @@ class AuthorType extends Component {
   }
 
   componentDidUpdate(_prevProps, prevState) {
-    if (!isEqual(prevState.list, this.props.authorType.list)) {
+    const {
+      authorType: { list },
+    } = this.props;
+    if (!isEqual(prevState.list, list)) {
       this.setState({
-        list: this.props.authorType.list,
+        list,
       });
     }
   }
 
-  reloadData = (_) => {
+  reloadData = () => {
     const { dispatch } = this.props;
     dispatch({
       type: 'authorType/queryList',
     });
   };
 
-  add = (_) => {
+  add = () => {
     const { dispatch } = this.props;
     dispatch({
       type: 'authorType/updateState',
@@ -49,7 +51,7 @@ class AuthorType extends Component {
     });
   };
 
-  edit = (rowData) => {
+  edit = rowData => {
     const { dispatch } = this.props;
     dispatch({
       type: 'authorType/updateState',
@@ -60,14 +62,14 @@ class AuthorType extends Component {
     });
   };
 
-  save = (data) => {
+  save = data => {
     const { dispatch } = this.props;
     dispatch({
       type: 'authorType/save',
       payload: {
         ...data,
       },
-      callback: (res) => {
+      callback: res => {
         if (res.success) {
           dispatch({
             type: 'authorType/updateState',
@@ -81,29 +83,32 @@ class AuthorType extends Component {
     });
   };
 
-  del = (record) => {
+  del = record => {
     const { dispatch } = this.props;
-    this.setState({
-      delRowId: record.id,
-    }, (_) => {
-      dispatch({
-        type: 'authorType/del',
-        payload: {
-          id: record.id,
-        },
-        callback: (res) => {
-          if (res.success) {
-            this.setState({
-              delRowId: null,
-            });
-            this.reloadData();
-          }
-        },
-      });
-    });
+    this.setState(
+      {
+        delRowId: record.id,
+      },
+      () => {
+        dispatch({
+          type: 'authorType/del',
+          payload: {
+            id: record.id,
+          },
+          callback: res => {
+            if (res.success) {
+              this.setState({
+                delRowId: null,
+              });
+              this.reloadData();
+            }
+          },
+        });
+      },
+    );
   };
 
-  closeFormModal = (_) => {
+  closeFormModal = () => {
     const { dispatch } = this.props;
     dispatch({
       type: 'authorType/updateState',
@@ -114,7 +119,7 @@ class AuthorType extends Component {
     });
   };
 
-  renderDelBtn = (row) => {
+  renderDelBtn = row => {
     const { loading } = this.props;
     const { delRowId } = this.state;
     if (loading.effects['authorType/del'] && delRowId === row.id) {
@@ -138,26 +143,25 @@ class AuthorType extends Component {
         required: true,
         render: (text, record) => (
           <span className={cls('action-box')}>
-            {
-              authAction(
-                <ExtIcon
-                  key={APP_MODULE_BTN_KEY.EDIT}
-                  className="edit"
-                  onClick={(_) => this.edit(record)}
-                  type="edit"
-                  ignore="true"
-                  antd
-                />,
-              )
-            }
+            {authAction(
+              <ExtIcon
+                key={APP_MODULE_BTN_KEY.EDIT}
+                className="edit"
+                onClick={() => this.edit(record)}
+                type="edit"
+                ignore="true"
+                antd
+              />,
+            )}
             <Popconfirm
               key={APP_MODULE_BTN_KEY.DELETE}
-              title={formatMessage({ id: 'global.delete.confirm', defaultMessage: '确定要删除吗？提示：删除后不可恢复' })}
-              onConfirm={(_) => this.del(record)}
+              title={formatMessage({
+                id: 'global.delete.confirm',
+                defaultMessage: '确定要删除吗？提示：删除后不可恢复',
+              })}
+              onConfirm={() => this.del(record)}
             >
-              {
-                this.renderDelBtn(record)
-              }
+              {this.renderDelBtn(record)}
             </Popconfirm>
           </span>
         ),
@@ -197,7 +201,6 @@ class AuthorType extends Component {
         width: 200,
         optional: true,
       },
-
     ];
     const formModalProps = {
       save: this.save,
@@ -209,18 +212,11 @@ class AuthorType extends Component {
     const toolBarProps = {
       left: (
         <>
-          {
-            authAction(
-              <Button
-                key={APP_MODULE_BTN_KEY.CREATE}
-                type="primary"
-                onClick={this.add}
-                ignore="true"
-              >
-                <FormattedMessage id="global.add" defaultMessage="新建" />
-              </Button>,
-            )
-          }
+          {authAction(
+            <Button key={APP_MODULE_BTN_KEY.CREATE} type="primary" onClick={this.add} ignore="true">
+              <FormattedMessage id="global.add" defaultMessage="新建" />
+            </Button>,
+          )}
           <Button onClick={this.reloadData}>
             <FormattedMessage id="global.refresh" defaultMessage="刷新" />
           </Button>
@@ -237,7 +233,13 @@ class AuthorType extends Component {
           dataSource={list}
           searchProperties={['name', 'entityClassName', 'apiPath', 'appModuleName']}
           sort={{
-            field: { appModuleName: 'asc', entityClassName: null, name: null, apiPath: null, beTree: null },
+            field: {
+              appModuleName: 'asc',
+              entityClassName: null,
+              name: null,
+              apiPath: null,
+              beTree: null,
+            },
           }}
         />
         <FormModal {...formModalProps} />

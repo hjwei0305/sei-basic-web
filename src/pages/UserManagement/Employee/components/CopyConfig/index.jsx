@@ -1,6 +1,6 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { connect } from 'dva';
-import { Button, message } from 'antd';
+import { Button } from 'antd';
 import { ExtTable, ComboTree } from 'suid';
 import cls from 'classnames';
 
@@ -10,15 +10,16 @@ import styles from './index.less';
 
 const { SERVER_PATH } = constants;
 
-
 @connect(({ employee }) => ({ employee }))
 class CopyConfig extends React.Component {
-  state = {
-    userCurrNode: null,
-    dataRoleIds: [],
-    featureRoleIds: [],
-    targetEmployeeIds: [],
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      dataRoleIds: [],
+      featureRoleIds: [],
+      targetEmployeeIds: [],
+    };
+  }
 
   handleBack = () => {
     const { dispatch } = this.props;
@@ -28,7 +29,7 @@ class CopyConfig extends React.Component {
         showCopyConfig: false,
       },
     });
-  }
+  };
 
   handleCopy = () => {
     const { dataRoleIds, featureRoleIds, targetEmployeeIds } = this.state;
@@ -47,7 +48,7 @@ class CopyConfig extends React.Component {
     // } else {
     //   message.warn(`不能复制功能角色和数据角色到当前帐号【${rowData.userName}】`);
     // }
-  }
+  };
 
   getComboTreeProps = () => {
     const { employee } = this.props;
@@ -64,19 +65,22 @@ class CopyConfig extends React.Component {
       },
       placeholder: '请选择组织机构',
       style: { width: 200 },
-      afterSelect: (node) => {
+      afterSelect: node => {
         if (node) {
-          this.setState({
-            organizationId: node.id,
-          }, () => {
-            if (this.userTableRef) {
-              this.userTableRef.remoteDataRefresh();
-            }
-          });
+          this.setState(
+            {
+              organizationId: node.id,
+            },
+            () => {
+              if (this.userTableRef) {
+                this.userTableRef.remoteDataRefresh();
+              }
+            },
+          );
         }
       },
     };
-  }
+  };
 
   getUserExtableProps = () => {
     const { organizationId } = this.state;
@@ -117,7 +121,7 @@ class CopyConfig extends React.Component {
           organizationId: organizationId || (currNode && currNode.id),
         },
       },
-      onSelectRow: (rowKeys) => {
+      onSelectRow: rowKeys => {
         let targetEmployeeIds = [];
         if (rowKeys && rowKeys.length) {
           targetEmployeeIds = rowKeys;
@@ -127,7 +131,7 @@ class CopyConfig extends React.Component {
         });
       },
     };
-  }
+  };
 
   getFeatureRoleExtableProps = () => {
     const { employee } = this.props;
@@ -157,7 +161,7 @@ class CopyConfig extends React.Component {
           parentId: rowData && rowData.id,
         },
       },
-      onSelectRow: (rowKeys) => {
+      onSelectRow: rowKeys => {
         let featureRoleIds = [];
         if (rowKeys && rowKeys.length) {
           featureRoleIds = rowKeys;
@@ -167,7 +171,7 @@ class CopyConfig extends React.Component {
         });
       },
     };
-  }
+  };
 
   getUserRoleExtableProps = () => {
     const { employee } = this.props;
@@ -197,7 +201,7 @@ class CopyConfig extends React.Component {
           parentId: rowData && rowData.id,
         },
       },
-      onSelectRow: (rowKeys) => {
+      onSelectRow: rowKeys => {
         let dataRoleIds = [];
         if (rowKeys && rowKeys.length) {
           dataRoleIds = rowKeys;
@@ -207,32 +211,50 @@ class CopyConfig extends React.Component {
         });
       },
     };
-  }
+  };
 
   render() {
     const { dataRoleIds, featureRoleIds, targetEmployeeIds } = this.state;
     const { employee } = this.props;
     const { rowData } = employee;
-    const copyBtnEnabled = targetEmployeeIds.length && (featureRoleIds.length || dataRoleIds.length);
-
+    const copyBtnEnabled =
+      targetEmployeeIds.length && (featureRoleIds.length || dataRoleIds.length);
     return (
       <AssignLayout
         title={['选择复制到的用户', `用户【${rowData.userName}】的功能角色和数据角色`]}
         layout={[7, 1, 16]}
-        extra={[null, (<Button type="primary" onClick={this.handleBack}>返回</Button>)]}
+        extra={[
+          null,
+          <Button key="back" type="primary" onClick={this.handleBack}>
+            返回
+          </Button>,
+        ]}
       >
-        <ExtTable slot="left" slotClassName={cls(styles['slot-container'])} onTableRef={(inst) => this.userTableRef = inst} {...this.getUserExtableProps()} />
+        <ExtTable
+          slot="left"
+          slotClassName={cls(styles['slot-container'])}
+          onTableRef={inst => (this.userTableRef = inst)}
+          {...this.getUserExtableProps()}
+        />
         <div slot="center">
-          <Button
-            onClick={this.handleCopy}
-            disabled={!copyBtnEnabled}
-            shape="circle"
-            icon="left"
-          />
+          <Button onClick={this.handleCopy} disabled={!copyBtnEnabled} shape="circle" icon="left" />
         </div>
-        <ColumnLayout slot="right" slotClassName={cls(styles['slot-container'])} title={['功能角色', '数据角色']} layout={[12, 12]}>
-          <ExtTable slot="left" onTableRef={(inst) => this.featureRoleTableRef = inst} {...this.getFeatureRoleExtableProps()} />
-          <ExtTable slot="right" onTableRef={(inst) => this.userRoleTableRef = inst} {...this.getUserRoleExtableProps()} />
+        <ColumnLayout
+          slot="right"
+          slotClassName={cls(styles['slot-container'])}
+          title={['功能角色', '数据角色']}
+          layout={[12, 12]}
+        >
+          <ExtTable
+            slot="left"
+            onTableRef={inst => (this.featureRoleTableRef = inst)}
+            {...this.getFeatureRoleExtableProps()}
+          />
+          <ExtTable
+            slot="right"
+            onTableRef={inst => (this.userRoleTableRef = inst)}
+            {...this.getUserRoleExtableProps()}
+          />
         </ColumnLayout>
       </AssignLayout>
     );

@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { ExtTable, ComboTree } from 'suid';
 import { Button, Checkbox } from 'antd';
 import { constants } from '@/utils';
@@ -7,32 +7,38 @@ import { AssignLayout } from '@/components';
 const { SERVER_PATH } = constants;
 
 class UserConfig extends Component {
-  state = {
-    assignBtnDisabled: true,
-    unAssignBtnDisabled: true,
-    includeSubNode: false,
-    organizationId: null,
-    assignParentIds: [],
-    unAssignParentIds: [],
+  constructor(props) {
+    super(props);
+    this.state = {
+      assignBtnDisabled: true,
+      unAssignBtnDisabled: true,
+      includeSubNode: false,
+      organizationId: null,
+      assignParentIds: [],
+      unAssignParentIds: [],
+    };
   }
 
-  handleCheck = (e) => {
+  handleCheck = e => {
     const { checked } = e.target;
-    this.setState({
-      includeSubNode: checked,
-    }, () => {
-      if (this.unAssignTable) {
-        this.unAssignTable.remoteDataRefresh();
-      }
-    });
-  }
+    this.setState(
+      {
+        includeSubNode: checked,
+      },
+      () => {
+        if (this.unAssignTable) {
+          this.unAssignTable.remoteDataRefresh();
+        }
+      },
+    );
+  };
 
   handleUnAssign = () => {
     const { onUnAssign, data } = this.props;
     const { assignParentIds } = this.state;
     const { id: childId } = data;
     if (onUnAssign) {
-      onUnAssign({ childId, parentIds: assignParentIds }).then((_) => {
+      onUnAssign({ childId, parentIds: assignParentIds }).then(() => {
         this.setState({
           unAssignBtnDisabled: true,
           assignParentIds: [],
@@ -40,14 +46,14 @@ class UserConfig extends Component {
         this.refreshTableData();
       });
     }
-  }
+  };
 
   handleAssign = () => {
     const { onAssign, data } = this.props;
     const { unAssignParentIds } = this.state;
     const { id: childId } = data;
     if (onAssign) {
-      onAssign({ childId, parentIds: unAssignParentIds }).then((_) => {
+      onAssign({ childId, parentIds: unAssignParentIds }).then(() => {
         this.setState({
           assignBtnDisabled: true,
           unAssignParentIds: [],
@@ -55,11 +61,10 @@ class UserConfig extends Component {
         this.refreshTableData();
       });
     }
-  }
+  };
 
   getComboTreeProps = () => {
     const { data } = this.props;
-
     return {
       defaultValue: data.organizationName || '',
       name: 'orgName',
@@ -71,19 +76,22 @@ class UserConfig extends Component {
       },
       placeholder: '请选择组织机构',
       style: { width: 240, marginRight: 15 },
-      afterSelect: (node) => {
+      afterSelect: node => {
         if (node) {
-          this.setState({
-            organizationId: node.id,
-          }, () => {
-            if (this.unAssignTable) {
-              this.unAssignTable.remoteDataRefresh();
-            }
-          });
+          this.setState(
+            {
+              organizationId: node.id,
+            },
+            () => {
+              if (this.unAssignTable) {
+                this.unAssignTable.remoteDataRefresh();
+              }
+            },
+          );
         }
       },
     };
-  }
+  };
 
   getCommonColumns = () => [
     {
@@ -104,7 +112,7 @@ class UserConfig extends Component {
       width: 100,
       required: true,
     },
-  ]
+  ];
 
   refreshTableData = () => {
     if (this.unAssignTable) {
@@ -113,7 +121,7 @@ class UserConfig extends Component {
     if (this.assignTable) {
       this.assignTable.remoteDataRefresh();
     }
-  }
+  };
 
   /** 未分配表格属性 */
   getUnAssignTableProps = () => {
@@ -141,7 +149,7 @@ class UserConfig extends Component {
       columns: this.getCommonColumns(),
       toolBar: toolBarProps,
       remotePaging: true,
-      onSelectRow: (rowIds) => {
+      onSelectRow: rowIds => {
         if (rowIds && rowIds.length) {
           this.setState({
             assignBtnDisabled: false,
@@ -161,11 +169,10 @@ class UserConfig extends Component {
           includeSubNode,
         },
         type: 'POST',
-        // url: `${SERVER_PATH}/sei-basic/employee/listAllCanAssignEmployees`,
         url: `${SERVER_PATH}/sei-basic/employee/queryEmployees`,
       },
     };
-  }
+  };
 
   /** 已分配表格属性 */
   getAssignTableProps = () => {
@@ -179,7 +186,7 @@ class UserConfig extends Component {
       selectedRowKeys: assignParentIds,
       columns: this.getCommonColumns(),
       searchProperties: ['code', 'userName'],
-      onSelectRow: (rowIds) => {
+      onSelectRow: rowIds => {
         if (rowIds && rowIds.length) {
           this.setState({
             unAssignBtnDisabled: false,
@@ -200,14 +207,18 @@ class UserConfig extends Component {
         url: `${SERVER_PATH}/sei-basic/employeePosition/getParentsFromChildId`,
       },
     };
-  }
+  };
 
   render() {
     const { assignBtnDisabled, unAssignBtnDisabled } = this.state;
 
     return (
       <AssignLayout>
-        <ExtTable onTableRef={(inst) => this.unAssignTable = inst} slot="left" {...this.getUnAssignTableProps()} />
+        <ExtTable
+          onTableRef={inst => (this.unAssignTable = inst)}
+          slot="left"
+          {...this.getUnAssignTableProps()}
+        />
         <div slot="center">
           <>
             <p>
@@ -228,7 +239,11 @@ class UserConfig extends Component {
             </p>
           </>
         </div>
-        <ExtTable onTableRef={(inst) => this.assignTable = inst} slot="right" {...this.getAssignTableProps()} />
+        <ExtTable
+          onTableRef={inst => (this.assignTable = inst)}
+          slot="right"
+          {...this.getAssignTableProps()}
+        />
       </AssignLayout>
     );
   }

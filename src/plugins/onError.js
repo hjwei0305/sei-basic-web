@@ -15,7 +15,10 @@ export default {
         });
         notification.error({
           message: formatMessage({ id: 'app.request.401', defaultMessage: '会话异常' }),
-          description: formatMessage({ id: 'app.request.401.message', defaultMessage: '当前会话超时或失效，请重新登录' }),
+          description: formatMessage({
+            id: 'app.request.401.message',
+            defaultMessage: '当前会话超时或失效，请重新登录',
+          }),
         });
       }
     } else {

@@ -14,7 +14,7 @@ const { TabPane } = Tabs;
 
 @connect(({ userProfile, loading }) => ({ userProfile, loading }))
 class UserProfile extends React.Component {
-  handleActiveChange = (activeTabKey) => {
+  handleActiveChange = activeTabKey => {
     const { dispatch } = this.props;
     dispatch({
       type: 'userProfile/updateState',
@@ -22,7 +22,7 @@ class UserProfile extends React.Component {
         activeTabKey,
       },
     });
-  }
+  };
 
   render() {
     const { loading, userProfile } = this.props;
@@ -30,11 +30,7 @@ class UserProfile extends React.Component {
 
     return (
       <PageWrapper loading={loading.global} className={cls(styles['container-box'])}>
-        <Tabs
-          activeKey={activeTabKey}
-          tabPosition="left"
-          onChange={this.handleActiveChange}
-        >
+        <Tabs activeKey={activeTabKey} tabPosition="left" onChange={this.handleActiveChange}>
           <TabPane tab="基本信息" key="baiscInfo">
             <Card title="基本信息" bordered={false}>
               <BasicInfo />

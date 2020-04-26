@@ -15,7 +15,7 @@ export default modelExtend(model, {
   },
   subscriptions: {
     setup({ dispatch, history }) {
-      history.listen((location) => {
+      history.listen(location => {
         if (pathMatchRegexp('/author/dataRole', location.pathname)) {
           dispatch({
             type: 'getRoleGroupList',
@@ -25,7 +25,7 @@ export default modelExtend(model, {
     },
   },
   effects: {
-    * getRoleGroupList({ payload }, { call, put }) {
+    *getRoleGroupList({ payload }, { call, put }) {
       const re = yield call(getRoleGroupList, payload);
       if (re.success) {
         yield put({
@@ -38,7 +38,7 @@ export default modelExtend(model, {
         message.error(re.message);
       }
     },
-    * saveRoleGroup({ payload, callback }, { call, put }) {
+    *saveRoleGroup({ payload, callback }, { call, put }) {
       const re = yield call(saveRoleGroup, payload);
       message.destroy();
       if (re.success) {
@@ -56,7 +56,7 @@ export default modelExtend(model, {
         callback(re);
       }
     },
-    * delRoleGroup({ payload, callback }, { call, put }) {
+    *delRoleGroup({ payload, callback }, { call, put }) {
       const re = yield call(delRoleGroup, payload);
       message.destroy();
       if (re.success) {

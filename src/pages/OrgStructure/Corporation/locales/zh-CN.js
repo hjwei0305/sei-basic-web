@@ -1,9 +1,9 @@
 /*
-* @Author: zp
-* @Date:   2020-02-02 14:55:12
-* @Last Modified by:   zp
-* @Last Modified time: 2020-02-02 15:30:27
-*/
+ * @Author: zp
+ * @Date:   2020-02-02 14:55:12
+ * @Last Modified by:   zp
+ * @Last Modified time: 2020-02-02 15:30:27
+ */
 export default {
   corporation: '预算公司',
   'corporation.shortName': '简称',

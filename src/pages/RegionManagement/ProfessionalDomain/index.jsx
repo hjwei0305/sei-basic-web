@@ -3,9 +3,9 @@ import withRouter from 'umi/withRouter';
 import { connect } from 'dva';
 import cls from 'classnames';
 import { Spin, Empty } from 'antd';
+import { CascadeLayout, PageWrapper } from '@/components';
 import TreePanel from './components/TreePanel';
 import FormPanel from './components/FormPanel';
-import { CascadeLayout, PageWrapper } from '@/components';
 import styles from './index.less';
 
 @withRouter
@@ -20,7 +20,15 @@ class ProfessionalDomain extends Component {
         <Spin spinning={loading.global} wrapperClassName={cls('spin-wrapper')}>
           <CascadeLayout title={['专业领域', selectedTreeNode && selectedTreeNode.name]}>
             <TreePanel slot="left" />
-            { selectedTreeNode ? (<FormPanel slot="right" />) : (<Empty slot="right" className={cls('empty-wrapper')} description="请选择左边的树节点进行操作" />) }
+            {selectedTreeNode ? (
+              <FormPanel slot="right" />
+            ) : (
+              <Empty
+                slot="right"
+                className={cls('empty-wrapper')}
+                description="请选择左边的树节点进行操作"
+              />
+            )}
           </CascadeLayout>
         </Spin>
       </PageWrapper>

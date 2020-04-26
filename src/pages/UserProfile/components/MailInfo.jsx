@@ -14,9 +14,16 @@ const formItemLayout = {
 @connect(({ userProfile }) => ({ userProfile }))
 @Form.create()
 class MailInfo extends React.Component {
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'userProfile/getEmailAlert',
+    });
+  }
+
   handleSave = () => {
-    const { form, dispatch, userProfile   } = this.props;
-    const { mailAlert } = userProfile3e3e3;
+    const { form, dispatch, userProfile } = this.props;
+    const { mailAlert } = userProfile;
     const user = getCurrentUser();
     form.validateFields((err, formData) => {
       if (err) {
@@ -32,13 +39,6 @@ class MailInfo extends React.Component {
       });
     });
   };
-
-  componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'userProfile/getEmailAlert',
-    });
-  }
 
   render() {
     const { form, userProfile } = this.props;

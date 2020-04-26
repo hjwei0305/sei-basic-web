@@ -1,5 +1,5 @@
-import React, { Fragment, Component } from 'react';
-import { Button, Popconfirm } from 'antd';
+import React, { Component } from 'react';
+import { Button } from 'antd';
 import { ExtTable, ExtIcon } from 'suid';
 import { connect } from 'dva';
 import cls from 'classnames';
@@ -13,13 +13,13 @@ const { SERVER_PATH } = constants;
 
 @connect(({ userProfile, loading }) => ({ userProfile, loading }))
 class AccountInfo extends Component {
-  reloadData = (_) => {
+  reloadData = () => {
     if (this.tableRef) {
       this.tableRef.remoteDataRefresh();
     }
   };
 
-  handleCloseModal = (visibleKey) => {
+  handleCloseModal = visibleKey => {
     const { dispatch } = this.props;
     dispatch({
       type: 'userProfile/updateState',
@@ -27,7 +27,7 @@ class AccountInfo extends Component {
         [visibleKey]: false,
       },
     });
-  }
+  };
 
   handleEvent = (type, row) => {
     const { dispatch } = this.props;
@@ -47,7 +47,7 @@ class AccountInfo extends Component {
         dispatch({
           type: 'userProfile/delAccount',
           payload: row.id,
-        }).then((res) => {
+        }).then(res => {
           if (res && res.success) {
             this.reloadData();
           }
@@ -65,45 +65,42 @@ class AccountInfo extends Component {
       default:
         break;
     }
-  }
+  };
 
-  save = (data) => {
+  save = data => {
     const { dispatch } = this.props;
 
     dispatch({
       type: 'userProfile/saveAccount',
       payload: data,
-    }).then((res) => {
+    }).then(res => {
       if (res.success) {
         this.handleCloseModal('editAccountVisable');
         this.reloadData();
       }
     });
-  }
+  };
 
-  resetPwd = (data) => {
+  resetPwd = data => {
     const { dispatch } = this.props;
 
     dispatch({
       type: 'userProfile/updatePwd',
       payload: data,
-    }).then((res) => {
+    }).then(res => {
       if (res.success) {
         this.handleCloseModal('resetPwdVisable');
         this.reloadData();
       }
     });
-  }
+  };
 
   getTableProps = () => {
     const user = getCurrentUser() || {};
     const toolBar = {
       left: (
         <>
-          <Button
-            type="primary"
-            onClick={() => this.handleEvent('add')}
-          >
+          <Button type="primary" onClick={() => this.handleEvent('add')}>
             <FormattedMessage id="global.add" defaultMessage="新建" />
           </Button>
           <Button onClick={this.reloadData}>
@@ -125,37 +122,19 @@ class AccountInfo extends Component {
           <span className={cls('action-box')}>
             <ExtIcon
               className="edit"
-              onClick={(_) => this.handleEvent('edit', record)}
+              onClick={() => this.handleEvent('edit', record)}
               type="edit"
               ignore="true"
-              tooltip={
-                { title: '编辑' }
-              }
+              tooltip={{ title: '编辑' }}
               antd
             />
             <ExtIcon
-              onClick={(_) => this.handleEvent('password', record)}
+              onClick={() => this.handleEvent('password', record)}
               className="lock"
               type="lock"
               antd
-              tooltip={
-                { title: '更新密码' }
-              }
+              tooltip={{ title: '更新密码' }}
             />
-            {/*            <Popconfirm
-              placement="topLeft"
-              title={formatMessage({ id: "global.delete.confirm", defaultMessage: "确定要删除吗？提示：删除后不可恢复" })}
-              onConfirm={_ => this.handleEvent('del', record)}
-            >
-              <ExtIcon
-                className="del"
-                type="delete"
-                tooltip={
-                  { title: '删除' }
-                }
-                antd
-              />
-            </Popconfirm> */}
           </span>
         ),
       },
@@ -184,7 +163,7 @@ class AccountInfo extends Component {
         url: `${SERVER_PATH}/sei-auth/account/getByUserId`,
       },
     };
-  }
+  };
 
   getEditModalProps = () => {
     const { loading, userProfile } = this.props;
@@ -199,7 +178,7 @@ class AccountInfo extends Component {
       },
       saving: loading.effects['userProfile/saveAccount'],
     };
-  }
+  };
 
   getResetPwdModalProps = () => {
     const { loading, userProfile } = this.props;
@@ -214,27 +193,16 @@ class AccountInfo extends Component {
       },
       saving: loading.effects['userProfile/updatePwd'],
     };
-  }
+  };
 
   render() {
     const { userProfile } = this.props;
     const { resetPwdVisable, editAccountVisable } = userProfile;
     return (
       <>
-        <ExtTable
-          onTableRef={(inst) => this.tableRef = inst}
-          {...this.getTableProps()}
-        />
-        {
-          editAccountVisable
-            ? <EidtModal {...this.getEditModalProps()} />
-            : null
-        }
-        {
-          resetPwdVisable
-            ? <ResetModal {...this.getResetPwdModalProps()} />
-            : null
-        }
+        <ExtTable onTableRef={inst => (this.tableRef = inst)} {...this.getTableProps()} />
+        {editAccountVisable ? <EidtModal {...this.getEditModalProps()} /> : null}
+        {resetPwdVisable ? <ResetModal {...this.getResetPwdModalProps()} /> : null}
       </>
     );
   }

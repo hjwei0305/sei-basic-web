@@ -1,9 +1,9 @@
 /*
-* @Author: zp
-* @Date:   2020-02-02 11:57:38
+ * @Author: zp
+ * @Date:   2020-02-02 11:57:38
  * @Last Modified by: Eason
  * @Last Modified time: 2020-03-06 13:34:50
-*/
+ */
 import { message } from 'antd';
 import { formatMessage } from 'umi-plugin-react/locale';
 import { utils } from 'suid';
@@ -23,7 +23,7 @@ export default modelExtend(model, {
   },
   subscriptions: {
     setup({ dispatch, history }) {
-      history.listen((location) => {
+      history.listen(location => {
         if (pathMatchRegexp('/regionManagement/professionalDomain', location.pathname)) {
           dispatch({
             type: 'queryTree',
@@ -33,7 +33,7 @@ export default modelExtend(model, {
     },
   },
   effects: {
-    * queryTree({ payload }, { call, put }) {
+    *queryTree({ payload }, { call, put }) {
       const ds = yield call(getTree, payload);
       if (ds.success) {
         yield put({
@@ -47,7 +47,7 @@ export default modelExtend(model, {
       }
       return ds;
     },
-    * save({ payload }, { call, put }) {
+    *save({ payload }, { call, put }) {
       const re = yield call(save, payload);
       message.destroy();
       if (re.success) {
@@ -63,7 +63,7 @@ export default modelExtend(model, {
       });
       return re;
     },
-    * del({ payload }, { call }) {
+    *del({ payload }, { call }) {
       const re = yield call(del, payload);
       message.destroy();
       if (re.success) {
@@ -74,7 +74,7 @@ export default modelExtend(model, {
 
       return re;
     },
-    * move({ payload }, { call }) {
+    *move({ payload }, { call }) {
       const re = yield call(move, payload);
       message.destroy();
       if (re.success) {

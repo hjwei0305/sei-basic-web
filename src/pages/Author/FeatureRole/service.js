@@ -37,7 +37,7 @@ export async function delRoleGroup(data) {
 /**
  * 根据角色组id获取功能角色列表
  * param roleGroupId
-*/
+ */
 export async function getFeatureRoleList(params) {
   const url = `${SERVER_PATH}/sei-basic/featureRole/findByFeatureRoleGroup`;
   return request({
@@ -128,7 +128,7 @@ export async function getAssignedEmployeesByFeatureRole(params) {
 /**
  * 根据功能角色的id获取已分配的岗位
  * params featureRoleId
-*/
+ */
 export async function getAssignedPositionsByFeatureRole(params) {
   const url = `${SERVER_PATH}/sei-basic/featureRole/getAssignedPositionsByFeatureRole`;
   return request({

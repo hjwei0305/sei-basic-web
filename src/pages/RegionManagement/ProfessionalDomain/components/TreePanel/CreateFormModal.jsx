@@ -14,11 +14,13 @@ class CreateFormModal extends PureComponent {
         onCancel={onCancel}
         maskClosable={false}
         title={title}
-        onOk={() => { this.formRef.onFormSubmit(); }}
+        onOk={() => {
+          this.formRef.onFormSubmit();
+        }}
         okText="新增"
         width={600}
       >
-        <FormPanel onRef={(inst) => this.formRef = inst} formType={formType} />
+        <FormPanel onRef={inst => (this.formRef = inst)} formType={formType} />
       </ExtModal>
     );
   }

@@ -14,8 +14,8 @@ const formItemLayout = {
 
 @Form.create()
 class FormModal extends PureComponent {
-  onFormSubmit = (_) => {
-    const { form, save, rowData } = this.props;
+  onFormSubmit = () => {
+    const { form, save } = this.props;
     form.validateFields((err, formData) => {
       if (err) {
         return;
@@ -26,20 +26,20 @@ class FormModal extends PureComponent {
     });
   };
 
-  checkPassword = (rule, password, callback) => {
+  checkPassword = (_rule, password, callback) => {
     if (!password || password.length < 8) {
       callback('密码须包含字母、数字、特殊字符至少2种,密码长度不能小于8位');
       return false;
     }
     let iNow = 0;
     if (password.match(/[0-9]/g)) {
-      iNow++;
+      iNow += 1;
     }
-    if (password.match(/[a-z]/ig)) {
-      iNow++;
+    if (password.match(/[a-z]/gi)) {
+      iNow += 1;
     }
     if (password.match(/[~!@#$%^&*]/g)) {
-      iNow++;
+      iNow += 1;
     }
     if (iNow < 2) {
       callback('密码须包含字母、数字、特殊字符至少2种,密码长度不能小于8位');
@@ -49,7 +49,7 @@ class FormModal extends PureComponent {
   };
 
   render() {
-    const { form, rowData, closeFormModal, saving, showModal, parentData } = this.props;
+    const { form, rowData, closeFormModal, saving, showModal } = this.props;
     const { getFieldDecorator } = form;
     const title = `重置用户【${rowData.userName}】的密码`;
 
@@ -76,16 +76,12 @@ class FormModal extends PureComponent {
             })(<Input.Password visibilityToggle />)}
           </FormItem>
           {/* 以下为隐藏的formItem */}
-          <FormItem
-            style={{ display: 'none' }}
-          >
+          <FormItem style={{ display: 'none' }}>
             {getFieldDecorator('tenant', {
               initialValue: rowData && rowData.tenantCode,
             })(<Input />)}
           </FormItem>
-          <FormItem
-            style={{ display: 'none' }}
-          >
+          <FormItem style={{ display: 'none' }}>
             {getFieldDecorator('account', {
               initialValue: rowData && rowData.code,
             })(<Input />)}

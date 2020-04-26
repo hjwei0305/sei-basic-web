@@ -30,11 +30,11 @@ class RoleGroupForm extends PureComponent {
     };
   }
 
-  handlerFormSubmit = (_) => {
+  handlerFormSubmit = () => {
     const { tenantCode } = this.state;
     const { form, saveRoleGroup, groupData, handlerPopoverHide } = this.props;
     const { validateFields, getFieldsValue } = form;
-    validateFields((errors) => {
+    validateFields(errors => {
       if (errors) {
         return;
       }
@@ -64,44 +64,49 @@ class RoleGroupForm extends PureComponent {
       <div key="form-box" className={cls(styles['form-box'])}>
         <div className="base-view-body">
           <div className="header">
-            <span className="title">
-              {title}
-            </span>
+            <span className="title">{title}</span>
           </div>
           <Form {...formItemLayout}>
             <FormItem label="代码">
               {getFieldDecorator('code', {
                 initialValue: this.getCode(),
-                rules: [{
-                  required: true,
-                  message: formatMessage({ id: 'global.code.required', defaultMessage: '代码不能为空' }),
-                }],
+                rules: [
+                  {
+                    required: true,
+                    message: formatMessage({
+                      id: 'global.code.required',
+                      defaultMessage: '代码不能为空',
+                    }),
+                  },
+                ],
               })(
                 <Input
                   disabled={!!groupData}
                   addonBefore={`${tenantCode}-`}
                   maxLength={20 - `${tenantCode}-`.length}
-                  placeholder={formatMessage({ id: 'global.code.tip', defaultMessage: '规则:名称各汉字首字母大写' })}
+                  placeholder={formatMessage({
+                    id: 'global.code.tip',
+                    defaultMessage: '规则:名称各汉字首字母大写',
+                  })}
                 />,
               )}
             </FormItem>
             <FormItem label={formatMessage({ id: 'global.name', defaultMessage: '名称' })}>
               {getFieldDecorator('name', {
                 initialValue: groupData ? groupData.name : '',
-                rules: [{
-                  required: true,
-                  message: formatMessage({ id: 'global.name.required', defaultMessage: '名称不能为空' }),
-                }],
-              })(
-                <Input />,
-              )}
+                rules: [
+                  {
+                    required: true,
+                    message: formatMessage({
+                      id: 'global.name.required',
+                      defaultMessage: '名称不能为空',
+                    }),
+                  },
+                ],
+              })(<Input />)}
             </FormItem>
             <FormItem wrapperCol={{ span: 4, offset: 4 }} className="btn-submit">
-              <Button
-                type="primary"
-                loading={saving}
-                onClick={this.handlerFormSubmit}
-              >
+              <Button type="primary" loading={saving} onClick={this.handlerFormSubmit}>
                 <FormattedMessage id="global.save" defaultMessage="保存" />
               </Button>
             </FormItem>

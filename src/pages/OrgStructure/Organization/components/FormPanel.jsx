@@ -16,7 +16,7 @@ class FormModal extends PureComponent {
     }
   }
 
-  onFormSubmit = (_) => {
+  onFormSubmit = () => {
     const { form, organization, isCreate } = this.props;
     form.validateFields((err, formData) => {
       if (err) {
@@ -34,14 +34,14 @@ class FormModal extends PureComponent {
     });
   };
 
-  save = (data) => {
+  save = data => {
     const { dispatch } = this.props;
     dispatch({
       type: 'organization/save',
       payload: {
         ...data,
       },
-    }).then((res) => {
+    }).then(res => {
       if (res.success) {
         dispatch({
           type: 'organization/queryTree',
@@ -65,7 +65,14 @@ class FormModal extends PureComponent {
     if (isCreate) {
       tempSelectedNode = { parentName: tempSelectedNode.name };
     }
-    const { code = '', parentName = '', name = '', shortName = '', rank = '', frozen = false } = tempSelectedNode;
+    const {
+      code = '',
+      parentName = '',
+      name = '',
+      shortName = '',
+      rank = '',
+      frozen = false,
+    } = tempSelectedNode;
 
     return (
       <Form {...formItemLayout} layout="horizontal">
@@ -73,10 +80,15 @@ class FormModal extends PureComponent {
           <FormItem label={formatMessage({ id: 'global.code', defaultMessage: '代码' })}>
             {getFieldDecorator('code', {
               initialValue: code,
-              rules: [{
-                required: true,
-                message: formatMessage({ id: 'global.code.required', defaultMessage: '代码不能为空' }),
-              }],
+              rules: [
+                {
+                  required: true,
+                  message: formatMessage({
+                    id: 'global.code.required',
+                    defaultMessage: '代码不能为空',
+                  }),
+                },
+              ],
             })(<Input disabled />)}
           </FormItem>
         ) : (
@@ -89,10 +101,15 @@ class FormModal extends PureComponent {
         <FormItem label={formatMessage({ id: 'global.name', defaultMessage: '名称' })}>
           {getFieldDecorator('name', {
             initialValue: name,
-            rules: [{
-              required: true,
-              message: formatMessage({ id: 'global.name.required', defaultMessage: '名称不能为空' }),
-            }],
+            rules: [
+              {
+                required: true,
+                message: formatMessage({
+                  id: 'global.name.required',
+                  defaultMessage: '名称不能为空',
+                }),
+              },
+            ],
           })(<Input />)}
         </FormItem>
         <FormItem label="简称">
@@ -103,10 +120,15 @@ class FormModal extends PureComponent {
         <FormItem label="排序">
           {getFieldDecorator('rank', {
             initialValue: rank,
-            rules: [{
-              required: true,
-              message: formatMessage({ id: 'global.rank.required', defaultMessage: '序号不能为空' }),
-            }],
+            rules: [
+              {
+                required: true,
+                message: formatMessage({
+                  id: 'global.rank.required',
+                  defaultMessage: '序号不能为空',
+                }),
+              },
+            ],
           })(<InputNumber style={{ width: '100%' }} precision={0} />)}
         </FormItem>
         <FormItem label="冻结">
@@ -117,14 +139,11 @@ class FormModal extends PureComponent {
         </FormItem>
         {!isCreate ? (
           <FormItem wrapperCol={buttonWrapper}>
-            <Button
-              type="primary"
-              onClick={this.onFormSubmit}
-            >
+            <Button type="primary" onClick={this.onFormSubmit}>
               <FormattedMessage id="global.ok" defaultMessage="确定" />
             </Button>
           </FormItem>
-        ) : (null)}
+        ) : null}
       </Form>
     );
   }

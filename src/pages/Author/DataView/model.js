@@ -22,7 +22,7 @@ export default modelExtend(model, {
     assignData: [],
   },
   effects: {
-    * getRoleList({ payload }, { call, put }) {
+    *getRoleList({ payload }, { call, put }) {
       const re = yield call(getRoleList, payload);
       if (re.success) {
         yield put({
@@ -35,7 +35,7 @@ export default modelExtend(model, {
         message.error(re.message);
       }
     },
-    * getDataAuthorTypeList({ payload }, { call, put }) {
+    *getDataAuthorTypeList({ payload }, { call, put }) {
       const re = yield call(getDataAuthorTypeList, payload);
       if (re.success) {
         yield put({
@@ -48,7 +48,7 @@ export default modelExtend(model, {
         message.error(re.message);
       }
     },
-    * getAssignedAuthDataList({ payload }, { call, put }) {
+    *getAssignedAuthDataList({ payload }, { call, put }) {
       const re = yield call(getAssignedAuthDataList, payload);
       if (re.success) {
         yield put({
@@ -61,7 +61,7 @@ export default modelExtend(model, {
         message.error(re.message);
       }
     },
-    * getAssignedAuthTreeDataList({ payload }, { call, put }) {
+    *getAssignedAuthTreeDataList({ payload }, { call, put }) {
       const re = yield call(getAssignedAuthTreeDataList, payload);
       if (re.success) {
         yield put({

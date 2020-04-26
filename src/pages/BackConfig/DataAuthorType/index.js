@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'dva';
 import cls from 'classnames';
 import { isEqual } from 'lodash';
@@ -12,7 +12,6 @@ import styles from './index.less';
 const { APP_MODULE_BTN_KEY } = constants;
 const { authAction } = utils;
 
-
 @connect(({ dataAuthorType, loading }) => ({ dataAuthorType, loading }))
 class DataAuthorType extends Component {
   constructor(props) {
@@ -24,21 +23,22 @@ class DataAuthorType extends Component {
   }
 
   componentDidUpdate(_prevProps, prevState) {
-    if (!isEqual(prevState.list, this.props.dataAuthorType.list)) {
+    const { dataAuthorType } = this.props;
+    if (!isEqual(prevState.list, dataAuthorType.list)) {
       this.setState({
-        list: this.props.dataAuthorType.list,
+        list: dataAuthorType.list,
       });
     }
   }
 
-  reloadData = (_) => {
+  reloadData = () => {
     const { dispatch } = this.props;
     dispatch({
       type: 'dataAuthorType/queryList',
     });
   };
 
-  add = (_) => {
+  add = () => {
     const { dispatch } = this.props;
     dispatch({
       type: 'dataAuthorType/updateState',
@@ -49,7 +49,7 @@ class DataAuthorType extends Component {
     });
   };
 
-  edit = (rowData) => {
+  edit = rowData => {
     const { dispatch } = this.props;
     dispatch({
       type: 'dataAuthorType/updateState',
@@ -60,14 +60,14 @@ class DataAuthorType extends Component {
     });
   };
 
-  save = (data) => {
+  save = data => {
     const { dispatch } = this.props;
     dispatch({
       type: 'dataAuthorType/save',
       payload: {
         ...data,
       },
-      callback: (res) => {
+      callback: res => {
         if (res.success) {
           dispatch({
             type: 'dataAuthorType/updateState',
@@ -81,29 +81,32 @@ class DataAuthorType extends Component {
     });
   };
 
-  del = (record) => {
+  del = record => {
     const { dispatch } = this.props;
-    this.setState({
-      delRowId: record.id,
-    }, (_) => {
-      dispatch({
-        type: 'dataAuthorType/del',
-        payload: {
-          id: record.id,
-        },
-        callback: (res) => {
-          if (res.success) {
-            this.setState({
-              delRowId: null,
-            });
-            this.reloadData();
-          }
-        },
-      });
-    });
+    this.setState(
+      {
+        delRowId: record.id,
+      },
+      () => {
+        dispatch({
+          type: 'dataAuthorType/del',
+          payload: {
+            id: record.id,
+          },
+          callback: res => {
+            if (res.success) {
+              this.setState({
+                delRowId: null,
+              });
+              this.reloadData();
+            }
+          },
+        });
+      },
+    );
   };
 
-  closeFormModal = (_) => {
+  closeFormModal = () => {
     const { dispatch } = this.props;
     dispatch({
       type: 'dataAuthorType/updateState',
@@ -114,7 +117,7 @@ class DataAuthorType extends Component {
     });
   };
 
-  renderDelBtn = (row) => {
+  renderDelBtn = row => {
     const { loading } = this.props;
     const { delRowId } = this.state;
     if (loading.effects['dataAuthorType/del'] && delRowId === row.id) {
@@ -136,29 +139,28 @@ class DataAuthorType extends Component {
         dataIndex: 'id',
         className: 'action',
         required: true,
-        render: (text, record) => (
+        render: (_text, record) => (
           <span className={cls('action-box')}>
-            {
-              authAction(
-                <ExtIcon
-                  key={APP_MODULE_BTN_KEY.EDIT}
-                  className="edit"
-                  onClick={(_) => this.edit(record)}
-                  type="edit"
-                  ignore="true"
-                  antd
-                />,
-              )
-            }
+            {authAction(
+              <ExtIcon
+                key={APP_MODULE_BTN_KEY.EDIT}
+                className="edit"
+                onClick={() => this.edit(record)}
+                type="edit"
+                ignore="true"
+                antd
+              />,
+            )}
             <Popconfirm
               key={APP_MODULE_BTN_KEY.DELETE}
               placement="topLeft"
-              title={formatMessage({ id: 'global.delete.confirm', defaultMessage: '确定要删除吗？提示：删除后不可恢复' })}
-              onConfirm={(_) => this.del(record)}
+              title={formatMessage({
+                id: 'global.delete.confirm',
+                defaultMessage: '确定要删除吗？提示：删除后不可恢复',
+              })}
+              onConfirm={() => this.del(record)}
             >
-              {
-                this.renderDelBtn(record)
-              }
+              {this.renderDelBtn(record)}
             </Popconfirm>
           </span>
         ),
@@ -197,18 +199,11 @@ class DataAuthorType extends Component {
     const toolBarProps = {
       left: (
         <>
-          {
-            authAction(
-              <Button
-                key={APP_MODULE_BTN_KEY.CREATE}
-                type="primary"
-                onClick={this.add}
-                ignore="true"
-              >
-                <FormattedMessage id="global.add" defaultMessage="新建" />
-              </Button>,
-            )
-          }
+          {authAction(
+            <Button key={APP_MODULE_BTN_KEY.CREATE} type="primary" onClick={this.add} ignore="true">
+              <FormattedMessage id="global.add" defaultMessage="新建" />
+            </Button>,
+          )}
           <Button onClick={this.reloadData}>
             <FormattedMessage id="global.refresh" defaultMessage="刷新" />
           </Button>

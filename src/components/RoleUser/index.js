@@ -7,7 +7,7 @@ const RoleUser = ({ userData = [], loading }) => (
     <List
       dataSource={userData}
       loading={loading}
-      renderItem={(item) => (
+      renderItem={item => (
         <List.Item key={item.id}>
           <Skeleton avatar loading={loading} active>
             <List.Item.Meta

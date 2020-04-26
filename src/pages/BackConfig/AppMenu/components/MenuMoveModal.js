@@ -29,7 +29,8 @@ class MenuMoveModal extends Component {
     }
   }
 
-    getMoveTreeData = (data, result, excludeId) => data.forEach((item) => {
+  getMoveTreeData = (data, result, excludeId) =>
+    data.forEach(item => {
       if (item[childFieldKey] && item[childFieldKey].length > 0) {
         if (item.id !== excludeId) {
           const tempItem = cloneDeep(item);
@@ -42,32 +43,33 @@ class MenuMoveModal extends Component {
       }
     });
 
-    submitMove = () => {
-      const { targetParentId } = this.state;
-      const { submitMove, currentNode } = this.props;
-      const params = { nodeId: currentNode.id, targetParentId };
-      submitMove(params);
-    };
+  submitMove = () => {
+    const { targetParentId } = this.state;
+    const { submitMove, currentNode } = this.props;
+    const params = { nodeId: currentNode.id, targetParentId };
+    submitMove(params);
+  };
 
-    handlerSelect = (selectedKeys, e) => {
-      let targetParentId = null;
-      if (e.selected) {
-        targetParentId = selectedKeys[0];
-      }
-      this.setState({
-        targetParentId,
-      });
-    };
+  handlerSelect = (selectedKeys, e) => {
+    let targetParentId = null;
+    if (e.selected) {
+      [targetParentId] = selectedKeys;
+    }
+    this.setState({
+      targetParentId,
+    });
+  };
 
-    renderTreeNodes = (treeData) => {
-      const searchValue = this.allValue || '';
-      return treeData.map((item) => {
-        const readerValue = item.name;
-        const readerChildren = item[childFieldKey];
-        const i = readerValue.toLowerCase().indexOf(searchValue.toLowerCase());
-        const beforeStr = readerValue.substr(0, i);
-        const afterStr = readerValue.substr(i + searchValue.length);
-        const title = i > -1 ? (
+  renderTreeNodes = treeData => {
+    const searchValue = this.allValue || '';
+    return treeData.map(item => {
+      const readerValue = item.name;
+      const readerChildren = item[childFieldKey];
+      const i = readerValue.toLowerCase().indexOf(searchValue.toLowerCase());
+      const beforeStr = readerValue.substr(0, i);
+      const afterStr = readerValue.substr(i + searchValue.length);
+      const title =
+        i > -1 ? (
           <span>
             {beforeStr}
             <span style={{ color: hightLightColor }}>{searchValue}</span>
@@ -76,56 +78,53 @@ class MenuMoveModal extends Component {
         ) : (
           <span>{readerValue}</span>
         );
-        if (readerChildren && readerChildren.length > 0) {
-          return (
-            <TreeNode
-              title={title}
-              key={item.id}
-            >
-              {this.renderTreeNodes(readerChildren)}
-            </TreeNode>
-          );
-        }
-        const iconProps = {
-          type: item.parentId ? 'dian' : 'down',
-          antd: !item.parentId,
-        };
+      if (readerChildren && readerChildren.length > 0) {
         return (
-          <TreeNode
-            switcherIcon={<ExtIcon {...iconProps} style={{ fontSize: 10 }} />}
-            title={title}
-            key={item.id}
-          />
+          <TreeNode title={title} key={item.id}>
+            {this.renderTreeNodes(readerChildren)}
+          </TreeNode>
         );
-      });
-    };
-
-    render() {
-      const { targetParentId, treeData } = this.state;
-      const { closeMenuMoveModal, showMove, currentNode, loading } = this.props;
-      const title = currentNode ? `将菜单【${currentNode.name}】移动到` : '';
-      const modalProps = {
-        destroyOnClose: true,
-        onCancel: closeMenuMoveModal,
-        visible: showMove,
-        centered: true,
-        title,
-        okButtonProps: { disabled: !targetParentId, loading: loading.effects['appMenu/move'] },
-        onOk: this.submitMove,
+      }
+      const iconProps = {
+        type: item.parentId ? 'dian' : 'down',
+        antd: !item.parentId,
       };
       return (
-        <ExtModal {...modalProps} className={cls(styles['meun-move-modal'])}>
-          <ScrollBar>
-            <Tree
-              blockNode
-              switcherIcon={<ExtIcon type="down" antd style={{ fontSize: 12 }} />}
-              onSelect={this.handlerSelect}
-            >
-              {this.renderTreeNodes(treeData)}
-            </Tree>
-          </ScrollBar>
-        </ExtModal>
+        <TreeNode
+          switcherIcon={<ExtIcon {...iconProps} style={{ fontSize: 10 }} />}
+          title={title}
+          key={item.id}
+        />
       );
-    }
+    });
+  };
+
+  render() {
+    const { targetParentId, treeData } = this.state;
+    const { closeMenuMoveModal, showMove, currentNode, loading } = this.props;
+    const title = currentNode ? `将菜单【${currentNode.name}】移动到` : '';
+    const modalProps = {
+      destroyOnClose: true,
+      onCancel: closeMenuMoveModal,
+      visible: showMove,
+      centered: true,
+      title,
+      okButtonProps: { disabled: !targetParentId, loading: loading.effects['appMenu/move'] },
+      onOk: this.submitMove,
+    };
+    return (
+      <ExtModal {...modalProps} className={cls(styles['meun-move-modal'])}>
+        <ScrollBar>
+          <Tree
+            blockNode
+            switcherIcon={<ExtIcon type="down" antd style={{ fontSize: 12 }} />}
+            onSelect={this.handlerSelect}
+          >
+            {this.renderTreeNodes(treeData)}
+          </Tree>
+        </ScrollBar>
+      </ExtModal>
+    );
+  }
 }
 export default MenuMoveModal;

@@ -1,12 +1,12 @@
 /*
-* @Author: zp
-* @Date:   2020-02-17 11:36:34
-* @Last Modified by:   zp
-* @Last Modified time: 2020-02-18 09:12:35
-*/
+ * @Author: zp
+ * @Date:   2020-02-17 11:36:34
+ * @Last Modified by: Eason
+ * @Last Modified time: 2020-04-26 20:34:47
+ */
 import { message } from 'antd';
-import { formatMessage } from 'umi-plugin-react/locale';
 import { utils } from 'suid';
+import { userUtils } from '@/utils';
 import {
   findByUserId,
   saveProfile,
@@ -16,7 +16,6 @@ import {
   updateAccount,
   updatePwd,
 } from './service';
-import { userUtils } from '@/utils';
 
 const { dvaModel, pathMatchRegexp } = utils;
 const { modelExtend, model } = dvaModel;
@@ -34,7 +33,7 @@ export default modelExtend(model, {
   },
   subscriptions: {
     setup({ dispatch, history }) {
-      history.listen((location) => {
+      history.listen(location => {
         const user = getCurrentUser();
         if (pathMatchRegexp('/userProfile', location.pathname)) {
           dispatch({
@@ -48,24 +47,18 @@ export default modelExtend(model, {
     },
   },
   effects: {
-    * save({ payload }, { call, put }) {
+    *save({ payload }, { call }) {
       const res = yield call(saveProfile, payload);
       message.destroy();
       if (res.success) {
         message.success(res.message);
-        // yield put({
-        //   type: 'updateState',
-        //   payload: {
-        //     basicInfo: res.data,
-        //   },
-        // });
       } else {
         message.error(res.message);
       }
 
       return res;
     },
-    * getUserInfo({ payload }, { call, put }) {
+    *getUserInfo({ payload }, { call, put }) {
       const res = yield call(findByUserId, payload);
       message.destroy();
       if (res.success) {
@@ -81,7 +74,7 @@ export default modelExtend(model, {
 
       return res;
     },
-    * saveEmailAlert({ payload }, { call, put }) {
+    *saveEmailAlert({ payload }, { call, put }) {
       const res = yield call(saveEmailAlert, payload);
       message.destroy();
       if (res.success) {
@@ -97,7 +90,7 @@ export default modelExtend(model, {
 
       return res;
     },
-    * getEmailAlert({ payload }, { call, put }) {
+    *getEmailAlert({ payload }, { call, put }) {
       const res = yield call(findMyEmailAlert, payload);
       message.destroy();
       if (res.success) {
@@ -113,7 +106,7 @@ export default modelExtend(model, {
 
       return res;
     },
-    * saveAccount({ payload }, { call }) {
+    *saveAccount({ payload }, { call }) {
       const service = payload.id ? updateAccount : createAccount;
       const res = yield call(service, payload);
       message.destroy();
@@ -125,7 +118,7 @@ export default modelExtend(model, {
 
       return res;
     },
-    * updatePwd({ payload }, { call }) {
+    *updatePwd({ payload }, { call }) {
       const res = yield call(updatePwd, payload);
       message.destroy();
       if (res.success) {

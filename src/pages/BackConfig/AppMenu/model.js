@@ -16,7 +16,7 @@ export default modelExtend(model, {
   },
   subscriptions: {
     setup({ dispatch, history }) {
-      history.listen((location) => {
+      history.listen(location => {
         if (pathMatchRegexp('/backConfig/appMenu', location.pathname)) {
           dispatch({
             type: 'getMenuList',
@@ -26,8 +26,8 @@ export default modelExtend(model, {
     },
   },
   effects: {
-    * getMenuList({ payload }, { call, put, select }) {
-      const { currentNode } = yield select((s) => s.appMenu);
+    *getMenuList({ payload }, { call, put, select }) {
+      const { currentNode } = yield select(s => s.appMenu);
       const re = yield call(getMenuList, payload);
       if (re.success) {
         yield put({
@@ -41,7 +41,7 @@ export default modelExtend(model, {
         message.error(re.message);
       }
     },
-    * save({ payload, callback }, { call, put }) {
+    *save({ payload, callback }, { call, put }) {
       const re = yield call(save, payload);
       message.destroy();
       if (re.success) {
@@ -59,7 +59,7 @@ export default modelExtend(model, {
         callback(re);
       }
     },
-    * del({ payload, callback }, { call, put }) {
+    *del({ payload, callback }, { call, put }) {
       const re = yield call(del, payload);
       message.destroy();
       if (re.success) {
@@ -77,7 +77,7 @@ export default modelExtend(model, {
         callback(re);
       }
     },
-    * move({ payload, callback }, { call, put }) {
+    *move({ payload, callback }, { call, put }) {
       const re = yield call(move, payload);
       message.destroy();
       if (re.success) {

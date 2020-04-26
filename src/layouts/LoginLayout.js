@@ -1,4 +1,4 @@
-import React, { PureComponent, Fragment } from 'react';
+import React, { PureComponent } from 'react';
 import withRouter from 'umi/withRouter';
 import { setLocale } from 'umi-plugin-react/locale';
 import zhCN from 'suid/lib/locale/zh_CN';

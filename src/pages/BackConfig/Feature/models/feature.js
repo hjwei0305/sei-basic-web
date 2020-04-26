@@ -16,7 +16,7 @@ export default modelExtend(model, {
     showFeatureItem: false,
   },
   effects: {
-    * getFeatureItemList({ payload }, { call, put }) {
+    *getFeatureItemList({ payload }, { call, put }) {
       const re = yield call(getFeatureItemList, payload);
       if (re.success) {
         yield put({
@@ -29,7 +29,7 @@ export default modelExtend(model, {
         message.error(re.message);
       }
     },
-    * saveFeature({ payload, callback }, { call, put }) {
+    *saveFeature({ payload, callback }, { call, put }) {
       const re = yield call(saveFeature, payload);
       message.destroy();
       if (re.success) {
@@ -47,7 +47,7 @@ export default modelExtend(model, {
         callback(re);
       }
     },
-    * delFeature({ payload, callback }, { call }) {
+    *delFeature({ payload, callback }, { call }) {
       const re = yield call(delFeature, payload);
       message.destroy();
       if (re.success) {

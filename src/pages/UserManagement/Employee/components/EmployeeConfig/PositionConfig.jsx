@@ -19,7 +19,7 @@ class PositionConfig extends Component {
     };
   }
 
-  handleCheck = (e) => {
+  handleCheck = e => {
     const { checked } = e.target;
     this.setState(
       {
@@ -77,7 +77,7 @@ class PositionConfig extends Component {
       },
       placeholder: '请选择组织机构',
       style: { width: 240, marginRight: 15 },
-      afterSelect: (node) => {
+      afterSelect: node => {
         if (node) {
           this.setState(
             {
@@ -148,7 +148,7 @@ class PositionConfig extends Component {
       selectedRowKeys: unAssignChildIds,
       columns: this.getCommonColumns(),
       toolBar: toolBarProps,
-      onSelectRow: (rowIds) => {
+      onSelectRow: rowIds => {
         if (rowIds && rowIds.length) {
           this.setState({
             assignBtnDisabled: false,
@@ -184,7 +184,7 @@ class PositionConfig extends Component {
       bordered: false,
       columns: this.getCommonColumns(),
       selectedRowKeys: assignChildIds,
-      onSelectRow: (rowIds) => {
+      onSelectRow: rowIds => {
         if (rowIds && rowIds.length) {
           this.setState({
             unAssignBtnDisabled: false,
@@ -213,7 +213,7 @@ class PositionConfig extends Component {
     return (
       <AssignLayout>
         <ExtTable
-          onTableRef={(inst) => (this.unAssignTable = inst)}
+          onTableRef={inst => (this.unAssignTable = inst)}
           slot="left"
           {...this.getUnAssignTableProps()}
         />
@@ -238,7 +238,7 @@ class PositionConfig extends Component {
           </>
         </div>
         <ExtTable
-          onTableRef={(inst) => (this.assignTable = inst)}
+          onTableRef={inst => (this.assignTable = inst)}
           slot="right"
           {...this.getAssignTableProps()}
         />

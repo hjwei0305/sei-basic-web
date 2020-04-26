@@ -20,15 +20,15 @@ class FormModal extends PureComponent {
     }
   }
 
-  componentDidUpdate(_prevProps) {
+  componentDidUpdate(prevProps) {
     const { form, professionalDomain } = this.props;
-    const { selectedTreeNode } = _prevProps.professionalDomain;
+    const { selectedTreeNode } = prevProps.professionalDomain;
     if (!isEqual(selectedTreeNode, professionalDomain.selectedTreeNode)) {
       form.setFieldsValue(this.getInitialValueObj());
     }
   }
 
-  onFormSubmit = (_) => {
+  onFormSubmit = () => {
     const { form } = this.props;
     form.validateFields((err, formData) => {
       if (err) {
@@ -38,14 +38,14 @@ class FormModal extends PureComponent {
     });
   };
 
-  save = (data) => {
+  save = data => {
     const { dispatch } = this.props;
     dispatch({
       type: 'professionalDomain/save',
       payload: {
         ...data,
       },
-    }).then((res) => {
+    }).then(res => {
       if (res.success) {
         dispatch({
           type: 'professionalDomain/queryTree',
@@ -73,7 +73,7 @@ class FormModal extends PureComponent {
   };
 
   render() {
-    const { form, professionalDomain, formType } = this.props;
+    const { form, formType } = this.props;
     const { getFieldDecorator } = form;
     const formItemLayout = {
       labelCol: {

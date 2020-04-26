@@ -18,7 +18,7 @@ const formItemLayout = {
 
 @Form.create()
 class CopyModal extends PureComponent {
-  onFormSubmit = (_) => {
+  onFormSubmit = () => {
     const { form, save } = this.props;
     form.validateFields((err, formData) => {
       if (err) {
@@ -62,7 +62,7 @@ class CopyModal extends PureComponent {
         field: ['id', 'code'],
       },
     };
-  }
+  };
 
   getComboTreeProps = () => {
     const { form } = this.props;
@@ -79,7 +79,7 @@ class CopyModal extends PureComponent {
         field: ['id'],
       },
     };
-  }
+  };
 
   render() {
     const { form, rowData, closeModal, saving, showModal } = this.props;
@@ -106,9 +106,11 @@ class CopyModal extends PureComponent {
           <FormItem label="源岗位">
             {getFieldDecorator('positionName', {
               initialValue: rowData ? rowData.name : '',
-              rules: [{
-                required: true,
-              }],
+              rules: [
+                {
+                  required: true,
+                },
+              ],
             })(<Input disabled />)}
           </FormItem>
           <FormItem label="目标组织机构id" style={{ display: 'none' }}>
@@ -119,10 +121,12 @@ class CopyModal extends PureComponent {
           <FormItem label="目标组织机构">
             {getFieldDecorator('orgName', {
               initialValue: '',
-              rules: [{
-                required: true,
-                message: '目标组织机构不能为空',
-              }],
+              rules: [
+                {
+                  required: true,
+                  message: '目标组织机构不能为空',
+                },
+              ],
             })(<ComboTree {...this.getComboTreeProps()} />)}
           </FormItem>
           <FormItem label="复制功能角色">

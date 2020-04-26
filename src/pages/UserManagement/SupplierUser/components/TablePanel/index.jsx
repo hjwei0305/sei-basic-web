@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'dva';
 import cls from 'classnames';
 import { Button, Popconfirm, Tag } from 'antd';
@@ -13,17 +13,20 @@ const { authAction } = utils;
 
 @connect(({ supplierUser, loading }) => ({ supplierUser, loading }))
 class TablePanel extends Component {
-  state = {
-    delRowId: null,
+  constructor(props) {
+    super(props);
+    this.state = {
+      delRowId: null,
+    };
   }
 
-  reloadData = (_) => {
+  reloadData = () => {
     if (this.tableRef) {
       this.tableRef.remoteDataRefresh();
     }
   };
 
-  add = (_) => {
+  add = () => {
     const { dispatch } = this.props;
     dispatch({
       type: 'supplierUser/updateState',
@@ -34,7 +37,7 @@ class TablePanel extends Component {
     });
   };
 
-  edit = (rowData) => {
+  edit = rowData => {
     const { dispatch } = this.props;
     dispatch({
       type: 'supplierUser/updateState',
@@ -45,14 +48,14 @@ class TablePanel extends Component {
     });
   };
 
-  save = (data) => {
+  save = data => {
     const { dispatch } = this.props;
     dispatch({
       type: 'supplierUser/save',
       payload: {
         ...data,
       },
-    }).then((res) => {
+    }).then(res => {
       if (res.success) {
         dispatch({
           type: 'supplierUser/updateState',
@@ -65,28 +68,31 @@ class TablePanel extends Component {
     });
   };
 
-  del = (record) => {
+  del = record => {
     const { dispatch } = this.props;
-    this.setState({
-      delRowId: record.id,
-    }, (_) => {
-      dispatch({
-        type: 'supplierUser/del',
-        payload: {
-          id: record.id,
-        },
-      }).then((res) => {
-        if (res.success) {
-          this.setState({
-            delRowId: null,
-          });
-          this.reloadData();
-        }
-      });
-    });
+    this.setState(
+      {
+        delRowId: record.id,
+      },
+      () => {
+        dispatch({
+          type: 'supplierUser/del',
+          payload: {
+            id: record.id,
+          },
+        }).then(res => {
+          if (res.success) {
+            this.setState({
+              delRowId: null,
+            });
+            this.reloadData();
+          }
+        });
+      },
+    );
   };
 
-  handleConfig = (rowData) => {
+  handleConfig = rowData => {
     const { dispatch } = this.props;
     dispatch({
       type: 'supplierUser/updateState',
@@ -95,13 +101,9 @@ class TablePanel extends Component {
         rowData,
       },
     });
-  }
+  };
 
-  handlResetPassword = (rowData) => {
-
-  }
-
-  closeFormModal = (_) => {
+  closeFormModal = () => {
     const { dispatch } = this.props;
     dispatch({
       type: 'supplierUser/updateState',
@@ -113,7 +115,7 @@ class TablePanel extends Component {
     });
   };
 
-  renderDelBtn = (row) => {
+  renderDelBtn = row => {
     const { loading } = this.props;
     const { delRowId } = this.state;
     if (loading.effects['supplierUser/del'] && delRowId === row.id) {
@@ -134,32 +136,31 @@ class TablePanel extends Component {
         required: true,
         render: (text, record) => (
           <span className={cls('action-box')}>
-            {
-              authAction(
-                <ExtIcon
-                  key={APP_MODULE_BTN_KEY.EDIT}
-                  className="edit"
-                  onClick={(_) => this.edit(record)}
-                  type="edit"
-                  tooltip={{ title: '编辑' }}
-                  ignore="true"
-                  antd
-                />,
-              )
-            }
+            {authAction(
+              <ExtIcon
+                key={APP_MODULE_BTN_KEY.EDIT}
+                className="edit"
+                onClick={() => this.edit(record)}
+                type="edit"
+                tooltip={{ title: '编辑' }}
+                ignore="true"
+                antd
+              />,
+            )}
             <Popconfirm
               key={APP_MODULE_BTN_KEY.DELETE}
               placement="topLeft"
-              title={formatMessage({ id: 'global.delete.confirm', defaultMessage: '确定要删除吗？提示：删除后不可恢复' })}
-              onConfirm={(_) => this.del(record)}
+              title={formatMessage({
+                id: 'global.delete.confirm',
+                defaultMessage: '确定要删除吗？提示：删除后不可恢复',
+              })}
+              onConfirm={() => this.del(record)}
             >
-              {
-                this.renderDelBtn(record)
-              }
+              {this.renderDelBtn(record)}
             </Popconfirm>
             <ExtIcon
               className="tool"
-              onClick={(_) => this.handleConfig(record)}
+              onClick={() => this.handleConfig(record)}
               tooltip={{ title: '配置' }}
               type="tool"
               antd
@@ -196,24 +197,17 @@ class TablePanel extends Component {
         dataIndex: 'frozen',
         width: 120,
         required: true,
-        render: (text) => <Tag color={text ? 'red' : 'green'}>{text ? '冻结' : '可用'}</Tag>,
+        render: text => <Tag color={text ? 'red' : 'green'}>{text ? '冻结' : '可用'}</Tag>,
       },
     ];
     const toolBarProps = {
       left: (
         <>
-          {
-            authAction(
-              <Button
-                key={APP_MODULE_BTN_KEY.CREATE}
-                type="primary"
-                onClick={this.add}
-                ignore="true"
-              >
-                <FormattedMessage id="global.add" defaultMessage="新建" />
-              </Button>,
-            )
-          }
+          {authAction(
+            <Button key={APP_MODULE_BTN_KEY.CREATE} type="primary" onClick={this.add} ignore="true">
+              <FormattedMessage id="global.add" defaultMessage="新建" />
+            </Button>,
+          )}
           <Button onClick={this.reloadData}>
             <FormattedMessage id="global.refresh" defaultMessage="刷新" />
           </Button>
@@ -250,12 +244,8 @@ class TablePanel extends Component {
 
     return (
       <div className={cls(styles['container-box'])}>
-        <ExtTable onTableRef={(inst) => this.tableRef = inst} {...this.getExtableProps()} />
-        {
-          showModal
-            ? <FormModal {...this.getFormModalProps()} />
-            : null
-        }
+        <ExtTable onTableRef={inst => (this.tableRef = inst)} {...this.getExtableProps()} />
+        {showModal ? <FormModal {...this.getFormModalProps()} /> : null}
       </div>
     );
   }

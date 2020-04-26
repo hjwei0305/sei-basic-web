@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'dva';
 import cls from 'classnames';
 import { isEqual } from 'lodash';
@@ -15,13 +15,18 @@ const { authAction } = utils;
 
 @connect(({ position, loading }) => ({ position, loading }))
 class TablePanel extends Component {
-  state = {
-    delRowId: null,
-    list: [],
+  constructor(props) {
+    super(props);
+    this.state = {
+      delRowId: null,
+      list: [],
+    };
   }
 
   componentDidUpdate(_prevProps, prevState) {
-    const { list } = this.props.position;
+    const {
+      position: { list },
+    } = this.props;
     if (!isEqual(prevState.list, list)) {
       this.setState({
         list,
@@ -29,7 +34,7 @@ class TablePanel extends Component {
     }
   }
 
-  reloadData = (_) => {
+  reloadData = () => {
     const { dispatch, position } = this.props;
     const { currNode } = position;
 
@@ -43,7 +48,7 @@ class TablePanel extends Component {
     }
   };
 
-  add = (_) => {
+  add = () => {
     const { dispatch, position } = this.props;
     if (position.currNode) {
       dispatch({
@@ -58,7 +63,7 @@ class TablePanel extends Component {
     }
   };
 
-  edit = (rowData) => {
+  edit = rowData => {
     const { dispatch } = this.props;
     dispatch({
       type: 'position/updateState',
@@ -69,14 +74,14 @@ class TablePanel extends Component {
     });
   };
 
-  save = (data) => {
+  save = data => {
     const { dispatch } = this.props;
     dispatch({
       type: 'position/save',
       payload: {
         ...data,
       },
-    }).then((res) => {
+    }).then(res => {
       if (res.success) {
         dispatch({
           type: 'position/updateState',
@@ -89,35 +94,38 @@ class TablePanel extends Component {
     });
   };
 
-  del = (record) => {
+  del = record => {
     const { dispatch } = this.props;
-    this.setState({
-      delRowId: record.id,
-    }, (_) => {
-      dispatch({
-        type: 'position/del',
-        payload: {
-          id: record.id,
-        },
-      }).then((res) => {
-        if (res.success) {
-          this.setState({
-            delRowId: null,
-          });
-          this.reloadData();
-        }
-      });
-    });
+    this.setState(
+      {
+        delRowId: record.id,
+      },
+      () => {
+        dispatch({
+          type: 'position/del',
+          payload: {
+            id: record.id,
+          },
+        }).then(res => {
+          if (res.success) {
+            this.setState({
+              delRowId: null,
+            });
+            this.reloadData();
+          }
+        });
+      },
+    );
   };
 
-  handleCopyToOrgNodes = (data) => {
+  handleCopyToOrgNodes = data => {
     const { dispatch } = this.props;
     dispatch({
       type: 'position/copyTo',
       payload: {
         ...data,
       },
-    }).then((res) => {
+    }).then(res => {
       if (res.success) {
         dispatch({
           type: 'position/updateState',
@@ -128,9 +136,9 @@ class TablePanel extends Component {
         this.reloadData();
       }
     });
-  }
+  };
 
-  handlCopy = (rowData) => {
+  handlCopy = rowData => {
     const { dispatch } = this.props;
     dispatch({
       type: 'position/updateState',
@@ -139,9 +147,9 @@ class TablePanel extends Component {
         rowData,
       },
     });
-  }
+  };
 
-  handleConfig = (rowData) => {
+  handleConfig = rowData => {
     const { dispatch } = this.props;
     dispatch({
       type: 'position/updateState',
@@ -150,9 +158,9 @@ class TablePanel extends Component {
         rowData,
       },
     });
-  }
+  };
 
-  closeFormModal = (_) => {
+  closeFormModal = () => {
     const { dispatch } = this.props;
     dispatch({
       type: 'position/updateState',
@@ -164,7 +172,7 @@ class TablePanel extends Component {
     });
   };
 
-  renderDelBtn = (row) => {
+  renderDelBtn = row => {
     const { loading } = this.props;
     const { delRowId } = this.state;
     if (loading.effects['position/del'] && delRowId === row.id) {
@@ -186,49 +194,42 @@ class TablePanel extends Component {
         dataIndex: 'id',
         className: 'action',
         required: true,
-        render: (text, record) => (
+        render: (_text, record) => (
           <span className={cls('action-box')}>
-            {
-              authAction(
-                <ExtIcon
-                  key={APP_MODULE_BTN_KEY.EDIT}
-                  className="edit"
-                  onClick={(_) => this.edit(record)}
-                  type="edit"
-                  tooltip={
-                    { title: '编辑' }
-                  }
-                  ignore="true"
-                  antd
-                />,
-              )
-            }
+            {authAction(
+              <ExtIcon
+                key={APP_MODULE_BTN_KEY.EDIT}
+                className="edit"
+                onClick={() => this.edit(record)}
+                type="edit"
+                tooltip={{ title: '编辑' }}
+                ignore="true"
+                antd
+              />,
+            )}
             <Popconfirm
               key={APP_MODULE_BTN_KEY.DELETE}
               placement="topLeft"
-              title={formatMessage({ id: 'global.delete.confirm', defaultMessage: '确定要删除吗？提示：删除后不可恢复' })}
-              onConfirm={(_) => this.del(record)}
+              title={formatMessage({
+                id: 'global.delete.confirm',
+                defaultMessage: '确定要删除吗？提示：删除后不可恢复',
+              })}
+              onConfirm={() => this.del(record)}
             >
-              {
-                this.renderDelBtn(record)
-              }
+              {this.renderDelBtn(record)}
             </Popconfirm>
             <ExtIcon
               className="copy"
-              onClick={(_) => this.handlCopy(record)}
+              onClick={() => this.handlCopy(record)}
               type="copy"
-              tooltip={
-                { title: '复制岗位' }
-              }
+              tooltip={{ title: '复制岗位' }}
               antd
             />
             <ExtIcon
               className="tool"
-              onClick={(_) => this.handleConfig(record)}
+              onClick={() => this.handleConfig(record)}
               type="tool"
-              tooltip={
-                { title: '配置岗位' }
-              }
+              tooltip={{ title: '配置岗位' }}
               antd
             />
           </span>
@@ -256,18 +257,11 @@ class TablePanel extends Component {
     const toolBarProps = {
       left: (
         <>
-          {
-            authAction(
-              <Button
-                key={APP_MODULE_BTN_KEY.CREATE}
-                type="primary"
-                onClick={this.add}
-                ignore="true"
-              >
-                <FormattedMessage id="global.add" defaultMessage="新建" />
-              </Button>,
-            )
-          }
+          {authAction(
+            <Button key={APP_MODULE_BTN_KEY.CREATE} type="primary" onClick={this.add} ignore="true">
+              <FormattedMessage id="global.add" defaultMessage="新建" />
+            </Button>,
+          )}
           <Button onClick={this.reloadData}>
             <FormattedMessage id="global.refresh" defaultMessage="刷新" />
           </Button>
@@ -318,16 +312,8 @@ class TablePanel extends Component {
     return (
       <div className={cls(styles['container-box'])}>
         <ExtTable {...this.getExtableProps()} />
-        {
-          showModal
-            ? <FormModal {...this.getFormModalProps()} />
-            : null
-        }
-        {
-          showCopyModal
-            ? <CopyModal {...this.getCopyModalProps()} />
-            : null
-        }
+        {showModal ? <FormModal {...this.getFormModalProps()} /> : null}
+        {showCopyModal ? <CopyModal {...this.getCopyModalProps()} /> : null}
       </div>
     );
   }

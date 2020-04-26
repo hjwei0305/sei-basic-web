@@ -37,7 +37,7 @@ class TreePanel extends Component {
     }
   }
 
-  onExpand = (expandedKeys) => {
+  onExpand = expandedKeys => {
     this.setState({
       expandedKeys,
       autoExpandParent: false,
@@ -66,14 +66,14 @@ class TreePanel extends Component {
     }
   };
 
-  handleSearch = (value) => {
+  handleSearch = value => {
     this.updateTreeState(value, this.treeData);
   };
 
   handleCheck = (checkedKeys, info) => {
     const { dispatch } = this.props;
     const checkedItems = [];
-    info.checkedNodes.forEach((item) => {
+    info.checkedNodes.forEach(item => {
       checkedItems.push(item.props.dataRef);
     });
 
@@ -96,10 +96,9 @@ class TreePanel extends Component {
     if (selectedKeys && selectedKeys.length) {
       const { dispatch } = this.props;
       const selectedItems = [];
-      info.selectedNodes.forEach((item) => {
+      info.selectedNodes.forEach(item => {
         selectedItems.push(item.props.dataRef);
       });
-
       this.setState(
         {
           selectedKeys,
@@ -118,7 +117,6 @@ class TreePanel extends Component {
 
   handleCreate = () => {
     const { organization, dispatch } = this.props;
-
     if (organization.selectedTreeNode) {
       dispatch({
         type: 'organization/updateState',
@@ -140,7 +138,7 @@ class TreePanel extends Component {
         payload: {
           id: selectedTreeNode.id,
         },
-      }).then((res) => {
+      }).then(res => {
         if (res.success) {
           dispatch({
             type: 'organization/updateState',
@@ -174,30 +172,31 @@ class TreePanel extends Component {
   };
 
   // 查找关键字节点
-  findNode = (value, tree) => tree
-    .map((treeNode) => {
-      const node = { ...treeNode };
-      const isInclude = node.name.includes(value);
-      // 如果有子节点
-      if (node.children && node.children.length > 0) {
-        node.children = this.findNode(value, node.children);
-        // 如果标题匹配
-        if (isInclude) {
-          return node;
-        } // 如果标题不匹配，则查看子节点是否有匹配标题
-        node.children = this.findNode(value, node.children);
+  findNode = (value, tree) =>
+    tree
+      .map(treeNode => {
+        const node = { ...treeNode };
+        const isInclude = node.name.includes(value);
+        // 如果有子节点
         if (node.children && node.children.length > 0) {
-          return node;
+          node.children = this.findNode(value, node.children);
+          // 如果标题匹配
+          if (isInclude) {
+            return node;
+          } // 如果标题不匹配，则查看子节点是否有匹配标题
+          node.children = this.findNode(value, node.children);
+          if (node.children && node.children.length > 0) {
+            return node;
+          }
+          return null;
         }
-      } else {
         // 没子节点
         if (isInclude) {
           return treeNode;
         }
         return null;
-      }
-    })
-    .filter((treeNode) => treeNode);
+      })
+      .filter(treeNode => treeNode);
 
   getToolBarProps = () => ({
     className: cls(styles['tool-bar-customer-wrapper']),
@@ -213,7 +212,7 @@ class TreePanel extends Component {
             id: 'global.delete.confirm',
             defaultMessage: '确定要删除吗？提示：删除后不可恢复',
           })}
-          onConfirm={(_) => this.handleDel()}
+          onConfirm={() => this.handleDel()}
         >
           <Button type="danger">删除</Button>
         </Popconfirm>
@@ -229,37 +228,38 @@ class TreePanel extends Component {
     ),
   });
 
-  getExpandedKeys = (data) => {
-    for (const item of data) {
+  getExpandedKeys = data => {
+    data.forEach(item => {
       this.keyList.push(item.id);
       if (item.children && item.children.length > 0) {
         this.getExpandedKeys(item.children);
       }
-    }
+    });
   };
 
-  getTreeNodes = (data) => data.map((item) => {
-    const { children, name, id } = item;
-    const { selectable } = this.props;
+  getTreeNodes = data =>
+    data.map(item => {
+      const { children, name, id } = item;
+      const { selectable } = this.props;
 
-    if (children && children.length > 0) {
+      if (children && children.length > 0) {
+        return (
+          <TreeNode title={name} key={id} dataRef={item} selectable={selectable}>
+            {this.getTreeNodes(children)}
+          </TreeNode>
+        );
+      }
+
       return (
-        <TreeNode title={name} key={id} dataRef={item} selectable={selectable}>
-          {this.getTreeNodes(children)}
-        </TreeNode>
+        <TreeNode
+          switcherIcon={<ExtIcon type="dian" />}
+          title={name}
+          key={id}
+          dataRef={item}
+          isLeaf
+        />
       );
-    }
-
-    return (
-      <TreeNode
-        switcherIcon={<ExtIcon type="dian" />}
-        title={name}
-        key={id}
-        dataRef={item}
-        isLeaf
-      />
-    );
-  });
+    });
 
   render() {
     const {

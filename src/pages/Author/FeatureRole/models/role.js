@@ -29,7 +29,7 @@ export default modelExtend(model, {
     assinStationData: [],
   },
   effects: {
-    * getFeatureRoleList({ payload }, { call, put }) {
+    *getFeatureRoleList({ payload }, { call, put }) {
       const re = yield call(getFeatureRoleList, payload);
       if (re.success) {
         yield put({
@@ -43,7 +43,7 @@ export default modelExtend(model, {
         message.error(re.message);
       }
     },
-    * saveFeatureRole({ payload, callback }, { call, put }) {
+    *saveFeatureRole({ payload, callback }, { call, put }) {
       const re = yield call(saveFeatureRole, payload);
       message.destroy();
       if (re.success) {
@@ -61,7 +61,7 @@ export default modelExtend(model, {
         callback(re);
       }
     },
-    * delFeatureRole({ payload, callback }, { call, put }) {
+    *delFeatureRole({ payload, callback }, { call, put }) {
       const re = yield call(delFeatureRole, payload);
       message.destroy();
       if (re.success) {
@@ -79,7 +79,7 @@ export default modelExtend(model, {
         callback(re);
       }
     },
-    * assignFeatureItem({ payload, callback }, { call, put }) {
+    *assignFeatureItem({ payload, callback }, { call, put }) {
       const re = yield call(assignFeatureItem, payload);
       message.destroy();
       if (re.success) {
@@ -97,7 +97,7 @@ export default modelExtend(model, {
         callback(re);
       }
     },
-    * getAssignFeatureItem({ payload, callback }, { call, put }) {
+    *getAssignFeatureItem({ payload, callback }, { call, put }) {
       const re = yield call(getAssignFeatureItem, payload);
       message.destroy();
       if (re.success) {
@@ -114,7 +114,7 @@ export default modelExtend(model, {
         callback(re);
       }
     },
-    * removeAssignedFeatureItem({ payload, callback }, { call }) {
+    *removeAssignedFeatureItem({ payload, callback }, { call }) {
       const re = yield call(removeAssignedFeatureItem, payload);
       message.destroy();
       if (re.success) {
@@ -126,7 +126,7 @@ export default modelExtend(model, {
         callback(re);
       }
     },
-    * getUnAssignedFeatureItemList({ payload }, { call, put }) {
+    *getUnAssignedFeatureItemList({ payload }, { call, put }) {
       const re = yield call(getUnAssignedFeatureItemList, payload);
       yield put({
         type: 'updateState',
@@ -145,7 +145,7 @@ export default modelExtend(model, {
         message.error(re.message);
       }
     },
-    * getAssignedEmployeesByFeatureRole({ payload }, { call, put }) {
+    *getAssignedEmployeesByFeatureRole({ payload }, { call, put }) {
       const re = yield call(getAssignedEmployeesByFeatureRole, payload);
       if (re.success) {
         yield put({
@@ -158,7 +158,7 @@ export default modelExtend(model, {
         message.error(re.message);
       }
     },
-    * getAssignedPositionsByFeatureRole({ payload }, { call, put }) {
+    *getAssignedPositionsByFeatureRole({ payload }, { call, put }) {
       const re = yield call(getAssignedPositionsByFeatureRole, payload);
       if (re.success) {
         yield put({

@@ -18,7 +18,7 @@ const formItemLayout = {
 
 @Form.create()
 class FormModal extends PureComponent {
-  handlerFormSubmit = (_) => {
+  handlerFormSubmit = () => {
     const { form, save, rowData } = this.props;
     form.validateFields((err, formData) => {
       if (err) {
@@ -32,7 +32,7 @@ class FormModal extends PureComponent {
     });
   };
 
-  renderFeatureType = (row) => {
+  renderFeatureType = row => {
     switch (row.featureType) {
       case FEATURE_TYPE.PAGE:
         return <Tag color="cyan">菜单项</Tag>;
@@ -42,12 +42,13 @@ class FormModal extends PureComponent {
     }
   };
 
-
   render() {
     const { form, rowData, closeFormModal, saving, showModal } = this.props;
     const { getFieldDecorator } = form;
     const title = rowData ? '修改数据权限类型' : '新建数据权限类型';
-    getFieldDecorator('authorizeEntityTypeId', { initialValue: rowData ? rowData.authorizeEntityTypeId : null });
+    getFieldDecorator('authorizeEntityTypeId', {
+      initialValue: rowData ? rowData.authorizeEntityTypeId : null,
+    });
     getFieldDecorator('featureId', { initialValue: rowData ? rowData.featureId : null });
     const authorizeEntityTypeNameProps = {
       form,
@@ -71,26 +72,31 @@ class FormModal extends PureComponent {
       searchProperties: ['name', 'code'],
       allowClear: true,
       width: 520,
-      columns: [{
-        title: '名称',
-        width: 220,
-        dataIndex: 'name',
-      }, {
-        title: '类别',
-        dataIndex: 'featureType',
-        width: 80,
-        required: true,
-        align: 'center',
-        render: (_text, record) => this.renderFeatureType(record),
-      }, {
-        title: '代码',
-        width: 180,
-        dataIndex: 'code',
-      }, {
-        title: '应用模块',
-        width: 180,
-        dataIndex: 'appModuleName',
-      }],
+      columns: [
+        {
+          title: '名称',
+          width: 220,
+          dataIndex: 'name',
+        },
+        {
+          title: '类别',
+          dataIndex: 'featureType',
+          width: 80,
+          required: true,
+          align: 'center',
+          render: (_text, record) => this.renderFeatureType(record),
+        },
+        {
+          title: '代码',
+          width: 180,
+          dataIndex: 'code',
+        },
+        {
+          title: '应用模块',
+          width: 180,
+          dataIndex: 'appModuleName',
+        },
+      ],
       store: {
         type: 'POST',
         url: `${SERVER_PATH}/sei-basic/feature/findByPage`,
@@ -115,40 +121,53 @@ class FormModal extends PureComponent {
           <FormItem label={formatMessage({ id: 'global.name', defaultMessage: '名称' })}>
             {getFieldDecorator('name', {
               initialValue: rowData ? rowData.name : '',
-              rules: [{
-                required: true,
-                message: formatMessage({ id: 'global.name.required', defaultMessage: '名称不能为空' }),
-              }],
+              rules: [
+                {
+                  required: true,
+                  message: formatMessage({
+                    id: 'global.name.required',
+                    defaultMessage: '名称不能为空',
+                  }),
+                },
+              ],
             })(<Input />)}
           </FormItem>
           <FormItem label={formatMessage({ id: 'global.code', defaultMessage: '代码' })}>
             {getFieldDecorator('code', {
               initialValue: rowData ? rowData.code : '',
-              rules: [{
-                required: true,
-                message: formatMessage({ id: 'global.code.required', defaultMessage: '代码不能为空' }),
-              }],
-            })(<Input
-              placeholder={formatMessage({ id: 'global.code.tip', defaultMessage: '规则:名称各汉字首字母大写' })}
-            />)}
+              rules: [
+                {
+                  required: true,
+                  message: formatMessage({
+                    id: 'global.code.required',
+                    defaultMessage: '代码不能为空',
+                  }),
+                },
+              ],
+            })(
+              <Input
+                placeholder={formatMessage({
+                  id: 'global.code.tip',
+                  defaultMessage: '规则:名称各汉字首字母大写',
+                })}
+              />,
+            )}
           </FormItem>
           <FormItem label="权限对象类型">
             {getFieldDecorator('authorizeEntityTypeName', {
               initialValue: rowData ? rowData.authorizeEntityTypeName : '',
-              rules: [{
-                required: true,
-                message: '权限对象类型不能为空',
-              }],
-            })(
-              <ComboList {...authorizeEntityTypeNameProps} />,
-            )}
+              rules: [
+                {
+                  required: true,
+                  message: '权限对象类型不能为空',
+                },
+              ],
+            })(<ComboList {...authorizeEntityTypeNameProps} />)}
           </FormItem>
           <FormItem label="功能项">
             {getFieldDecorator('featureName', {
               initialValue: rowData ? rowData.featureName : null,
-            })(
-              <ComboGrid {...featureNameProps} />,
-            )}
+            })(<ComboGrid {...featureNameProps} />)}
           </FormItem>
         </Form>
       </ExtModal>

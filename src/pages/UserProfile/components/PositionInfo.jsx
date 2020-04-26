@@ -45,14 +45,9 @@ export default class PositionInfo extends React.PureComponent {
         url: `${SERVER_PATH}/sei-basic/employeePosition/getChildrenFromParentId`,
       },
     };
-  }
+  };
 
   render() {
-    return (
-      <ExtTable
-        onTableRef={(inst) => this.tableRef = inst}
-        {...this.getTableProps()}
-      />
-    );
+    return <ExtTable onTableRef={inst => (this.tableRef = inst)} {...this.getTableProps()} />;
   }
 }

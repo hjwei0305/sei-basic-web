@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import withRouter from 'umi/withRouter';
 import { connect } from 'dva';
 import cls from 'classnames';
@@ -17,13 +17,18 @@ const { authAction } = utils;
 @withRouter
 @connect(({ positionCategory, loading }) => ({ positionCategory, loading }))
 class PositionCategory extends Component {
-  state = {
-    delRowId: null,
-    list: [],
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      delRowId: null,
+      list: [],
+    };
+  }
 
   componentDidUpdate(_prevProps, prevState) {
-    const { list } = this.props.positionCategory;
+    const {
+      positionCategory: { list },
+    } = this.props;
     if (!isEqual(prevState.list, list)) {
       this.setState({
         list,
@@ -31,14 +36,14 @@ class PositionCategory extends Component {
     }
   }
 
-  reloadData = (_) => {
+  reloadData = () => {
     const { dispatch } = this.props;
     dispatch({
       type: 'positionCategory/queryList',
     });
   };
 
-  add = (_) => {
+  add = () => {
     const { dispatch } = this.props;
     dispatch({
       type: 'positionCategory/updateState',
@@ -49,7 +54,7 @@ class PositionCategory extends Component {
     });
   };
 
-  edit = (rowData) => {
+  edit = rowData => {
     const { dispatch } = this.props;
     dispatch({
       type: 'positionCategory/updateState',
@@ -60,14 +65,14 @@ class PositionCategory extends Component {
     });
   };
 
-  save = (data) => {
+  save = data => {
     const { dispatch } = this.props;
     dispatch({
       type: 'positionCategory/save',
       payload: {
         ...data,
       },
-    }).then((res) => {
+    }).then(res => {
       if (res.success) {
         dispatch({
           type: 'positionCategory/updateState',
@@ -80,19 +85,19 @@ class PositionCategory extends Component {
     });
   };
 
-  del = (record) => {
+  del = record => {
     const { dispatch } = this.props;
     this.setState(
       {
         delRowId: record.id,
       },
-      (_) => {
+      () => {
         dispatch({
           type: 'positionCategory/del',
           payload: {
             id: record.id,
           },
-        }).then((res) => {
+        }).then(res => {
           if (res.success) {
             this.setState({
               delRowId: null,
@@ -104,7 +109,7 @@ class PositionCategory extends Component {
     );
   };
 
-  closeFormModal = (_) => {
+  closeFormModal = () => {
     const { dispatch } = this.props;
     dispatch({
       type: 'positionCategory/updateState',
@@ -115,7 +120,7 @@ class PositionCategory extends Component {
     });
   };
 
-  renderDelBtn = (row) => {
+  renderDelBtn = row => {
     const { loading } = this.props;
     const { delRowId } = this.state;
     if (loading.effects['positionCategory/del'] && delRowId === row.id) {
@@ -142,7 +147,7 @@ class PositionCategory extends Component {
               <ExtIcon
                 key={APP_MODULE_BTN_KEY.EDIT}
                 className="edit"
-                onClick={(_) => this.edit(record)}
+                onClick={() => this.edit(record)}
                 type="edit"
                 ignore="true"
                 antd
@@ -155,7 +160,7 @@ class PositionCategory extends Component {
                 id: 'global.delete.confirm',
                 defaultMessage: '确定要删除吗？提示：删除后不可恢复',
               })}
-              onConfirm={(_) => this.del(record)}
+              onConfirm={() => this.del(record)}
             >
               {this.renderDelBtn(record)}
             </Popconfirm>

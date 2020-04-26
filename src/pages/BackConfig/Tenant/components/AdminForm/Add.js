@@ -5,7 +5,6 @@ import cls from 'classnames';
 import Form from './Form';
 import styles from './index.less';
 
-
 class TenantAdd extends Component {
   constructor(props) {
     super(props);
@@ -20,7 +19,7 @@ class TenantAdd extends Component {
     });
   };
 
-  handlerShowChange = (visible) => {
+  handlerShowChange = visible => {
     this.setState({ visible });
   };
 
@@ -37,7 +36,7 @@ class TenantAdd extends Component {
         visible={visible}
         key="form-popover-box"
         destroyTooltipOnHide
-        onVisibleChange={(visible) => this.handlerShowChange(visible)}
+        onVisibleChange={v => this.handlerShowChange(v)}
         overlayClassName={cls(styles['form-popover-box'])}
         content={<Form {...popoverProps} />}
       >

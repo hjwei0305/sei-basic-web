@@ -14,32 +14,35 @@ export default class ColumnLayout extends PureComponent {
       return null;
     }
 
-    return [].concat(children).map((child) => {
-      const { slot, slotClassName } = child.props;
-      if (['left', 'right'].includes(slot)) {
-        if (slot === 'left') {
-          return (
-            <Col key={slot} className={cls('layout-col', slotClassName)} span={leftSpan}>
-              <Card title={leftTitle} bordered={bordered}>
-                {child}
-              </Card>
-            </Col>
-          );
+    return []
+      .concat(children)
+      .map(child => {
+        const { slot, slotClassName } = child.props;
+        if (['left', 'right'].includes(slot)) {
+          if (slot === 'left') {
+            return (
+              <Col key={slot} className={cls('layout-col', slotClassName)} span={leftSpan}>
+                <Card title={leftTitle} bordered={bordered}>
+                  {child}
+                </Card>
+              </Col>
+            );
+          }
+          if (slot === 'right') {
+            return (
+              <Col key={slot} className={cls('layout-col', slotClassName)} span={rightSpan}>
+                <Card title={rightTitle} bordered={bordered}>
+                  {child}
+                </Card>
+              </Col>
+            );
+          }
         }
-        if (slot === 'right') {
-          return (
-            <Col key={slot} className={cls('layout-col', slotClassName)} span={rightSpan}>
-              <Card title={rightTitle} bordered={bordered}>
-                {child}
-              </Card>
-            </Col>
-          );
-        }
-      }
 
-      return null;
-    }).filter((child) => !!child);
-  }
+        return null;
+      })
+      .filter(child => !!child);
+  };
 
   render() {
     return (

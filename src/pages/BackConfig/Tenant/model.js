@@ -28,7 +28,7 @@ export default modelExtend(model, {
   },
   subscriptions: {
     setup({ dispatch, history }) {
-      history.listen((location) => {
+      history.listen(location => {
         if (pathMatchRegexp('/backConfig/tenant', location.pathname)) {
           dispatch({
             type: 'getTenantList',
@@ -38,7 +38,7 @@ export default modelExtend(model, {
     },
   },
   effects: {
-    * getTenantList({ payload }, { call, put }) {
+    *getTenantList({ payload }, { call, put }) {
       const re = yield call(getTenantList, payload);
       if (re.success) {
         yield put({
@@ -51,14 +51,17 @@ export default modelExtend(model, {
         message.error(re.message);
       }
     },
-    * saveTenant({ payload, callback }, { call }) {
+    *saveTenant({ payload, callback }, { call }) {
       const { tenantData, tenantRootOrganization } = payload;
       const re = yield call(saveTenant, { ...tenantData });
       message.destroy();
       if (re.success) {
         message.success(formatMessage({ id: 'global.save-success', defaultMessage: '保存成功' }));
         const { organizationDto } = tenantData;
-        if (!organizationDto || organizationDto && organizationDto.name !== tenantRootOrganization.name) {
+        if (
+          !organizationDto ||
+          (organizationDto && organizationDto.name !== tenantRootOrganization.name)
+        ) {
           const org = yield call(saveTenantRootOrganization, { ...tenantRootOrganization });
           if (org.success) {
             message.success('组织机构保存成功');
@@ -73,7 +76,7 @@ export default modelExtend(model, {
         callback(re);
       }
     },
-    * saveTenantAdmin({ payload, callback }, { call }) {
+    *saveTenantAdmin({ payload, callback }, { call }) {
       const re = yield call(saveTenantAdmin, payload);
       message.destroy();
       if (re.success) {
@@ -85,7 +88,7 @@ export default modelExtend(model, {
         callback(re);
       }
     },
-    * delTenant({ payload, callback }, { call, put }) {
+    *delTenant({ payload, callback }, { call, put }) {
       const re = yield call(delTenant, payload);
       message.destroy();
       if (re.success) {
@@ -103,7 +106,7 @@ export default modelExtend(model, {
         callback(re);
       }
     },
-    * assignAppModuleItem({ payload, callback }, { call, put }) {
+    *assignAppModuleItem({ payload, callback }, { call, put }) {
       const re = yield call(assignAppModuleItem, payload);
       message.destroy();
       if (re.success) {
@@ -121,7 +124,7 @@ export default modelExtend(model, {
         callback(re);
       }
     },
-    * removeAssignedAppModuleItem({ payload, callback }, { call }) {
+    *removeAssignedAppModuleItem({ payload, callback }, { call }) {
       const re = yield call(removeAssignedAppModuleItem, payload);
       message.destroy();
       if (re.success) {
@@ -133,7 +136,7 @@ export default modelExtend(model, {
         callback(re);
       }
     },
-    * getUnAssignedAppModuleItemList({ payload }, { call, put }) {
+    *getUnAssignedAppModuleItemList({ payload }, { call, put }) {
       const re = yield call(getUnAssignedAppModuleItemList, payload);
       if (re.success) {
         yield put({

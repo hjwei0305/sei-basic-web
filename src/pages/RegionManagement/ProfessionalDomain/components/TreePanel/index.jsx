@@ -1,36 +1,44 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'dva';
 import { Popconfirm, Button, message } from 'antd';
 import { formatMessage } from 'umi-plugin-react/locale';
 import { cloneDeep } from 'lodash';
+import TreeView from '@/components/TreeView';
 import CreateFormModal from './CreateFormModal';
 import MoveTreeModal from './MoveTreeModal';
-import TreeView from '@/components/TreeView';
 
 @connect(({ professionalDomain }) => ({ professionalDomain }))
 class TreePanel extends Component {
-  state = {
-    mTmVisible: false,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      mTmVisible: false,
+    };
+  }
 
-  getMoveTreeData = (selectedNode, treeData) => treeData.map((item, key) => {
-    if (item.children && item.children.length > 0) {
-      if (item.id !== selectedNode.id) {
-        item.children = this.getMoveTreeData(selectedNode, item.children);
-        return item;
-      }
-    } else if (item.id !== selectedNode.id) {
-      return item;
-    }
-  }).filter((treeNode) => treeNode);
+  getMoveTreeData = (selectedNode, treeData) =>
+    treeData
+      .map(item => {
+        const node = { ...item };
+        if (node.children && node.children.length > 0) {
+          if (node.id !== selectedNode.id) {
+            node.children = this.getMoveTreeData(selectedNode, node.children);
+            return node;
+          }
+        } else if (node.id !== selectedNode.id) {
+          return node;
+        }
+        return null;
+      })
+      .filter(treeNode => treeNode);
 
-  moveCurNodeFromTree = (currNode) => {
+  moveCurNodeFromTree = currNode => {
     const { professionalDomain } = this.props;
     const { treeData } = professionalDomain;
     return this.getMoveTreeData(currNode, cloneDeep(treeData));
-  }
+  };
 
-  handleSelect = (selectedItems) => {
+  handleSelect = selectedItems => {
     if (selectedItems && selectedItems.length) {
       const { dispatch } = this.props;
       dispatch({
@@ -41,9 +49,9 @@ class TreePanel extends Component {
         },
       });
     }
-  }
+  };
 
-  handleTreeOpt = (type) => {
+  handleTreeOpt = type => {
     const { professionalDomain, dispatch } = this.props;
     const { selectedTreeNode } = professionalDomain;
 
@@ -86,7 +94,7 @@ class TreePanel extends Component {
               nodeId: selectedTreeNode.id,
               targetParentId: this.targetParentNode.id,
             },
-          }).then((res) => {
+          }).then(res => {
             if (res.success) {
               selectedTreeNode.parentId = this.targetParentNode.id;
               this.targetParentNode = null;
@@ -112,7 +120,7 @@ class TreePanel extends Component {
             payload: {
               id: selectedTreeNode.id,
             },
-          }).then((res) => {
+          }).then(res => {
             if (res.success) {
               dispatch({
                 type: 'professionalDomain/updateState',
@@ -130,9 +138,9 @@ class TreePanel extends Component {
       default:
         break;
     }
-  }
+  };
 
-  handleCancel = (type) => {
+  handleCancel = type => {
     if (type === 'create') {
       const { dispatch } = this.props;
       dispatch({
@@ -146,33 +154,64 @@ class TreePanel extends Component {
         mTmVisible: false,
       });
     }
-  }
+  };
 
   reloadData = () => {
     const { dispatch } = this.props;
     return dispatch({
       type: 'professionalDomain/queryTree',
     });
-  }
+  };
 
   getToolBarProps = () => ({
     /** 左部占用一行 */
     rowLeft: true,
-    left: (<>
-      <Button style={{ marginRight: 8 }} type="primary" onClick={() => { this.handleTreeOpt('addRootNode'); }}>新增根节点</Button>
-      <Button.Group onChange={(e) => { this.handleTreeOpt(e.target.value); }}>
-        <Button onClick={() => { this.handleTreeOpt('addChildNode'); }}>创建节点</Button>
-        <Button onClick={() => { this.handleTreeOpt('showMoveModal'); }}>移动</Button>
-        <Popconfirm
-          placement="topLeft"
-          title={formatMessage({ id: 'global.delete.confirm', defaultMessage: '确定要删除吗？提示：删除后不可恢复' })}
-          onConfirm={(_) => { this.handleTreeOpt('delNode'); }}
+    left: (
+      <>
+        <Button
+          style={{ marginRight: 8 }}
+          type="primary"
+          onClick={() => {
+            this.handleTreeOpt('addRootNode');
+          }}
         >
-          <Button type="danger">删除</Button>
-        </Popconfirm>
-      </Button.Group>
-    </>),
-  })
+          新增根节点
+        </Button>
+        <Button.Group
+          onChange={e => {
+            this.handleTreeOpt(e.target.value);
+          }}
+        >
+          <Button
+            onClick={() => {
+              this.handleTreeOpt('addChildNode');
+            }}
+          >
+            创建节点
+          </Button>
+          <Button
+            onClick={() => {
+              this.handleTreeOpt('showMoveModal');
+            }}
+          >
+            移动
+          </Button>
+          <Popconfirm
+            placement="topLeft"
+            title={formatMessage({
+              id: 'global.delete.confirm',
+              defaultMessage: '确定要删除吗？提示：删除后不可恢复',
+            })}
+            onConfirm={() => {
+              this.handleTreeOpt('delNode');
+            }}
+          >
+            <Button type="danger">删除</Button>
+          </Popconfirm>
+        </Button.Group>
+      </>
+    ),
+  });
 
   render() {
     const { mTmVisible } = this.state;
@@ -181,25 +220,37 @@ class TreePanel extends Component {
 
     return (
       <div style={{ height: '100%' }}>
-        <TreeView treeData={treeData} toolBar={this.getToolBarProps()} onSelect={this.handleSelect} />
-        { showCreateModal ? (
+        <TreeView
+          treeData={treeData}
+          toolBar={this.getToolBarProps()}
+          onSelect={this.handleSelect}
+        />
+        {showCreateModal ? (
           <CreateFormModal
             formType={this.formType}
             title={this.formType === 'addRootNode' ? '新增根节点' : '新增子节点'}
             visible={showCreateModal}
-            onCancel={() => { this.handleCancel('create'); }}
+            onCancel={() => {
+              this.handleCancel('create');
+            }}
           />
-        ) : (null)}
-        { mTmVisible ? (
+        ) : null}
+        {mTmVisible ? (
           <MoveTreeModal
             treeData={moveTreeData}
             visible={mTmVisible}
             title={`移动结点【${selectedTreeNode.name}】到:`}
-            onCancel={() => { this.handleCancel('move'); }}
-            onChange={(node) => { this.targetParentNode = node; }}
-            onMove={() => { this.handleTreeOpt('moveNode'); }}
+            onCancel={() => {
+              this.handleCancel('move');
+            }}
+            onChange={node => {
+              this.targetParentNode = node;
+            }}
+            onMove={() => {
+              this.handleTreeOpt('moveNode');
+            }}
           />
-        ) : (null)}
+        ) : null}
       </div>
     );
   }

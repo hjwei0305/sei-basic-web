@@ -1,11 +1,11 @@
 @import '../../../../../themes/vars.less';
 .data-author-type-box {
-  height: 100%;
+  position: relative;
   width: 100%;
+  height: 100%;
   padding: 0;
   overflow: hidden;
   background-color: @page-background-color;
-  position: relative;
   :global {
     .ant-table-bordered.ant-table-empty .ant-table-placeholder {
       border-right-color: transparent;
@@ -17,14 +17,14 @@
         background-color: @white;
       }
       .ant-card-body {
-        padding: 0;
         height: calc(100% - 57px);
+        padding: 0;
         .suid-panel {
           height: 100%;
           .panel-body {
+            width: 100%;
             height: 100% !important;
             max-height: 100% !important;
-            width: 100%;
             .left-box {
               .app-module-box {
                 display: inline-block;
@@ -32,8 +32,8 @@
                 .label {
                   display: inline-block;
                   &::after {
-                    content: ':';
                     margin: 0 4px;
+                    content: ':';
                   }
                 }
               }

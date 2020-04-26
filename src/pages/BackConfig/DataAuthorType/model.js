@@ -16,7 +16,7 @@ export default modelExtend(model, {
   },
   subscriptions: {
     setup({ dispatch, history }) {
-      history.listen((location) => {
+      history.listen(location => {
         if (pathMatchRegexp('/backConfig/dataAuthorType', location.pathname)) {
           dispatch({
             type: 'queryList',
@@ -26,7 +26,7 @@ export default modelExtend(model, {
     },
   },
   effects: {
-    * queryList({ payload }, { call, put }) {
+    *queryList({ payload }, { call, put }) {
       const re = yield call(getList, payload);
       if (re.success) {
         yield put({
@@ -39,7 +39,7 @@ export default modelExtend(model, {
         message.error(re.message);
       }
     },
-    * save({ payload, callback }, { call }) {
+    *save({ payload, callback }, { call }) {
       const re = yield call(save, payload);
       message.destroy();
       if (re.success) {
@@ -51,7 +51,7 @@ export default modelExtend(model, {
         callback(re);
       }
     },
-    * del({ payload, callback }, { call }) {
+    *del({ payload, callback }, { call }) {
       const re = yield call(del, payload);
       message.destroy();
       if (re.success) {

@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import { Form, Input } from 'antd';
-import { formatMessage } from 'umi-plugin-react/locale';
 import { ExtModal } from 'suid';
 import md5 from 'md5';
 import { userUtils } from '@/utils';
@@ -18,7 +17,7 @@ const formItemLayout = {
 
 @Form.create()
 class ResetPwdModal extends PureComponent {
-  onFormSubmit = (_) => {
+  onFormSubmit = () => {
     const { form, save } = this.props;
     const { tenantCode } = getCurrentUser() || {};
     form.validateFields((err, formData) => {
@@ -37,20 +36,20 @@ class ResetPwdModal extends PureComponent {
     });
   };
 
-  checkPassword = (rule, password, callback) => {
+  checkPassword = (_rule, password, callback) => {
     if (!password || password.length < 8) {
       callback('密码须包含字母、数字、特殊字符至少2种,密码长度不能小于8位');
       return false;
     }
     let iNow = 0;
     if (password.match(/[0-9]/g)) {
-      iNow++;
+      iNow += 1;
     }
-    if (password.match(/[a-z]/ig)) {
-      iNow++;
+    if (password.match(/[a-z]/gi)) {
+      iNow += 1;
     }
     if (password.match(/[~!@#$%^&*]/g)) {
-      iNow++;
+      iNow += 1;
     }
     if (iNow < 2) {
       callback('密码须包含字母、数字、特殊字符至少2种,密码长度不能小于8位');
@@ -80,49 +79,38 @@ class ResetPwdModal extends PureComponent {
           <FormItem label="帐号">
             {getFieldDecorator('account', {
               initialValue: editData.account,
-              rules: [{
-                required: true,
-                message: '帐号不能为空',
-              }],
+              rules: [
+                {
+                  required: true,
+                  message: '帐号不能为空',
+                },
+              ],
             })(<Input disabled />)}
           </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label="旧密码"
-          >
+          <FormItem {...formItemLayout} label="旧密码">
             {getFieldDecorator('oldPassword', {
               initialValue: '',
               rules: [{ required: true, message: '请填写旧密码!' }],
-            })(
-              <Input.Password visibilityToggle />,
-            )}
+            })(<Input.Password visibilityToggle />)}
           </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label="新密码"
-          >
+          <FormItem {...formItemLayout} label="新密码">
             {getFieldDecorator('newPassword', {
               initialValue: '',
               rules: [
                 { required: true, message: '请填写新密码!' },
-                { validator: this.checkPassword }],
-            })(
-              <Input.Password visibilityToggle />,
-            )}
+                { validator: this.checkPassword },
+              ],
+            })(<Input.Password visibilityToggle />)}
           </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label="确认新密码"
-          >
+          <FormItem {...formItemLayout} label="确认新密码">
             {getFieldDecorator('confirmNewPassword', {
               initialValue: '',
-              rules: [{ required: true, message: '请填写确认新密码!' },
-                { validator: this.checkPassword }],
-            })(
-              <Input.Password visibilityToggle />,
-            )}
+              rules: [
+                { required: true, message: '请填写确认新密码!' },
+                { validator: this.checkPassword },
+              ],
+            })(<Input.Password visibilityToggle />)}
           </FormItem>
-
         </Form>
       </ExtModal>
     );

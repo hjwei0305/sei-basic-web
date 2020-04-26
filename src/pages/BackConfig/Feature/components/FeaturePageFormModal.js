@@ -16,7 +16,7 @@ const formItemLayout = {
 
 @Form.create()
 class FormModal extends PureComponent {
-  handlerFormSubmit = (_) => {
+  handlerFormSubmit = () => {
     const { form, save, currentPageRow, currentFeatureGroup } = this.props;
     form.validateFields((err, formData) => {
       if (err) {
@@ -47,13 +47,20 @@ class FormModal extends PureComponent {
   };
 
   render() {
-    const { form, currentPageRow, closePageFormModal, saving, showFormModal, currentFeatureGroup } = this.props;
+    const {
+      form,
+      currentPageRow,
+      closePageFormModal,
+      saving,
+      showFormModal,
+      currentFeatureGroup,
+    } = this.props;
     const { getFieldDecorator } = form;
     const title = currentPageRow
       ? formatMessage({
-        id: 'feature.page.edit',
-        defaultMessage: '修改菜单项',
-      })
+          id: 'feature.page.edit',
+          defaultMessage: '修改菜单项',
+        })
       : formatMessage({ id: 'feature.page.add', defaultMessage: '新建菜单项' });
     return (
       <ExtModal
@@ -70,37 +77,54 @@ class FormModal extends PureComponent {
           <FormItem label={formatMessage({ id: 'global.name', defaultMessage: '名称' })}>
             {getFieldDecorator('name', {
               initialValue: currentPageRow ? currentPageRow.name : '',
-              rules: [{
-                required: true,
-                message: formatMessage({ id: 'global.name.required', defaultMessage: '名称不能为空' }),
-              }],
+              rules: [
+                {
+                  required: true,
+                  message: formatMessage({
+                    id: 'global.name.required',
+                    defaultMessage: '名称不能为空',
+                  }),
+                },
+              ],
             })(<Input />)}
           </FormItem>
           <FormItem label={formatMessage({ id: 'global.code', defaultMessage: '代码' })}>
             {getFieldDecorator('code', {
               initialValue: this.getCode(),
-              rules: [{
-                required: true,
-                message: formatMessage({ id: 'global.code.required', defaultMessage: '代码不能为空' }),
-              }],
+              rules: [
+                {
+                  required: true,
+                  message: formatMessage({
+                    id: 'global.code.required',
+                    defaultMessage: '代码不能为空',
+                  }),
+                },
+              ],
             })(
               <Input
                 addonBefore={`${currentFeatureGroup.code}-`}
                 maxLength={50 - `${currentFeatureGroup.code}-`.length}
-                placeholder={formatMessage({ id: 'global.code.tip', defaultMessage: '规则:名称各汉字首字母大写' })}
+                placeholder={formatMessage({
+                  id: 'global.code.tip',
+                  defaultMessage: '规则:名称各汉字首字母大写',
+                })}
               />,
             )}
           </FormItem>
           <FormItem label="页面路由地址">
             {getFieldDecorator('groupCode', {
               initialValue: currentPageRow ? currentPageRow.groupCode : '',
-              rules: [{
-                required: true,
-                message: '页面路由地址不能为空',
-              }],
+              rules: [
+                {
+                  required: true,
+                  message: '页面路由地址不能为空',
+                },
+              ],
             })(<Input />)}
           </FormItem>
-          <FormItem label={formatMessage({ id: 'feature.tenantCanUse', defaultMessage: '租户可用' })}>
+          <FormItem
+            label={formatMessage({ id: 'feature.tenantCanUse', defaultMessage: '租户可用' })}
+          >
             {getFieldDecorator('tenantCanUse', {
               initialValue: currentPageRow ? currentPageRow.tenantCanUse || false : false,
               valuePropName: 'checked',
