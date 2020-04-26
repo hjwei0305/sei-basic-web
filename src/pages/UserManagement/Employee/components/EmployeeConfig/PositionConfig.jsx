@@ -128,7 +128,7 @@ class PositionConfig extends Component {
   getUnAssignTableProps = () => {
     const { includeSubNode, organizationId: orgId, unAssignChildIds } = this.state;
     const { data } = this.props;
-    const { id,organizationId } = data || {};
+    const {id,organizationId } = data || {};
     const toolBarProps = {
       layout: {
         leftSpan: 16,
