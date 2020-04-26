@@ -1,16 +1,30 @@
 {
-  "extends": ["airbnb", "prettier"],
+  "extends": [
+    "airbnb",
+    "prettier",
+    "plugin:jest/recommended",
+    "plugin:react/recommended",
+    "plugin:import/typescript",
+    "prettier/react"
+  ],
   "parser": "babel-eslint",
   "env": {
     "browser": true,
     "node": true,
-    "mocha": true
+    "jasmine": true,
+    "jest": true,
+    "es6": true
+  },
+  "settings": {
+    "react": {
+      "version": "16.8"
+    }
   },
   "globals": {
     "Babel": true,
     "React": true
   },
-  "plugins": ["react", "prettier"],
+  "plugins": ["react", "prettier", "babel"],
   "rules": {
     "global-require": 0,
     "no-underscore-dangle": 0,
