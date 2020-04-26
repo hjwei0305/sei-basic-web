@@ -25,10 +25,12 @@
     "lodash": "^4.17.15",
     "md5": "^2.2.1",
     "prop-types": "^15.7.2",
+    "qs": "^6.9.3",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-fast-compare": "^2.0.4",
-    "suid": "^1.2.27"
+    "suid": "^1.2.27",
+    "umi-plugin-react": "^1.8.4"
   },
   "devDependencies": {
     "babel-eslint": "^9.0.0",
@@ -51,13 +53,15 @@
     "prettier": "^1.17.1",
     "react-test-renderer": "^16.7.0",
     "sei-tools": "^1.0.10",
-    "umi": "^2.7.7",
-    "umi-plugin-react": "^1.8.4"
+    "umi": "^2.7.7"
   },
   "husky": {
     "hooks": {
       "pre-commit": "npm run lint-staged"
     }
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
   },
   "lint-staged": {
     "**/*.less": "stylelint --syntax less",

@@ -43,7 +43,7 @@ export default [
         name: 'orgStructure',
         routes: [{
           path: '/orgStructure/corporation',
-          component: 'OrgStructure/Corporation'
+          component: 'OrgStructure/Corporation',
         }, {
           path: '/orgStructure/positionCategory',
           component: 'OrgStructure/PositionCategory',
@@ -62,13 +62,13 @@ export default [
         name: 'userManagement',
         routes: [{
           path: '/userManagement/employee',
-          component: 'UserManagement/Employee'
+          component: 'UserManagement/Employee',
         }, {
           path: '/userManagement/supplierUser',
-          component: 'UserManagement/SupplierUser'
+          component: 'UserManagement/SupplierUser',
         }, {
           path: '/userManagement/expertUser',
-          component: 'UserManagement/ExpertUser'
+          component: 'UserManagement/ExpertUser',
         }],
       },
       {
@@ -76,7 +76,7 @@ export default [
         name: 'regionManagement',
         routes: [{
           path: '/regionManagement/professionalDomain',
-          component: 'RegionManagement/ProfessionalDomain'
+          component: 'RegionManagement/ProfessionalDomain',
         }],
       },
     ],

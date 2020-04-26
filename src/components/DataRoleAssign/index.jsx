@@ -1,19 +1,18 @@
-import React, { Component, Fragment, } from 'react';
+import React, { Component } from 'react';
 import { ExtTable, ComboGrid, ExtIcon } from 'suid';
-import { Button,} from "antd";
+import { Button } from 'antd';
 import cls from 'classnames';
 import { AssignLayout } from '@/components';
 import CfgModal from './CfgModal';
-import { constants } from "@/utils";
+import { constants } from '@/utils';
 
 const { SERVER_PATH } = constants;
 
 class DataRoleAssign extends Component {
-
   constructor(props) {
     super(props);
-    const { unAssignCfg, } = props;
-    const { unAssignedUrl, } = unAssignCfg;
+    const { unAssignCfg } = props;
+    const { unAssignedUrl } = unAssignCfg;
     this.state = {
       assignBtnDisabled: true,
       unAssignBtnDisabled: true,
@@ -22,27 +21,21 @@ class DataRoleAssign extends Component {
       assignChildIds: [],
       unAssignChildIds: [],
       cfgModalVisible: false,
-    }
+    };
   }
 
-  handleCheck = (e) => {
-    const { checked } = e.target;
-    this.setState({
-      includeSubNode: checked,
-    }, () => {
-      console.log(this.unAssignTable);
-      if (this.unAssignTable) {
-        this.unAssignTable.remoteDataRefresh();
-      }
-    });
-  }
+  handleCheck = () => {
+    if (this.unAssignTable) {
+      this.unAssignTable.remoteDataRefresh();
+    }
+  };
 
   handleUnAssign = () => {
-    const { onUnAssign, data, } = this.props;
-    const { assignChildIds, } = this.state;
-    const { id: parentId, } = data;
+    const { onUnAssign, data } = this.props;
+    const { assignChildIds } = this.state;
+    const { id: parentId } = data;
     if (onUnAssign) {
-      onUnAssign({ parentId, childIds: assignChildIds, }).then(res => {
+      onUnAssign({ parentId, childIds: assignChildIds }).then(() => {
         this.setState({
           unAssignBtnDisabled: true,
           assignChildIds: [],
@@ -50,14 +43,14 @@ class DataRoleAssign extends Component {
         this.refreshTableData();
       });
     }
-  }
+  };
 
   handleAssign = () => {
-    const { onAssign, data, } = this.props;
-    const { unAssignChildIds, } = this.state;
-    const { id: parentId, } = data;
+    const { onAssign, data } = this.props;
+    const { unAssignChildIds } = this.state;
+    const { id: parentId } = data;
     if (onAssign) {
-      onAssign({ parentId, childIds: unAssignChildIds, }).then(res => {
+      onAssign({ parentId, childIds: unAssignChildIds }).then(() => {
         this.setState({
           assignBtnDisabled: true,
           unAssignChildIds: [],
@@ -65,16 +58,16 @@ class DataRoleAssign extends Component {
         this.refreshTableData();
       });
     }
-  }
+  };
 
   getComboGridProps = () => {
-    const { unAssignCfg, } = this.props;
-    const { unAssignedUrl, unAssignedByIdUrl, } = unAssignCfg;
+    const { unAssignCfg } = this.props;
+    const { unAssignedUrl, unAssignedByIdUrl } = unAssignCfg;
 
     return {
       allowClear: true,
       placeholder: '请选择数据角色组',
-      rowKey: "id",
+      rowKey: 'id',
       name: 'roleGroupName',
       store: {
         url: `${SERVER_PATH}/sei-basic/dataRoleGroup/findAll`,
@@ -95,68 +88,71 @@ class DataRoleAssign extends Component {
         },
       ],
       searchProperties: ['code', 'name'],
-      style: { width: 240, marginRight: 15, },
+      style: { width: 240, marginRight: 15 },
       afterSelect: (rowData) => {
         if (rowData) {
-          this.setState({
-            dataRoleGroupId: rowData.id,
-            unAssignUrl: unAssignedByIdUrl,
-          }, () => {
-            if (this.unAssignTable) {
-              this.unAssignTable.remoteDataRefresh();
-            }
-          });
+          this.setState(
+            {
+              dataRoleGroupId: rowData.id,
+              unAssignUrl: unAssignedByIdUrl,
+            },
+            () => {
+              if (this.unAssignTable) {
+                this.unAssignTable.remoteDataRefresh();
+              }
+            },
+          );
         }
       },
       afterClear: () => {
-        this.setState({
-          unAssignUrl: unAssignedUrl,
-          dataRoleGroupId: undefined,
-        }, () => {
-          if (this.unAssignTable) {
-            this.unAssignTable.remoteDataRefresh();
-          }
-        });
-      }
+        this.setState(
+          {
+            unAssignUrl: unAssignedUrl,
+            dataRoleGroupId: undefined,
+          },
+          () => {
+            if (this.unAssignTable) {
+              this.unAssignTable.remoteDataRefresh();
+            }
+          },
+        );
+      },
     };
-  }
+  };
 
-  getCommonColumns = () => {
-
-    return [
-      {
-        title: "角色代码",
-        dataIndex: "code",
-        width: 120,
-        required: true,
-      },
-      {
-        title: "角色名称",
-        dataIndex: "name",
-        width: 180,
-        required: true,
-      },
-      {
-        title: "公共角色组织机构",
-        dataIndex: "publicOrgName",
-        width: 180,
-        required: true,
-      },
-      {
-        title: "公共角色用户类型",
-        dataIndex: "publicUserType",
-        width: 180,
-        required: true,
-      },
-    ];
-  }
+  getCommonColumns = () => [
+    {
+      title: '角色代码',
+      dataIndex: 'code',
+      width: 120,
+      required: true,
+    },
+    {
+      title: '角色名称',
+      dataIndex: 'name',
+      width: 180,
+      required: true,
+    },
+    {
+      title: '公共角色组织机构',
+      dataIndex: 'publicOrgName',
+      width: 180,
+      required: true,
+    },
+    {
+      title: '公共角色用户类型',
+      dataIndex: 'publicUserType',
+      width: 180,
+      required: true,
+    },
+  ];
 
   handleConfig = (record) => {
     this.setState({
       cfgModalVisible: true,
       editData: record,
     });
-  }
+  };
 
   refreshTableData = () => {
     if (this.unAssignTable) {
@@ -165,24 +161,24 @@ class DataRoleAssign extends Component {
     if (this.assignTable) {
       this.assignTable.remoteDataRefresh();
     }
-  }
+  };
 
   /** 未分配表格属性 */
   getUnAssignTableProps = () => {
-    const { dataRoleGroupId, unAssignUrl, unAssignChildIds, } = this.state;
-    const { data, unAssignCfg, } = this.props;
-    const { unAssignedUrl, byIdKey, } = unAssignCfg;
-    const { id, } = data || {};
+    const { dataRoleGroupId, unAssignUrl, unAssignChildIds } = this.state;
+    const { data, unAssignCfg } = this.props;
+    const { unAssignedUrl, byIdKey } = unAssignCfg;
+    const { id } = data || {};
     const toolBarProps = {
       layout: {
         leftSpan: 16,
         rightSpan: 8,
       },
       left: (
-        <Fragment>
-          <ComboGrid {...this.getComboGridProps()}/>
-        </Fragment>
-      )
+        <>
+          <ComboGrid {...this.getComboGridProps()} />
+        </>
+      ),
     };
 
     return {
@@ -205,56 +201,60 @@ class DataRoleAssign extends Component {
         }
       },
       store: {
-        params: unAssignUrl === unAssignedUrl ? {
-          parentId: id,
-        } : {
-          [byIdKey]: id,
-          dataRoleGroupId,
-        },
+        params:
+          unAssignUrl === unAssignedUrl
+            ? {
+              parentId: id,
+            }
+            : {
+              [byIdKey]: id,
+              dataRoleGroupId,
+            },
         url: unAssignUrl,
       },
     };
-  }
+  };
 
   /** 已分配表格属性 */
   getAssignTableProps = () => {
     const { data, assginCfg, cfged } = this.props;
-    const { assignChildIds, } = this.state;
+    const { assignChildIds } = this.state;
     const { url } = assginCfg;
-    const { id, } = data || {};
+    const { id } = data || {};
     const columns = this.getCommonColumns();
     if (cfged) {
       columns.unshift({
         title: '操作',
         width: 60,
-        className: "action",
+        className: 'action',
         dataIndex: 'id',
         required: true,
         render: (_, record) => (
-          <span className={cls("action-box")}>
+          <span className={cls('action-box')}>
             <ExtIcon
               className="tool"
-              onClick={e => {this.handleConfig(record); e.stopPropagation();}}
+              onClick={(e) => {
+                this.handleConfig(record);
+                e.stopPropagation();
+              }}
               type="tool"
-              tooltip={
-                { title: '配置有效期' }
-              }
+              tooltip={{ title: '配置有效期' }}
               antd
             />
           </span>
-        )
+        ),
       });
       columns.splice(3, 0, {
         title: '有效期',
         dataIndex: 'effective',
         width: 220,
         render: (_, record) => {
-          const { effectiveFrom, effectiveTo, } = record;
+          const { effectiveFrom, effectiveTo } = record;
           if (effectiveFrom) {
             return `${effectiveFrom} ~ ${effectiveTo}`;
           }
-          return ``;
-        }
+          return '';
+        },
       });
     }
 
@@ -284,27 +284,30 @@ class DataRoleAssign extends Component {
         url,
       },
     };
-  }
+  };
 
   getCfgModalProps = () => {
-    const { cfgModalVisible: visible, editData,  } = this.state;
+    const { cfgModalVisible: visible, editData } = this.state;
     const { onSaveCfg, cfgLoading } = this.props;
 
-    return  {
+    return {
       editData,
       visible,
       saving: cfgLoading,
       onSave: (data) => {
         if (onSaveCfg) {
-          onSaveCfg(data).then(result => {
-            const { success, } = result || {};
+          onSaveCfg(data).then((result) => {
+            const { success } = result || {};
             if (success) {
-              this.setState({
-                editData: null,
-                cfgModalVisible: false,
-              }, () => {
-                this.refreshTableData();
-              });
+              this.setState(
+                {
+                  editData: null,
+                  cfgModalVisible: false,
+                },
+                () => {
+                  this.refreshTableData();
+                },
+              );
             }
           });
         }
@@ -314,19 +317,23 @@ class DataRoleAssign extends Component {
           editData: null,
           cfgModalVisible: false,
         });
-      }
+      },
     };
-  }
+  };
 
   render() {
-    const { assignBtnDisabled, unAssignBtnDisabled, cfgModalVisible, } = this.state;
+    const { assignBtnDisabled, unAssignBtnDisabled, cfgModalVisible } = this.state;
     const { cfged } = this.props;
 
     return (
       <AssignLayout>
-        <ExtTable onTableRef={inst => this.unAssignTable = inst } slot="left" {...this.getUnAssignTableProps()} />
+        <ExtTable
+          onTableRef={(inst) => (this.unAssignTable = inst)}
+          slot="left"
+          {...this.getUnAssignTableProps()}
+        />
         <div slot="center">
-          <Fragment>
+          <>
             <p>
               <Button
                 onClick={this.handleUnAssign}
@@ -343,10 +350,14 @@ class DataRoleAssign extends Component {
                 icon="right"
               />
             </p>
-          </Fragment>
-          { cfged && cfgModalVisible ? (<CfgModal {...this.getCfgModalProps()} />) : null }
+          </>
+          {cfged && cfgModalVisible ? <CfgModal {...this.getCfgModalProps()} /> : null}
         </div>
-        <ExtTable onTableRef={inst => this.assignTable = inst } slot="right" {...this.getAssignTableProps()} />
+        <ExtTable
+          onTableRef={(inst) => (this.assignTable = inst)}
+          slot="right"
+          {...this.getAssignTableProps()}
+        />
       </AssignLayout>
     );
   }
