@@ -39,11 +39,11 @@ export default {
         pwa:
           process.env.NODE_ENV === 'production'
             ? {
-              workboxPluginMode: 'InjectManifest',
-              workboxOptions: {
-                importWorkboxFrom: 'local',
-              },
-            }
+                workboxPluginMode: 'InjectManifest',
+                workboxOptions: {
+                  importWorkboxFrom: 'local',
+                },
+              }
             : false,
         locale: {
           enable: true,

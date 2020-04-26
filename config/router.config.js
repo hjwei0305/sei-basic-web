@@ -41,43 +41,52 @@ export default [
       {
         path: '/orgStructure',
         name: 'orgStructure',
-        routes: [{
-          path: '/orgStructure/corporation',
-          component: 'OrgStructure/Corporation',
-        }, {
-          path: '/orgStructure/positionCategory',
-          component: 'OrgStructure/PositionCategory',
-        },
-        {
-          path: '/orgStructure/position',
-          component: 'OrgStructure/Position',
-        },
-        {
-          path: '/orgStructure/organization',
-          component: 'OrgStructure/Organization',
-        }],
+        routes: [
+          {
+            path: '/orgStructure/corporation',
+            component: 'OrgStructure/Corporation',
+          },
+          {
+            path: '/orgStructure/positionCategory',
+            component: 'OrgStructure/PositionCategory',
+          },
+          {
+            path: '/orgStructure/position',
+            component: 'OrgStructure/Position',
+          },
+          {
+            path: '/orgStructure/organization',
+            component: 'OrgStructure/Organization',
+          },
+        ],
       },
       {
         path: '/userManagement',
         name: 'userManagement',
-        routes: [{
-          path: '/userManagement/employee',
-          component: 'UserManagement/Employee',
-        }, {
-          path: '/userManagement/supplierUser',
-          component: 'UserManagement/SupplierUser',
-        }, {
-          path: '/userManagement/expertUser',
-          component: 'UserManagement/ExpertUser',
-        }],
+        routes: [
+          {
+            path: '/userManagement/employee',
+            component: 'UserManagement/Employee',
+          },
+          {
+            path: '/userManagement/supplierUser',
+            component: 'UserManagement/SupplierUser',
+          },
+          {
+            path: '/userManagement/expertUser',
+            component: 'UserManagement/ExpertUser',
+          },
+        ],
       },
       {
         path: '/regionManagement',
         name: 'regionManagement',
-        routes: [{
-          path: '/regionManagement/professionalDomain',
-          component: 'RegionManagement/ProfessionalDomain',
-        }],
+        routes: [
+          {
+            path: '/regionManagement/professionalDomain',
+            component: 'RegionManagement/ProfessionalDomain',
+          },
+        ],
       },
     ],
   },

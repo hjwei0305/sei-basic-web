@@ -89,7 +89,7 @@ class DataRoleAssign extends Component {
       ],
       searchProperties: ['code', 'name'],
       style: { width: 240, marginRight: 15 },
-      afterSelect: (rowData) => {
+      afterSelect: rowData => {
         if (rowData) {
           this.setState(
             {
@@ -147,7 +147,7 @@ class DataRoleAssign extends Component {
     },
   ];
 
-  handleConfig = (record) => {
+  handleConfig = record => {
     this.setState({
       cfgModalVisible: true,
       editData: record,
@@ -187,7 +187,7 @@ class DataRoleAssign extends Component {
       selectedRowKeys: unAssignChildIds,
       columns: this.getCommonColumns(),
       toolBar: toolBarProps,
-      onSelectRow: (rowIds) => {
+      onSelectRow: rowIds => {
         if (rowIds && rowIds.length) {
           this.setState({
             assignBtnDisabled: false,
@@ -204,12 +204,12 @@ class DataRoleAssign extends Component {
         params:
           unAssignUrl === unAssignedUrl
             ? {
-              parentId: id,
-            }
+                parentId: id,
+              }
             : {
-              [byIdKey]: id,
-              dataRoleGroupId,
-            },
+                [byIdKey]: id,
+                dataRoleGroupId,
+              },
         url: unAssignUrl,
       },
     };
@@ -233,7 +233,7 @@ class DataRoleAssign extends Component {
           <span className={cls('action-box')}>
             <ExtIcon
               className="tool"
-              onClick={(e) => {
+              onClick={e => {
                 this.handleConfig(record);
                 e.stopPropagation();
               }}
@@ -263,7 +263,7 @@ class DataRoleAssign extends Component {
       bordered: false,
       selectedRowKeys: assignChildIds,
       columns,
-      onSelectRow: (rowIds) => {
+      onSelectRow: rowIds => {
         if (rowIds && rowIds.length) {
           this.setState({
             unAssignBtnDisabled: false,
@@ -294,9 +294,9 @@ class DataRoleAssign extends Component {
       editData,
       visible,
       saving: cfgLoading,
-      onSave: (data) => {
+      onSave: data => {
         if (onSaveCfg) {
-          onSaveCfg(data).then((result) => {
+          onSaveCfg(data).then(result => {
             const { success } = result || {};
             if (success) {
               this.setState(
@@ -328,7 +328,7 @@ class DataRoleAssign extends Component {
     return (
       <AssignLayout>
         <ExtTable
-          onTableRef={(inst) => (this.unAssignTable = inst)}
+          onTableRef={inst => (this.unAssignTable = inst)}
           slot="left"
           {...this.getUnAssignTableProps()}
         />
@@ -354,7 +354,7 @@ class DataRoleAssign extends Component {
           {cfged && cfgModalVisible ? <CfgModal {...this.getCfgModalProps()} /> : null}
         </div>
         <ExtTable
-          onTableRef={(inst) => (this.assignTable = inst)}
+          onTableRef={inst => (this.assignTable = inst)}
           slot="right"
           {...this.getAssignTableProps()}
         />
