@@ -1,11 +1,11 @@
-import { base } from '../../public/app.config.json';
+import { base } from "../../public/app.config.json";
 
 const BASE_DOMAIN = '/';
 
 const GATEWAY = 'api-gateway';
 
 const getServerPath = () => {
-  if (process.env.NODE_ENV !== 'production') {
+  if (process.env.NODE_ENV !== "production") {
     if (process.env.MOCK === 'yes') {
       return '/mocker.api';
     }
