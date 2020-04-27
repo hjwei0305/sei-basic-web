@@ -11,6 +11,8 @@ module.exports = {
     'import/extensions': 0,
     'import/no-extraneous-dependencies': 0,
     'import/no-dynamic-require': 0,
+    'import/order': 2,
+    'react/prop-types': 0,
     'react/prop-types': 0,
     'react/jsx-props-no-spreading': 0,
     'react/static-property-placement': 0,
