@@ -10,6 +10,10 @@ import styles from './index.less';
 const { Search } = Input;
 
 class ListPanel extends Component {
+  static allValue = '';
+
+  static data = [];
+
   static propTypes = {
     title: PropTypes.string.isRequired,
     dataSource: PropTypes.array,
@@ -22,10 +26,6 @@ class ListPanel extends Component {
     dataSource: [],
     loading: false,
   };
-
-  static allValue = '';
-
-  static data = [];
 
   constructor(props) {
     super(props);
