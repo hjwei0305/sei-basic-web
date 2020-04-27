@@ -74,6 +74,44 @@ class FeatureRole extends Component {
     });
   };
 
+  handlerPageChange = (current, pageSize) => {
+    const { pagination } = this.state;
+    this.setState(
+      {
+        pagination: {
+          ...pagination,
+          current,
+          pageSize,
+        },
+      },
+      () => {
+        const newData = this.getLocalFilterData();
+        const listData = newData.slice((current - 1) * pageSize, current * pageSize);
+        this.setState({
+          listData,
+        });
+      },
+    );
+  };
+
+  handlerGroupSelect = (currentRoleGroup, e) => {
+    e && e.stopPropagation();
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'dataRoleGroup/updateState',
+      payload: {
+        currentRoleGroup,
+      },
+    });
+    dispatch({
+      type: 'role/updateState',
+      payload: {
+        showAssignFeature: false,
+        currentRole: null,
+      },
+    });
+  };
+
   reloadRoleGroupData = () => {
     const { dispatch } = this.props;
     dispatch({
@@ -123,44 +161,6 @@ class FeatureRole extends Component {
         });
       },
     );
-  };
-
-  handlerPageChange = (current, pageSize) => {
-    const { pagination } = this.state;
-    this.setState(
-      {
-        pagination: {
-          ...pagination,
-          current,
-          pageSize,
-        },
-      },
-      () => {
-        const newData = this.getLocalFilterData();
-        const listData = newData.slice((current - 1) * pageSize, current * pageSize);
-        this.setState({
-          listData,
-        });
-      },
-    );
-  };
-
-  handlerGroupSelect = (currentRoleGroup, e) => {
-    e && e.stopPropagation();
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'dataRoleGroup/updateState',
-      payload: {
-        currentRoleGroup,
-      },
-    });
-    dispatch({
-      type: 'role/updateState',
-      payload: {
-        showAssignFeature: false,
-        currentRole: null,
-      },
-    });
   };
 
   render() {

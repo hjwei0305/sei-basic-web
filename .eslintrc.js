@@ -18,6 +18,12 @@ module.exports = {
     'react/require-default-props': 0,
     'react/no-did-update-set-state': 0,
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
+    'react/sort-comp': [
+      2,
+      {
+        order: ['static-variables', 'static-methods', 'lifecycle', 'everything-else', 'render'],
+      },
+    ],
     'no-return-assign': 0,
     'jsx-a11y/label-has-associated-control': 0,
     'jsx-a11y/control-has-associated-label': 0,

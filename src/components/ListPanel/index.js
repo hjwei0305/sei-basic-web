@@ -59,6 +59,28 @@ class ListPanel extends Component {
     }
   }
 
+  onSelectAllChange = e => {
+    const { checkedList, dataSource } = this.state;
+    let checkedKeys = cloneDeep(checkedList);
+    let selectAll = false;
+    if (e.target.checked) {
+      dataSource.forEach(row => {
+        checkedKeys[row.id] = row.id;
+      });
+      selectAll = true;
+    } else {
+      checkedKeys = {};
+    }
+    this.setState(
+      {
+        selectAll,
+        selectIndeterminate: false,
+        checkedList: checkedKeys,
+      },
+      this.handlerSelectChange,
+    );
+  };
+
   handlerSearchChange = v => {
     this.allValue = v;
   };
@@ -76,21 +98,6 @@ class ListPanel extends Component {
         total: dataSource.length,
       },
     });
-  };
-
-  getLocalFilterData = () => {
-    let dataSource = [];
-    if (this.allValue) {
-      const valueKey = this.allValue.toLowerCase();
-      dataSource = this.data.filter(
-        ds =>
-          ds.name.toLowerCase().indexOf(valueKey) > -1 ||
-          ds.code.toLowerCase().indexOf(valueKey) > -1,
-      );
-    } else {
-      dataSource = [...this.data];
-    }
-    return dataSource;
   };
 
   handlerPageChange = (current, pageSize) => {
@@ -141,34 +148,27 @@ class ListPanel extends Component {
     );
   };
 
-  onSelectAllChange = e => {
-    const { checkedList, dataSource } = this.state;
-    let checkedKeys = cloneDeep(checkedList);
-    let selectAll = false;
-    if (e.target.checked) {
-      dataSource.forEach(row => {
-        checkedKeys[row.id] = row.id;
-      });
-      selectAll = true;
-    } else {
-      checkedKeys = {};
-    }
-    this.setState(
-      {
-        selectAll,
-        selectIndeterminate: false,
-        checkedList: checkedKeys,
-      },
-      this.handlerSelectChange,
-    );
-  };
-
   handlerSelectChange = () => {
     const { onSelectChange } = this.props;
     const { checkedList } = this.state;
     if (onSelectChange) {
       onSelectChange(checkedList);
     }
+  };
+
+  getLocalFilterData = () => {
+    let dataSource = [];
+    if (this.allValue) {
+      const valueKey = this.allValue.toLowerCase();
+      dataSource = this.data.filter(
+        ds =>
+          ds.name.toLowerCase().indexOf(valueKey) > -1 ||
+          ds.code.toLowerCase().indexOf(valueKey) > -1,
+      );
+    } else {
+      dataSource = [...this.data];
+    }
+    return dataSource;
   };
 
   render() {
