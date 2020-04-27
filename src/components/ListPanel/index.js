@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import cls from 'classnames';
 import { isEqual, cloneDeep } from 'lodash';
 import PropTypes from 'prop-types';
-
 import { Input, Pagination, List, Skeleton, Checkbox, Card } from 'antd';
 import { ScrollBar, ListLoader } from 'suid';
 import styles from './index.less';
