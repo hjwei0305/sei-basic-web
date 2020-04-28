@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import cls from 'classnames';
 import { connect } from 'dva';
 import { isEqual } from 'lodash';
@@ -29,7 +29,7 @@ const menuData = () => [
 ];
 
 @connect(({ featureRole, loading }) => ({ featureRole, loading }))
-class ExtAction extends Component {
+class ExtAction extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {

@@ -5,7 +5,7 @@ import { ExtIcon } from 'suid';
 import { RoleStation } from '@/components';
 import styles from './View.less';
 
-class UserView extends Component {
+class StationView extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -45,4 +45,4 @@ class UserView extends Component {
   }
 }
 
-export default UserView;
+export default StationView;
