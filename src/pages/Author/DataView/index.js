@@ -26,6 +26,7 @@ class DataView extends PureComponent {
         },
       });
     } else {
+      message.destroy();
       message.warning('请输入用户账号');
     }
   };

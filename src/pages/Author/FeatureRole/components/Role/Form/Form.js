@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import cls from 'classnames';
-import { toUpper, trim } from 'lodash';
+import { toUpper, trim, get } from 'lodash';
 import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale';
 import { Button, Form, Input, Switch } from 'antd';
 import { ComboList, ComboTree } from 'suid';
@@ -75,12 +75,14 @@ class RoleGroupForm extends PureComponent {
     const { isPublicRole } = this.state;
     const { form, roleData, saving, currentRoleGroup } = this.props;
     const { getFieldDecorator } = form;
-    getFieldDecorator('roleType', { initialValue: roleData ? roleData.roleType : null });
+    getFieldDecorator('roleType', { initialValue: get(roleData, 'roleType', null) || null });
     getFieldDecorator('publicUserType', {
       initialValue: roleData ? roleData.publicUserType : null,
     });
-    getFieldDecorator('publicOrgId', { initialValue: roleData ? roleData.publicOrgId : null });
-    getFieldDecorator('publicOrgCode', { initialValue: roleData ? roleData.publicOrgCode : null });
+    getFieldDecorator('publicOrgId', { initialValue: get(roleData, 'publicOrgId', null) || null });
+    getFieldDecorator('publicOrgCode', {
+      initialValue: get(roleData, 'publicOrgCode', null) || null,
+    });
     const title = roleData ? '修改角色' : '新建角色';
     const roleTypeProps = {
       form,
@@ -92,7 +94,7 @@ class RoleGroupForm extends PureComponent {
         url: `${SERVER_PATH}/sei-basic/featureRole/listAllRoleTypeList`,
       },
       afterLoaded: data => {
-        if (data && data instanceof Array && data.length > 0) {
+        if (data && data instanceof Array && data.length > 0 && !roleData) {
           form.setFieldsValue({
             roleTypeRemark: data[0].remark,
             roleType: data[0].name,
@@ -138,7 +140,7 @@ class RoleGroupForm extends PureComponent {
           <Form {...formItemLayout}>
             <FormItem label={formatMessage({ id: 'global.name', defaultMessage: '名称' })}>
               {getFieldDecorator('name', {
-                initialValue: roleData ? roleData.name : '',
+                initialValue: get(roleData, 'name', ''),
                 rules: [
                   {
                     required: true,
@@ -175,7 +177,7 @@ class RoleGroupForm extends PureComponent {
             </FormItem>
             <FormItem label="角色类型">
               {getFieldDecorator('roleTypeRemark', {
-                initialValue: roleData ? roleData.roleTypeRemark : null,
+                initialValue: get(roleData, 'roleTypeRemark', ''),
               })(<ComboList {...roleTypeProps} />)}
             </FormItem>
             <FormItem label="公共角色">
@@ -193,7 +195,7 @@ class RoleGroupForm extends PureComponent {
               <>
                 <FormItem label="用户类型">
                   {getFieldDecorator('userTypeRemark', {
-                    initialValue: roleData ? roleData.userTypeRemark : null,
+                    initialValue: get(roleData, 'userTypeRemark', null),
                     rules: [
                       {
                         required: false,
@@ -204,7 +206,7 @@ class RoleGroupForm extends PureComponent {
                 </FormItem>
                 <FormItem label="组织机构">
                   {getFieldDecorator('publicOrgName', {
-                    initialValue: roleData ? roleData.publicOrgName : null,
+                    initialValue: get(roleData, 'publicOrgName', null),
                     rules: [
                       {
                         required: false,
