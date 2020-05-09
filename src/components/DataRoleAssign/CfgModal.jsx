@@ -62,7 +62,7 @@ class CfgModal extends Component {
         onOk={this.handleOk}
         onCancel={onCancel}
       >
-        <Form {...formItemLayout} layout="horizontal">
+        <Form {...formItemLayout} layout="inline">
           <FormItem label="有效期">
             {getFieldDecorator('effectiveRange', {
               initialValue: [tempEffectiveFrom, tempEffectiveTo],
