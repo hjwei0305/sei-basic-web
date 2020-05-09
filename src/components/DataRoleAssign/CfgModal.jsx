@@ -63,11 +63,11 @@ class CfgModal extends Component {
         onCancel={onCancel}
       >
         <Form {...formItemLayout} layout="inline">
-          <FormItem label="有效期">
+          <FormItem label="有效期" style={{ width: '100%' }}>
             {getFieldDecorator('effectiveRange', {
               initialValue: [tempEffectiveFrom, tempEffectiveTo],
               rules: [{ validator: this.checkRange }],
-            })(<ScopeDatePicker />)}
+            })(<ScopeDatePicker style={{ width: '100%' }} />)}
           </FormItem>
           {/* 以下为隐藏的formItem */}
           <FormItem style={{ display: 'none' }}>
