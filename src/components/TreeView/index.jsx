@@ -183,7 +183,7 @@ class TreeView extends Component {
         <Search
           placeholder="请输入名称搜索"
           onSearch={this.handleSearch}
-          style={{ width: '100%' }}
+          style={{ width: '100%', textAlign: 'left' }}
         />
       ),
       left: rowLeft ? null : left,
