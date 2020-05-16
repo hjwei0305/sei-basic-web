@@ -4,4 +4,5 @@ export default {
   'appModule.edit': 'Edit App Modules',
   'appModule.webBaseAddress': 'WEB Base Address',
   'appModule.apiBaseAddress': 'Service Name',
+  'appModule.apiBaseAddress.required': 'Service name is required',
 };

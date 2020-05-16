@@ -105,6 +105,15 @@ class FormModal extends PureComponent {
           >
             {getFieldDecorator('apiBaseAddress', {
               initialValue: rowData ? rowData.apiBaseAddress : '',
+              rules: [
+                {
+                  required: true,
+                  message: formatMessage({
+                    id: 'appModule.apiBaseAddress.required',
+                    defaultMessage: '服务名不能为空',
+                  }),
+                },
+              ],
             })(<Input />)}
           </FormItem>
           <FormItem label={formatMessage({ id: 'global.rank', defaultMessage: '序号' })}>

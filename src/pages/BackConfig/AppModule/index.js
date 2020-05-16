@@ -175,7 +175,7 @@ class AppModule extends Component {
       {
         title: formatMessage({ id: 'global.code', defaultMessage: '代码' }),
         dataIndex: 'code',
-        width: 120,
+        width: 160,
         required: true,
       },
       {
@@ -185,14 +185,14 @@ class AppModule extends Component {
         required: true,
       },
       {
-        title: formatMessage({ id: 'appModule.webBaseAddress', defaultMessage: 'WEB基地址' }),
-        dataIndex: 'webBaseAddress',
-        width: 160,
-      },
-      {
         title: formatMessage({ id: 'appModule.apiBaseAddress', defaultMessage: '服务名' }),
         dataIndex: 'apiBaseAddress',
         width: 160,
+      },
+      {
+        title: formatMessage({ id: 'appModule.webBaseAddress', defaultMessage: 'WEB基地址' }),
+        dataIndex: 'webBaseAddress',
+        width: 220,
       },
       {
         title: formatMessage({ id: 'global.remark', defaultMessage: '说明' }),

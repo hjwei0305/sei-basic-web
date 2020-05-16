@@ -4,4 +4,5 @@ export default {
   'appModule.edit': '修改应用模块',
   'appModule.webBaseAddress': 'WEB基地址',
   'appModule.apiBaseAddress': '服务名',
+  'appModule.apiBaseAddress.required': '服务名不能为空',
 };
