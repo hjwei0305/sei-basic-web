@@ -94,13 +94,6 @@ class FormModal extends PureComponent {
             })(<Input />)}
           </FormItem>
           <FormItem
-            label={formatMessage({ id: 'appModule.webBaseAddress', defaultMessage: 'WEB基地址' })}
-          >
-            {getFieldDecorator('webBaseAddress', {
-              initialValue: rowData ? rowData.webBaseAddress : '',
-            })(<Input />)}
-          </FormItem>
-          <FormItem
             label={formatMessage({ id: 'appModule.apiBaseAddress', defaultMessage: '服务名' })}
           >
             {getFieldDecorator('apiBaseAddress', {
@@ -114,6 +107,13 @@ class FormModal extends PureComponent {
                   }),
                 },
               ],
+            })(<Input />)}
+          </FormItem>
+          <FormItem
+            label={formatMessage({ id: 'appModule.webBaseAddress', defaultMessage: 'WEB基地址' })}
+          >
+            {getFieldDecorator('webBaseAddress', {
+              initialValue: rowData ? rowData.webBaseAddress : '',
             })(<Input />)}
           </FormItem>
           <FormItem label={formatMessage({ id: 'global.rank', defaultMessage: '序号' })}>
