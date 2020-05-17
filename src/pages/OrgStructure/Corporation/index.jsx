@@ -154,7 +154,7 @@ class Corporation extends Component {
             >
               {this.renderDelBtn(record)}
             </Popconfirm>
-            <DataAduitButton title="公司" entityId={record.id} />
+            <DataAduitButton title={record.name} entityId={record.id} />
           </span>
         ),
       },
