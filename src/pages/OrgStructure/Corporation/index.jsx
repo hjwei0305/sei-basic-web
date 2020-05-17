@@ -4,13 +4,13 @@ import { connect } from 'dva';
 import cls from 'classnames';
 import { Button, Popconfirm, Tag } from 'antd';
 import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale';
-import { ExtTable, utils, ExtIcon } from 'suid';
+import { ExtTable, utils, ExtIcon, DataAudit } from 'suid';
 import { PageWrapper } from '@/components';
-
 import { constants } from '@/utils';
 import FormModal from './FormModal';
 import styles from './index.less';
 
+const { DataAduitButton } = DataAudit;
 const { APP_MODULE_BTN_KEY } = constants;
 const { authAction } = utils;
 
@@ -126,7 +126,7 @@ class Corporation extends Component {
       {
         title: formatMessage({ id: 'global.operation', defaultMessage: '操作' }),
         key: 'operation',
-        width: 100,
+        width: 120,
         align: 'center',
         dataIndex: 'id',
         className: 'action',
@@ -154,6 +154,7 @@ class Corporation extends Component {
             >
               {this.renderDelBtn(record)}
             </Popconfirm>
+            <DataAduitButton entityId={record.id} />
           </span>
         ),
       },
