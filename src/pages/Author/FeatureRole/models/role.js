@@ -11,6 +11,10 @@ import {
   getAssignedEmployeesByFeatureRole,
   getAssignedPositionsByFeatureRole,
   getAssignFeatureItem,
+  unAssignPosition,
+  assignPosition,
+  unAssignUser,
+  assignUser,
 } from '../service';
 
 const { dvaModel } = utils;
@@ -22,7 +26,9 @@ export default modelExtend(model, {
   state: {
     listData: [],
     currentRole: null,
+    currCfgRole: null,
     showAssignFeature: false,
+    showCfgView: false,
     assignListData: [],
     unAssignListData: [],
     assignUserData: [],
@@ -170,6 +176,46 @@ export default modelExtend(model, {
       } else {
         message.error(re.message);
       }
+    },
+    *assignPosition({ payload }, { call, put }) {
+      const re = yield call(assignPosition, payload);
+      message.destroy();
+      if (re.success) {
+        message.success(re.message);
+      } else {
+        message.error(re.message);
+      }
+      return re;
+    },
+    *unAssignPosition({ payload }, { call, put }) {
+      const re = yield call(unAssignPosition, payload);
+      message.destroy();
+      if (re.success) {
+        message.success(re.message);
+      } else {
+        message.error(re.message);
+      }
+      return re;
+    },
+    *assignUser({ payload }, { call, put }) {
+      const re = yield call(assignUser, payload);
+      message.destroy();
+      if (re.success) {
+        message.success(re.message);
+      } else {
+        message.error(re.message);
+      }
+      return re;
+    },
+    *unAssignUser({ payload }, { call, put }) {
+      const re = yield call(unAssignUser, payload);
+      message.destroy();
+      if (re.success) {
+        message.success(re.message);
+      } else {
+        message.error(re.message);
+      }
+      return re;
     },
   },
 });

@@ -6,6 +6,7 @@ import { formatMessage } from 'umi-plugin-react/locale';
 import { Row, Col, Card, Input, Empty, Pagination, List, Skeleton, Popconfirm } from 'antd';
 import { ScrollBar, ExtIcon } from 'suid';
 import empty from '@/assets/item_empty.svg';
+import Config from './components/Config';
 import RoleGroupAdd from './components/RoleGroupForm/Add';
 import RoleGroupEdit from './components/RoleGroupForm/Edit';
 import Role from './components/Role';
@@ -13,7 +14,7 @@ import styles from './index.less';
 
 const { Search } = Input;
 
-@connect(({ featureRoleGroup, loading }) => ({ featureRoleGroup, loading }))
+@connect(({featureRole, featureRoleGroup, loading }) => ({featureRole, featureRoleGroup, loading }))
 class FeatureRole extends Component {
   static allValue = '';
 
@@ -164,8 +165,9 @@ class FeatureRole extends Component {
   };
 
   render() {
-    const { loading, featureRoleGroup } = this.props;
+    const { loading, featureRoleGroup, featureRole } = this.props;
     const { currentRoleGroup } = featureRoleGroup;
+    const { currCfgRole } = featureRole;
     const { listData, pagination, delGroupId } = this.state;
     const listLoading = loading.effects['featureRoleGroup/getRoleGroupList'];
     const saving = loading.effects['featureRoleGroup/saveRoleGroup'];
@@ -174,7 +176,7 @@ class FeatureRole extends Component {
     };
     return (
       <div className={cls(styles['container-box'])}>
-        <Row gutter={8} className="auto-height">
+        <Row style={{ display: currCfgRole ? 'none' : ''}} gutter={8} className="auto-height">
           <Col span={5} className="auto-height">
             <Card title="角色组" bordered={false} className="left-content">
               <div className="header-tool-box">
@@ -250,6 +252,7 @@ class FeatureRole extends Component {
             )}
           </Col>
         </Row>
+        { currCfgRole ? <Config></Config> : null }
       </div>
     );
   }
