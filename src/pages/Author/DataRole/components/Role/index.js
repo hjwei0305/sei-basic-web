@@ -71,6 +71,16 @@ class Role extends Component {
     this.allValue = v;
   };
 
+  handleCfg = role => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'dataRole/updateState',
+      payload: {
+        currCfgRole: role,
+      },
+    });
+  };
+
   handlerSearch = () => {
     let listData = [];
     if (this.allValue) {
@@ -259,6 +269,14 @@ class Role extends Component {
                           </div>
                         </Skeleton>
                         <div className="tool-action" onClick={e => e.stopPropagation()}>
+                          <span className={cls('form-popover-box-trigger', 'action-item')}>
+                            <ExtIcon
+                              type="setting"
+                              tooltip={{ title: '配置' }}
+                              antd
+                              onClick={() => this.handleCfg(item)}
+                            />
+                          </span>
                           <RoleEdit
                             currentRoleGroup={currentRoleGroup}
                             saving={saving}

@@ -14,7 +14,11 @@ import styles from './index.less';
 const { Search } = Input;
 const { Sider, Content } = Layout;
 
-@connect(({ featureRoleGroup, loading }) => ({ featureRoleGroup, loading }))
+@connect(({ featureRole, featureRoleGroup, loading }) => ({
+  featureRole,
+  featureRoleGroup,
+  loading,
+}))
 class FeatureRole extends Component {
   static allValue = '';
 

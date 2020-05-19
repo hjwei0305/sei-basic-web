@@ -137,3 +137,53 @@ export async function getAssignedPositionsByFeatureRole(params) {
     params,
   });
 }
+
+/**
+ * 移除功能角色分配的岗位
+ * params featureRoleId
+ */
+export async function unAssignPosition(data) {
+  const url = `${SERVER_PATH}/sei-basic/positionFeatureRole/removeRelationsByParents`;
+  return request({
+    url,
+    method: 'DELETE',
+    data,
+  });
+}
+
+/**
+ * 给功能角色分配岗位
+ */
+export async function assignPosition(data) {
+  const url = `${SERVER_PATH}/sei-basic/positionFeatureRole/insertRelationsByParents`;
+  return request({
+    url,
+    method: 'POST',
+    data,
+  });
+}
+
+/**
+ * 移除功能角色分配的用户
+ * params featureRoleId
+ */
+export async function unAssignUser(data) {
+  const url = `${SERVER_PATH}/sei-basic/userFeatureRole/removeRelationsByParents`;
+  return request({
+    url,
+    method: 'DELETE',
+    data,
+  });
+}
+
+/**
+ * 给功能角色分配用户
+ */
+export async function assignUser(data) {
+  const url = `${SERVER_PATH}/sei-basic/userFeatureRole/insertRelationsByParents`;
+  return request({
+    url,
+    method: 'POST',
+    data,
+  });
+}
