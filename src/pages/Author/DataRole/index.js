@@ -3,16 +3,16 @@ import { connect } from 'dva';
 import cls from 'classnames';
 import { isEqual } from 'lodash';
 import { formatMessage } from 'umi-plugin-react/locale';
-import { Row, Col, Card, Input, Empty, Pagination, List, Skeleton, Popconfirm } from 'antd';
+import { Card, Input, Empty, Pagination, List, Skeleton, Popconfirm, Layout } from 'antd';
 import { ScrollBar, ExtIcon } from 'suid';
 import empty from '@/assets/item_empty.svg';
-import Config from './components/Config';
 import RoleGroupAdd from './components/RoleGroupForm/Add';
 import RoleGroupEdit from './components/RoleGroupForm/Edit';
 import Role from './components/Role';
 import styles from './index.less';
 
 const { Search } = Input;
+const { Sider, Content } = Layout;
 
 @connect(({ dataRole, dataRoleGroup, loading }) => ({ dataRole, dataRoleGroup, loading }))
 class FeatureRole extends Component {
@@ -165,9 +165,8 @@ class FeatureRole extends Component {
   };
 
   render() {
-    const { loading, dataRoleGroup, dataRole } = this.props;
+    const { loading, dataRoleGroup } = this.props;
     const { currentRoleGroup } = dataRoleGroup;
-    const { currCfgRole } = dataRole;
     const { listData, pagination, delGroupId } = this.state;
     const listLoading = loading.effects['dataRoleGroup/getRoleGroupList'];
     const saving = loading.effects['dataRoleGroup/saveRoleGroup'];
@@ -176,8 +175,8 @@ class FeatureRole extends Component {
     };
     return (
       <div className={cls(styles['container-box'])}>
-        <Row style={{ display: currCfgRole ? 'none' : '' }} gutter={8} className="auto-height">
-          <Col span={5} className="auto-height">
+        <Layout className="auto-height">
+          <Sider width={320} className="auto-height">
             <Card title="角色组" bordered={false} className="left-content">
               <div className="header-tool-box">
                 <RoleGroupAdd saving={saving} saveRoleGroup={this.saveRoleGroup} />
@@ -241,8 +240,11 @@ class FeatureRole extends Component {
                 <Pagination simple onChange={this.handlerPageChange} {...pagination} />
               </div>
             </Card>
-          </Col>
-          <Col span={19} className={cls('main-content', 'auto-height', 'role-main')}>
+          </Sider>
+          <Content
+            className={cls('main-content', 'auto-height', 'role-main')}
+            style={{ paddingLeft: 8 }}
+          >
             {currentRoleGroup ? (
               <Role {...roleProps} />
             ) : (
@@ -250,9 +252,8 @@ class FeatureRole extends Component {
                 <Empty image={empty} description="可选择左边列表角色组操作" />
               </div>
             )}
-          </Col>
-        </Row>
-        {currCfgRole ? <Config /> : null}
+          </Content>
+        </Layout>
       </div>
     );
   }

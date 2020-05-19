@@ -3,7 +3,7 @@ import { connect } from 'dva';
 import cls from 'classnames';
 import { isEqual } from 'lodash';
 import { formatMessage } from 'umi-plugin-react/locale';
-import { Avatar, Card, Row, Col, Empty, Input, List, Skeleton, Popconfirm, Tag } from 'antd';
+import { Avatar, Card, Empty, Input, List, Skeleton, Popconfirm, Tag, Layout } from 'antd';
 import { ScrollBar, ExtIcon } from 'suid';
 import empty from '@/assets/item_empty.svg';
 import RoleAdd from './Form/Add';
@@ -12,6 +12,7 @@ import DataAuthorType from './DataAuthorType';
 import styles from './index.less';
 
 const { Search } = Input;
+const { Sider, Content } = Layout;
 
 @connect(({ dataRole, dataRoleGroup, loading }) => ({ dataRole, dataRoleGroup, loading }))
 class Role extends Component {
@@ -223,8 +224,8 @@ class Role extends Component {
     };
     return (
       <div className={cls(styles['role-box'])}>
-        <Row gutter={4} className="auto-height">
-          <Col span={8} className={cls('left-content', 'auto-height')}>
+        <Layout className="auto-height">
+          <Sider width={360} className={cls('left-content', 'auto-height')}>
             <Card
               title={this.renderTitle()}
               bordered={false}
@@ -303,8 +304,8 @@ class Role extends Component {
                 </ScrollBar>
               </div>
             </Card>
-          </Col>
-          <Col span={16} className={cls('main-content', 'auto-height')}>
+          </Sider>
+          <Content className={cls('main-content', 'auto-height')} style={{ paddingLeft: 4 }}>
             {currentRole ? (
               <DataAuthorType {...dataAuthorTypeProps} />
             ) : (
@@ -312,8 +313,8 @@ class Role extends Component {
                 <Empty image={empty} description="选择角色项进行权限配置" />
               </div>
             )}
-          </Col>
-        </Row>
+          </Content>
+        </Layout>
       </div>
     );
   }
