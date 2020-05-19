@@ -151,3 +151,54 @@ export async function getUnassignedAuthTreeDataList(params) {
     params,
   });
 }
+
+/**
+ * 移除数据角色分配的岗位
+ * params featureRoleId
+ */
+export async function unAssignPosition(data) {
+  const url = `${SERVER_PATH}/sei-basic/positionDataRole/removeRelationsByParents`;
+  return request({
+    url,
+    method: 'DELETE',
+    data,
+  });
+}
+
+
+/**
+ * 给数据角色分配岗位
+ */
+export async function assignPosition(data) {
+  const url = `${SERVER_PATH}/sei-basic/positionDataRole/insertRelationsByParents`;
+  return request({
+    url,
+    method: 'POST',
+    data,
+  });
+}
+
+/**
+ * 移除数据角色分配的用户
+ */
+export async function unAssignUser(data) {
+  const url = `${SERVER_PATH}/sei-basic/userDataRole/removeRelationsByParents`;
+  return request({
+    url,
+    method: 'DELETE',
+    data,
+  });
+}
+
+
+/**
+ * 给数据角色分配用户
+ */
+export async function assignUser(data) {
+  const url = `${SERVER_PATH}/sei-basic/userDataRole/insertRelationsByParents`;
+  return request({
+    url,
+    method: 'POST',
+    data,
+  });
+}
