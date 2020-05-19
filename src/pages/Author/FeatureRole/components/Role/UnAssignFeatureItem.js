@@ -156,17 +156,37 @@ class UnAssignFeatureItem extends Component {
     return { unAssignListData: newData };
   };
 
+  getTooltip = code => {
+    return {
+      placement: 'top',
+      title: (
+        <>
+          代码
+          <br />
+          <span style={{ fontSize: 12, color: '#d2d2d2' }}>{code}</span>
+        </>
+      ),
+    };
+  };
+
   renderNodeIcon = featureType => {
     let icon = null;
     switch (featureType) {
       case FEATURE_TYPE.APP_MODULE:
-        icon = <ExtIcon type="appstore" antd style={{ color: '#13c2c2' }} />;
+        icon = (
+          <ExtIcon
+            type="appstore"
+            tooltip={{ title: '应用模块' }}
+            antd
+            style={{ color: '#13c2c2' }}
+          />
+        );
         break;
       case FEATURE_TYPE.PAGE:
-        icon = <ExtIcon type="doc" style={{ color: '#722ed1' }} />;
+        icon = <ExtIcon type="doc" tooltip={{ title: '页面' }} style={{ color: '#722ed1' }} />;
         break;
       case FEATURE_TYPE.OPERATE:
-        icon = <ExtIcon type="dian" />;
+        icon = <ExtIcon type="dian" tooltip={{ title: '功能项' }} />;
         break;
       default:
     }
@@ -192,11 +212,7 @@ class UnAssignFeatureItem extends Component {
         ) : (
           <span>{readerValue}</span>
         );
-      const nodeTitle = (
-        <Tooltip title={`代码:${item.code}`} placement="right">
-          {title}
-        </Tooltip>
-      );
+      const nodeTitle = <Tooltip {...this.getTooltip(item.code)}>{title}</Tooltip>;
       if (readerChildren && readerChildren.length > 0) {
         return (
           <TreeNode title={nodeTitle} key={item.id} icon={this.renderNodeIcon(item.featureType)}>
@@ -270,7 +286,7 @@ class UnAssignFeatureItem extends Component {
     };
     return (
       <Drawer
-        width={500}
+        width={520}
         destroyOnClose
         getContainer={false}
         placement="right"

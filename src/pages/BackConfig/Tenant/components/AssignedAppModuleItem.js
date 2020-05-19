@@ -145,7 +145,7 @@ class TenantAssignedAppModuleItem extends Component {
     if (loading.effects['tenant/removeAssignedAppModuleItem'] && removeAppModuleId === row.id) {
       return <ExtIcon className="del-loading" type="loading" antd />;
     }
-    return <ExtIcon className="del" type="minus-circle" antd />;
+    return <ExtIcon tooltip={{ title: '移除应用模块' }} className="del" type="minus-circle" antd />;
   };
 
   renderTitle = () => {
@@ -190,18 +190,18 @@ class TenantAssignedAppModuleItem extends Component {
       {
         title: formatMessage({ id: 'global.code', defaultMessage: '代码' }),
         dataIndex: 'code',
-        width: 200,
+        width: 260,
       },
       {
         title: formatMessage({ id: 'global.name', defaultMessage: '名称' }),
         dataIndex: 'name',
-        width: 220,
+        width: 360,
         required: true,
       },
       {
         title: formatMessage({ id: 'global.remark', defaultMessage: '说明' }),
         dataIndex: 'remark',
-        width: 320,
+        width: 420,
         optional: true,
       },
     ];

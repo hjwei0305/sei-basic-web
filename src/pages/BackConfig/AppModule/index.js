@@ -230,6 +230,7 @@ class AppModule extends Component {
           toolBar={toolBarProps}
           columns={columns}
           dataSource={list}
+          searchWidth={260}
           sort={{
             field: { rank: 'asc', code: null, name: null },
           }}

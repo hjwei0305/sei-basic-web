@@ -161,7 +161,9 @@ class FeaturePage extends Component {
         title={formatMessage({ id: 'global.remove.confirm', defaultMessage: '确定要移除吗?' })}
         onConfirm={() => this.removeAssignFeatureItem([item.id])}
       >
-        {icon}
+        <Tooltip title="移除功能项" placement="right">
+          {icon}
+        </Tooltip>
       </Popconfirm>
     );
   };
@@ -236,6 +238,19 @@ class FeaturePage extends Component {
     return icon;
   };
 
+  getTooltip = code => {
+    return {
+      placement: 'top',
+      title: (
+        <>
+          代码
+          <br />
+          <span style={{ fontSize: 12, color: '#d2d2d2' }}>{code}</span>
+        </>
+      ),
+    };
+  };
+
   renderTreeNodes = treeData => {
     const { allValue } = this.state;
     const searchValue = allValue || '';
@@ -256,10 +271,10 @@ class FeaturePage extends Component {
           <span>{readerValue}</span>
         );
       const nodeTitle = (
-        <Tooltip title={`代码:${item.code}`} placement="right">
-          {title}
+        <>
+          <Tooltip {...this.getTooltip(item.code)}>{title}</Tooltip>
           {this.renderRemoveBtn(item)}
-        </Tooltip>
+        </>
       );
       if (readerChildren && readerChildren.length > 0) {
         return (

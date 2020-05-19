@@ -3,7 +3,7 @@ import { connect } from 'dva';
 import cls from 'classnames';
 import { omit, isEqual } from 'lodash';
 import { formatMessage } from 'umi-plugin-react/locale';
-import { Row, Col, Card, Input, Empty, Pagination, List, Skeleton, Popconfirm, Tag } from 'antd';
+import { Card, Input, Empty, Pagination, List, Skeleton, Popconfirm, Tag, Layout } from 'antd';
 import { ScrollBar, ExtIcon } from 'suid';
 import empty from '@/assets/item_empty.svg';
 import TenantAdd from './components/TenantForm/Add';
@@ -14,6 +14,7 @@ import AssignedAppModuleItem from './components/AssignedAppModuleItem';
 import styles from './index.less';
 
 const { Search } = Input;
+const { Sider, Content } = Layout;
 
 @connect(({ tenant, loading }) => ({ tenant, loading }))
 class Tenant extends Component {
@@ -221,8 +222,8 @@ class Tenant extends Component {
     };
     return (
       <div className={cls(styles['container-box'])}>
-        <Row gutter={8} className="auto-height">
-          <Col span={6} className="auto-height">
+        <Layout className="auto-height">
+          <Sider width={320} className="auto-height">
             <Card title="租户列表" bordered={false} className="left-content">
               <div className="header-tool-box">
                 <TenantAdd saving={saving} saveTenant={this.saveTenant} />
@@ -288,8 +289,8 @@ class Tenant extends Component {
                 <Pagination simple onChange={this.handlerPageChange} {...pagination} />
               </div>
             </Card>
-          </Col>
-          <Col span={18} className={cls('main-content', 'auto-height')}>
+          </Sider>
+          <Content className={cls('main-content', 'auto-height')} style={{ paddingLeft: 8 }}>
             {currentTenant ? (
               <AssignedAppModuleItem {...assignedAppModuleItemProps} />
             ) : (
@@ -297,8 +298,8 @@ class Tenant extends Component {
                 <Empty image={empty} description="选择左边的租户来配置相关要素" />
               </div>
             )}
-          </Col>
-        </Row>
+          </Content>
+        </Layout>
       </div>
     );
   }

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'dva';
 import cls from 'classnames';
 import { isEqual } from 'lodash';
-import { Button, Row, Col, Card, Input, Tree, Empty } from 'antd';
+import { Button, Card, Input, Tree, Empty, Layout } from 'antd';
 import { ScrollBar, ExtIcon, ListLoader } from 'suid';
 import empty from '@/assets/item_empty.svg';
 import NodeForm from './components/NodeForm';
@@ -13,6 +13,7 @@ const { Search } = Input;
 const { TreeNode } = Tree;
 const childFieldKey = 'children';
 const hightLightColor = '#f50';
+const { Sider, Content } = Layout;
 
 @connect(({ appMenu, loading }) => ({ appMenu, loading }))
 class AppMenu extends Component {
@@ -347,8 +348,8 @@ class AppMenu extends Component {
     };
     return (
       <div className={cls(styles['container-box'])}>
-        <Row gutter={8} className="auto-height">
-          <Col span={7} className="auto-height">
+        <Layout className="auto-height">
+          <Sider width={380} className="auto-height">
             <Card
               title="应用菜单"
               bordered={false}
@@ -388,8 +389,8 @@ class AppMenu extends Component {
                 </ScrollBar>
               </div>
             </Card>
-          </Col>
-          <Col span={17} className={cls('main-content')}>
+          </Sider>
+          <Content className={cls('main-content', 'auto-height')} style={{ paddingLeft: 8 }}>
             {currentNode ? (
               <NodeForm {...nodeFormProps} />
             ) : (
@@ -397,8 +398,8 @@ class AppMenu extends Component {
                 <Empty image={empty} description="可选择左侧菜单节点获得相关的操作" />
               </div>
             )}
-          </Col>
-        </Row>
+          </Content>
+        </Layout>
         <MenuMoveModal {...menuMoveModalProps} />
       </div>
     );

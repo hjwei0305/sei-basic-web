@@ -3,7 +3,7 @@ import { connect } from 'dva';
 import cls from 'classnames';
 import { isEqual } from 'lodash';
 import { formatMessage } from 'umi-plugin-react/locale';
-import { Row, Col, Input, Empty, Popconfirm } from 'antd';
+import { Input, Empty, Popconfirm, Layout } from 'antd';
 import { ExtIcon, ListCard } from 'suid';
 import empty from '@/assets/item_empty.svg';
 import GroupAdd from './components/FeatureGroupForm/Add';
@@ -12,6 +12,7 @@ import PageFeature from './components/FeaturePage';
 import styles from './index.less';
 
 const { Search } = Input;
+const { Sider, Content } = Layout;
 
 @connect(({ featureGroup, loading }) => ({ featureGroup, loading }))
 class Feature extends Component {
@@ -183,11 +184,11 @@ class Feature extends Component {
     };
     return (
       <div className={cls(styles['container-box'])}>
-        <Row gutter={8} className="auto-height">
-          <Col span={7} className="auto-height">
+        <Layout className="auto-height">
+          <Sider width={320} className="auto-height">
             <ListCard {...featureGroupprops} />
-          </Col>
-          <Col span={17} className={cls('main-content', 'auto-height')}>
+          </Sider>
+          <Content className={cls('main-content', 'auto-height')} style={{ paddingLeft: 8 }}>
             {currentFeatureGroup ? (
               <PageFeature {...pageFeatureProps} />
             ) : (
@@ -195,8 +196,8 @@ class Feature extends Component {
                 <Empty image={empty} description="可选择左边列表项进行相应的操作" />
               </div>
             )}
-          </Col>
-        </Row>
+          </Content>
+        </Layout>
       </div>
     );
   }

@@ -3,7 +3,7 @@ import { connect } from 'dva';
 import cls from 'classnames';
 import { isEqual } from 'lodash';
 import { formatMessage } from 'umi-plugin-react/locale';
-import { Avatar, Card, Row, Col, Empty, Input, List, Skeleton, Popconfirm, Tag } from 'antd';
+import { Avatar, Card, Empty, Input, List, Skeleton, Popconfirm, Tag, Layout } from 'antd';
 import { ScrollBar, ExtIcon } from 'suid';
 import empty from '@/assets/item_empty.svg';
 import RoleAdd from './Form/Add';
@@ -13,6 +13,7 @@ import AssignedFeature from './AssignedFeature';
 import styles from './index.less';
 
 const { Search } = Input;
+const { Sider, Content } = Layout;
 
 @connect(({ featureRole, featureRoleGroup, loading }) => ({
   featureRole,
@@ -228,8 +229,8 @@ class Role extends Component {
     };
     return (
       <div className={cls(styles['role-box'])}>
-        <Row gutter={4} className="auto-height">
-          <Col span={8} className={cls('left-content', 'auto-height')}>
+        <Layout className="auto-height">
+          <Sider width={360} className={cls('left-content', 'auto-height')}>
             <Card
               title={this.renderTitle()}
               bordered={false}
@@ -302,8 +303,8 @@ class Role extends Component {
                 </ScrollBar>
               </div>
             </Card>
-          </Col>
-          <Col span={16} className={cls('main-content', 'auto-height')}>
+          </Sider>
+          <Content className={cls('main-content', 'auto-height')} style={{ paddingLeft: 4 }}>
             {currentRole ? (
               <AssignedFeature {...assignedFeatureProps} />
             ) : (
@@ -311,8 +312,8 @@ class Role extends Component {
                 <Empty image={empty} description="选择角色列表项进行功能项配置" />
               </div>
             )}
-          </Col>
-        </Row>
+          </Content>
+        </Layout>
       </div>
     );
   }

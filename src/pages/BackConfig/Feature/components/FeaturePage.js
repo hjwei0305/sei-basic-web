@@ -195,14 +195,14 @@ class FeaturePage extends Component {
       {
         title: formatMessage({ id: 'global.name', defaultMessage: '名称' }),
         dataIndex: 'name',
-        width: 220,
+        width: 320,
         required: true,
         render: (_text, record) => this.renderName(record),
       },
       {
         title: '页面路由地址',
         dataIndex: 'groupCode',
-        width: 320,
+        width: 380,
       },
     ];
     const toolBarProps = {
