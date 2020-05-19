@@ -102,7 +102,7 @@ class UserConfig extends Component {
     },
     {
       title: '用户备注',
-      dataIndex: 'userRemark',
+      dataIndex: 'remark',
       width: 100,
       required: true,
     },
