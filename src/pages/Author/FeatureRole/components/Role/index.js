@@ -6,14 +6,17 @@ import { formatMessage } from 'umi-plugin-react/locale';
 import { Avatar, Card, Empty, Input, List, Skeleton, Popconfirm, Tag, Layout } from 'antd';
 import { ScrollBar, ExtIcon } from 'suid';
 import empty from '@/assets/item_empty.svg';
+import { constants } from '@/utils';
 import RoleAdd from './Form/Add';
 import RoleEdit from './Form/Edit';
 import ExtAction from './ExtAction';
 import AssignedFeature from './AssignedFeature';
+import StationModal from '../Config/Station';
 import styles from './index.less';
 
 const { Search } = Input;
 const { Sider, Content } = Layout;
+const { ROLE_VIEW } = constants;
 
 @connect(({ featureRole, featureRoleGroup, loading }) => ({
   featureRole,
@@ -167,6 +170,42 @@ class Role extends Component {
     });
   };
 
+  handlerAction = key => {
+    const { dispatch } = this.props;
+    switch (key) {
+      case ROLE_VIEW.CONFIG_STATION:
+        dispatch({
+          type: 'featureRole/updateState',
+          payload: {
+            showConfigStation: true,
+          },
+        });
+        break;
+      case ROLE_VIEW.CONFIG_USER:
+        dispatch({
+          type: 'featureRole/updateState',
+          payload: {
+            showConfigUser: true,
+          },
+        });
+        break;
+      default:
+    }
+  };
+
+  closeFormModal = () => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'featureRole/updateState',
+      payload: {
+        showConfigUser: false,
+        showConfigStation: false,
+      },
+    });
+  };
+
+  handlerStationSave = () => {};
+
   renderName = row => {
     let tag;
     if (row.publicUserType && row.publicOrgId) {
@@ -229,13 +268,20 @@ class Role extends Component {
 
   render() {
     const { loading, featureRole, featureRoleGroup } = this.props;
-    const { currentRole } = featureRole;
+    const { currentRole, showConfigStation } = featureRole;
     const { listData, delRoleId } = this.state;
     const listLoading = loading.effects['featureRole/getFeatureRoleList'];
     const saving = loading.effects['featureRole/saveFeatureRole'];
     const { currentRoleGroup } = featureRoleGroup;
     const assignedFeatureProps = {
       currentRole,
+    };
+    const stationModalProps = {
+      save: this.handlerStationSave,
+      rowData: currentRole,
+      showModal: showConfigStation,
+      closeFormModal: this.closeFormModal,
+      saving: loading.effects['featureRole/save'],
     };
     return (
       <div className={cls(styles['role-box'])}>
@@ -285,14 +331,6 @@ class Role extends Component {
                           </div>
                         </Skeleton>
                         <div className="tool-action" onClick={e => e.stopPropagation()}>
-                          <span className={cls('form-popover-box-trigger', 'action-item')}>
-                            <ExtIcon
-                              type="setting"
-                              tooltip={{ title: '配置' }}
-                              antd
-                              onClick={() => this.handleCfg(item)}
-                            />
-                          </span>
                           <RoleEdit
                             currentRoleGroup={currentRoleGroup}
                             saving={saving}
@@ -313,7 +351,7 @@ class Role extends Component {
                               <ExtIcon className={cls('del', 'action-item')} type="delete" antd />
                             )}
                           </Popconfirm>
-                          <ExtAction roleData={item} />
+                          <ExtAction roleData={item} onAction={this.handlerAction} />
                         </div>
                       </List.Item>
                     )}
@@ -332,6 +370,7 @@ class Role extends Component {
             )}
           </Content>
         </Layout>
+        <StationModal {...stationModalProps} />
       </div>
     );
   }

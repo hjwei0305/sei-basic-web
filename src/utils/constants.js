@@ -54,7 +54,9 @@ const LOGIN_STATUS = {
 };
 
 const ROLE_VIEW = {
-  SATION: 'role-station',
+  CONFIG_STATION: 'config-station',
+  CONFIG_USER: 'config-user',
+  STATION: 'role-station',
   USER: 'role-user',
 };
 

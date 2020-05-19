@@ -1,0 +1,35 @@
+@import '../../themes/vars.less';
+.station-panel-box {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  overflow: hidden;
+  background-color: @page-background-color;
+  :global {
+    .org-box {
+      height: 100%;
+      background-color: @white;
+      .title {
+        position: relative;
+        height: 32px;
+        padding: 0 16px;
+        overflow: hidden;
+        color: fade(@black, 85%);
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 32px;
+      }
+      .search-box {
+        position: relative;
+        height: 32px;
+        overflow: hidden;
+        line-height: 32px;
+        text-align: center;
+      }
+      .org-body {
+        height: calc(100% - 64px);
+        max-height: calc(100% - 64px);
+      }
+    }
+  }
+}

@@ -80,9 +80,14 @@ class DataAuthorType extends Component {
         required: true,
       },
       {
+        title: '应用模块',
+        dataIndex: 'appModuleName',
+        width: 200,
+      },
+      {
         title: '树形结构',
         dataIndex: 'beTree',
-        width: 80,
+        width: 120,
         align: 'center',
         required: true,
         render: (text, record) => {
@@ -91,11 +96,6 @@ class DataAuthorType extends Component {
           }
           return null;
         },
-      },
-      {
-        title: '应用模块',
-        dataIndex: 'appModuleName',
-        width: 200,
       },
     ];
     const appModulePros = {
@@ -145,6 +145,9 @@ class DataAuthorType extends Component {
       onTableRef: ref => (this.dataAutorTypeTableRef = ref),
       store: {
         url: `${SERVER_PATH}/sei-basic/dataAuthorizeType/getByDataRole`,
+      },
+      sort: {
+        field: { name: null, beTree: null, appModuleName: 'asc' },
       },
     };
     if (currentAppModuleId) {

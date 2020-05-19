@@ -28,7 +28,8 @@ export default modelExtend(model, {
     currentRole: null,
     currCfgRole: null,
     showAssignFeature: false,
-    showCfgView: false,
+    showConfigStation: false,
+    showConfigUser: false,
     assignListData: [],
     unAssignListData: [],
     assignUserData: [],
@@ -177,11 +178,17 @@ export default modelExtend(model, {
         message.error(re.message);
       }
     },
-    *assignPosition({ payload }, { call }) {
+    *assignPosition({ payload }, { call, put }) {
       const re = yield call(assignPosition, payload);
       message.destroy();
       if (re.success) {
         message.success(re.message);
+        yield put({
+          type: 'updateState',
+          payload: {
+            showConfigStation: false,
+          },
+        });
       } else {
         message.error(re.message);
       }

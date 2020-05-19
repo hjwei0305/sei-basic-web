@@ -16,7 +16,7 @@ const { Item } = Menu;
 const menuData = () => [
   {
     title: '查看岗位',
-    key: ROLE_VIEW.SATION,
+    key: ROLE_VIEW.STATION,
     disabled: false,
     icon: 'flag',
   },
@@ -24,7 +24,19 @@ const menuData = () => [
     title: '查看用户',
     key: ROLE_VIEW.USER,
     disabled: false,
-    icon: 'user',
+    icon: 'team',
+  },
+  {
+    title: '配置岗位',
+    key: ROLE_VIEW.CONFIG_STATION,
+    disabled: false,
+    icon: 'gold',
+  },
+  {
+    title: '配置用户',
+    key: ROLE_VIEW.CONFIG_USER,
+    disabled: false,
+    icon: 'solution',
   },
 ];
 
@@ -81,7 +93,7 @@ class ExtAction extends PureComponent {
 
   onActionOperation = e => {
     e.domEvent.stopPropagation();
-    if (e.key === ROLE_VIEW.SATION || e.key === ROLE_VIEW.USER) {
+    if (e.key === ROLE_VIEW.STATION || e.key === ROLE_VIEW.USER) {
       this.setState(
         {
           selectedKeys: e.key,
@@ -91,7 +103,7 @@ class ExtAction extends PureComponent {
           if (e.key === ROLE_VIEW.USER) {
             this.getUserData();
           }
-          if (e.key === ROLE_VIEW.SATION) {
+          if (e.key === ROLE_VIEW.STATION) {
             this.getStationData();
           }
         },
@@ -101,6 +113,10 @@ class ExtAction extends PureComponent {
         selectedKeys: '',
         menuShow: false,
       });
+      const { onAction } = this.props;
+      if (onAction) {
+        onAction(e.key);
+      }
     }
   };
 
@@ -130,7 +146,7 @@ class ExtAction extends PureComponent {
               </Item>
             );
           }
-          if (m.key === ROLE_VIEW.SATION) {
+          if (m.key === ROLE_VIEW.STATION) {
             return (
               <Item key={m.key}>
                 <StationView
@@ -145,8 +161,10 @@ class ExtAction extends PureComponent {
           }
           return (
             <Item key={m.key} disabled={m.disabled}>
-              <ExtIcon type={m.icon} antd />
-              {m.title}
+              <span className="view-popover-box-trigger">
+                <ExtIcon type={m.icon} antd />
+                {m.title}
+              </span>
             </Item>
           );
         })}

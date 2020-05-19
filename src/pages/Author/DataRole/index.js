@@ -5,7 +5,7 @@ import { isEqual } from 'lodash';
 import { formatMessage } from 'umi-plugin-react/locale';
 import { Card, Input, Empty, Pagination, List, Skeleton, Popconfirm, Layout } from 'antd';
 import { ScrollBar, ExtIcon } from 'suid';
-import empty from '@/assets/item_empty.svg';
+import empty from '@/assets/data-role-guide.png';
 import RoleGroupAdd from './components/RoleGroupForm/Add';
 import RoleGroupEdit from './components/RoleGroupForm/Edit';
 import Role from './components/Role';
@@ -248,8 +248,8 @@ class FeatureRole extends Component {
             {currentRoleGroup ? (
               <Role {...roleProps} />
             ) : (
-              <div className="blank-empty">
-                <Empty image={empty} description="可选择左边列表角色组操作" />
+              <div className={cls('blank-empty', 'role-guide')}>
+                <Empty image={empty} description="数据权限配置过程向导" />
               </div>
             )}
           </Content>

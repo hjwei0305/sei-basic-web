@@ -270,14 +270,6 @@ class Role extends Component {
                           </div>
                         </Skeleton>
                         <div className="tool-action" onClick={e => e.stopPropagation()}>
-                          <span className={cls('form-popover-box-trigger', 'action-item')}>
-                            <ExtIcon
-                              type="setting"
-                              tooltip={{ title: '配置' }}
-                              antd
-                              onClick={() => this.handleCfg(item)}
-                            />
-                          </span>
                           <RoleEdit
                             currentRoleGroup={currentRoleGroup}
                             saving={saving}
@@ -297,6 +289,14 @@ class Role extends Component {
                               <ExtIcon className={cls('del', 'action-item')} type="delete" antd />
                             )}
                           </Popconfirm>
+                          <span className={cls('form-popover-box-trigger', 'action-item')}>
+                            <ExtIcon
+                              type="setting"
+                              tooltip={{ title: '配置岗位或用户' }}
+                              antd
+                              onClick={() => this.handleCfg(item)}
+                            />
+                          </span>
                         </div>
                       </List.Item>
                     )}
