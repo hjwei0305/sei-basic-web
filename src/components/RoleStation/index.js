@@ -10,7 +10,15 @@ const RoleStation = ({ stationData = [], loading }) => (
       renderItem={item => (
         <List.Item key={item.id}>
           <Skeleton loading={loading} active>
-            <List.Item.Meta title={item.name} description={item.organizationNamePath} />
+            <List.Item.Meta
+              title={
+                <>
+                  {item.name}
+                  <span style={{ color: '#999', marginLeft: 8 }}>{`(${item.code})`}</span>
+                </>
+              }
+              description={item.organizationNamePath}
+            />
           </Skeleton>
         </List.Item>
       )}

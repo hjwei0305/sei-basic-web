@@ -2,7 +2,7 @@
  * @Author: Eason
  * @Date: 2020-02-15 11:53:29
  * @Last Modified by: Eason
- * @Last Modified time: 2020-05-20 21:35:21
+ * @Last Modified time: 2020-05-20 23:11:00
  */
 import React, { Component } from 'react';
 import cls from 'classnames';
@@ -81,9 +81,9 @@ class StationAssign extends Component {
           {`确定 (${selectedKeys.length})`}
         </Button>
         <div>
-          <Tooltip title="输入名称关键字查询">
+          <Tooltip title="输入代码或名称关键字查询">
             <Search
-              placeholder="输入名称关键字查询"
+              placeholder="输入代码或名称关键字查询"
               onChange={e => this.handlerSearchChange(e.target.value)}
               onSearch={this.handlerSearch}
               onPressEnter={this.handlerSearch}
