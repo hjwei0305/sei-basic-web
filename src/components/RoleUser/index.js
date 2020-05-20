@@ -13,7 +13,13 @@ const RoleUser = ({ userData = [], loading }) => (
             <List.Item.Meta
               avatar={<Avatar icon="user" />}
               title={item.userName}
-              description={item.userTypeRemark}
+              description={
+                <>
+                  {item.userTypeRemark}
+                  <br />
+                  {item.remark}
+                </>
+              }
             />
           </Skeleton>
         </List.Item>
