@@ -6,19 +6,26 @@ import { formatMessage } from 'umi-plugin-react/locale';
 import { Avatar, Card, Empty, Input, List, Skeleton, Popconfirm, Tag, Layout } from 'antd';
 import { ScrollBar, ExtIcon } from 'suid';
 import empty from '@/assets/item_empty.svg';
+import { constants } from '@/utils';
 import RoleAdd from './Form/Add';
 import RoleEdit from './Form/Edit';
+import ExtAction from './ExtAction';
 import DataAuthorType from './DataAuthorType';
+import StationModal from '../Config/Station';
+import UserModal from '../Config/User';
 import styles from './index.less';
 
 const { Search } = Input;
 const { Sider, Content } = Layout;
+const { ROLE_VIEW } = constants;
 
 @connect(({ dataRole, dataRoleGroup, loading }) => ({ dataRole, dataRoleGroup, loading }))
 class Role extends Component {
   static allValue = '';
 
   static data = [];
+
+  static configRole = null;
 
   constructor(props) {
     super(props);
@@ -152,6 +159,41 @@ class Role extends Component {
     });
   };
 
+  handlerAction = (key, roleData) => {
+    const { dispatch } = this.props;
+    this.configRole = roleData;
+    switch (key) {
+      case ROLE_VIEW.CONFIG_STATION:
+        dispatch({
+          type: 'dataRole/updateState',
+          payload: {
+            showConfigStation: true,
+          },
+        });
+        break;
+      case ROLE_VIEW.CONFIG_USER:
+        dispatch({
+          type: 'dataRole/updateState',
+          payload: {
+            showConfigUser: true,
+          },
+        });
+        break;
+      default:
+    }
+  };
+
+  closeFormModal = () => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'dataRole/updateState',
+      payload: {
+        showConfigUser: false,
+        showConfigStation: false,
+      },
+    });
+  };
+
   renderName = row => {
     let tag;
     if (row.publicUserType && row.publicOrgId) {
@@ -214,13 +256,23 @@ class Role extends Component {
 
   render() {
     const { loading, dataRole, dataRoleGroup } = this.props;
-    const { currentRole } = dataRole;
+    const { currentRole, showConfigStation, showConfigUser } = dataRole;
     const { listData, delRoleId } = this.state;
     const listLoading = loading.effects['dataRole/getDataRoleList'];
     const saving = loading.effects['dataRole/saveDataRole'];
     const { currentRoleGroup } = dataRoleGroup;
     const dataAuthorTypeProps = {
       currentRole,
+    };
+    const stationModalProps = {
+      rowData: this.configRole,
+      showModal: showConfigStation,
+      closeFormModal: this.closeFormModal,
+    };
+    const userModalProps = {
+      rowData: this.configRole,
+      showModal: showConfigUser,
+      closeFormModal: this.closeFormModal,
     };
     return (
       <div className={cls(styles['role-box'])}>
@@ -289,14 +341,7 @@ class Role extends Component {
                               <ExtIcon className={cls('del', 'action-item')} type="delete" antd />
                             )}
                           </Popconfirm>
-                          <span className={cls('form-popover-box-trigger', 'action-item')}>
-                            <ExtIcon
-                              type="setting"
-                              tooltip={{ title: '配置岗位或用户' }}
-                              antd
-                              onClick={() => this.handleCfg(item)}
-                            />
-                          </span>
+                          <ExtAction roleData={item} onAction={this.handlerAction} />
                         </div>
                       </List.Item>
                     )}
@@ -315,6 +360,8 @@ class Role extends Component {
             )}
           </Content>
         </Layout>
+        <StationModal {...stationModalProps} />
+        <UserModal {...userModalProps} />
       </div>
     );
   }

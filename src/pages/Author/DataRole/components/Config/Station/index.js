@@ -7,8 +7,8 @@ import { StationAssign } from '@/components';
 import Assinged from './Assigned';
 import styles from './index.less';
 
-@connect(({ featureRole, loading }) => ({
-  featureRole,
+@connect(({ dataRole, loading }) => ({
+  dataRole,
   loading,
 }))
 class StationModal extends PureComponent {
@@ -23,7 +23,7 @@ class StationModal extends PureComponent {
     const { rowData, dispatch } = this.props;
     const data = { childId: get(rowData, 'id', null), parentIds: keys };
     dispatch({
-      type: 'featureRole/assignStation',
+      type: 'dataRole/assignStation',
       payload: {
         ...data,
       },
@@ -35,7 +35,7 @@ class StationModal extends PureComponent {
     const { rowData, dispatch } = this.props;
     const data = { childId: get(rowData, 'id', null), parentIds: keys };
     dispatch({
-      type: 'featureRole/unAssignStation',
+      type: 'dataRole/unAssignStation',
       payload: {
         ...data,
       },
@@ -92,14 +92,14 @@ class StationModal extends PureComponent {
       currentRole: rowData,
       onBackAssigned: this.handlerBackAssigned,
       save: this.assignStation,
-      saving: loading.effects['featureRole/assignStation'],
-      extParams: { excludeFeatureRoleId: get(rowData, 'id', null) },
+      saving: loading.effects['dataRole/assignStation'],
+      extParams: { excludeDataRoleId: get(rowData, 'id', null) },
     };
     const assignedProps = {
       currentRole: rowData,
       onShowAssign: this.handlerShowAssign,
       save: this.unassignStation,
-      saving: loading.effects['featureRole/unAssignStation'],
+      saving: loading.effects['dataRole/unAssignStation'],
     };
     return (
       <ExtModal {...extModalProps}>

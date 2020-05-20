@@ -153,10 +153,36 @@ export async function getUnassignedAuthTreeDataList(params) {
 }
 
 /**
+ * 根据数据角色的id获取已分配的用户
+ * params childId
+ */
+export async function getAssignedEmployeesByDataRole(params) {
+  const url = `${SERVER_PATH}/sei-basic/userDataRole/getParentsFromChildId`;
+  return request({
+    url,
+    method: 'GET',
+    params,
+  });
+}
+
+/**
+ * 根据数据角色的id获取已分配的岗位
+ * params childId
+ */
+export async function getAssignedPositionsByDataRole(params) {
+  const url = `${SERVER_PATH}/sei-basic/positionDataRole/getParentsFromChildId`;
+  return request({
+    url,
+    method: 'GET',
+    params,
+  });
+}
+
+/**
  * 移除数据角色分配的岗位
  * params featureRoleId
  */
-export async function unAssignPosition(data) {
+export async function unAssignStation(data) {
   const url = `${SERVER_PATH}/sei-basic/positionDataRole/removeRelationsByParents`;
   return request({
     url,
@@ -168,7 +194,7 @@ export async function unAssignPosition(data) {
 /**
  * 给数据角色分配岗位
  */
-export async function assignPosition(data) {
+export async function assignStation(data) {
   const url = `${SERVER_PATH}/sei-basic/positionDataRole/insertRelationsByParents`;
   return request({
     url,

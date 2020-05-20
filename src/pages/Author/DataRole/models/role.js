@@ -11,8 +11,10 @@ import {
   getUnassignedAuthTreeDataList,
   saveAssignRelations,
   removeAssignRelations,
-  unAssignPosition,
-  assignPosition,
+  getAssignedEmployeesByDataRole,
+  getAssignedPositionsByDataRole,
+  unAssignStation,
+  assignStation,
   unAssignUser,
   assignUser,
 } from '../service';
@@ -27,8 +29,12 @@ export default modelExtend(model, {
     listData: [],
     currCfgRole: null,
     currentRole: null,
+    showConfigStation: false,
+    showConfigUser: false,
     assignData: [],
     unAssignData: [],
+    assignUserData: [],
+    assinStationData: [],
   },
   effects: {
     *getDataRoleList({ payload }, { call, put }) {
@@ -150,27 +156,57 @@ export default modelExtend(model, {
         message.error(re.message);
       }
     },
-    *assignPosition({ payload }, { call }) {
-      const re = yield call(assignPosition, payload);
+    *getAssignedEmployeesByDataRole({ payload }, { call, put }) {
+      const re = yield call(getAssignedEmployeesByDataRole, payload);
+      if (re.success) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            assignUserData: re.data,
+          },
+        });
+      } else {
+        message.error(re.message);
+      }
+    },
+    *getAssignedPositionsByDataRole({ payload }, { call, put }) {
+      const re = yield call(getAssignedPositionsByDataRole, payload);
+      if (re.success) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            assinStationData: re.data,
+          },
+        });
+      } else {
+        message.error(re.message);
+      }
+    },
+    *assignStation({ payload, callback }, { call }) {
+      const re = yield call(assignStation, payload);
       message.destroy();
       if (re.success) {
         message.success(re.message);
       } else {
         message.error(re.message);
       }
-      return re;
+      if (callback && callback instanceof Function) {
+        callback(re);
+      }
     },
-    *unAssignPosition({ payload }, { call }) {
-      const re = yield call(unAssignPosition, payload);
+    *unAssignStation({ payload, callback }, { call }) {
+      const re = yield call(unAssignStation, payload);
       message.destroy();
       if (re.success) {
         message.success(re.message);
       } else {
         message.error(re.message);
       }
-      return re;
+      if (callback && callback instanceof Function) {
+        callback(re);
+      }
     },
-    *assignUser({ payload }, { call }) {
+    *assignUser({ payload, callback }, { call }) {
       const re = yield call(assignUser, payload);
       message.destroy();
       if (re.success) {
@@ -178,9 +214,11 @@ export default modelExtend(model, {
       } else {
         message.error(re.message);
       }
-      return re;
+      if (callback && callback instanceof Function) {
+        callback(re);
+      }
     },
-    *unAssignUser({ payload }, { call }) {
+    *unAssignUser({ payload, callback }, { call }) {
       const re = yield call(unAssignUser, payload);
       message.destroy();
       if (re.success) {
@@ -188,7 +226,9 @@ export default modelExtend(model, {
       } else {
         message.error(re.message);
       }
-      return re;
+      if (callback && callback instanceof Function) {
+        callback(re);
+      }
     },
   },
 });

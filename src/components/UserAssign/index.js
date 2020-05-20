@@ -2,12 +2,11 @@
  * @Author: Eason
  * @Date: 2020-02-15 11:53:29
  * @Last Modified by: Eason
- * @Last Modified time: 2020-05-20 17:16:01
+ * @Last Modified time: 2020-05-20 21:35:02
  */
 import React, { Component } from 'react';
 import cls from 'classnames';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
 import { Layout, Button, Input, Tooltip } from 'antd';
 import { ListLoader, ListCard } from 'suid';
 import { constants } from '@/utils';
@@ -22,12 +21,7 @@ class UserAssign extends Component {
   static listCardRef;
 
   static propTypes = {
-    currentRole: PropTypes.object,
     onBackAssigned: PropTypes.func,
-  };
-
-  static defaultProps = {
-    currentRole: null,
   };
 
   constructor(props) {
@@ -103,7 +97,7 @@ class UserAssign extends Component {
 
   render() {
     const { orgId, selectedKeys } = this.state;
-    const { currentRole } = this.props;
+    const { extParams } = this.props;
     const listCardProps = {
       className: 'anyone-user-box',
       title: '可选择的用户',
@@ -131,7 +125,7 @@ class UserAssign extends Component {
       store: {
         type: 'POST',
         url: `${SERVER_PATH}/sei-basic/user/queryUsers`,
-        params: { excludeFeatureRoleId: get(currentRole, 'id', null), includeSubNode: true },
+        params: { ...extParams, includeSubNode: true },
       },
       onListCardRef: ref => (this.listCardRef = ref),
       onSelectChange: this.handerAssignUserSelectChange,

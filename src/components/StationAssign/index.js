@@ -2,12 +2,11 @@
  * @Author: Eason
  * @Date: 2020-02-15 11:53:29
  * @Last Modified by: Eason
- * @Last Modified time: 2020-05-20 16:59:42
+ * @Last Modified time: 2020-05-20 21:35:21
  */
 import React, { Component } from 'react';
 import cls from 'classnames';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
 import { Layout, Button, Input, Tooltip } from 'antd';
 import { ListLoader, ListCard } from 'suid';
 import { constants } from '@/utils';
@@ -22,12 +21,7 @@ class StationAssign extends Component {
   static listCardRef;
 
   static propTypes = {
-    currentRole: PropTypes.object,
     onBackAssigned: PropTypes.func,
-  };
-
-  static defaultProps = {
-    currentRole: null,
   };
 
   constructor(props) {
@@ -103,7 +97,7 @@ class StationAssign extends Component {
 
   render() {
     const { orgId, selectedKeys } = this.state;
-    const { currentRole } = this.props;
+    const { extParams } = this.props;
     const listCardProps = {
       className: 'anyone-user-box',
       title: '可选择的岗位',
@@ -112,7 +106,12 @@ class StationAssign extends Component {
       checkbox: true,
       selectedKeys,
       itemField: {
-        title: item => item.name,
+        title: item => (
+          <>
+            {item.name}
+            <span style={{ color: '#999', marginLeft: 8 }}>{`(${item.code})`}</span>
+          </>
+        ),
         description: item =>
           item.organizationNamePath ? (
             <span style={{ fontSize: 12 }}>{item.organizationNamePath}</span>
@@ -130,7 +129,7 @@ class StationAssign extends Component {
       store: {
         type: 'POST',
         url: `${SERVER_PATH}/sei-basic/position/queryPositions`,
-        params: { excludeFeatureRoleId: get(currentRole, 'id', null), includeSubNode: true },
+        params: { ...extParams, includeSubNode: true },
       },
       onListCardRef: ref => (this.listCardRef = ref),
       onSelectChange: this.handerAssignStationSelectChange,

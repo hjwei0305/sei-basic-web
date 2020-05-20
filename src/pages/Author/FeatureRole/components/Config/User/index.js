@@ -93,6 +93,7 @@ class UserModal extends PureComponent {
       onBackAssigned: this.handlerBackAssigned,
       save: this.assignUser,
       saving: loading.effects['featureRole/assignUser'],
+      extParams: { excludeFeatureRoleId: get(rowData, 'id', null) },
     };
     const assignedProps = {
       currentRole: rowData,

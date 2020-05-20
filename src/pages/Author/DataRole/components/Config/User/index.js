@@ -3,15 +3,15 @@ import { get } from 'lodash';
 import cls from 'classnames';
 import { connect } from 'dva';
 import { ExtModal, ExtIcon } from 'suid';
-import { StationAssign } from '@/components';
+import { UserAssign } from '@/components';
 import Assinged from './Assigned';
 import styles from './index.less';
 
-@connect(({ featureRole, loading }) => ({
-  featureRole,
+@connect(({ dataRole, loading }) => ({
+  dataRole,
   loading,
 }))
-class StationModal extends PureComponent {
+class UserModal extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,11 +19,11 @@ class StationModal extends PureComponent {
     };
   }
 
-  assignStation = (keys, callback) => {
+  assignUser = (keys, callback) => {
     const { rowData, dispatch } = this.props;
     const data = { childId: get(rowData, 'id', null), parentIds: keys };
     dispatch({
-      type: 'featureRole/assignStation',
+      type: 'dataRole/assignUser',
       payload: {
         ...data,
       },
@@ -31,11 +31,11 @@ class StationModal extends PureComponent {
     });
   };
 
-  unassignStation = (keys, callback) => {
+  unassignUser = (keys, callback) => {
     const { rowData, dispatch } = this.props;
     const data = { childId: get(rowData, 'id', null), parentIds: keys };
     dispatch({
-      type: 'featureRole/unAssignStation',
+      type: 'dataRole/unAssignUser',
       payload: {
         ...data,
       },
@@ -59,14 +59,14 @@ class StationModal extends PureComponent {
         <>
           <ExtIcon onClick={this.handlerBackAssigned} type="left" className="trigger-back" antd />
           {title}
-          <span style={{ fontSize: 14, color: '#999', marginLeft: 8 }}>请选择要添加的岗位</span>
+          <span style={{ fontSize: 14, color: '#999', marginLeft: 8 }}>请选择要添加的用户</span>
         </>
       );
     }
     return (
       <>
         {title}
-        <span style={{ fontSize: 14, color: '#999', marginLeft: 8 }}>已配置的岗位</span>
+        <span style={{ fontSize: 14, color: '#999', marginLeft: 8 }}>已配置的用户</span>
       </>
     );
   };
@@ -91,22 +91,22 @@ class StationModal extends PureComponent {
     const assignProps = {
       currentRole: rowData,
       onBackAssigned: this.handlerBackAssigned,
-      save: this.assignStation,
-      saving: loading.effects['featureRole/assignStation'],
-      extParams: { excludeFeatureRoleId: get(rowData, 'id', null) },
+      save: this.assignUser,
+      saving: loading.effects['dataRole/assignUser'],
+      extParams: { excludeDataRoleId: get(rowData, 'id', null) },
     };
     const assignedProps = {
       currentRole: rowData,
       onShowAssign: this.handlerShowAssign,
-      save: this.unassignStation,
-      saving: loading.effects['featureRole/unAssignStation'],
+      save: this.unassignUser,
+      saving: loading.effects['dataRole/unAssignUser'],
     };
     return (
       <ExtModal {...extModalProps}>
-        {showAssign ? <StationAssign {...assignProps} /> : <Assinged {...assignedProps} />}
+        {showAssign ? <UserAssign {...assignProps} /> : <Assinged {...assignedProps} />}
       </ExtModal>
     );
   }
 }
 
-export default StationModal;
+export default UserModal;

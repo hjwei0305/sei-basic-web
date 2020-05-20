@@ -151,7 +151,7 @@ class StationAssigned extends PureComponent {
           ),
       },
       store: {
-        url: `${SERVER_PATH}/sei-basic/positionFeatureRole/getParentsFromChildId`,
+        url: `${SERVER_PATH}/sei-basic/positionDataRole/getParentsFromChildId`,
         params: {
           childId: roleId,
         },
