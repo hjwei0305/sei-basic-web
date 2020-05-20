@@ -80,6 +80,7 @@ class StationModal extends PureComponent {
       onCancel: closeFormModal,
       wrapClassName: cls(styles['assign-modal-box'], showAssign ? styles['assign-to-box'] : null),
       closable: !showAssign,
+      keyboard: !showAssign,
       visible: showModal,
       centered: true,
       width: 680,
