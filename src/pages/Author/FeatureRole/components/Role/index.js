@@ -16,7 +16,7 @@ import styles from './index.less';
 
 const { Search } = Input;
 const { Sider, Content } = Layout;
-const { ROLE_VIEW } = constants;
+const { ROLE_VIEW, ROLE_TYPE } = constants;
 
 @connect(({ featureRole, featureRoleGroup, loading }) => ({
   featureRole,
@@ -27,6 +27,8 @@ class Role extends Component {
   static allValue = '';
 
   static data = [];
+
+  static configRole = null;
 
   constructor(props) {
     super(props);
@@ -170,8 +172,9 @@ class Role extends Component {
     });
   };
 
-  handlerAction = key => {
+  handlerAction = (key, roleData) => {
     const { dispatch } = this.props;
+    this.configRole = roleData;
     switch (key) {
       case ROLE_VIEW.CONFIG_STATION:
         dispatch({
@@ -203,8 +206,6 @@ class Role extends Component {
       },
     });
   };
-
-  handlerStationSave = () => {};
 
   renderName = row => {
     let tag;
@@ -266,6 +267,16 @@ class Role extends Component {
     );
   };
 
+  renderRoleTypeRemark = item => {
+    switch (item.roleType) {
+      case ROLE_TYPE.CAN_USE:
+        return <span style={{ color: '#52c41a' }}>{item.roleTypeRemark}</span>;
+      case ROLE_TYPE.CAN_ASSIGN:
+        return <span style={{ color: '#fa8c16' }}>{item.roleTypeRemark}</span>;
+      default:
+    }
+  };
+
   render() {
     const { loading, featureRole, featureRoleGroup } = this.props;
     const { currentRole, showConfigStation } = featureRole;
@@ -277,11 +288,9 @@ class Role extends Component {
       currentRole,
     };
     const stationModalProps = {
-      save: this.handlerStationSave,
-      rowData: currentRole,
+      rowData: this.configRole,
       showModal: showConfigStation,
       closeFormModal: this.closeFormModal,
-      saving: loading.effects['featureRole/save'],
     };
     return (
       <div className={cls(styles['role-box'])}>
@@ -325,7 +334,7 @@ class Role extends Component {
                             title={this.renderName(item)}
                             description={this.renderDescription(item)}
                           />
-                          <div className="desc">{item.roleTypeRemark}</div>
+                          <div className="desc">{this.renderRoleTypeRemark(item)}</div>
                           <div className="arrow-box">
                             <ExtIcon type="right" antd />
                           </div>

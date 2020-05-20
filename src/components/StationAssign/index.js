@@ -1,0 +1,155 @@
+/*
+ * @Author: Eason
+ * @Date: 2020-02-15 11:53:29
+ * @Last Modified by: Eason
+ * @Last Modified time: 2020-05-20 15:11:12
+ */
+import React, { Component } from 'react';
+import cls from 'classnames';
+import PropTypes from 'prop-types';
+import { get } from 'lodash';
+import { Layout, Button, Input, Tooltip } from 'antd';
+import { ListLoader, ListCard } from 'suid';
+import { constants } from '@/utils';
+import Organization from './Organization';
+import styles from './index.less';
+
+const { SERVER_PATH } = constants;
+const { Sider, Content } = Layout;
+const { Search } = Input;
+
+class StationSelected extends Component {
+  static listCardRef;
+
+  static propTypes = {
+    currentRole: PropTypes.object,
+    onBackAssigned: PropTypes.func,
+  };
+
+  static defaultProps = {
+    currentRole: null,
+  };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      orgId: null,
+      selectedKeys: [],
+    };
+  }
+
+  handlerOrganizationChange = orgId => {
+    this.setState({ orgId });
+  };
+
+  handerAssignStationSelectChange = selectedKeys => {
+    this.setState({ selectedKeys });
+  };
+
+  handlerOrganizationAfterLoaded = orgId => {
+    this.setState({ orgId });
+  };
+
+  handlerSearchChange = v => {
+    this.listCardRef.handlerSearchChange(v);
+  };
+
+  handlerSearch = () => {
+    this.listCardRef.handlerSearch();
+  };
+
+  assignedSave = () => {
+    const { selectedKeys } = this.state;
+    const { save, onBackAssigned } = this.props;
+    if (save) {
+      save(selectedKeys, re => {
+        if (re.success) {
+          onBackAssigned && onBackAssigned();
+        }
+      });
+    }
+  };
+
+  assignedCancel = () => {
+    this.setState({ selectedKeys: [] });
+  };
+
+  renderCustomTool = () => {
+    const { selectedKeys } = this.state;
+    const { saving } = this.props;
+    const hasSelected = selectedKeys.length > 0;
+    return (
+      <>
+        <Button type="danger" ghost disabled={!hasSelected} onClick={this.assignedCancel}>
+          取消
+        </Button>
+        <Button type="primary" disabled={!hasSelected} loading={saving} onClick={this.assignedSave}>
+          {`确定 (${selectedKeys.length})`}
+        </Button>
+        <div>
+          <Tooltip title="输入名称关键字查询">
+            <Search
+              placeholder="输入名称关键字查询"
+              onChange={e => this.handlerSearchChange(e.target.value)}
+              onSearch={this.handlerSearch}
+              onPressEnter={this.handlerSearch}
+              style={{ width: 132 }}
+            />
+          </Tooltip>
+        </div>
+      </>
+    );
+  };
+
+  render() {
+    const { orgId, selectedKeys } = this.state;
+    const { currentRole } = this.props;
+    const listCardProps = {
+      className: 'anyone-user-box',
+      title: '可选择的岗位',
+      bordered: false,
+      searchPlaceHolder: '输入岗位名称关键字查询',
+      checkbox: true,
+      selectedKeys,
+      itemField: {
+        title: item => item.name,
+        description: item =>
+          item.organizationNamePath ? (
+            <span style={{ fontSize: 12 }}>{item.organizationNamePath}</span>
+          ) : (
+            ''
+          ),
+      },
+      searchProperties: ['name'],
+      remotePaging: true,
+      showArrow: false,
+      showSearch: false,
+      cascadeParams: {
+        organizationId: orgId,
+      },
+      store: {
+        type: 'POST',
+        url: `${SERVER_PATH}/sei-basic/position/queryPositions`,
+        params: { excludeFeatureRoleId: get(currentRole, 'id', null), includeSubNode: true },
+      },
+      onListCardRef: ref => (this.listCardRef = ref),
+      onSelectChange: this.handerAssignStationSelectChange,
+      customTool: this.renderCustomTool,
+    };
+    return (
+      <Layout className={cls(styles['station-panel-box'])}>
+        <Sider width={320} className={cls('auto-height')}>
+          <Organization
+            onSelectChange={this.handlerOrganizationChange}
+            onAfterLoaded={this.handlerOrganizationAfterLoaded}
+          />
+        </Sider>
+        <Content className={cls('auto-height')} style={{ paddingLeft: 4 }}>
+          {orgId ? <ListCard {...listCardProps} /> : <ListLoader />}
+        </Content>
+      </Layout>
+    );
+  }
+}
+
+export default StationSelected;

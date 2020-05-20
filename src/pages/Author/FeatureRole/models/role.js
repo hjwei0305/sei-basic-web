@@ -11,8 +11,8 @@ import {
   getAssignedEmployeesByFeatureRole,
   getAssignedPositionsByFeatureRole,
   getAssignFeatureItem,
-  unAssignPosition,
-  assignPosition,
+  unAssignStation,
+  assignStation,
   unAssignUser,
   assignUser,
 } from '../service';
@@ -26,7 +26,6 @@ export default modelExtend(model, {
   state: {
     listData: [],
     currentRole: null,
-    currCfgRole: null,
     showAssignFeature: false,
     showConfigStation: false,
     showConfigUser: false,
@@ -178,33 +177,31 @@ export default modelExtend(model, {
         message.error(re.message);
       }
     },
-    *assignPosition({ payload }, { call, put }) {
-      const re = yield call(assignPosition, payload);
-      message.destroy();
-      if (re.success) {
-        message.success(re.message);
-        yield put({
-          type: 'updateState',
-          payload: {
-            showConfigStation: false,
-          },
-        });
-      } else {
-        message.error(re.message);
-      }
-      return re;
-    },
-    *unAssignPosition({ payload }, { call }) {
-      const re = yield call(unAssignPosition, payload);
+    *assignStation({ payload, callback }, { call }) {
+      const re = yield call(assignStation, payload);
       message.destroy();
       if (re.success) {
         message.success(re.message);
       } else {
         message.error(re.message);
       }
-      return re;
+      if (callback && callback instanceof Function) {
+        callback(re);
+      }
     },
-    *assignUser({ payload }, { call }) {
+    *unAssignStation({ payload, callback }, { call }) {
+      const re = yield call(unAssignStation, payload);
+      message.destroy();
+      if (re.success) {
+        message.success(re.message);
+      } else {
+        message.error(re.message);
+      }
+      if (callback && callback instanceof Function) {
+        callback(re);
+      }
+    },
+    *assignUser({ payload, callback }, { call }) {
       const re = yield call(assignUser, payload);
       message.destroy();
       if (re.success) {
@@ -212,9 +209,11 @@ export default modelExtend(model, {
       } else {
         message.error(re.message);
       }
-      return re;
+      if (callback && callback instanceof Function) {
+        callback(re);
+      }
     },
-    *unAssignUser({ payload }, { call }) {
+    *unAssignUser({ payload, callback }, { call }) {
       const re = yield call(unAssignUser, payload);
       message.destroy();
       if (re.success) {
@@ -222,7 +221,9 @@ export default modelExtend(model, {
       } else {
         message.error(re.message);
       }
-      return re;
+      if (callback && callback instanceof Function) {
+        callback(re);
+      }
     },
   },
 });

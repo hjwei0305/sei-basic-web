@@ -142,7 +142,7 @@ export async function getAssignedPositionsByFeatureRole(params) {
  * 移除功能角色分配的岗位
  * params featureRoleId
  */
-export async function unAssignPosition(data) {
+export async function unAssignStation(data) {
   const url = `${SERVER_PATH}/sei-basic/positionFeatureRole/removeRelationsByParents`;
   return request({
     url,
@@ -154,7 +154,7 @@ export async function unAssignPosition(data) {
 /**
  * 给功能角色分配岗位
  */
-export async function assignPosition(data) {
+export async function assignStation(data) {
   const url = `${SERVER_PATH}/sei-basic/positionFeatureRole/insertRelationsByParents`;
   return request({
     url,

@@ -60,6 +60,11 @@ const ROLE_VIEW = {
   USER: 'role-user',
 };
 
+const ROLE_TYPE = {
+  CAN_USE: 'CanUse',
+  CAN_ASSIGN: 'CanAssign',
+};
+
 export default {
   APP_BASE,
   LOCAL_PATH,
@@ -69,4 +74,5 @@ export default {
   APP_MENU_BTN_KEY,
   ROLE_VIEW,
   FEATURE_TYPE,
+  ROLE_TYPE,
 };

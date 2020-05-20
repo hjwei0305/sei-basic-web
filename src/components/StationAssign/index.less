@@ -6,29 +6,25 @@
   overflow: hidden;
   background-color: @page-background-color;
   :global {
+    .suid-list-card-tool-box {
+      button {
+        margin-right: 8px;
+      }
+    }
     .org-box {
       height: 100%;
       background-color: @white;
-      .title {
-        position: relative;
-        height: 32px;
-        padding: 0 16px;
-        overflow: hidden;
-        color: fade(@black, 85%);
-        font-weight: 500;
-        font-size: 14px;
-        line-height: 32px;
-      }
       .search-box {
         position: relative;
-        height: 32px;
+        height: 42px;
+        padding: 0 16px;
         overflow: hidden;
-        line-height: 32px;
+        line-height: 42px;
         text-align: center;
       }
       .org-body {
-        height: calc(100% - 64px);
-        max-height: calc(100% - 64px);
+        height: calc(100% - 42px);
+        max-height: calc(100% - 42px);
       }
     }
   }

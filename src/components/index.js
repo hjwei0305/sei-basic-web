@@ -8,7 +8,7 @@ import TreeView from './TreeView';
 import CascadeLayout from './Layout/CascadeLayout';
 import ColumnLayout from './Layout/ColumnLayout';
 import PageWrapper from './PageWrapper';
-import Station from './Station';
+import StationAssign from './StationAssign';
 
 export {
   Loader,
@@ -21,5 +21,5 @@ export {
   CascadeLayout,
   ColumnLayout,
   PageWrapper,
-  Station,
+  StationAssign,
 };

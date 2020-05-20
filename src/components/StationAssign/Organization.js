@@ -197,7 +197,6 @@ class Organization extends PureComponent {
     } = this.state;
     return (
       <div className="org-box">
-        <div className="title">组织机构</div>
         <div className="search-box">
           <Search
             placeholder="输入名称关键字查询"
@@ -205,7 +204,7 @@ class Organization extends PureComponent {
             onChange={e => this.handlerSearchChange(e.target.value)}
             onSearch={this.handlerSearch}
             onPressEnter={this.handlerSearch}
-            style={{ width: 172 }}
+            style={{ width: '100%' }}
           />
         </div>
         <div className="org-body">
