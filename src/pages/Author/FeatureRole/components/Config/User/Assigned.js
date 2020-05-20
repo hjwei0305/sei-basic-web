@@ -64,7 +64,7 @@ class UserAssigned extends PureComponent {
       save(selectedKeys, re => {
         if (re.success) {
           this.listCardRef.remoteDataRefresh();
-          this.setState({ removeId: '' });
+          this.setState({ removeId: '', selectedKeys: [] });
         }
       });
     }
