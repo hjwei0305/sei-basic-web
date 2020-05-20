@@ -9,6 +9,7 @@ import CascadeLayout from './Layout/CascadeLayout';
 import ColumnLayout from './Layout/ColumnLayout';
 import PageWrapper from './PageWrapper';
 import StationAssign from './StationAssign';
+import UserAssign from './UserAssign';
 
 export {
   Loader,
@@ -22,4 +23,5 @@ export {
   ColumnLayout,
   PageWrapper,
   StationAssign,
+  UserAssign,
 };

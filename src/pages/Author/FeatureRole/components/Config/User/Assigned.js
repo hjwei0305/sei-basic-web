@@ -9,7 +9,7 @@ import styles from './Assigned.less';
 
 const { SERVER_PATH } = constants;
 
-class StationAssigned extends PureComponent {
+class UserAssigned extends PureComponent {
   static listCardRef;
 
   static propTypes = {
@@ -83,7 +83,7 @@ class StationAssigned extends PureComponent {
     return (
       <>
         <Button type="primary" icon="plus" onClick={this.handlerShowAssign}>
-          添加岗位
+          添加用户
         </Button>
         <Drawer
           placement="top"
@@ -97,7 +97,7 @@ class StationAssigned extends PureComponent {
           <Button onClick={this.onCancelBatchRemoveAssigned} disabled={saving}>
             取消
           </Button>
-          <Popconfirm title="确定要移除选择的岗位吗？" onConfirm={this.batchRemoveAssigned}>
+          <Popconfirm title="确定要移除选择的用户吗？" onConfirm={this.batchRemoveAssigned}>
             <Button type="danger" loading={saving}>
               批量移除
             </Button>
@@ -137,16 +137,17 @@ class StationAssigned extends PureComponent {
       pagination: false,
       selectedKeys,
       itemField: {
-        title: item => item.name,
-        description: item =>
-          item.organizationNamePath ? (
-            <span style={{ fontSize: 12 }}>{item.organizationNamePath}</span>
-          ) : (
-            ''
-          ),
+        title: item => item.userName,
+        description: item => (
+          <>
+            {item.userTypeRemark}
+            <br />
+            {item.remark}
+          </>
+        ),
       },
       store: {
-        url: `${SERVER_PATH}/sei-basic/positionFeatureRole/getParentsFromChildId`,
+        url: `${SERVER_PATH}/sei-basic/userFeatureRole/getParentsFromChildId`,
         params: {
           childId: roleId,
         },
@@ -166,4 +167,4 @@ class StationAssigned extends PureComponent {
   }
 }
 
-export default StationAssigned;
+export default UserAssigned;

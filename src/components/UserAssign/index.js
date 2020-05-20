@@ -2,7 +2,7 @@
  * @Author: Eason
  * @Date: 2020-02-15 11:53:29
  * @Last Modified by: Eason
- * @Last Modified time: 2020-05-20 16:59:42
+ * @Last Modified time: 2020-05-20 17:16:01
  */
 import React, { Component } from 'react';
 import cls from 'classnames';
@@ -18,7 +18,7 @@ const { SERVER_PATH } = constants;
 const { Sider, Content } = Layout;
 const { Search } = Input;
 
-class StationAssign extends Component {
+class UserAssign extends Component {
   static listCardRef;
 
   static propTypes = {
@@ -42,7 +42,7 @@ class StationAssign extends Component {
     this.setState({ orgId });
   };
 
-  handerAssignStationSelectChange = selectedKeys => {
+  handerAssignUserSelectChange = selectedKeys => {
     this.setState({ selectedKeys });
   };
 
@@ -106,21 +106,22 @@ class StationAssign extends Component {
     const { currentRole } = this.props;
     const listCardProps = {
       className: 'anyone-user-box',
-      title: '可选择的岗位',
+      title: '可选择的用户',
       bordered: false,
-      searchPlaceHolder: '输入岗位名称关键字查询',
+      searchPlaceHolder: '输入用户代码或名称关键字查询',
+      searchProperties: ['code', 'userName'],
       checkbox: true,
       selectedKeys,
       itemField: {
-        title: item => item.name,
-        description: item =>
-          item.organizationNamePath ? (
-            <span style={{ fontSize: 12 }}>{item.organizationNamePath}</span>
-          ) : (
-            ''
-          ),
+        title: item => item.userName,
+        description: item => (
+          <>
+            {item.userTypeRemark}
+            <br />
+            {item.remark}
+          </>
+        ),
       },
-      searchProperties: ['name'],
       remotePaging: true,
       showArrow: false,
       showSearch: false,
@@ -129,15 +130,15 @@ class StationAssign extends Component {
       },
       store: {
         type: 'POST',
-        url: `${SERVER_PATH}/sei-basic/position/queryPositions`,
+        url: `${SERVER_PATH}/sei-basic/user/queryUsers`,
         params: { excludeFeatureRoleId: get(currentRole, 'id', null), includeSubNode: true },
       },
       onListCardRef: ref => (this.listCardRef = ref),
-      onSelectChange: this.handerAssignStationSelectChange,
+      onSelectChange: this.handerAssignUserSelectChange,
       customTool: this.renderCustomTool,
     };
     return (
-      <Layout className={cls(styles['station-panel-box'])}>
+      <Layout className={cls(styles['user-panel-box'])}>
         <Sider width={320} className={cls('auto-height')}>
           <Organization
             onSelectChange={this.handlerOrganizationChange}
@@ -152,4 +153,4 @@ class StationAssign extends Component {
   }
 }
 
-export default StationAssign;
+export default UserAssign;

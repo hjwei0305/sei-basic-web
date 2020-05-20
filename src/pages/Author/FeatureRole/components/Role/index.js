@@ -12,6 +12,7 @@ import RoleEdit from './Form/Edit';
 import ExtAction from './ExtAction';
 import AssignedFeature from './AssignedFeature';
 import StationModal from '../Config/Station';
+import UserModal from '../Config/User';
 import styles from './index.less';
 
 const { Search } = Input;
@@ -279,7 +280,7 @@ class Role extends Component {
 
   render() {
     const { loading, featureRole, featureRoleGroup } = this.props;
-    const { currentRole, showConfigStation } = featureRole;
+    const { currentRole, showConfigStation, showConfigUser } = featureRole;
     const { listData, delRoleId } = this.state;
     const listLoading = loading.effects['featureRole/getFeatureRoleList'];
     const saving = loading.effects['featureRole/saveFeatureRole'];
@@ -290,6 +291,11 @@ class Role extends Component {
     const stationModalProps = {
       rowData: this.configRole,
       showModal: showConfigStation,
+      closeFormModal: this.closeFormModal,
+    };
+    const userModalProps = {
+      rowData: this.configRole,
+      showModal: showConfigUser,
       closeFormModal: this.closeFormModal,
     };
     return (
@@ -380,6 +386,7 @@ class Role extends Component {
           </Content>
         </Layout>
         <StationModal {...stationModalProps} />
+        <UserModal {...userModalProps} />
       </div>
     );
   }
