@@ -10,7 +10,7 @@ import { constants } from '@/utils';
 import RoleAdd from './Form/Add';
 import RoleEdit from './Form/Edit';
 import ExtAction from './ExtAction';
-import DataAuthorType from './DataAuthorType';
+import DataAuthorTypeList from './DataAuthorTypeList';
 import StationModal from '../Config/Station';
 import UserModal from '../Config/User';
 import styles from './index.less';
@@ -261,7 +261,7 @@ class Role extends Component {
     const listLoading = loading.effects['dataRole/getDataRoleList'];
     const saving = loading.effects['dataRole/saveDataRole'];
     const { currentRoleGroup } = dataRoleGroup;
-    const dataAuthorTypeProps = {
+    const dataAuthorTypeListProps = {
       currentRole,
     };
     const stationModalProps = {
@@ -352,7 +352,7 @@ class Role extends Component {
           </Sider>
           <Content className={cls('main-content', 'auto-height')} style={{ paddingLeft: 4 }}>
             {currentRole ? (
-              <DataAuthorType {...dataAuthorTypeProps} />
+              <DataAuthorTypeList {...dataAuthorTypeListProps} />
             ) : (
               <div className="blank-empty">
                 <Empty image={empty} description="选择角色项进行权限配置" />

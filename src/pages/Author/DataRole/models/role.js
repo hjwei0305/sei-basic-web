@@ -27,10 +27,11 @@ export default modelExtend(model, {
 
   state: {
     listData: [],
-    currCfgRole: null,
     currentRole: null,
     showConfigStation: false,
     showConfigUser: false,
+    showDataAuthorAssign: false,
+    currentDataAuthorType: null,
     assignData: [],
     unAssignData: [],
     assignUserData: [],

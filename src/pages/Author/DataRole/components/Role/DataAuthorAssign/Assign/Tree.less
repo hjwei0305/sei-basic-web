@@ -1,0 +1,26 @@
+@import '../../../../../../../themes/vars.less';
+.tree-assign-box {
+  height: 100%;
+  padding: 0;
+  overflow: hidden;
+  :global {
+    .tool-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 42px;
+      padding: 0 24px;
+      line-height: 42px;
+      button {
+        margin-right: 8px;
+      }
+    }
+    .list-body {
+      height: calc(100% - 42px);
+      .ant-tree {
+        padding: 0 16px;
+      }
+    }
+  }
+}

@@ -2,10 +2,10 @@ import React, { Component, Suspense } from 'react';
 import cls from 'classnames';
 import { Popover } from 'antd';
 import { ExtIcon, ListLoader } from 'suid';
-import styles from './Assign.less';
+import styles from './AssignView.less';
 
-const ListAssign = React.lazy(() => import('./ListAssign'));
-const TreeAssign = React.lazy(() => import('./TreeAssign'));
+const ListAssign = React.lazy(() => import('./DataAuthorView/ListAssign'));
+const TreeAssign = React.lazy(() => import('./DataAuthorView/TreeAssign'));
 
 class Assign extends Component {
   constructor(props) {
@@ -60,7 +60,7 @@ class Assign extends Component {
         content={this.renderPopoverContent()}
       >
         <span className={cls('assign-popover-box-trigger')}>
-          <ExtIcon type="column" tooltip={{ title: '数据配置', placement: 'right' }} />
+          <ExtIcon type="file-search" antd />
         </span>
       </Popover>
     );

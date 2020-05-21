@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import cls from 'classnames';
-import { isEqual } from 'lodash';
+import { isEqual, trim } from 'lodash';
 import PropTypes from 'prop-types';
 import { Input, Tree, Card, Empty } from 'antd';
 import { ScrollBar, ListLoader, ExtIcon } from 'suid';
@@ -11,48 +11,73 @@ const { TreeNode } = Tree;
 const childFieldKey = 'children';
 const hightLightColor = '#f50';
 
-class TreePanel extends Component {
+class TreePanel extends PureComponent {
+  static data = [];
+
   static propTypes = {
     title: PropTypes.string,
     dataSource: PropTypes.array,
+    selectedKeys: PropTypes.array,
     loading: PropTypes.bool,
     onSelectChange: PropTypes.func,
     className: PropTypes.string,
     checkable: PropTypes.bool,
     checkStrictly: PropTypes.bool,
+    showSearch: PropTypes.bool,
   };
 
   static defaultProps = {
     dataSource: [],
     loading: false,
     checkable: true,
+    showSearch: true,
     checkStrictly: true,
+    selectedKeys: [],
   };
 
   static allValue = '';
 
   constructor(props) {
     super(props);
+    const { dataSource } = props;
+    this.data = [...dataSource];
     this.state = {
-      dataSource: [],
-      expandedKeys: [],
+      dataSource,
+      expandedKeys: this.getDefaultExpandKeys(dataSource),
       checkedKeys: [],
       autoExpandParent: true,
     };
   }
 
-  componentDidUpdate() {
-    const { dataSource } = this.props;
-    const { dataSource: stateDataSource } = this.state;
-    if (!isEqual(stateDataSource, dataSource)) {
+  componentDidMount() {
+    const { onTreeRef } = this.props;
+    if (onTreeRef) {
+      onTreeRef(this);
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const { dataSource, selectedKeys } = this.props;
+    if (!isEqual(prevProps.selectedKeys, selectedKeys)) {
+      this.setState({
+        checkedKeys: selectedKeys,
+        autoExpandParent: true,
+      });
+    }
+    if (!isEqual(prevProps.dataSource, dataSource)) {
+      this.data = [...dataSource];
       this.setState({
         dataSource,
-        expandedKeys: [],
+        expandedKeys: this.getDefaultExpandKeys(dataSource),
         checkedKeys: [],
         autoExpandParent: true,
       });
     }
   }
+
+  getDefaultExpandKeys = dataSource => {
+    return dataSource.map(d => d.id);
+  };
 
   filterNodes = (valueKey, treeData, expandedKeys) => {
     const newArr = [];
@@ -77,8 +102,8 @@ class TreePanel extends Component {
   };
 
   getLocalFilterData = () => {
-    const { expandedKeys: expKeys, dataSource } = this.state;
-    let newData = [...dataSource];
+    const { expandedKeys: expKeys } = this.state;
+    let newData = [...this.data];
     const expandedKeys = [...expKeys];
     const searchValue = this.allValue;
     if (searchValue) {
@@ -88,7 +113,7 @@ class TreePanel extends Component {
   };
 
   handlerSearchChange = v => {
-    this.allValue = v;
+    this.allValue = trim(v);
   };
 
   handlerSearch = () => {
@@ -158,12 +183,13 @@ class TreePanel extends Component {
     if (dataSource.length === 0) {
       return (
         <div className="blank-empty">
-          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="暂时没有数据" />
+          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="暂无数据" />
         </div>
       );
     }
     return (
       <Tree
+        blockNode
         checkable={checkable}
         checkStrictly={checkStrictly}
         autoExpandParent={autoExpandParent}
@@ -179,22 +205,28 @@ class TreePanel extends Component {
   };
 
   render() {
-    const { loading, title, className } = this.props;
+    const { loading, title, className, showSearch } = this.props;
     const { allValue } = this.state;
     return (
       <Card
         title={title}
-        className={cls(styles['tree-panel-box'], className)}
+        className={cls(
+          styles['tree-panel-box'],
+          className,
+          !title ? styles['tree-panel-box-no-title'] : null,
+        )}
         bordered={false}
         extra={
-          <Search
-            placeholder="输入名称关键字查询"
-            defaultValue={allValue}
-            onChange={e => this.handlerSearchChange(e.target.value)}
-            onSearch={this.handlerSearch}
-            onPressEnter={this.handlerSearch}
-            style={{ width: 172 }}
-          />
+          showSearch ? (
+            <Search
+              placeholder="输入名称关键字查询"
+              defaultValue={allValue}
+              onChange={e => this.handlerSearchChange(e.target.value)}
+              onSearch={this.handlerSearch}
+              onPressEnter={this.handlerSearch}
+              style={{ width: 172 }}
+            />
+          ) : null
         }
       >
         <div className="tree-body">

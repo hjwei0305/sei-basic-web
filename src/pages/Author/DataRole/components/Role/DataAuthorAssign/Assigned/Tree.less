@@ -1,0 +1,43 @@
+@import '../../../../../../../themes/vars.less';
+.tree-assigned-box {
+  height: 100%;
+  padding: 0;
+  overflow: hidden;
+  :global {
+    .tool-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 42px;
+      padding: 0 24px;
+      overflow: hidden;
+      line-height: 42px;
+    }
+    .ant-drawer-top.ant-drawer-open .ant-drawer-content-wrapper {
+      box-shadow: none;
+    }
+    .ant-drawer-body {
+      display: flex;
+      align-items: center;
+      height: 44px;
+      padding: 0 24px;
+      line-height: 44px;
+      background-color: @white;
+      button {
+        margin-right: 8px;
+      }
+      .select {
+        display: inline-block;
+        min-width: 120px;
+        color: fade(@black, 65%);
+      }
+    }
+    .list-body {
+      height: calc(100% - 42px);
+      .ant-tree{
+        padding:0 16px
+      }
+    }
+  }
+}

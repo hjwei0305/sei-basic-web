@@ -6,14 +6,18 @@
   overflow: hidden;
   :global {
     .ant-card-head {
+      height: 42px;
+      min-height: 42px;
+      max-height: 42px;
       padding: 0 8px;
+      line-height: 42px;
       .ant-card-head-title {
         padding: 0;
       }
     }
     .ant-card-body {
       width: 100%;
-      height: calc(100% - 32px);
+      height: calc(100% - 41px);
       padding: 0;
       overflow: hidden;
       .header-tool-box {
@@ -36,13 +40,14 @@
         line-height: 42px;
       }
       .tree-body {
-        height: calc(100% - 42px);
+        height: 100%;
+        padding: 8px 0;
         .scrollbar-container {
           width: 100%;
         }
         .blank-empty {
           display: flex;
-          align-items: center;
+          align-items: flex-start;
           justify-content: center;
           height: 100%;
         }
@@ -67,6 +72,14 @@
           }
         }
       }
+    }
+  }
+}
+
+.tree-panel-box-no-title {
+  :global {
+    .ant-card-body {
+      height: 100%;
     }
   }
 }

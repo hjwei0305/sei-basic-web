@@ -1,32 +1,25 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import cls from 'classnames';
-import { isEqual } from 'lodash';
+import { connect } from 'dva';
 import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale';
 import { Card, Button } from 'antd';
 import { ExtTable, ExtIcon, ComboList } from 'suid';
 import { constants } from '@/utils';
-import Assign from './Assign';
-import styles from './DataAuthorType.less';
+import AssignView from './AssignView';
+import DataAuthorAssignModal from './DataAuthorAssign';
+import styles from './DataAuthorTypeList.less';
 
 const { SERVER_PATH } = constants;
 
-class DataAuthorType extends Component {
+@connect(({ dataRole, loading }) => ({ dataRole, loading }))
+class DataAuthorTypeList extends PureComponent {
   static dataAutorTypeTableRef;
 
   constructor(props) {
     super(props);
-    const { currentRole } = props;
     this.state = {
       currentAppModuleId: null,
-      currentRole,
     };
-  }
-
-  componentDidUpdate(preProps) {
-    const { currentRole } = this.props;
-    if (!isEqual(preProps.currentRole, currentRole)) {
-      this.setState({ currentRole });
-    }
   }
 
   reloadData = () => {
@@ -35,17 +28,38 @@ class DataAuthorType extends Component {
     }
   };
 
-  renderAssign = record => {
-    const { currentRole } = this.state;
+  handlerShowDataAuthorAssign = dataAuthorType => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'dataRole/updateState',
+      payload: {
+        showDataAuthorAssign: true,
+        currentDataAuthorType: dataAuthorType,
+      },
+    });
+  };
+
+  renderAssignView = record => {
+    const { dataRole } = this.props;
+    const { currentRole } = dataRole;
     return (
-      <span className={cls('action-box')} onClick={e => e.stopPropagation()}>
-        <Assign currentDataAuthorType={record} currentRole={currentRole} />
-      </span>
+      <>
+        <span className={cls('action-box')}>
+          <AssignView currentDataAuthorType={record} currentRole={currentRole} />
+          <ExtIcon
+            type="file-add"
+            onClick={() => this.handlerShowDataAuthorAssign(record)}
+            antd
+            tooltip={{ title: '配置权限' }}
+          />
+        </span>
+      </>
     );
   };
 
   renderTitle = () => {
-    const { currentRole } = this.state;
+    const { dataRole } = this.props;
+    const { currentRole } = dataRole;
     return (
       <>
         {currentRole.name}
@@ -55,17 +69,19 @@ class DataAuthorType extends Component {
   };
 
   render() {
-    const { currentAppModuleId, currentRole } = this.state;
+    const { dataRole } = this.props;
+    const { currentRole } = dataRole;
+    const { currentAppModuleId } = this.state;
     const columns = [
       {
         title: formatMessage({ id: 'global.operation', defaultMessage: '操作' }),
         key: 'operation',
-        width: 60,
+        width: 100,
         align: 'center',
         dataIndex: 'id',
         className: 'action',
         required: true,
-        render: (_text, record) => this.renderAssign(record),
+        render: (_text, record) => this.renderAssignView(record),
       },
       {
         title: formatMessage({ id: 'global.code', defaultMessage: '代码' }),
@@ -161,9 +177,10 @@ class DataAuthorType extends Component {
         <Card title={this.renderTitle()} bordered={false}>
           <ExtTable {...extTableProps} />
         </Card>
+        <DataAuthorAssignModal />
       </div>
     );
   }
 }
 
-export default DataAuthorType;
+export default DataAuthorTypeList;
