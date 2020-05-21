@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Popover } from 'antd';
 import cls from 'classnames';
 import { ExtIcon } from 'suid';
 import { RoleStation } from '@/components';
 import styles from './View.less';
 
-class StationView extends Component {
+class StationView extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {

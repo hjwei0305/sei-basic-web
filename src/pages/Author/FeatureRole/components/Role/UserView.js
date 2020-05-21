@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Popover } from 'antd';
 import cls from 'classnames';
 import { ExtIcon } from 'suid';
 import { RoleUser } from '@/components';
 import styles from './View.less';
 
-class UserView extends Component {
+class UserView extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
