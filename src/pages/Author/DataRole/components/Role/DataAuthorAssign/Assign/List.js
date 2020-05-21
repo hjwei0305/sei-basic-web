@@ -88,7 +88,6 @@ class List extends PureComponent {
     const roleId = get(currentRole, 'id', null);
     const listCardProps = {
       className: 'anyone-user-box',
-      title: '可选择的数据',
       bordered: false,
       searchPlaceHolder: '输入用户代码或名称关键字查询',
       searchProperties: ['code', 'userName'],
