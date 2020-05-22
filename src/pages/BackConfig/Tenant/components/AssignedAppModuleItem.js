@@ -7,7 +7,6 @@ import { Popconfirm, Button, Card, Drawer } from 'antd';
 import { ExtTable, ExtIcon } from 'suid';
 import { BannerTitle } from '@/components';
 import { constants } from '@/utils';
-import UnAssignAppModuleItem from './UnAssignAppModuleItem';
 import styles from './AssignedAppModuleItem.less';
 
 const { SERVER_PATH } = constants;
@@ -130,16 +129,6 @@ class TenantAssignedAppModuleItem extends Component {
     });
   };
 
-  closeAssignAppModuleItem = () => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'tenant/updateState',
-      payload: {
-        showAssignAppModule: false,
-      },
-    });
-  };
-
   renderRemoveBtn = row => {
     const { loading } = this.props;
     const { removeAppModuleId } = this.state;
@@ -152,7 +141,7 @@ class TenantAssignedAppModuleItem extends Component {
   render() {
     const { selectedRowKeys } = this.state;
     const { tenant, loading } = this.props;
-    const { currentTenant, unAssignListData, showAssignAppModule } = tenant;
+    const { currentTenant } = tenant;
     const columns = [
       {
         title: formatMessage({ id: 'global.operation', defaultMessage: '操作' }),
@@ -249,14 +238,6 @@ class TenantAssignedAppModuleItem extends Component {
         field: { code: 'asc', name: null, remark: null },
       },
     };
-    const unAssignAppModuleItemProps = {
-      loading: loading.effects['tenant/getUnAssignedAppModuleItemList'],
-      unAssignListData,
-      assignAppModuleItem: this.assignAppModuleItem,
-      showAssignAppModule,
-      closeAssignFeatureItem: this.closeAssignAppModuleItem,
-      assigning: loading.effects['tenant/assignAppModuleItem'],
-    };
     return (
       <div className={cls(styles['tenant-app-module-box'])}>
         <Card
@@ -265,7 +246,6 @@ class TenantAssignedAppModuleItem extends Component {
         >
           <ExtTable {...extTableProps} />
         </Card>
-        <UnAssignAppModuleItem {...unAssignAppModuleItemProps} />
       </div>
     );
   }

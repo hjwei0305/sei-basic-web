@@ -208,9 +208,9 @@ class FeatureItem extends Component {
         placement="right"
         visible={showFeatureItem}
         title="功能项列表"
+        style={{ position: 'absolute' }}
         className={cls(styles['feature-item-box'])}
         onClose={this.handlerClose}
-        style={{ position: 'absolute' }}
       >
         <div className="header-tool-box">
           <FeatureItemAdd

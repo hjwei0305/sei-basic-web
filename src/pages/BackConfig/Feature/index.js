@@ -9,12 +9,13 @@ import empty from '@/assets/item_empty.svg';
 import GroupAdd from './components/FeatureGroupForm/Add';
 import GroupEdit from './components/FeatureGroupForm/Edit';
 import PageFeature from './components/FeaturePage';
+import FeatureItem from './components/FeatureItem';
 import styles from './index.less';
 
 const { Search } = Input;
 const { Sider, Content } = Layout;
 
-@connect(({ featureGroup, loading }) => ({ featureGroup, loading }))
+@connect(({ featureGroup, feature, loading }) => ({ featureGroup, feature, loading }))
 class Feature extends Component {
   constructor(props) {
     super(props);
@@ -155,8 +156,9 @@ class Feature extends Component {
   );
 
   render() {
-    const { loading, featureGroup } = this.props;
+    const { loading, featureGroup, feature } = this.props;
     const { currentFeatureGroup } = featureGroup;
+    const { currentPageRow, showFeatureItem } = feature;
     const { listData } = this.state;
     const listLoading = loading.effects['featureGroup/queryFeatureGroupList'];
     const saving = loading.effects['featureGroup/saveFeatureGroup'];
@@ -182,6 +184,11 @@ class Feature extends Component {
     const pageFeatureProps = {
       currentFeatureGroup,
     };
+    const featureItemProps = {
+      showFeatureItem,
+      currentPageRow,
+      currentFeatureGroup,
+    };
     return (
       <div className={cls(styles['container-box'])}>
         <Layout className="auto-height">
@@ -198,6 +205,7 @@ class Feature extends Component {
             )}
           </Content>
         </Layout>
+        <FeatureItem {...featureItemProps} />
       </div>
     );
   }

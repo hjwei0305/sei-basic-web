@@ -7,7 +7,6 @@ import { Card, Popconfirm, Button, Drawer, Empty, Tree, Input, Tooltip } from 'a
 import { ScrollBar, ListLoader, ExtIcon } from 'suid';
 import { BannerTitle } from '@/components';
 import { constants } from '../../../../../utils';
-import UnAssignFeatureItem from './UnAssignFeatureItem';
 import styles from './AssignedFeature.less';
 
 const { FEATURE_TYPE } = constants;
@@ -135,19 +134,6 @@ class FeaturePage extends Component {
     this.setState({
       checkedKeys,
     });
-  };
-
-  closeAssignFeatureItem = refresh => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'featureRole/updateState',
-      payload: {
-        showAssignFeature: false,
-      },
-    });
-    if (refresh === true) {
-      this.getAssignData();
-    }
   };
 
   renderRemoveBtn = item => {
@@ -322,13 +308,9 @@ class FeaturePage extends Component {
 
   render() {
     const { featureRole, loading } = this.props;
-    const { showAssignFeature, currentRole } = featureRole;
+    const { currentRole } = featureRole;
     const { checkedKeys, allValue } = this.state;
     const hasSelected = checkedKeys.length > 0;
-    const unAssignFeatureItemProps = {
-      showAssignFeature,
-      closeAssignFeatureItem: this.closeAssignFeatureItem,
-    };
     const loadingAssigned = loading.effects['featureRole/getAssignFeatureItem'];
     return (
       <div className={cls(styles['assigned-feature-box'])}>
@@ -388,7 +370,6 @@ class FeaturePage extends Component {
             <ScrollBar>{loadingAssigned ? <ListLoader /> : this.renderTree()}</ScrollBar>
           </div>
         </Card>
-        <UnAssignFeatureItem {...unAssignFeatureItemProps} />
       </div>
     );
   }

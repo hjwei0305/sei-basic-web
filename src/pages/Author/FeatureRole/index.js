@@ -9,6 +9,7 @@ import empty from '@/assets/feature-role-guide.png';
 import RoleGroupAdd from './components/RoleGroupForm/Add';
 import RoleGroupEdit from './components/RoleGroupForm/Edit';
 import Role from './components/Role';
+import UnAssignFeatureItem from './components/Role/UnAssignFeatureItem';
 import styles from './index.less';
 
 const { Search } = Input;
@@ -168,14 +169,40 @@ class FeatureRole extends Component {
     });
   };
 
+  closeAssignFeatureItem = refresh => {
+    const { dispatch, featureRole } = this.props;
+    dispatch({
+      type: 'featureRole/updateState',
+      payload: {
+        showAssignFeature: false,
+      },
+    });
+    if (refresh === true) {
+      const { currentRole } = featureRole;
+      if (currentRole) {
+        dispatch({
+          type: 'featureRole/getAssignFeatureItem',
+          payload: {
+            featureRoleId: currentRole.id,
+          },
+        });
+      }
+    }
+  };
+
   render() {
-    const { loading, featureRoleGroup } = this.props;
+    const { loading, featureRoleGroup, featureRole } = this.props;
     const { currentRoleGroup } = featureRoleGroup;
+    const { showAssignFeature } = featureRole;
     const { listData, pagination, delGroupId } = this.state;
     const listLoading = loading.effects['featureRoleGroup/getRoleGroupList'];
     const saving = loading.effects['featureRoleGroup/saveRoleGroup'];
     const roleProps = {
       currentRoleGroup,
+    };
+    const unAssignFeatureItemProps = {
+      showAssignFeature,
+      closeAssignFeatureItem: this.closeAssignFeatureItem,
     };
     return (
       <div className={cls(styles['container-box'])}>
@@ -258,6 +285,7 @@ class FeatureRole extends Component {
             )}
           </Content>
         </Layout>
+        <UnAssignFeatureItem {...unAssignFeatureItemProps} />
       </div>
     );
   }

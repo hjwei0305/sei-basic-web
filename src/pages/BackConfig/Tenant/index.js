@@ -11,6 +11,7 @@ import TenantEdit from './components/TenantForm/Edit';
 import AdminAdd from './components/AdminForm/Add';
 import AdminEdit from './components/AdminForm/Edit';
 import AssignedAppModuleItem from './components/AssignedAppModuleItem';
+import UnAssignAppModuleItem from './components/UnAssignAppModuleItem';
 import styles from './index.less';
 
 const { Search } = Input;
@@ -184,6 +185,16 @@ class Tenant extends Component {
     });
   };
 
+  closeAssignAppModuleItem = () => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'tenant/updateState',
+      payload: {
+        showAssignAppModule: false,
+      },
+    });
+  };
+
   renderAdmin = item => {
     const { loading } = this.props;
     const saving = loading.effects['tenant/saveTenantAdmin'];
@@ -213,12 +224,20 @@ class Tenant extends Component {
 
   render() {
     const { loading, tenant } = this.props;
-    const { currentTenant } = tenant;
+    const { currentTenant, unAssignListData, showAssignAppModule } = tenant;
     const { allValue, listData, pagination, delTenantId } = this.state;
     const listLoading = loading.effects['tenant/getTenantList'];
     const saving = loading.effects['tenant/saveTenant'];
     const assignedAppModuleItemProps = {
       currentTenant,
+    };
+    const unAssignAppModuleItemProps = {
+      loading: loading.effects['tenant/getUnAssignedAppModuleItemList'],
+      unAssignListData,
+      assignAppModuleItem: this.assignAppModuleItem,
+      showAssignAppModule,
+      closeAssignFeatureItem: this.closeAssignAppModuleItem,
+      assigning: loading.effects['tenant/assignAppModuleItem'],
     };
     return (
       <div className={cls(styles['container-box'])}>
@@ -300,6 +319,7 @@ class Tenant extends Component {
             )}
           </Content>
         </Layout>
+        <UnAssignAppModuleItem {...unAssignAppModuleItemProps} />
       </div>
     );
   }

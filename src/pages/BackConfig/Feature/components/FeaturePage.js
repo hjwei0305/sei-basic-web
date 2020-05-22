@@ -7,7 +7,6 @@ import { ExtTable, ExtIcon } from 'suid';
 import { BannerTitle } from '@/components';
 import { constants } from '@/utils';
 import FeaturePageFormModal from './FeaturePageFormModal';
-import FeatureItem from './FeatureItem';
 import styles from './FeaturePage.less';
 
 const { SERVER_PATH } = constants;
@@ -143,7 +142,7 @@ class FeaturePage extends Component {
     const { loading, featureGroup, feature } = this.props;
     const { currentFeatureGroup } = featureGroup;
     const { appModuleName, name } = currentFeatureGroup;
-    const { showFormModal, currentPageRow, showFeatureItem } = feature;
+    const { showFormModal, currentPageRow } = feature;
     const columns = [
       {
         title: formatMessage({ id: 'global.operation', defaultMessage: '操作' }),
@@ -228,11 +227,6 @@ class FeaturePage extends Component {
       closePageFormModal: this.closePageFormModal,
       saving: loading.effects['feature/saveFeature'],
     };
-    const featureItemProps = {
-      showFeatureItem,
-      currentPageRow,
-      currentFeatureGroup,
-    };
     return (
       <div className={cls(styles['feature-page-box'])}>
         <Card
@@ -242,7 +236,6 @@ class FeaturePage extends Component {
           <ExtTable {...extTableProps} />
         </Card>
         <FeaturePageFormModal {...formModalProps} />
-        <FeatureItem {...featureItemProps} />
       </div>
     );
   }
