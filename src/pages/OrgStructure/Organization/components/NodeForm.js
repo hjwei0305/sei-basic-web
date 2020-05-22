@@ -94,6 +94,16 @@ class NodeForm extends PureComponent {
     goBackToChildParent();
   };
 
+  renderPopconfirmTitle = (title, subTitle) => {
+    return (
+      <>
+        <span style={{ fontWeight: 700, marginBottom: 8, display: 'inline-block' }}>{title}</span>
+        <br />
+        {subTitle}
+      </>
+    );
+  };
+
   getExtAction = () => {
     const { editData, loading } = this.props;
     if (editData && editData.id) {
@@ -103,7 +113,7 @@ class NodeForm extends PureComponent {
           {editData.parentId ? (
             <Popconfirm
               overlayClassName={cls(styles['pop-confirm-box'])}
-              title="确定要删除吗？删除后不能恢复"
+              title={this.renderPopconfirmTitle('确定要删除吗？', '提示：删除后不能恢复')}
               placement="top"
               icon={<ExtIcon type="question-circle" antd />}
               onConfirm={e => this.handlerDelete(e, editData.id)}
@@ -119,7 +129,7 @@ class NodeForm extends PureComponent {
     return (
       <Popconfirm
         overlayClassName={cls(styles['pop-confirm-box'])}
-        title="确定要返回吗？未保存的数据将会丢失!"
+        title={this.renderPopconfirmTitle('确定要返回吗？', '提示：未保存的数据将会丢失')}
         placement="top"
         icon={<ExtIcon type="question-circle" antd />}
         onConfirm={e => this.handlerGoBackParent(e)}
