@@ -3,6 +3,7 @@ import cls from 'classnames';
 import { get } from 'lodash';
 import { Input } from 'antd';
 import { ListCard } from 'suid';
+import { BannerTitle } from '@/components';
 import { constants } from '@/utils';
 import styles from './ListAssign.less';
 
@@ -26,16 +27,6 @@ class ListAssign extends PureComponent {
 
   handlerSearch = () => {
     this.listCardRef.handlerSearch();
-  };
-
-  renderTitle = currentDataAuthorType => {
-    const title = get(currentDataAuthorType, 'name', '');
-    return (
-      <>
-        {title}
-        <span style={{ fontSize: 14, color: '#999', marginLeft: 8 }}>已配置的数据权限</span>
-      </>
-    );
   };
 
   renderCustomTool = ({ total }) => {
@@ -77,7 +68,12 @@ class ListAssign extends PureComponent {
     return (
       <div className={cls(styles['list-assign-box'])}>
         <div className="header-box">
-          <span>{this.renderTitle(currentDataAuthorType)}</span>
+          <span>
+            <BannerTitle
+              title={get(currentDataAuthorType, 'name', '')}
+              subTitle="已配置的数据权限"
+            />
+          </span>
         </div>
         <div className={cls('list-body')}>
           <ListCard {...listCardProps} />

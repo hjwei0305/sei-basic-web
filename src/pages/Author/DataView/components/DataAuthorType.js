@@ -4,6 +4,7 @@ import { isEqual } from 'lodash';
 import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale';
 import { Card, Button } from 'antd';
 import { ExtTable, ExtIcon } from 'suid';
+import { BannerTitle } from '@/components';
 import { constants } from '@/utils';
 import Assign from './Assign';
 import styles from './DataAuthorType.less';
@@ -43,18 +44,8 @@ class DataAuthorType extends Component {
     );
   };
 
-  renderTitle = () => {
-    const { currentRoleName } = this.props;
-    return (
-      <>
-        {currentRoleName}
-        <span style={{ fontSize: 14, color: '#999', marginLeft: 8 }}>数据权限类型</span>
-      </>
-    );
-  };
-
   render() {
-    const { currentRoleId } = this.props;
+    const { currentRoleId, currentRoleName } = this.props;
     const columns = [
       {
         title: formatMessage({ id: 'global.operation', defaultMessage: '操作' }),
@@ -123,7 +114,10 @@ class DataAuthorType extends Component {
     };
     return (
       <div className={cls(styles['data-author-type-box'])}>
-        <Card title={this.renderTitle()} bordered={false}>
+        <Card
+          title={<BannerTitle title={currentRoleName} subTitle="数据权限类型" />}
+          bordered={false}
+        >
           <ExtTable {...extTableProps} />
         </Card>
       </div>

@@ -3,6 +3,7 @@ import { get } from 'lodash';
 import cls from 'classnames';
 import { connect } from 'dva';
 import { ExtModal, ExtIcon } from 'suid';
+import { BannerTitle } from '@/components';
 import Assinged from './Assigned';
 import Assign from './Assign';
 import styles from './index.less';
@@ -73,17 +74,11 @@ class DataAuthorAssignModal extends PureComponent {
       return (
         <>
           <ExtIcon onClick={this.handlerBackAssigned} type="left" className="trigger-back" antd />
-          {title}
-          <span style={{ fontSize: 14, color: '#999', marginLeft: 8 }}>请选择要添加的数据权限</span>
+          <BannerTitle title={title} subTitle="请选择要添加的数据权限" />
         </>
       );
     }
-    return (
-      <>
-        {title}
-        <span style={{ fontSize: 14, color: '#999', marginLeft: 8 }}>已配置的数据权限</span>
-      </>
-    );
+    return <BannerTitle title={title} subTitle="已配置的数据权限" />;
   };
 
   render() {

@@ -3,7 +3,7 @@ import { get } from 'lodash';
 import cls from 'classnames';
 import { connect } from 'dva';
 import { ExtModal, ExtIcon } from 'suid';
-import { StationAssign } from '@/components';
+import { StationAssign, BannerTitle } from '@/components';
 import Assinged from './Assigned';
 import styles from './index.less';
 
@@ -58,17 +58,11 @@ class StationModal extends PureComponent {
       return (
         <>
           <ExtIcon onClick={this.handlerBackAssigned} type="left" className="trigger-back" antd />
-          {title}
-          <span style={{ fontSize: 14, color: '#999', marginLeft: 8 }}>请选择要添加的岗位</span>
+          <BannerTitle title={title} subTitle="请选择要添加的岗位" />
         </>
       );
     }
-    return (
-      <>
-        {title}
-        <span style={{ fontSize: 14, color: '#999', marginLeft: 8 }}>已配置的岗位</span>
-      </>
-    );
+    return <BannerTitle title={title} subTitle="已配置的岗位" />;
   };
 
   render() {

@@ -5,6 +5,7 @@ import { isEqual } from 'lodash';
 import { FormattedMessage, formatMessage } from 'umi-plugin-react/locale';
 import { Card, Popconfirm, Button, Drawer, Empty, Tree, Input, Tooltip } from 'antd';
 import { ScrollBar, ListLoader, ExtIcon } from 'suid';
+import { BannerTitle } from '@/components';
 import { constants } from '../../../../../utils';
 import UnAssignFeatureItem from './UnAssignFeatureItem';
 import styles from './AssignedFeature.less';
@@ -319,20 +320,9 @@ class FeaturePage extends Component {
     );
   };
 
-  renderTitle = () => {
-    const { featureRole } = this.props;
-    const { currentRole } = featureRole;
-    return (
-      <>
-        {currentRole.name}
-        <span style={{ fontSize: 14, color: '#999', marginLeft: 8 }}>功能权限</span>
-      </>
-    );
-  };
-
   render() {
     const { featureRole, loading } = this.props;
-    const { showAssignFeature } = featureRole;
+    const { showAssignFeature, currentRole } = featureRole;
     const { checkedKeys, allValue } = this.state;
     const hasSelected = checkedKeys.length > 0;
     const unAssignFeatureItemProps = {
@@ -342,7 +332,7 @@ class FeaturePage extends Component {
     const loadingAssigned = loading.effects['featureRole/getAssignFeatureItem'];
     return (
       <div className={cls(styles['assigned-feature-box'])}>
-        <Card title={this.renderTitle()} bordered={false}>
+        <Card title={<BannerTitle title={currentRole.name} subTitle="功能权限" />} bordered={false}>
           <div className={cls('tool-box')}>
             <Button
               icon="plus"

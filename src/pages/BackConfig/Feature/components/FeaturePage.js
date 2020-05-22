@@ -4,6 +4,7 @@ import cls from 'classnames';
 import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale';
 import { Popconfirm, Button, Card, Tag } from 'antd';
 import { ExtTable, ExtIcon } from 'suid';
+import { BannerTitle } from '@/components';
 import { constants } from '@/utils';
 import FeaturePageFormModal from './FeaturePageFormModal';
 import FeatureItem from './FeatureItem';
@@ -138,21 +139,10 @@ class FeaturePage extends Component {
     );
   };
 
-  renderTitle = () => {
-    const { featureGroup } = this.props;
-    const { currentFeatureGroup } = featureGroup;
-    const { appModuleName, name } = currentFeatureGroup;
-    return (
-      <>
-        {`${appModuleName} > ${name}`}
-        <span style={{ fontSize: 14, color: '#999', marginLeft: 8 }}>页面功能管理</span>
-      </>
-    );
-  };
-
   render() {
     const { loading, featureGroup, feature } = this.props;
     const { currentFeatureGroup } = featureGroup;
+    const { appModuleName, name } = currentFeatureGroup;
     const { showFormModal, currentPageRow, showFeatureItem } = feature;
     const columns = [
       {
@@ -245,7 +235,10 @@ class FeaturePage extends Component {
     };
     return (
       <div className={cls(styles['feature-page-box'])}>
-        <Card title={this.renderTitle()} bordered={false}>
+        <Card
+          title={<BannerTitle title={`${appModuleName} > ${name}`} subTitle="页面功能管理" />}
+          bordered={false}
+        >
           <ExtTable {...extTableProps} />
         </Card>
         <FeaturePageFormModal {...formModalProps} />

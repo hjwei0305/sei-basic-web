@@ -6,6 +6,7 @@ import { formatMessage } from 'umi-plugin-react/locale';
 import { Avatar, Card, Empty, Input, List, Skeleton, Popconfirm, Tag, Layout } from 'antd';
 import { ScrollBar, ExtIcon } from 'suid';
 import empty from '@/assets/item_empty.svg';
+import { BannerTitle } from '@/components';
 import { constants } from '@/utils';
 import RoleAdd from './Form/Add';
 import RoleEdit from './Form/Edit';
@@ -243,17 +244,6 @@ class Role extends Component {
     );
   };
 
-  renderTitle = () => {
-    const { dataRoleGroup } = this.props;
-    const { currentRoleGroup } = dataRoleGroup;
-    return (
-      <>
-        {currentRoleGroup.name}
-        <span style={{ fontSize: 14, color: '#999', marginLeft: 8 }}>角色列表</span>
-      </>
-    );
-  };
-
   render() {
     const { loading, dataRole, dataRoleGroup } = this.props;
     const { currentRole, showConfigStation, showConfigUser } = dataRole;
@@ -279,7 +269,7 @@ class Role extends Component {
         <Layout className="auto-height">
           <Sider width={360} className={cls('left-content', 'auto-height')}>
             <Card
-              title={this.renderTitle()}
+              title={<BannerTitle title={currentRoleGroup.name} subTitle="角色列表" />}
               bordered={false}
               className={cls('list-box', 'auto-height')}
             >

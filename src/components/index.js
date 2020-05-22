@@ -10,6 +10,7 @@ import ColumnLayout from './Layout/ColumnLayout';
 import PageWrapper from './PageWrapper';
 import StationAssign from './StationAssign';
 import UserAssign from './UserAssign';
+import BannerTitle from './BannerTitle';
 
 export {
   Loader,
@@ -24,4 +25,5 @@ export {
   PageWrapper,
   StationAssign,
   UserAssign,
+  BannerTitle,
 };

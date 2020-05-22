@@ -5,6 +5,7 @@ import { isEqual } from 'lodash';
 import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale';
 import { Popconfirm, Button, Card, Drawer } from 'antd';
 import { ExtTable, ExtIcon } from 'suid';
+import { BannerTitle } from '@/components';
 import { constants } from '@/utils';
 import UnAssignAppModuleItem from './UnAssignAppModuleItem';
 import styles from './AssignedAppModuleItem.less';
@@ -148,17 +149,6 @@ class TenantAssignedAppModuleItem extends Component {
     return <ExtIcon tooltip={{ title: '移除应用模块' }} className="del" type="minus-circle" antd />;
   };
 
-  renderTitle = () => {
-    const { tenant } = this.props;
-    const { currentTenant } = tenant;
-    return (
-      <>
-        {`${currentTenant.name}`}
-        <span style={{ fontSize: 14, color: '#999', marginLeft: 8 }}>可以使用的应用模块</span>
-      </>
-    );
-  };
-
   render() {
     const { selectedRowKeys } = this.state;
     const { tenant, loading } = this.props;
@@ -269,7 +259,10 @@ class TenantAssignedAppModuleItem extends Component {
     };
     return (
       <div className={cls(styles['tenant-app-module-box'])}>
-        <Card title={this.renderTitle()} bordered={false}>
+        <Card
+          title={<BannerTitle title={currentTenant.name} subTitle="可以使用的应用模块" />}
+          bordered={false}
+        >
           <ExtTable {...extTableProps} />
         </Card>
         <UnAssignAppModuleItem {...unAssignAppModuleItemProps} />

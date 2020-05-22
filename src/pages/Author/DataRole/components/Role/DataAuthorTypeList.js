@@ -4,6 +4,7 @@ import { connect } from 'dva';
 import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale';
 import { Card, Button } from 'antd';
 import { ExtTable, ExtIcon, ComboList } from 'suid';
+import { BannerTitle } from '@/components';
 import { constants } from '@/utils';
 import AssignView from './AssignView';
 import DataAuthorAssignModal from './DataAuthorAssign';
@@ -53,17 +54,6 @@ class DataAuthorTypeList extends PureComponent {
             tooltip={{ title: '配置权限' }}
           />
         </span>
-      </>
-    );
-  };
-
-  renderTitle = () => {
-    const { dataRole } = this.props;
-    const { currentRole } = dataRole;
-    return (
-      <>
-        {currentRole.name}
-        <span style={{ fontSize: 14, color: '#999', marginLeft: 8 }}>数据权限类型</span>
       </>
     );
   };
@@ -174,7 +164,10 @@ class DataAuthorTypeList extends PureComponent {
     }
     return (
       <div className={cls(styles['data-author-type-box'])}>
-        <Card title={this.renderTitle()} bordered={false}>
+        <Card
+          title={<BannerTitle title={currentRole.name} subTitle="数据权限类型" />}
+          bordered={false}
+        >
           <ExtTable {...extTableProps} />
         </Card>
         <DataAuthorAssignModal />
