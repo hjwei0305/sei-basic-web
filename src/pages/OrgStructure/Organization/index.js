@@ -34,7 +34,7 @@ class Organization extends Component {
   }
 
   componentDidUpdate(preProps) {
-    const { organization } = this.props;
+    const { organization, dispatch } = this.props;
     const { treeData: dataSource } = organization;
     if (!isEqual(preProps.organization.treeData, dataSource)) {
       this.data = [...dataSource];
@@ -45,14 +45,23 @@ class Organization extends Component {
         () => {
           const { currentNode } = organization;
           let expandedKeys = [];
+          const { selectedKeys } = this.state;
+          let keys = [...selectedKeys];
           if (currentNode && currentNode.id) {
             const { treeData } = this.state;
             const parentData = this.getCurrentNodeAllParents(treeData, currentNode.id);
             expandedKeys = parentData.map(p => p.id);
           } else {
             expandedKeys = dataSource.map(p => p.id);
+            keys = expandedKeys.filter((_e, idx) => idx === 0);
+            dispatch({
+              type: 'organization/updateState',
+              payload: {
+                currentNode: keys.length > 0 ? dataSource[0] : null,
+              },
+            });
           }
-          this.setState({ expandedKeys });
+          this.setState({ expandedKeys, selectedKeys: keys });
         },
       );
     }

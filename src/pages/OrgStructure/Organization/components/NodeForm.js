@@ -100,17 +100,19 @@ class NodeForm extends PureComponent {
       return (
         <>
           <Button onClick={e => this.handlerAddChild(e, editData)}>新建下级组织</Button>
-          <Popconfirm
-            overlayClassName={cls(styles['pop-confirm-box'])}
-            title="确定要删除吗？删除后不能恢复"
-            placement="top"
-            icon={<ExtIcon type="question-circle" antd />}
-            onConfirm={e => this.handlerDelete(e, editData.id)}
-          >
-            <Button type="danger" loading={loading.effects['organization/del']}>
-              删除
-            </Button>
-          </Popconfirm>
+          {editData.parentId ? (
+            <Popconfirm
+              overlayClassName={cls(styles['pop-confirm-box'])}
+              title="确定要删除吗？删除后不能恢复"
+              placement="top"
+              icon={<ExtIcon type="question-circle" antd />}
+              onConfirm={e => this.handlerDelete(e, editData.id)}
+            >
+              <Button type="danger" loading={loading.effects['organization/del']}>
+                删除
+              </Button>
+            </Popconfirm>
+          ) : null}
         </>
       );
     }
@@ -131,9 +133,7 @@ class NodeForm extends PureComponent {
     const { editData } = this.props;
     let title = '';
     if (editData) {
-      if (editData.parentId) {
-        title = editData.id ? editData.name : '新建下级组织';
-      }
+      title = editData.id ? editData.name : '新建下级组织';
     }
     return title;
   };
