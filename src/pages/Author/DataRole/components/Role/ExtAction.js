@@ -18,25 +18,21 @@ const menuData = () => [
     title: '查看岗位',
     key: ROLE_VIEW.STATION,
     disabled: false,
-    icon: 'flag',
   },
   {
     title: '查看用户',
     key: ROLE_VIEW.USER,
     disabled: false,
-    icon: 'team',
   },
   {
     title: '配置岗位',
     key: ROLE_VIEW.CONFIG_STATION,
     disabled: false,
-    icon: 'gold',
   },
   {
     title: '配置用户',
     key: ROLE_VIEW.CONFIG_USER,
     disabled: false,
-    icon: 'solution',
   },
 ];
 
@@ -161,10 +157,7 @@ class ExtAction extends PureComponent {
           }
           return (
             <Item key={m.key} disabled={m.disabled}>
-              <span className="view-popover-box-trigger">
-                <ExtIcon type={m.icon} antd />
-                {m.title}
-              </span>
+              <span className="view-popover-box-trigger">{m.title}</span>
             </Item>
           );
         })}

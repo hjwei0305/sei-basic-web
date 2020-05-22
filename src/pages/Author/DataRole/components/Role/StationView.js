@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Popover } from 'antd';
 import cls from 'classnames';
-import { ExtIcon } from 'suid';
 import { RoleStation } from '@/components';
 import styles from './View.less';
 
@@ -19,7 +18,7 @@ class StationView extends PureComponent {
 
   render() {
     const { visible } = this.state;
-    const { title, icon, menuId, loading, assinStationData } = this.props;
+    const { title, menuId, loading, assinStationData } = this.props;
     const roleStationProps = {
       stationData: assinStationData,
       loading,
@@ -36,10 +35,7 @@ class StationView extends PureComponent {
         overlayClassName={cls(styles['view-popover-box'])}
         content={<RoleStation {...roleStationProps} />}
       >
-        <span className={cls('view-popover-box-trigger')}>
-          <ExtIcon type={icon} antd />
-          {title}
-        </span>
+        <span className={cls('view-popover-box-trigger')}>{title}</span>
       </Popover>
     );
   }
