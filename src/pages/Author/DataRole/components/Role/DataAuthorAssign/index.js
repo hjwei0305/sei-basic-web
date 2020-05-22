@@ -100,7 +100,7 @@ class DataAuthorAssignModal extends PureComponent {
       visible: showDataAuthorAssign,
       centered: true,
       width: 460,
-      bodyStyle: { padding: 0, height: 520, overflow: 'hidden' },
+      bodyStyle: { padding: 0, height: 520, width: 460, overflow: 'hidden' },
       footer: null,
       title: this.renderTitle(currentRole),
     };
