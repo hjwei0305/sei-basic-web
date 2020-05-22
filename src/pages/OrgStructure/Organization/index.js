@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'dva';
 import cls from 'classnames';
 import { isEqual, trim } from 'lodash';
-import { Button, Card, Input, Tree, Empty, Layout } from 'antd';
+import { Card, Input, Tree, Empty, Layout } from 'antd';
 import { ScrollBar, ExtIcon, ListLoader } from 'suid';
 import empty from '@/assets/item_empty.svg';
 import NodeForm from './components/NodeForm';
-import MenuMoveModal from './components/MenuMoveModal';
 import styles from './index.less';
 
 const { Search } = Input;
@@ -15,16 +14,16 @@ const childFieldKey = 'children';
 const hightLightColor = '#f50';
 const { Sider, Content } = Layout;
 
-@connect(({ appMenu, loading }) => ({ appMenu, loading }))
-class AppMenu extends Component {
+@connect(({ organization, loading }) => ({ organization, loading }))
+class Organization extends Component {
   static allValue = '';
 
   static data = [];
 
   constructor(props) {
     super(props);
-    const { appMenu } = props;
-    const { currentNode } = appMenu;
+    const { organization } = props;
+    const { currentNode } = organization;
     this.state = {
       treeData: [],
       expandedKeys: [],
@@ -35,17 +34,17 @@ class AppMenu extends Component {
   }
 
   componentDidUpdate(preProps) {
-    const { appMenu } = this.props;
-    const { treeData: dataSource } = appMenu;
-    if (!isEqual(preProps.appMenu.treeData, dataSource)) {
+    const { organization } = this.props;
+    const { treeData: dataSource } = organization;
+    if (!isEqual(preProps.organization.treeData, dataSource)) {
       this.data = [...dataSource];
       this.setState(
         {
           treeData: dataSource,
         },
         () => {
+          const { currentNode } = organization;
           let expandedKeys = [];
-          const { currentNode } = appMenu;
           if (currentNode && currentNode.id) {
             const { treeData } = this.state;
             const parentData = this.getCurrentNodeAllParents(treeData, currentNode.id);
@@ -58,11 +57,11 @@ class AppMenu extends Component {
       );
     }
     if (
-      !isEqual(preProps.appMenu.currentNode, appMenu.currentNode) &&
-      appMenu.currentNode &&
-      appMenu.currentNode.id
+      !isEqual(preProps.organization.currentNode, organization.currentNode) &&
+      organization.currentNode &&
+      organization.currentNode.id
     ) {
-      const { currentNode } = appMenu;
+      const { currentNode } = organization;
       this.setState({
         selectedKeys: [currentNode.id],
       });
@@ -76,7 +75,7 @@ class AppMenu extends Component {
       selectedKeys: [],
     });
     dispatch({
-      type: 'appMenu/updateState',
+      type: 'organization/updateState',
       payload: {
         currentNode: {},
       },
@@ -92,7 +91,7 @@ class AppMenu extends Component {
       };
       const { dispatch } = this.props;
       dispatch({
-        type: 'appMenu/updateState',
+        type: 'organization/updateState',
         payload: {
           currentNode,
         },
@@ -104,7 +103,7 @@ class AppMenu extends Component {
     const { childParentNode } = this.state;
     const { dispatch } = this.props;
     dispatch({
-      type: 'appMenu/updateState',
+      type: 'organization/updateState',
       payload: {
         currentNode: childParentNode,
       },
@@ -112,74 +111,34 @@ class AppMenu extends Component {
     this.setState({ childParentNode: null });
   };
 
-  moveChild = currentNode => {
-    if (currentNode) {
-      const { dispatch } = this.props;
-      dispatch({
-        type: 'appMenu/updateState',
-        payload: {
-          currentNode,
-          showMove: true,
-        },
-      });
-    }
-  };
-
-  submitMove = data => {
+  deleteOrg = id => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'appMenu/move',
-      payload: {
-        ...data,
-      },
-      callback: res => {
-        if (res.success) {
-          dispatch({
-            type: 'appMenu/getMenuList',
-          });
-        }
-      },
-    });
-  };
-
-  closeMenuMoveModal = () => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'appMenu/updateState',
-      payload: {
-        showMove: false,
-      },
-    });
-  };
-
-  deleteMenu = id => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'appMenu/del',
+      type: 'organization/del',
       payload: {
         id,
       },
       callback: res => {
         if (res.success) {
           dispatch({
-            type: 'appMenu/getMenuList',
+            type: 'organization/getOrgList',
           });
         }
       },
     });
   };
 
-  saveMenu = data => {
+  saveOrg = data => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'appMenu/save',
+      type: 'organization/save',
       payload: {
         ...data,
       },
       callback: res => {
         if (res.success) {
           dispatch({
-            type: 'appMenu/getMenuList',
+            type: 'organization/getOrgList',
           });
           this.setState({ childParentNode: null });
         }
@@ -261,7 +220,7 @@ class AppMenu extends Component {
       },
       () => {
         dispatch({
-          type: 'appMenu/updateState',
+          type: 'organization/updateState',
           payload: {
             currentNode,
           },
@@ -331,40 +290,23 @@ class AppMenu extends Component {
   };
 
   render() {
-    const { loading, appMenu } = this.props;
+    const { loading, organization } = this.props;
     const { allValue, treeData, expandedKeys, selectedKeys, autoExpandParent } = this.state;
-    const { currentNode, showMove } = appMenu;
+    const { currentNode } = organization;
     const nodeFormProps = {
       loading,
       editData: currentNode,
-      saveMenu: this.saveMenu,
+      saveOrg: this.saveOrg,
       addChild: this.addChild,
-      deleteMenu: this.deleteMenu,
+      deleteOrg: this.deleteOrg,
       moveChild: this.moveChild,
       goBackToChildParent: this.goBackToChildParent,
-    };
-    const menuMoveModalProps = {
-      loading,
-      currentNode,
-      submitMove: this.submitMove,
-      showMove,
-      treeData,
-      closeMenuMoveModal: this.closeMenuMoveModal,
     };
     return (
       <div className={cls(styles['container-box'])}>
         <Layout className="auto-height">
           <Sider width={380} className="auto-height">
-            <Card
-              title="应用菜单"
-              bordered={false}
-              className="left-content"
-              extra={
-                <Button icon="plus" type="link" onClick={e => this.addParent(e)}>
-                  根菜单
-                </Button>
-              }
-            >
+            <Card title="组织机构" bordered={false} className="left-content">
               <div className="header-tool-box">
                 <Search
                   placeholder="输入名称关键字查询"
@@ -376,7 +318,7 @@ class AppMenu extends Component {
               </div>
               <div className="tree-body">
                 <ScrollBar>
-                  {loading.effects['appMenu/getMenuList'] ? (
+                  {loading.effects['organization/getOrgList'] ? (
                     <ListLoader />
                   ) : (
                     <Tree
@@ -400,14 +342,13 @@ class AppMenu extends Component {
               <NodeForm {...nodeFormProps} />
             ) : (
               <div className="blank-empty">
-                <Empty image={empty} description="可选择左侧菜单节点获得相关的操作" />
+                <Empty image={empty} description="可选择左侧节点获得相关的操作" />
               </div>
             )}
           </Content>
         </Layout>
-        <MenuMoveModal {...menuMoveModalProps} />
       </div>
     );
   }
 }
-export default AppMenu;
+export default Organization;

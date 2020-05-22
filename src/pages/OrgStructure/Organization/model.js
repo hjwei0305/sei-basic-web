@@ -1,13 +1,7 @@
-/*
- * @Author: zp
- * @Date:   2020-02-02 11:57:38
- * @Last Modified by: Eason
- * @Last Modified time: 2020-03-06 13:34:32
- */
 import { message } from 'antd';
 import { formatMessage } from 'umi-plugin-react/locale';
 import { utils } from 'suid';
-import { del, getTree, save } from './service';
+import { del, getOrgList, save } from './service';
 
 const { pathMatchRegexp, dvaModel } = utils;
 const { modelExtend, model } = dvaModel;
@@ -17,37 +11,36 @@ export default modelExtend(model, {
 
   state: {
     treeData: [],
-    rowData: null,
-    showCreateModal: false,
-    selectedTreeNode: null,
+    currentNode: null,
   },
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen(location => {
         if (pathMatchRegexp('/orgStructure/organization', location.pathname)) {
           dispatch({
-            type: 'queryTree',
+            type: 'getOrgList',
           });
         }
       });
     },
   },
   effects: {
-    *queryTree({ payload }, { call, put }) {
-      const ds = yield call(getTree, payload);
-      if (ds.success) {
+    *getOrgList({ payload }, { call, put, select }) {
+      const { currentNode } = yield select(s => s.organization);
+      const re = yield call(getOrgList, payload);
+      if (re.success) {
         yield put({
           type: 'updateState',
           payload: {
-            treeData: [ds.data],
+            treeData: [re.data],
+            currentNode,
           },
         });
       } else {
-        throw ds;
+        message.error(re.message);
       }
-      return ds;
     },
-    *save({ payload }, { call, put }) {
+    *save({ payload, callback }, { call, put }) {
       const re = yield call(save, payload);
       message.destroy();
       if (re.success) {
@@ -55,25 +48,33 @@ export default modelExtend(model, {
         yield put({
           type: 'updateState',
           payload: {
-            showCreateModal: false,
-            selectedTreeNode: re.data,
+            currentNode: re.data,
           },
         });
       } else {
         message.error(re.message);
       }
-      return re;
+      if (callback && callback instanceof Function) {
+        callback(re);
+      }
     },
-    *del({ payload }, { call }) {
+    *del({ payload, callback }, { call, put }) {
       const re = yield call(del, payload);
       message.destroy();
       if (re.success) {
         message.success(formatMessage({ id: 'global.delete-success', defaultMessage: '删除成功' }));
+        yield put({
+          type: 'updateState',
+          payload: {
+            currentNode: null,
+          },
+        });
       } else {
         message.error(re.message);
       }
-
-      return re;
+      if (callback && callback instanceof Function) {
+        callback(re);
+      }
     },
   },
 });

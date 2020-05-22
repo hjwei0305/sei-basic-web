@@ -1,18 +1,12 @@
-/*
- * @Author: zp
- * @Date:   2020-02-02 11:57:24
- * @Last Modified by: Eason
- * @Last Modified time: 2020-03-06 13:34:34
- */
 import { utils } from 'suid';
-import { constants } from '@/utils';
+import { constants } from '../../../utils';
 
 const { request } = utils;
 
 const { SERVER_PATH } = constants;
 
-/** 获取树 */
-export async function getTree() {
+/** 获取所有组织机构 */
+export async function getOrgList() {
   const url = `${SERVER_PATH}/sei-basic/organization/findOrgTree`;
   return request({
     url,
@@ -20,7 +14,7 @@ export async function getTree() {
   });
 }
 
-/** 保存 */
+/** 组织机构项保存 */
 export async function save(data) {
   const url = `${SERVER_PATH}/sei-basic/organization/save`;
   return request({
@@ -30,7 +24,7 @@ export async function save(data) {
   });
 }
 
-/** 删除 */
+/** 组织机构项删除 */
 export async function del(params) {
   const url = `${SERVER_PATH}/sei-basic/organization/delete/${params.id}`;
   return request({
