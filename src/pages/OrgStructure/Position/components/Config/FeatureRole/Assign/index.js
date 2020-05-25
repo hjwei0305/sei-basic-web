@@ -2,22 +2,23 @@
  * @Author: Eason
  * @Date: 2020-02-15 11:53:29
  * @Last Modified by: Eason
- * @Last Modified time: 2020-05-25 10:31:39
+ * @Last Modified time: 2020-05-25 10:57:36
  */
 import React, { Component } from 'react';
 import cls from 'classnames';
 import PropTypes from 'prop-types';
-import { Layout, Button, Input, Tooltip } from 'antd';
-import { ListLoader, ListCard } from 'suid';
+import { get } from 'lodash';
+import { Layout, Button, Input, Tooltip, Tag } from 'antd';
+import { ListCard } from 'suid';
 import { constants } from '@/utils';
-import Organization from './Organization';
+import RoleGroup from './RoleGroup';
 import styles from './index.less';
 
-const { SERVER_PATH } = constants;
+const { SERVER_PATH, ROLE_TYPE } = constants;
 const { Sider, Content } = Layout;
 const { Search } = Input;
 
-class UserAssign extends Component {
+class FeatureRoleAssign extends Component {
   static listCardRef;
 
   static propTypes = {
@@ -27,21 +28,17 @@ class UserAssign extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      orgId: null,
+      roleGroupId: null,
       selectedKeys: [],
     };
   }
 
-  handlerOrganizationChange = orgId => {
-    this.setState({ orgId });
+  handlerSelectRoleGroupChange = roleGroupId => {
+    this.setState({ roleGroupId });
   };
 
   handerAssignUserSelectChange = selectedKeys => {
     this.setState({ selectedKeys });
-  };
-
-  handlerOrganizationAfterLoaded = orgId => {
-    this.setState({ orgId });
   };
 
   handlerSearchChange = v => {
@@ -66,6 +63,65 @@ class UserAssign extends Component {
 
   assignedCancel = () => {
     this.setState({ selectedKeys: [] });
+  };
+
+  renderName = row => {
+    let tag;
+    if (row.publicUserType && row.publicOrgId) {
+      tag = (
+        <Tag color="green" style={{ marginLeft: 8 }}>
+          公共角色
+        </Tag>
+      );
+    }
+    return (
+      <>
+        {row.name}
+        {tag}
+      </>
+    );
+  };
+
+  renderDescription = row => {
+    let pubUserType;
+    let publicOrg;
+    if (row.publicUserType) {
+      pubUserType = (
+        <div className="field-item info">
+          <span className="label">用户类型</span>
+          <span className="value">{row.userTypeRemark}</span>
+        </div>
+      );
+    }
+    if (row.publicOrgId) {
+      publicOrg = (
+        <div className="field-item info">
+          <span className="label">组织机构</span>
+          <span className="value">{row.publicOrgName}</span>
+        </div>
+      );
+    }
+    return (
+      <div className="desc-box">
+        <div className="field-item">{row.code}</div>
+        {publicOrg || pubUserType ? (
+          <div className="public-box">
+            {pubUserType}
+            {publicOrg}
+          </div>
+        ) : null}
+      </div>
+    );
+  };
+
+  renderRoleTypeRemark = item => {
+    switch (item.roleType) {
+      case ROLE_TYPE.CAN_USE:
+        return <span style={{ color: '#52c41a', fontSize: 12 }}>{item.roleTypeRemark}</span>;
+      case ROLE_TYPE.CAN_ASSIGN:
+        return <span style={{ color: '#fa8c16', fontSize: 12 }}>{item.roleTypeRemark}</span>;
+      default:
+    }
   };
 
   renderCustomTool = () => {
@@ -103,36 +159,28 @@ class UserAssign extends Component {
   };
 
   render() {
-    const { orgId, selectedKeys } = this.state;
-    const { extParams } = this.props;
+    const { roleGroupId, selectedKeys } = this.state;
+    const { currentPosition } = this.props;
     const listCardProps = {
       className: 'anyone-user-box',
-      title: '可选择的用户',
+      title: '可选择的角色',
       bordered: false,
-      searchPlaceHolder: '输入用户代码或名称关键字查询',
-      searchProperties: ['code', 'userName'],
+      searchPlaceHolder: '输入代码或名称关键字查询',
       checkbox: true,
       selectedKeys,
       itemField: {
-        title: item => item.userName,
-        description: item => (
-          <>
-            {item.userTypeRemark}
-            <br />
-            {item.remark}
-          </>
-        ),
+        title: item => this.renderName(item),
+        description: item => this.renderDescription(item),
+        extra: item => this.renderRoleTypeRemark(item),
       },
-      remotePaging: true,
       showArrow: false,
       showSearch: false,
       cascadeParams: {
-        organizationId: orgId,
+        featureRoleGroupId: roleGroupId,
       },
       store: {
-        type: 'POST',
-        url: `${SERVER_PATH}/sei-basic/user/queryUsers`,
-        params: { ...extParams, includeSubNode: true },
+        url: `${SERVER_PATH}/sei-basic/position/getCanAssignedFeatureRoles`,
+        params: { positionId: get(currentPosition, 'id', null) },
       },
       onListCardRef: ref => (this.listCardRef = ref),
       onSelectChange: this.handerAssignUserSelectChange,
@@ -140,18 +188,15 @@ class UserAssign extends Component {
     };
     return (
       <Layout className={cls(styles['user-panel-box'])}>
-        <Sider width={320} className={cls('auto-height')}>
-          <Organization
-            onSelectChange={this.handlerOrganizationChange}
-            onAfterLoaded={this.handlerOrganizationAfterLoaded}
-          />
+        <Sider width={280} className={cls('auto-height')}>
+          <RoleGroup onSelectChange={this.handlerSelectRoleGroupChange} />
         </Sider>
         <Content className={cls('auto-height')} style={{ paddingLeft: 4 }}>
-          {orgId ? <ListCard {...listCardProps} /> : <ListLoader />}
+          <ListCard {...listCardProps} />
         </Content>
       </Layout>
     );
   }
 }
 
-export default UserAssign;
+export default FeatureRoleAssign;

@@ -235,7 +235,6 @@ class FeatureRole extends Component {
                       >
                         <Skeleton loading={listLoading} active>
                           <List.Item.Meta title={item.name} description={item.code} />
-                          <div className="desc">{item.appModuleName}</div>
                           <div className="arrow-box">
                             <ExtIcon type="right" antd />
                           </div>

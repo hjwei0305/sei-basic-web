@@ -1,8 +1,8 @@
 /*
  * @Author: zp
  * @Date:   2020-02-02 11:57:38
- * @Last Modified by: zp
- * @Last Modified time: 2020-04-14 10:33:20
+ * @Last Modified by: Eason
+ * @Last Modified time: 2020-05-25 10:55:38
  */
 import { message } from 'antd';
 import { formatMessage } from 'umi-plugin-react/locale';
@@ -13,14 +13,13 @@ import {
   listAllTree,
   findByOrganizationId,
   copyToOrgNodes,
-  assignEmployee,
-  unAssignEmployee,
+  assignUser,
+  unAssignUser,
   assignFeatureRole,
   unAssignFeatureRole,
   assignDataRole,
   unAssignDataRole,
-  saveAssignFeatureRoleCfg,
-} from './service';
+} from '../service';
 
 const { pathMatchRegexp, dvaModel } = utils;
 const { modelExtend, model } = dvaModel;
@@ -29,13 +28,14 @@ export default modelExtend(model, {
   namespace: 'position',
 
   state: {
-    list: [],
-    rowData: null,
-    showModal: false,
+    showFormModal: false,
     showCopyModal: false,
+    showConfigFeatrueRole: false,
+    showConfigUser: false,
+    showConfigDataRole: false,
     treeData: [],
-    currNode: null,
-    showPosionConfig: false,
+    currentOrgNode: null,
+    currentPosition: null,
   },
   subscriptions: {
     setup({ dispatch, history }) {
@@ -62,14 +62,6 @@ export default modelExtend(model, {
         throw ds;
       }
     },
-    *updateCurrNode({ payload }, { put }) {
-      yield put({
-        type: 'updateState',
-        payload,
-      });
-
-      return payload;
-    },
     *queryListByOrgId({ payload }, { call, put }) {
       const re = yield call(findByOrganizationId, payload);
       if (re.success) {
@@ -83,7 +75,7 @@ export default modelExtend(model, {
         throw re;
       }
     },
-    *save({ payload }, { call }) {
+    *save({ payload, callback }, { call }) {
       const re = yield call(save, payload);
       message.destroy();
       if (re.success) {
@@ -91,21 +83,11 @@ export default modelExtend(model, {
       } else {
         message.error(re.message);
       }
-
-      return re;
-    },
-    *saveCfg({ payload }, { call }) {
-      const re = yield call(saveAssignFeatureRoleCfg, payload);
-      message.destroy();
-      if (re.success) {
-        message.success(formatMessage({ id: 'global.save-success', defaultMessage: '保存成功' }));
-      } else {
-        message.error(re.message);
+      if (callback && callback instanceof Function) {
+        callback(re);
       }
-
-      return re;
     },
-    *del({ payload }, { call }) {
+    *del({ payload, callback }, { call }) {
       const re = yield call(del, payload);
       message.destroy();
       if (re.success) {
@@ -113,10 +95,11 @@ export default modelExtend(model, {
       } else {
         message.error(re.message);
       }
-
-      return re;
+      if (callback && callback instanceof Function) {
+        callback(re);
+      }
     },
-    *copyTo({ payload }, { call }) {
+    *copyTo({ payload, callback }, { call }) {
       const re = yield call(copyToOrgNodes, payload);
       message.destroy();
       if (re.success) {
@@ -124,29 +107,35 @@ export default modelExtend(model, {
       } else {
         message.error(re.message);
       }
-      return re;
+      if (callback && callback instanceof Function) {
+        callback(re);
+      }
     },
-    *assignEmployee({ payload }, { call }) {
-      const re = yield call(assignEmployee, payload);
+    *assignUser({ payload, callback }, { call }) {
+      const re = yield call(assignUser, payload);
       message.destroy();
       if (re.success) {
         message.success(re.message);
       } else {
         message.error(re.message);
       }
-      return re;
+      if (callback && callback instanceof Function) {
+        callback(re);
+      }
     },
-    *unAssignEmployee({ payload }, { call }) {
-      const re = yield call(unAssignEmployee, payload);
+    *unAssignUser({ payload, callback }, { call }) {
+      const re = yield call(unAssignUser, payload);
       message.destroy();
       if (re.success) {
         message.success(re.message);
       } else {
         message.error(re.message);
       }
-      return re;
+      if (callback && callback instanceof Function) {
+        callback(re);
+      }
     },
-    *assignFeatureRole({ payload }, { call }) {
+    *assignFeatureRole({ payload, callback }, { call }) {
       const re = yield call(assignFeatureRole, payload);
       message.destroy();
       if (re.success) {
@@ -154,9 +143,11 @@ export default modelExtend(model, {
       } else {
         message.error(re.message);
       }
-      return re;
+      if (callback && callback instanceof Function) {
+        callback(re);
+      }
     },
-    *unAssignFeatureRole({ payload }, { call }) {
+    *unAssignFeatureRole({ payload, callback }, { call }) {
       const re = yield call(unAssignFeatureRole, payload);
       message.destroy();
       if (re.success) {
@@ -164,9 +155,11 @@ export default modelExtend(model, {
       } else {
         message.error(re.message);
       }
-      return re;
+      if (callback && callback instanceof Function) {
+        callback(re);
+      }
     },
-    *assignDataRole({ payload }, { call }) {
+    *assignDataRole({ payload, callback }, { call }) {
       const re = yield call(assignDataRole, payload);
       message.destroy();
       if (re.success) {
@@ -174,9 +167,11 @@ export default modelExtend(model, {
       } else {
         message.error(re.message);
       }
-      return re;
+      if (callback && callback instanceof Function) {
+        callback(re);
+      }
     },
-    *unAssignDataRole({ payload }, { call }) {
+    *unAssignDataRole({ payload, callback }, { call }) {
       const re = yield call(unAssignDataRole, payload);
       message.destroy();
       if (re.success) {
@@ -184,7 +179,9 @@ export default modelExtend(model, {
       } else {
         message.error(re.message);
       }
-      return re;
+      if (callback && callback instanceof Function) {
+        callback(re);
+      }
     },
   },
 });

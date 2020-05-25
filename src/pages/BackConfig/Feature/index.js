@@ -17,6 +17,8 @@ const { Sider, Content } = Layout;
 
 @connect(({ featureGroup, feature, loading }) => ({ featureGroup, feature, loading }))
 class Feature extends Component {
+  static listCardRef = null;
+
   constructor(props) {
     super(props);
     this.state = {

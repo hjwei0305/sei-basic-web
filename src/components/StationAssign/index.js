@@ -2,7 +2,7 @@
  * @Author: Eason
  * @Date: 2020-02-15 11:53:29
  * @Last Modified by: Eason
- * @Last Modified time: 2020-05-20 23:11:00
+ * @Last Modified time: 2020-05-25 10:31:55
  */
 import React, { Component } from 'react';
 import cls from 'classnames';
@@ -74,12 +74,19 @@ class StationAssign extends Component {
     const hasSelected = selectedKeys.length > 0;
     return (
       <>
-        <Button type="danger" ghost disabled={!hasSelected} onClick={this.assignedCancel}>
-          取消
-        </Button>
-        <Button type="primary" disabled={!hasSelected} loading={saving} onClick={this.assignedSave}>
-          {`确定 (${selectedKeys.length})`}
-        </Button>
+        <div>
+          <Button type="danger" ghost disabled={!hasSelected} onClick={this.assignedCancel}>
+            取消
+          </Button>
+          <Button
+            type="primary"
+            disabled={!hasSelected}
+            loading={saving}
+            onClick={this.assignedSave}
+          >
+            {`确定 (${selectedKeys.length})`}
+          </Button>
+        </div>
         <div>
           <Tooltip title="输入代码或名称关键字查询">
             <Search

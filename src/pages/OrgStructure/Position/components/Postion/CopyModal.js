@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Form, Input, Checkbox } from 'antd';
+import { Form, Input, Switch } from 'antd';
 import { ExtModal, ComboTree, utils } from 'suid';
 import { constants } from '@/utils';
 
@@ -18,6 +18,8 @@ const formItemLayout = {
 
 @Form.create()
 class CopyModal extends PureComponent {
+  static copyToOrgNode = null;
+
   onFormSubmit = () => {
     const { form, save } = this.props;
     form.validateFields((err, formData) => {
@@ -29,7 +31,8 @@ class CopyModal extends PureComponent {
         copyFeatureRole: false,
         targetOrgIds: [formData.orgId],
       };
-      save(objectAssignHave(params, formData));
+      objectAssignHave(params, formData);
+      save(params, this.copyToOrgNode);
     });
   };
 
@@ -66,13 +69,15 @@ class CopyModal extends PureComponent {
 
   getComboTreeProps = () => {
     const { form } = this.props;
-
     return {
       form,
       name: 'orgName',
       field: ['orgId'],
       store: {
         url: `${SERVER_PATH}/sei-basic/organization/findOrgTreeWithoutFrozen`,
+      },
+      afterSelect: item => {
+        this.copyToOrgNode = item;
       },
       reader: {
         name: 'name',
@@ -81,14 +86,20 @@ class CopyModal extends PureComponent {
     };
   };
 
-  render() {
-    const { form, rowData, closeModal, saving, showModal } = this.props;
-    const { getFieldDecorator } = form;
+  handlerCloseModal = () => {
+    const { closeModal } = this.props;
+    if (closeModal) {
+      closeModal();
+    }
+  };
 
+  render() {
+    const { form, currentPosition, saving, showModal } = this.props;
+    const { getFieldDecorator } = form;
     return (
       <ExtModal
         destroyOnClose
-        onCancel={closeModal}
+        onCancel={this.handlerCloseModal}
         visible={showModal}
         centered
         confirmLoading={saving}
@@ -100,12 +111,12 @@ class CopyModal extends PureComponent {
         <Form {...formItemLayout} layout="horizontal">
           <FormItem label="源岗位Id" style={{ display: 'none' }}>
             {getFieldDecorator('positionId', {
-              initialValue: rowData ? rowData.id : '',
+              initialValue: currentPosition ? currentPosition.id : '',
             })(<Input />)}
           </FormItem>
           <FormItem label="源岗位">
             {getFieldDecorator('positionName', {
-              initialValue: rowData ? rowData.name : '',
+              initialValue: currentPosition ? currentPosition.name : '',
               rules: [
                 {
                   required: true,
@@ -131,9 +142,9 @@ class CopyModal extends PureComponent {
           </FormItem>
           <FormItem label="复制功能角色">
             {getFieldDecorator('copyFeatureRole', {
-              valuePropName: 'checked',
               initialValue: false,
-            })(<Checkbox />)}
+              valuePropName: 'checked',
+            })(<Switch size="small" />)}
           </FormItem>
         </Form>
       </ExtModal>

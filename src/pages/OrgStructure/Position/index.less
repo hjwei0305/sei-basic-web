@@ -1,34 +1,46 @@
 @import '../../../themes/vars.less';
 .container-box {
   height: 100%;
+  padding: 0;
+  overflow: hidden;
+  background-color: @page-background-color;
   :global {
-    .empty-wrapper {
-      margin-top: 200px;
-    }
-    .table-slot-container {
-      .ant-card {
-        .ant-card-body {
-          padding: 0;
+    .left-content {
+      position: relative;
+      height: 100%;
+      .ant-card-head {
+        height: 60px;
+        padding: 0 8px 0 24px;
+        border-bottom-color: transparent;
+      }
+      .header-tool-box {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 60px;
+        padding: 0 24px;
+      }
+      .ant-card-body {
+        height: calc(100% - 60px);
+        padding: 0;
+        .tree-body {
+          height: calc(100% - 60px);
+          padding: 0 0 0 24px;
+        }
+        .account-node {
+          display: flex;
+          align-items: center;
+          .title {
+            margin-right: 16px;
+          }
         }
       }
     }
-    .spin-wrapper {
+    .main-content {
+      position: relative;
+      display: flex;
+      justify-content: center;
       height: 100%;
-      .ant-spin-container {
-        height: 100%;
-      }
-    }
-    .suid-tool-bar {
-      button {
-        margin-right: 8px;
-      }
-    }
-    .suid-panel {
-      height: 100%;
-      .panel-body {
-        height: 100% !important;
-        max-height: 100% !important;
-      }
     }
   }
 }

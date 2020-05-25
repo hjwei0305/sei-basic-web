@@ -2,11 +2,12 @@
  * @Author: Eason
  * @Date: 2020-02-15 11:53:29
  * @Last Modified by: Eason
- * @Last Modified time: 2020-05-25 10:31:39
+ * @Last Modified time: 2020-05-25 10:29:45
  */
 import React, { Component } from 'react';
 import cls from 'classnames';
 import PropTypes from 'prop-types';
+import { get } from 'lodash';
 import { Layout, Button, Input, Tooltip } from 'antd';
 import { ListLoader, ListCard } from 'suid';
 import { constants } from '@/utils';
@@ -74,19 +75,12 @@ class UserAssign extends Component {
     const hasSelected = selectedKeys.length > 0;
     return (
       <>
-        <div>
-          <Button type="danger" ghost disabled={!hasSelected} onClick={this.assignedCancel}>
-            取消
-          </Button>
-          <Button
-            type="primary"
-            disabled={!hasSelected}
-            loading={saving}
-            onClick={this.assignedSave}
-          >
-            {`确定 (${selectedKeys.length})`}
-          </Button>
-        </div>
+        <Button type="danger" ghost disabled={!hasSelected} onClick={this.assignedCancel}>
+          取消
+        </Button>
+        <Button type="primary" disabled={!hasSelected} loading={saving} onClick={this.assignedSave}>
+          {`确定 (${selectedKeys.length})`}
+        </Button>
         <div>
           <Tooltip title="输入名称关键字查询">
             <Search
@@ -104,7 +98,7 @@ class UserAssign extends Component {
 
   render() {
     const { orgId, selectedKeys } = this.state;
-    const { extParams } = this.props;
+    const { currentPosition } = this.props;
     const listCardProps = {
       className: 'anyone-user-box',
       title: '可选择的用户',
@@ -131,8 +125,8 @@ class UserAssign extends Component {
       },
       store: {
         type: 'POST',
-        url: `${SERVER_PATH}/sei-basic/user/queryUsers`,
-        params: { ...extParams, includeSubNode: true },
+        url: `${SERVER_PATH}/sei-basic/employee/queryEmployees`,
+        params: { positionId: get(currentPosition, 'id', null), includeSubNode: true },
       },
       onListCardRef: ref => (this.listCardRef = ref),
       onSelectChange: this.handerAssignUserSelectChange,

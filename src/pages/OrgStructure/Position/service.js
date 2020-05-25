@@ -45,19 +45,26 @@ export async function del(params) {
  * @param params
  * @returns {*}
  */
-export async function listAllTree(params = {}) {
+export async function listAllTree() {
   const url = `${SERVER_PATH}/sei-basic/organization/findOrgTreeWithoutFrozen`;
-  return request.get(url, params);
+  return request({
+    url,
+    method: 'GET',
+  });
 }
 
 /**
  * 获得组织机构下所有岗位
  *
- * param organizationId 组织机构ID
+ * @param organizationId 组织机构ID
  */
-export async function findByOrganizationId(params = {}) {
-  const url = `${SERVER_PATH}/sei-basic/position/findByOrganizationId?organizationId=${params.organizationId}`;
-  return request.get(url);
+export async function findByOrganizationId(params) {
+  const url = `${SERVER_PATH}/sei-basic/position/findByOrganizationId`;
+  return request({
+    url,
+    method: 'GET',
+    params,
+  });
 }
 
 /**
@@ -65,21 +72,29 @@ export async function findByOrganizationId(params = {}) {
  */
 export async function copyToOrgNodes(data) {
   const url = `${SERVER_PATH}/sei-basic/position/copyToOrgNodes`;
-  return request.post(url, data);
+  return request({
+    url,
+    method: 'POST',
+    data,
+  });
 }
 
 /**
  * 分配岗位 企业员工
  */
-export async function assignEmployee(data) {
+export async function assignUser(data) {
   const url = `${SERVER_PATH}/sei-basic/employeePosition/insertRelationsByParents`;
-  return request.post(url, data);
+  return request({
+    url,
+    method: 'POST',
+    data,
+  });
 }
 
 /**
  * 取消分配岗位 企业员工
  */
-export async function unAssignEmployee(data) {
+export async function unAssignUser(data) {
   const url = `${SERVER_PATH}/sei-basic/employeePosition/removeRelationsByParents`;
   return request({
     url,
@@ -93,7 +108,11 @@ export async function unAssignEmployee(data) {
  */
 export async function assignFeatureRole(data) {
   const url = `${SERVER_PATH}/sei-basic/positionFeatureRole/insertRelations`;
-  return request.post(url, data);
+  return request({
+    url,
+    method: 'POST',
+    data,
+  });
 }
 
 /**
@@ -113,7 +132,11 @@ export async function unAssignFeatureRole(data) {
  */
 export async function assignDataRole(data) {
   const url = `${SERVER_PATH}/sei-basic/positionDataRole/insertRelations`;
-  return request.post(url, data);
+  return request({
+    url,
+    method: 'POST',
+    data,
+  });
 }
 
 /**
@@ -126,12 +149,4 @@ export async function unAssignDataRole(data) {
     method: 'DELETE',
     data,
   });
-}
-
-/**
- * 保存已经分配功能角色的有效期
- */
-export async function saveAssignFeatureRoleCfg(data) {
-  const url = `${SERVER_PATH}/sei-basic/userFeatureRole/saveEffective`;
-  return request.post(url, data);
 }

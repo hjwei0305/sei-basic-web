@@ -65,6 +65,13 @@ const ROLE_TYPE = {
   CAN_ASSIGN: 'CanAssign',
 };
 
+const POSITION_ACTION = {
+  COPY: 'copy',
+  USER: 'user',
+  FEATURE_ROLE: 'feature-role',
+  DATA_ROLE: 'data-role',
+};
+
 export default {
   APP_BASE,
   LOCAL_PATH,
@@ -75,4 +82,5 @@ export default {
   ROLE_VIEW,
   FEATURE_TYPE,
   ROLE_TYPE,
+  POSITION_ACTION,
 };
