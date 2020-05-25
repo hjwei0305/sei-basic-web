@@ -2,7 +2,7 @@
  * @Author: Eason
  * @Date: 2020-02-15 11:53:29
  * @Last Modified by: Eason
- * @Last Modified time: 2020-05-25 10:29:45
+ * @Last Modified time: 2020-05-25 11:20:13
  */
 import React, { Component } from 'react';
 import cls from 'classnames';
@@ -108,14 +108,13 @@ class UserAssign extends Component {
       checkbox: true,
       selectedKeys,
       itemField: {
-        title: item => item.userName,
-        description: item => (
+        title: item => (
           <>
-            {item.userTypeRemark}
-            <br />
-            {item.remark}
+            {item.userName}
+            <span style={{ color: '#999', marginLeft: 8 }}>{`(${item.code})`}</span>
           </>
         ),
+        description: item => item.organizationNamePath,
       },
       remotePaging: true,
       showArrow: false,

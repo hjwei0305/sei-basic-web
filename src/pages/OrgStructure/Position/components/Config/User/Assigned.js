@@ -137,14 +137,13 @@ class UserAssigned extends PureComponent {
       pagination: false,
       selectedKeys,
       itemField: {
-        title: item => item.userName,
-        description: item => (
+        title: item => (
           <>
-            {item.userTypeRemark}
-            <br />
-            {item.remark}
+            {item.userName}
+            <span style={{ color: '#999', marginLeft: 8 }}>{`(${item.code})`}</span>
           </>
         ),
+        description: item => item.organizationNamePath,
       },
       store: {
         url: `${SERVER_PATH}/sei-basic/employeePosition/getParentsFromChildId`,
