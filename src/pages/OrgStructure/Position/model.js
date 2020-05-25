@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-02-02 11:57:38
  * @Last Modified by: Eason
- * @Last Modified time: 2020-05-25 10:55:38
+ * @Last Modified time: 2020-05-25 11:27:19
  */
 import { message } from 'antd';
 import { formatMessage } from 'umi-plugin-react/locale';
@@ -19,7 +19,7 @@ import {
   unAssignFeatureRole,
   assignDataRole,
   unAssignDataRole,
-} from '../service';
+} from './service';
 
 const { pathMatchRegexp, dvaModel } = utils;
 const { modelExtend, model } = dvaModel;
