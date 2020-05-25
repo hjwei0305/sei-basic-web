@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-02-02 11:57:38
  * @Last Modified by: Eason
- * @Last Modified time: 2020-05-25 15:03:35
+ * @Last Modified time: 2020-05-25 17:46:31
  */
 import { message } from 'antd';
 import { formatMessage } from 'umi-plugin-react/locale';
@@ -18,6 +18,8 @@ import {
   unAssignFeatureRole,
   assignDataRole,
   unAssignDataRole,
+  saveAssignFeatureRoleEffective,
+  saveAssignDataRoleEffective,
 } from './service';
 
 const { pathMatchRegexp, dvaModel } = utils;
@@ -163,6 +165,30 @@ export default modelExtend(model, {
       message.destroy();
       if (re.success) {
         message.success(re.message);
+      } else {
+        message.error(re.message);
+      }
+      if (callback && callback instanceof Function) {
+        callback(re);
+      }
+    },
+    *saveAssignFeatureRoleEffective({ payload, callback }, { call }) {
+      const re = yield call(saveAssignFeatureRoleEffective, payload);
+      message.destroy();
+      if (re.success) {
+        message.success(formatMessage({ id: 'global.save-success', defaultMessage: '保存成功' }));
+      } else {
+        message.error(re.message);
+      }
+      if (callback && callback instanceof Function) {
+        callback(re);
+      }
+    },
+    *saveAssignDataRoleEffective({ payload, callback }, { call }) {
+      const re = yield call(saveAssignDataRoleEffective, payload);
+      message.destroy();
+      if (re.success) {
+        message.success(formatMessage({ id: 'global.save-success', defaultMessage: '保存成功' }));
       } else {
         message.error(re.message);
       }

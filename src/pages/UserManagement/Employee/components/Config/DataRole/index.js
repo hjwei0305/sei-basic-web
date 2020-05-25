@@ -44,6 +44,17 @@ class DataRoleModal extends PureComponent {
     });
   };
 
+  handlerSaveEffectDate = (data, callback) => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'employee/saveAssignDataRoleEffective',
+      payload: {
+        ...data,
+      },
+      callback,
+    });
+  };
+
   handlerShowAssign = () => {
     this.setState({ showAssign: true });
   };
@@ -101,6 +112,8 @@ class DataRoleModal extends PureComponent {
       onShowAssign: this.handlerShowAssign,
       save: this.unAssignDataRole,
       saving: loading.effects['employee/unAssignDataRole'],
+      onSaveEffectDate: this.handlerSaveEffectDate,
+      effectDateSaving: loading.effects['employee/saveAssignDataRoleEffective'],
     };
     return (
       <ExtModal {...extModalProps}>

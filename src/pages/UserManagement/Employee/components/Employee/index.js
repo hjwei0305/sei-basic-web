@@ -11,6 +11,7 @@ import ResetModal from './ResetModal';
 import StationModal from '../Config/Station';
 import FeatureRoleModal from '../Config/FeatureRole';
 import DataRoleModal from '../Config/DataRole';
+import CopyRoleToUserModal from '../CopyRoleToUser';
 import ExtAction from './ExtAction';
 import styles from './index.less';
 
@@ -131,7 +132,7 @@ class EmployeeHome extends Component {
       case EMPLOYEE_ACTION.RESET_PASSWORD:
         extData.showResetPasswordModal = true;
         break;
-      case EMPLOYEE_ACTION.COPY_ROLE:
+      case EMPLOYEE_ACTION.COPY_AUTH:
         extData.showCopyModal = true;
         break;
       case EMPLOYEE_ACTION.STATION:
@@ -162,6 +163,7 @@ class EmployeeHome extends Component {
       showConfigStaion,
       showConfigFeatrueRole,
       showConfigDataRole,
+      showCopyModal,
       currentOrgNode,
       currentEmployee,
     } = employee;
@@ -269,6 +271,11 @@ class EmployeeHome extends Component {
       showModal: showConfigDataRole,
       closeModal: this.closeFormModal,
     };
+    const copyRoleToUserModalProps = {
+      currentEmployee,
+      showModal: showCopyModal,
+      closeModal: this.closeFormModal,
+    };
     return (
       <div className={cls(styles['employee-box'])}>
         <Card
@@ -282,6 +289,7 @@ class EmployeeHome extends Component {
         <StationModal {...stationModalProps} />
         <FeatureRoleModal {...featureRoleModalProps} />
         <DataRoleModal {...dataRoleModalProps} />
+        <CopyRoleToUserModal {...copyRoleToUserModalProps} />
       </div>
     );
   }

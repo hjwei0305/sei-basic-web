@@ -127,3 +127,27 @@ export async function unAssignDataRole(data) {
     data,
   });
 }
+
+/**
+ * 保存已经分配功能角色的有效期
+ */
+export async function saveAssignFeatureRoleEffective(data) {
+  const url = `${SERVER_PATH}/sei-basic/userFeatureRole/saveEffective`;
+  return request({
+    url,
+    method: 'POST',
+    data,
+  });
+}
+
+/**
+ * 保存已经分配数据角色的有效期
+ */
+export async function saveAssignDataRoleEffective(data) {
+  const url = `${SERVER_PATH}/sei-basic/userDataRole/saveEffective`;
+  return request({
+    url,
+    method: 'POST',
+    data,
+  });
+}

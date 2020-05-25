@@ -74,7 +74,7 @@ const POSITION_ACTION = {
 
 const EMPLOYEE_ACTION = {
   RESET_PASSWORD: 'reset-password',
-  COPY_ROLE: 'copy-role',
+  COPY_AUTH: 'copy-auth',
   STATION: 'station',
   FEATURE_ROLE: 'feature-role',
   DATA_ROLE: 'data-role',

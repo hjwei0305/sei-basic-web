@@ -16,8 +16,8 @@ const menuData = () => [
     disabled: false,
   },
   {
-    title: '复制角色',
-    key: EMPLOYEE_ACTION.COPY_ROLE,
+    title: '复制权限到用户',
+    key: EMPLOYEE_ACTION.COPY_AUTH,
     disabled: false,
   },
   {

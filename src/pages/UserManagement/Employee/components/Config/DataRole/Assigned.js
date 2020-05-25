@@ -5,6 +5,7 @@ import { get } from 'lodash';
 import { Button, Drawer, Popconfirm, Tag } from 'antd';
 import { ListCard, ExtIcon } from 'suid';
 import { constants } from '@/utils';
+import EffectDate from '../../EffectDate';
 import styles from './Assigned.less';
 
 const { SERVER_PATH } = constants;
@@ -76,6 +77,17 @@ class DataRoleAssigned extends PureComponent {
     });
   };
 
+  handlerSaveEffectDate = data => {
+    const { onSaveEffectDate } = this.props;
+    if (onSaveEffectDate) {
+      onSaveEffectDate(data, res => {
+        if (res.success) {
+          this.listCardRef.remoteDataRefresh();
+        }
+      });
+    }
+  };
+
   renderCustomTool = () => {
     const { selectedKeys } = this.state;
     const { saving } = this.props;
@@ -126,6 +138,7 @@ class DataRoleAssigned extends PureComponent {
   };
 
   renderDescription = row => {
+    const { effectDateSaving } = this.props;
     let pubUserType;
     let publicOrg;
     if (row.publicUserType) {
@@ -153,6 +166,13 @@ class DataRoleAssigned extends PureComponent {
             {publicOrg}
           </div>
         ) : null}
+        <EffectDate
+          effectiveFrom={row.effectiveFrom}
+          effectiveTo={row.effectiveTo}
+          itemId={row.relationId}
+          saving={effectDateSaving}
+          onSaveEffectDate={this.handlerSaveEffectDate}
+        />
       </div>
     );
   };
