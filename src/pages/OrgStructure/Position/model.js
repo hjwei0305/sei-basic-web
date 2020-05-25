@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-02-02 11:57:38
  * @Last Modified by: Eason
- * @Last Modified time: 2020-05-25 11:27:19
+ * @Last Modified time: 2020-05-25 12:37:34
  */
 import { message } from 'antd';
 import { formatMessage } from 'umi-plugin-react/locale';
@@ -11,7 +11,6 @@ import {
   del,
   save,
   listAllTree,
-  findByOrganizationId,
   copyToOrgNodes,
   assignUser,
   unAssignUser,
@@ -60,19 +59,6 @@ export default modelExtend(model, {
         });
       } else {
         throw ds;
-      }
-    },
-    *queryListByOrgId({ payload }, { call, put }) {
-      const re = yield call(findByOrganizationId, payload);
-      if (re.success) {
-        yield put({
-          type: 'updateState',
-          payload: {
-            list: re.data,
-          },
-        });
-      } else {
-        throw re;
       }
     },
     *save({ payload, callback }, { call }) {

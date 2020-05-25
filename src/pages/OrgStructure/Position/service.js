@@ -11,16 +11,6 @@ const { request } = utils;
 
 const { SERVER_PATH } = constants;
 
-/** 获取列表 */
-export async function getList(params) {
-  const url = `${SERVER_PATH}/sei-basic/position/findAll`;
-  return request({
-    url,
-    method: 'GET',
-    params,
-  });
-}
-
 /** 保存 */
 export async function save(data) {
   const url = `${SERVER_PATH}/sei-basic/position/save`;
@@ -50,20 +40,6 @@ export async function listAllTree() {
   return request({
     url,
     method: 'GET',
-  });
-}
-
-/**
- * 获得组织机构下所有岗位
- *
- * @param organizationId 组织机构ID
- */
-export async function findByOrganizationId(params) {
-  const url = `${SERVER_PATH}/sei-basic/position/findByOrganizationId`;
-  return request({
-    url,
-    method: 'GET',
-    params,
   });
 }
 

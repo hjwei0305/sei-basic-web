@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { get } from 'lodash';
-import { Form, Input, Checkbox } from 'antd';
+import { Form, Input, Switch } from 'antd';
 import { formatMessage } from 'umi-plugin-react/locale';
 import { ExtModal } from 'suid';
 
@@ -17,50 +17,58 @@ const formItemLayout = {
 @Form.create()
 class FormModal extends PureComponent {
   onFormSubmit = () => {
-    const { form, save, rowData } = this.props;
+    const { form, save, currentEmployee, currentOrgNode } = this.props;
     form.validateFields((err, formData) => {
       if (err) {
         return;
       }
-      const params = {};
-      Object.assign(params, rowData || {});
+      const params = {
+        organizationId: currentOrgNode.id,
+        organizationCode: currentOrgNode.code,
+      };
+      Object.assign(params, currentEmployee || {});
       Object.assign(params);
       Object.assign(params, formData);
       save(params);
     });
   };
 
+  handlerCloseModal = () => {
+    const { closeFormModal } = this.props;
+    if (closeFormModal) {
+      closeFormModal();
+    }
+  };
+
   render() {
-    const { form, rowData, closeFormModal, saving, showModal, parentData } = this.props;
+    const { form, currentEmployee, saving, showFormModal, currentOrgNode } = this.props;
     const { getFieldDecorator } = form;
-    const title = rowData
+    const title = currentEmployee
       ? formatMessage({
           id: 'global.edit',
           defaultMessage: '编辑',
         })
       : formatMessage({ id: 'global.add', defaultMessage: '新建' });
-
     return (
       <ExtModal
         destroyOnClose
-        onCancel={closeFormModal}
-        visible={showModal}
+        onCancel={this.handlerCloseModal}
+        visible={showFormModal}
         centered
         confirmLoading={saving}
         maskClosable={false}
         title={title}
-        okText="保存"
         onOk={this.onFormSubmit}
       >
         <Form {...formItemLayout} layout="horizontal">
           <FormItem label="组织机构">
             {getFieldDecorator('organizationName', {
-              initialValue: get(rowData, 'organizationName', parentData && parentData.name),
-            })(<Input disabled={!!parentData} />)}
+              initialValue: currentOrgNode && currentOrgNode.name,
+            })(<Input disabled={!!currentOrgNode} />)}
           </FormItem>
           <FormItem label="员工编号">
             {getFieldDecorator('code', {
-              initialValue: rowData ? rowData.code : '',
+              initialValue: get(currentEmployee, 'code', null),
               rules: [
                 {
                   required: true,
@@ -71,42 +79,28 @@ class FormModal extends PureComponent {
                   message: '允许输入字母和数字,且不超过10个字符!',
                 },
               ],
-            })(<Input disabled={!!rowData} />)}
+            })(<Input disabled={!!currentEmployee} />)}
           </FormItem>
-          <FormItem label={formatMessage({ id: 'global.name', defaultMessage: '名称' })}>
+          <FormItem label="员工姓名">
             {getFieldDecorator('userName', {
-              initialValue: rowData ? rowData.userName : '',
+              initialValue: get(currentEmployee, 'userName', null),
               rules: [
                 {
                   required: true,
                   message: formatMessage({
                     id: 'global.name.required',
-                    defaultMessage: '名称不能为空',
+                    defaultMessage: '员工姓名不能为空',
                   }),
                 },
               ],
             })(<Input />)}
           </FormItem>
-          {rowData ? (
-            <FormItem label="冻结">
-              {getFieldDecorator('frozen', {
-                initialValue: rowData ? rowData.frozen : false,
-                valuePropName: 'checked',
-              })(<Checkbox />)}
-            </FormItem>
-          ) : null}
-          {/* 以下为隐藏的formItem */}
-          <FormItem style={{ display: 'none' }}>
-            {getFieldDecorator('organizationId', {
-              initialValue: get(rowData, 'organizationId', parentData && parentData.id),
-            })(<Input />)}
+          <FormItem label="冻结">
+            {getFieldDecorator('frozen', {
+              initialValue: get(currentEmployee, 'frozen', false),
+              valuePropName: 'checked',
+            })(<Switch size="small" />)}
           </FormItem>
-          {/*          <FormItem
-            style={{display: "none"}}>
-            {getFieldDecorator('organizationCode', {
-              initialValue: parentData && parentData.code,
-            })(<Input />)}
-          </FormItem> */}
         </Form>
       </ExtModal>
     );

@@ -6,28 +6,33 @@ import { constants } from '@/utils';
 import styles from './ExtAction.less';
 
 const { getUUID } = utils;
-const { POSITION_ACTION } = constants;
+const { EMPLOYEE_ACTION } = constants;
 const { Item } = Menu;
 
 const menuData = () => [
   {
-    title: '复制岗位',
-    key: POSITION_ACTION.COPY,
+    title: '重置密码',
+    key: EMPLOYEE_ACTION.RESET_PASSWORD,
     disabled: false,
   },
   {
-    title: '配置用户',
-    key: POSITION_ACTION.USER,
+    title: '复制角色',
+    key: EMPLOYEE_ACTION.COPY_ROLE,
+    disabled: false,
+  },
+  {
+    title: '配置岗位',
+    key: EMPLOYEE_ACTION.STATION,
     disabled: false,
   },
   {
     title: '配置功能角色',
-    key: POSITION_ACTION.FEATURE_ROLE,
+    key: EMPLOYEE_ACTION.FEATURE_ROLE,
     disabled: false,
   },
   {
     title: '配置数据角色',
-    key: POSITION_ACTION.DATA_ROLE,
+    key: EMPLOYEE_ACTION.DATA_ROLE,
     disabled: false,
   },
 ];
@@ -47,9 +52,9 @@ class ExtAction extends PureComponent {
       selectedKeys: '',
       menuShow: false,
     });
-    const { onAction, postionData } = this.props;
+    const { onAction, employeeData } = this.props;
     if (onAction) {
-      onAction(e.key, postionData);
+      onAction(e.key, employeeData);
     }
   };
 

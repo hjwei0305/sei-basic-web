@@ -5,7 +5,7 @@ import { isEqual, trim } from 'lodash';
 import { Card, Input, Tree, Empty, Layout } from 'antd';
 import { ScrollBar, ExtIcon, ListLoader } from 'suid';
 import empty from '@/assets/item_empty.svg';
-import Postion from './components/Postion';
+import Employee from './components/Employee';
 import styles from './index.less';
 
 const { Search } = Input;
@@ -14,7 +14,7 @@ const childFieldKey = 'children';
 const hightLightColor = '#f50';
 const { Sider, Content } = Layout;
 
-@connect(({ position, loading }) => ({ position, loading }))
+@connect(({ employee, loading }) => ({ employee, loading }))
 class PositionHome extends Component {
   static allValue = '';
 
@@ -22,8 +22,8 @@ class PositionHome extends Component {
 
   constructor(props) {
     super(props);
-    const { position } = props;
-    const { currentOrgNode } = position;
+    const { employee } = props;
+    const { currentOrgNode } = employee;
     this.state = {
       treeData: [],
       expandedKeys: [],
@@ -33,16 +33,16 @@ class PositionHome extends Component {
   }
 
   componentDidUpdate(preProps) {
-    const { position, dispatch } = this.props;
-    const { treeData: dataSource } = position;
-    if (!isEqual(preProps.position.treeData, dataSource)) {
+    const { employee, dispatch } = this.props;
+    const { treeData: dataSource } = employee;
+    if (!isEqual(preProps.employee.treeData, dataSource)) {
       this.data = [...dataSource];
       this.setState(
         {
           treeData: dataSource,
         },
         () => {
-          const { currentOrgNode } = position;
+          const { currentOrgNode } = employee;
           let expandedKeys = [];
           const { selectedKeys } = this.state;
           let keys = [...selectedKeys];
@@ -53,7 +53,7 @@ class PositionHome extends Component {
             expandedKeys = dataSource.map(p => p.id);
             keys = expandedKeys.filter((_e, idx) => idx === 0);
             dispatch({
-              type: 'position/updateState',
+              type: 'employee/updateState',
               payload: {
                 currentOrgNode: keys.length > 0 ? dataSource[0] : null,
               },
@@ -64,11 +64,11 @@ class PositionHome extends Component {
       );
     }
     if (
-      !isEqual(preProps.position.currentOrgNode, position.currentOrgNode) &&
-      position.currentOrgNode &&
-      position.currentOrgNode.id
+      !isEqual(preProps.employee.currentOrgNode, employee.currentOrgNode) &&
+      employee.currentOrgNode &&
+      employee.currentOrgNode.id
     ) {
-      const { currentOrgNode } = position;
+      const { currentOrgNode } = employee;
       const parentData = this.getCurrentNodeAllParents(this.data, currentOrgNode.id);
       this.setState({
         selectedKeys: [currentOrgNode.id],
@@ -150,7 +150,7 @@ class PositionHome extends Component {
         },
         () => {
           dispatch({
-            type: 'position/updateState',
+            type: 'employee/updateState',
             payload: {
               currentOrgNode,
             },
@@ -221,9 +221,9 @@ class PositionHome extends Component {
   };
 
   render() {
-    const { loading, position } = this.props;
+    const { loading, employee } = this.props;
     const { allValue, treeData, expandedKeys, selectedKeys, autoExpandParent } = this.state;
-    const { currentOrgNode } = position;
+    const { currentOrgNode } = employee;
     return (
       <div className={cls(styles['container-box'])}>
         <Layout className="auto-height">
@@ -240,7 +240,7 @@ class PositionHome extends Component {
               </div>
               <div className="tree-body">
                 <ScrollBar>
-                  {loading.effects['position/getOrgList'] ? (
+                  {loading.effects['employee/getOrgList'] ? (
                     <ListLoader />
                   ) : (
                     <Tree
@@ -261,7 +261,7 @@ class PositionHome extends Component {
           </Sider>
           <Content className={cls('main-content', 'auto-height')} style={{ paddingLeft: 8 }}>
             {currentOrgNode ? (
-              <Postion />
+              <Employee />
             ) : (
               <div className="blank-empty">
                 <Empty image={empty} description="可选择左侧节点获得相关的操作" />

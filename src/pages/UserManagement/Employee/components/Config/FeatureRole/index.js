@@ -8,8 +8,8 @@ import Assign from './Assign';
 import Assinged from './Assigned';
 import styles from './index.less';
 
-@connect(({ position, loading }) => ({
-  position,
+@connect(({ employee, loading }) => ({
+  employee,
   loading,
 }))
 class FeatureRoleModal extends PureComponent {
@@ -21,10 +21,10 @@ class FeatureRoleModal extends PureComponent {
   }
 
   assignFeatureRole = (keys, callback) => {
-    const { currentPosition, dispatch } = this.props;
-    const data = { parentId: get(currentPosition, 'id', null), childIds: keys };
+    const { currentEmployee, dispatch } = this.props;
+    const data = { parentId: get(currentEmployee, 'id', null), childIds: keys };
     dispatch({
-      type: 'position/assignFeatureRole',
+      type: 'employee/assignFeatureRole',
       payload: {
         ...data,
       },
@@ -33,10 +33,10 @@ class FeatureRoleModal extends PureComponent {
   };
 
   unAssignFeatureRole = (keys, callback) => {
-    const { currentPosition, dispatch } = this.props;
-    const data = { parentId: get(currentPosition, 'id', null), childIds: keys };
+    const { currentEmployee, dispatch } = this.props;
+    const data = { parentId: get(currentEmployee, 'id', null), childIds: keys };
     dispatch({
-      type: 'position/unAssignFeatureRole',
+      type: 'employee/unAssignFeatureRole',
       payload: {
         ...data,
       },
@@ -61,7 +61,7 @@ class FeatureRoleModal extends PureComponent {
 
   renderTitle = role => {
     const { showAssign } = this.state;
-    const title = get(role, 'name', '');
+    const title = get(role, 'userName', '');
     if (showAssign) {
       return (
         <>
@@ -74,7 +74,7 @@ class FeatureRoleModal extends PureComponent {
   };
 
   render() {
-    const { currentPosition, showModal, loading } = this.props;
+    const { currentEmployee, showModal, loading } = this.props;
     const { showAssign } = this.state;
     const extModalProps = {
       destroyOnClose: true,
@@ -88,19 +88,19 @@ class FeatureRoleModal extends PureComponent {
       width: 680,
       bodyStyle: { padding: 0, height: 560, overflow: 'hidden' },
       footer: null,
-      title: this.renderTitle(currentPosition),
+      title: this.renderTitle(currentEmployee),
     };
     const assignProps = {
-      currentPosition,
+      currentEmployee,
       onBackAssigned: this.handlerBackAssigned,
       save: this.assignFeatureRole,
-      saving: loading.effects['position/assignFeatureRole'],
+      saving: loading.effects['employee/assignFeatureRole'],
     };
     const assignedProps = {
-      currentPosition,
+      currentEmployee,
       onShowAssign: this.handlerShowAssign,
       save: this.unAssignFeatureRole,
-      saving: loading.effects['position/unAssignFeatureRole'],
+      saving: loading.effects['employee/unAssignFeatureRole'],
     };
     return (
       <ExtModal {...extModalProps}>

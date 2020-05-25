@@ -1,44 +1,50 @@
 import React, { PureComponent } from 'react';
+import { get, trim } from 'lodash';
 import { Form, Input } from 'antd';
 import { ExtModal } from 'suid';
+import { BannerTitle } from '@/components';
 
 const FormItem = Form.Item;
 const formItemLayout = {
   labelCol: {
-    span: 6,
+    span: 4,
   },
   wrapperCol: {
-    span: 18,
+    span: 20,
   },
 };
 
 @Form.create()
-class FormModal extends PureComponent {
-  onFormSubmit = () => {
-    const { form, save } = this.props;
+class ResetFormModal extends PureComponent {
+  handlerFormSubmit = () => {
+    const { form, save, currentEmployee } = this.props;
     form.validateFields((err, formData) => {
       if (err) {
         return;
       }
-      const params = {};
+      const params = {
+        tenant: currentEmployee.tenantCode,
+        account: currentEmployee.code,
+      };
       Object.assign(params, formData);
       save(params);
     });
   };
 
   checkPassword = (_rule, password, callback) => {
-    if (!password || password.length < 8) {
+    const pws = trim(password);
+    if (!pws || pws.length < 8) {
       callback('密码须包含字母、数字、特殊字符至少2种,密码长度不能小于8位');
       return false;
     }
     let iNow = 0;
-    if (password.match(/[0-9]/g)) {
+    if (pws.match(/[0-9]/g)) {
       iNow += 1;
     }
-    if (password.match(/[a-z]/gi)) {
+    if (pws.match(/[a-z]/gi)) {
       iNow += 1;
     }
-    if (password.match(/[~!@#$%^&*]/g)) {
+    if (pws.match(/[~!@#$%^&*]/g)) {
       iNow += 1;
     }
     if (iNow < 2) {
@@ -48,22 +54,26 @@ class FormModal extends PureComponent {
     callback();
   };
 
-  render() {
-    const { form, rowData, closeFormModal, saving, showModal } = this.props;
-    const { getFieldDecorator } = form;
-    const title = `重置用户【${rowData.userName}】的密码`;
+  handlerCloseModal = () => {
+    const { closeModal } = this.props;
+    if (closeModal) {
+      closeModal();
+    }
+  };
 
+  render() {
+    const { form, currentEmployee, saving, showModal } = this.props;
+    const { getFieldDecorator } = form;
     return (
       <ExtModal
         destroyOnClose
-        onCancel={closeFormModal}
+        onCancel={this.handlerCloseModal}
         visible={showModal}
         centered
         confirmLoading={saving}
         maskClosable={false}
-        title={title}
-        okText="重置"
-        onOk={this.onFormSubmit}
+        title={<BannerTitle title={get(currentEmployee, 'userName', '')} subTitle="重置密码" />}
+        onOk={this.handlerFormSubmit}
       >
         <Form {...formItemLayout} layout="horizontal">
           <FormItem label="新密码">
@@ -75,21 +85,10 @@ class FormModal extends PureComponent {
               ],
             })(<Input.Password visibilityToggle />)}
           </FormItem>
-          {/* 以下为隐藏的formItem */}
-          <FormItem style={{ display: 'none' }}>
-            {getFieldDecorator('tenant', {
-              initialValue: rowData && rowData.tenantCode,
-            })(<Input />)}
-          </FormItem>
-          <FormItem style={{ display: 'none' }}>
-            {getFieldDecorator('account', {
-              initialValue: rowData && rowData.code,
-            })(<Input />)}
-          </FormItem>
         </Form>
       </ExtModal>
     );
   }
 }
 
-export default FormModal;
+export default ResetFormModal;

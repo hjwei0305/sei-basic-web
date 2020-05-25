@@ -8,11 +8,11 @@ import Assign from './Assign';
 import Assinged from './Assigned';
 import styles from './index.less';
 
-@connect(({ position, loading }) => ({
-  position,
+@connect(({ employee, loading }) => ({
+  employee,
   loading,
 }))
-class FeatureRoleModal extends PureComponent {
+class DataRoleModal extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -20,11 +20,11 @@ class FeatureRoleModal extends PureComponent {
     };
   }
 
-  assignFeatureRole = (keys, callback) => {
-    const { currentPosition, dispatch } = this.props;
-    const data = { parentId: get(currentPosition, 'id', null), childIds: keys };
+  assignDataRole = (keys, callback) => {
+    const { currentEmployee, dispatch } = this.props;
+    const data = { parentId: get(currentEmployee, 'id', null), childIds: keys };
     dispatch({
-      type: 'position/assignFeatureRole',
+      type: 'employee/assignDataRole',
       payload: {
         ...data,
       },
@@ -32,11 +32,11 @@ class FeatureRoleModal extends PureComponent {
     });
   };
 
-  unAssignFeatureRole = (keys, callback) => {
-    const { currentPosition, dispatch } = this.props;
-    const data = { parentId: get(currentPosition, 'id', null), childIds: keys };
+  unAssignDataRole = (keys, callback) => {
+    const { currentEmployee, dispatch } = this.props;
+    const data = { parentId: get(currentEmployee, 'id', null), childIds: keys };
     dispatch({
-      type: 'position/unAssignFeatureRole',
+      type: 'employee/unAssignDataRole',
       payload: {
         ...data,
       },
@@ -61,20 +61,20 @@ class FeatureRoleModal extends PureComponent {
 
   renderTitle = role => {
     const { showAssign } = this.state;
-    const title = get(role, 'name', '');
+    const title = get(role, 'userName', '');
     if (showAssign) {
       return (
         <>
           <ExtIcon onClick={this.handlerBackAssigned} type="left" className="trigger-back" antd />
-          <BannerTitle title={title} subTitle="请选择要添加的功能角色" />
+          <BannerTitle title={title} subTitle="请选择要添加的数据角色" />
         </>
       );
     }
-    return <BannerTitle title={title} subTitle="已配置的功能角色" />;
+    return <BannerTitle title={title} subTitle="已配置的数据角色" />;
   };
 
   render() {
-    const { currentPosition, showModal, loading } = this.props;
+    const { currentEmployee, showModal, loading } = this.props;
     const { showAssign } = this.state;
     const extModalProps = {
       destroyOnClose: true,
@@ -88,19 +88,19 @@ class FeatureRoleModal extends PureComponent {
       width: 680,
       bodyStyle: { padding: 0, height: 560, overflow: 'hidden' },
       footer: null,
-      title: this.renderTitle(currentPosition),
+      title: this.renderTitle(currentEmployee),
     };
     const assignProps = {
-      currentPosition,
+      currentEmployee,
       onBackAssigned: this.handlerBackAssigned,
-      save: this.assignFeatureRole,
-      saving: loading.effects['position/assignFeatureRole'],
+      save: this.assignDataRole,
+      saving: loading.effects['employee/assignDataRole'],
     };
     const assignedProps = {
-      currentPosition,
+      currentEmployee,
       onShowAssign: this.handlerShowAssign,
-      save: this.unAssignFeatureRole,
-      saving: loading.effects['position/unAssignFeatureRole'],
+      save: this.unAssignDataRole,
+      saving: loading.effects['employee/unAssignDataRole'],
     };
     return (
       <ExtModal {...extModalProps}>
@@ -110,4 +110,4 @@ class FeatureRoleModal extends PureComponent {
   }
 }
 
-export default FeatureRoleModal;
+export default DataRoleModal;

@@ -3,8 +3,9 @@ import { get } from 'lodash';
 import cls from 'classnames';
 import { connect } from 'dva';
 import { ExtModal, ExtIcon } from 'suid';
-import { UserAssign, BannerTitle } from '@/components';
-import Assinged from './Assigned';
+import { BannerTitle } from '@/components';
+import Assigned from './Assigned';
+import Assign from './Assign';
 import styles from './index.less';
 
 @connect(({ dataRole, loading }) => ({
@@ -77,7 +78,7 @@ class UserModal extends PureComponent {
       keyboard: !showAssign,
       visible: showModal,
       centered: true,
-      width: 680,
+      width: 480,
       bodyStyle: { padding: 0, height: 560, overflow: 'hidden' },
       footer: null,
       title: this.renderTitle(rowData),
@@ -97,7 +98,7 @@ class UserModal extends PureComponent {
     };
     return (
       <ExtModal {...extModalProps}>
-        {showAssign ? <UserAssign {...assignProps} /> : <Assinged {...assignedProps} />}
+        {showAssign ? <Assign {...assignProps} /> : <Assigned {...assignedProps} />}
       </ExtModal>
     );
   }

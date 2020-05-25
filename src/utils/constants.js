@@ -72,6 +72,14 @@ const POSITION_ACTION = {
   DATA_ROLE: 'data-role',
 };
 
+const EMPLOYEE_ACTION = {
+  RESET_PASSWORD: 'reset-password',
+  COPY_ROLE: 'copy-role',
+  STATION: 'station',
+  FEATURE_ROLE: 'feature-role',
+  DATA_ROLE: 'data-role',
+};
+
 export default {
   APP_BASE,
   LOCAL_PATH,
@@ -83,4 +91,5 @@ export default {
   FEATURE_TYPE,
   ROLE_TYPE,
   POSITION_ACTION,
+  EMPLOYEE_ACTION,
 };

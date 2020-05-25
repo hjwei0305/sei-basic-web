@@ -1,8 +1,8 @@
 /*
  * @Author: zp
  * @Date:   2020-02-02 11:57:24
- * @Last Modified by: zp
- * @Last Modified time: 2020-04-14 10:49:57
+ * @Last Modified by: Easonon
+ * @Last Modified time: 2020-03-06 13:34:411
  */
 import { utils } from 'suid';
 import { constants } from '@/utils';
@@ -10,26 +10,6 @@ import { constants } from '@/utils';
 const { request } = utils;
 
 const { SERVER_PATH } = constants;
-
-/** 获取列表 */
-export async function getList(params) {
-  const url = `${SERVER_PATH}/sei-basic/employee/findAll`;
-  return request({
-    url,
-    method: 'GET',
-    params,
-  });
-}
-
-/** 重置密码 */
-export async function resetPass(data) {
-  const url = `${SERVER_PATH}/sei-auth/account/resetPass`;
-  return request({
-    url,
-    method: 'POST',
-    params: data,
-  });
-}
 
 /** 保存 */
 export async function save(data) {
@@ -41,13 +21,13 @@ export async function save(data) {
   });
 }
 
-/** 删除 */
-export async function del(params) {
-  const url = `${SERVER_PATH}/sei-basic/employee/delete`;
+/** 重置密码 */
+export async function resetPassword(data) {
+  const url = `${SERVER_PATH}/sei-auth/account/resetPass`;
   return request({
     url,
-    method: 'DELETE',
-    params,
+    method: 'POST',
+    params: data,
   });
 }
 
@@ -56,31 +36,11 @@ export async function del(params) {
  * @param params
  * @returns {*}
  */
-export async function listAllTree(params = {}) {
+export async function listAllTree() {
   const url = `${SERVER_PATH}/sei-basic/organization/findOrgTreeWithoutFrozen`;
-  return request.get(url, params);
-}
-
-/**
- * 获得组织机构下所有员工
- *
- * param organizationId 组织机构ID
- */
-export async function findByOrganizationId(params = {}) {
-  const url = `${SERVER_PATH}/sei-basic/employee/findByOrganizationId?organizationId=${params.organizationId}`;
-  return request.get(url);
-}
-
-/**
- * 获得组织机构下所有员工
- *
- */
-export async function findByUserQueryParam(data) {
-  const url = `${SERVER_PATH}/sei-basic/employee/findByUserQueryParam`;
   return request({
     url,
-    method: 'POST',
-    data,
+    method: 'GET',
   });
 }
 
@@ -89,21 +49,29 @@ export async function findByUserQueryParam(data) {
  */
 export async function copyToEmployees(data) {
   const url = `${SERVER_PATH}/sei-basic/employee/copyToEmployees`;
-  return request.post(url, data);
+  return request({
+    url,
+    method: 'POST',
+    data,
+  });
 }
 
 /**
- * 分配岗位
+ * 分配岗位 企业员工
  */
-export async function assignEmployee(data) {
+export async function assignStation(data) {
   const url = `${SERVER_PATH}/sei-basic/employeePosition/insertRelations`;
-  return request.post(url, data);
+  return request({
+    url,
+    method: 'POST',
+    data,
+  });
 }
 
 /**
- * 取消分配岗位
+ * 取消分配岗位 企业员工
  */
-export async function unAssignEmployee(data) {
+export async function unAssignStation(data) {
   const url = `${SERVER_PATH}/sei-basic/employeePosition/removeRelations`;
   return request({
     url,
@@ -117,7 +85,11 @@ export async function unAssignEmployee(data) {
  */
 export async function assignFeatureRole(data) {
   const url = `${SERVER_PATH}/sei-basic/userFeatureRole/insertRelations`;
-  return request.post(url, data);
+  return request({
+    url,
+    method: 'POST',
+    data,
+  });
 }
 
 /**
@@ -137,7 +109,11 @@ export async function unAssignFeatureRole(data) {
  */
 export async function assignDataRole(data) {
   const url = `${SERVER_PATH}/sei-basic/userDataRole/insertRelations`;
-  return request.post(url, data);
+  return request({
+    url,
+    method: 'POST',
+    data,
+  });
 }
 
 /**
@@ -150,20 +126,4 @@ export async function unAssignDataRole(data) {
     method: 'DELETE',
     data,
   });
-}
-
-/**
- * 保存已经分配功能角色的有效期
- */
-export async function saveAssignFeatureRoleCfg(data) {
-  const url = `${SERVER_PATH}/sei-basic/userFeatureRole/saveEffective`;
-  return request.post(url, data);
-}
-
-/**
- * 保存已经分配数据角色的有效期
- */
-export async function saveAssignDataRoleCfg(data) {
-  const url = `${SERVER_PATH}/sei-basic/userDataRole/saveEffective`;
-  return request.post(url, data);
 }
