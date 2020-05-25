@@ -213,6 +213,7 @@ class Organization extends PureComponent {
               <ListLoader />
             ) : (
               <Tree
+                blockNode
                 autoExpandParent={autoExpandParent}
                 selectedKeys={selectedKeys}
                 expandedKeys={expandedKeys}
