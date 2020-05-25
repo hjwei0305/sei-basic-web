@@ -231,7 +231,7 @@ class EmployeeHome extends Component {
       cascadeParams: { organizationId: currentOrgNode ? currentOrgNode.id : null },
       onTableRef: ref => (this.tableRef = ref),
       remotePaging: true,
-      searchPlaceHolder: '请输入代码或名称关键字查询',
+      searchPlaceHolder: '请输入员工编号或姓名关键字查询',
       searchWidth: 260,
       store: {
         type: 'POST',
