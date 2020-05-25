@@ -216,13 +216,12 @@ class PositionHome extends Component {
       {
         title: formatMessage({ id: 'global.code', defaultMessage: '代码' }),
         dataIndex: 'code',
-        width: 200,
-        optional: true,
+        width: 140,
       },
       {
         title: formatMessage({ id: 'global.name', defaultMessage: '名称' }),
         dataIndex: 'name',
-        width: 320,
+        width: 280,
         required: true,
       },
       {
@@ -248,6 +247,8 @@ class PositionHome extends Component {
       bordered: false,
       toolBar: toolBarProps,
       columns,
+      searchPlaceHolder: '请输入代码或名称关键字查询',
+      searchWidth: 260,
       cascadeParams: { organizationId: currentOrgNode ? currentOrgNode.id : null },
       onTableRef: ref => (this.tableRef = ref),
       store: {
