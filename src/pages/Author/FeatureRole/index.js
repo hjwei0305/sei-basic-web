@@ -207,7 +207,7 @@ class FeatureRole extends Component {
     return (
       <div className={cls(styles['container-box'])}>
         <Layout className="auto-height">
-          <Sider width={320} className="auto-height">
+          <Sider width={240} className="auto-height">
             <Card title="角色组" bordered={false} className="left-content">
               <div className="header-tool-box">
                 <RoleGroupAdd saving={saving} saveRoleGroup={this.saveRoleGroup} />
