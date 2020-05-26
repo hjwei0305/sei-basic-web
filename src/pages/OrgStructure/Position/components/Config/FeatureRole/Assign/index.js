@@ -2,7 +2,7 @@
  * @Author: Eason
  * @Date: 2020-02-15 11:53:29
  * @Last Modified by: Eason
- * @Last Modified time: 2020-05-25 10:57:36
+ * @Last Modified time: 2020-05-26 13:48:40
  */
 import React, { Component } from 'react';
 import cls from 'classnames';
@@ -188,7 +188,7 @@ class FeatureRoleAssign extends Component {
     };
     return (
       <Layout className={cls(styles['user-panel-box'])}>
-        <Sider width={280} className={cls('auto-height')}>
+        <Sider width={280} className={cls('auto-height')} theme="light">
           <RoleGroup onSelectChange={this.handlerSelectRoleGroupChange} />
         </Sider>
         <Content className={cls('auto-height')} style={{ paddingLeft: 4 }}>

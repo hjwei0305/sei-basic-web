@@ -354,7 +354,7 @@ class AppMenu extends Component {
     return (
       <div className={cls(styles['container-box'])}>
         <Layout className="auto-height">
-          <Sider width={380} className="auto-height">
+          <Sider width={380} className="auto-height" theme="light">
             <Card
               title="应用菜单"
               bordered={false}

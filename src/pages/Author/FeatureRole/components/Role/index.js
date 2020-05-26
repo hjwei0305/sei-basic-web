@@ -291,7 +291,7 @@ class Role extends Component {
     return (
       <div className={cls(styles['role-box'])}>
         <Layout className="auto-height">
-          <Sider width={320} className={cls('left-content', 'auto-height')}>
+          <Sider width={320} className={cls('left-content', 'auto-height')} theme="light">
             <Card
               title={<BannerTitle title={currentRoleGroup.name} subTitle="角色列表" />}
               bordered={false}

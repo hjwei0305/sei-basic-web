@@ -194,7 +194,7 @@ class Feature extends Component {
     return (
       <div className={cls(styles['container-box'])}>
         <Layout className="auto-height">
-          <Sider width={320} className="auto-height">
+          <Sider width={320} className="auto-height" theme="light">
             <ListCard {...featureGroupprops} />
           </Sider>
           <Content className={cls('main-content', 'auto-height')} style={{ paddingLeft: 8 }}>
