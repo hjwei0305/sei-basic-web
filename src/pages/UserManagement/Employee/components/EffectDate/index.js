@@ -33,7 +33,8 @@ class EffectDate extends PureComponent {
     if (
       (this.effectDate &&
         this.effectDate.length === 2 &&
-        this.effectDate[0] && this.effectDate[1]) ||
+        this.effectDate[0] &&
+        this.effectDate[1]) ||
       (!this.effectDate[0] && !this.effectDate[1])
     ) {
       this.setState(
@@ -116,6 +117,7 @@ class EffectDate extends PureComponent {
       value: defaultValue,
       splitStr: '至',
       onChange: this.handlerEffectDateChange,
+      style: { width: 320 },
     };
     return (
       <div className={cls(styles['effect-box'])}>

@@ -3,7 +3,7 @@ import { connect } from 'dva';
 import cls from 'classnames';
 import { isEqual } from 'lodash';
 import { formatMessage } from 'umi-plugin-react/locale';
-import { Avatar, Card, Empty, Input, List, Skeleton, Popconfirm, Tag, Layout } from 'antd';
+import { Card, Empty, Input, List, Skeleton, Popconfirm, Tag, Layout } from 'antd';
 import { ScrollBar, ExtIcon } from 'suid';
 import empty from '@/assets/item_empty.svg';
 import { BannerTitle } from '@/components';
@@ -291,7 +291,7 @@ class Role extends Component {
     return (
       <div className={cls(styles['role-box'])}>
         <Layout className="auto-height">
-          <Sider width={360} className={cls('left-content', 'auto-height')}>
+          <Sider width={320} className={cls('left-content', 'auto-height')}>
             <Card
               title={<BannerTitle title={currentRoleGroup.name} subTitle="角色列表" />}
               bordered={false}
@@ -326,7 +326,6 @@ class Role extends Component {
                       >
                         <Skeleton avatar loading={listLoading} active>
                           <List.Item.Meta
-                            avatar={<Avatar icon="user" shape="square" />}
                             title={this.renderName(item)}
                             description={this.renderDescription(item)}
                           />
