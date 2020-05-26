@@ -69,7 +69,7 @@ class CopyAuthModal extends PureComponent {
       <ExtModal {...extModalProps}>
         <div className="step-box">
           <Steps current={1}>
-            <Step title="Finished" description="This is a description." />
+            <Step title="选择角色" description="This is a description." />
             <Step
               title="In Progress"
               subTitle="Left 00:00:08"

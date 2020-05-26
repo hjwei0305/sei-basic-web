@@ -38,7 +38,7 @@ class RoleGroupForm extends PureComponent {
       }
       const { isPublicRole } = this.state;
       const params = {
-        featureGroupId: currentRoleGroup.id,
+        featureRoleGroupId: currentRoleGroup.id,
         featureRoleGroupCode: currentRoleGroup.code,
         featureRoleGroupName: currentRoleGroup.name,
       };
