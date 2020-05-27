@@ -4,7 +4,7 @@ import { get } from 'lodash';
 import { Row, Col, Tag } from 'antd';
 import { ListCard } from 'suid';
 import { constants } from '@/utils';
-import EffectDate from '../EffectDate';
+import { EffectDate } from '@/components';
 
 const { SERVER_PATH, ROLE_TYPE } = constants;
 

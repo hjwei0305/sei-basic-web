@@ -1,11 +1,5 @@
-/*
- * @Author: zp
- * @Date:   2020-02-02 11:57:24
- * @Last Modified by:   zp
- * @Last Modified time: 2020-02-10 16:15:16
- */
 import { utils } from 'suid';
-import { constants } from '@/utils';
+import { constants } from '../../../utils';
 
 const { request } = utils;
 
@@ -13,8 +7,7 @@ const { SERVER_PATH } = constants;
 
 /** 保存 */
 export async function save(data) {
-  const url = `${SERVER_PATH}/sei-basic/supplierUser/saveSupplierUserVo
-`;
+  const url = `${SERVER_PATH}/sei-basic/supplierUser/saveSupplierUserVo`;
   return request({
     url,
     method: 'POST',
@@ -24,11 +17,10 @@ export async function save(data) {
 
 /** 删除 */
 export async function del(params) {
-  const url = `${SERVER_PATH}/sei-basic/supplierUser/delete`;
+  const url = `${SERVER_PATH}/sei-basic/supplierUser/delete/${params.id}`;
   return request({
     url,
     method: 'DELETE',
-    params,
   });
 }
 
@@ -37,7 +29,11 @@ export async function del(params) {
  */
 export async function assignFeatureRole(data) {
   const url = `${SERVER_PATH}/sei-basic/userFeatureRole/insertRelations`;
-  return request.post(url, data);
+  return request({
+    url,
+    method: 'POST',
+    data,
+  });
 }
 
 /**
@@ -57,7 +53,11 @@ export async function unAssignFeatureRole(data) {
  */
 export async function assignDataRole(data) {
   const url = `${SERVER_PATH}/sei-basic/userDataRole/insertRelations`;
-  return request.post(url, data);
+  return request({
+    url,
+    method: 'POST',
+    data,
+  });
 }
 
 /**
@@ -68,6 +68,30 @@ export async function unAssignDataRole(data) {
   return request({
     url,
     method: 'DELETE',
+    data,
+  });
+}
+
+/**
+ * 保存已经分配功能角色的有效期
+ */
+export async function saveAssignFeatureRoleEffective(data) {
+  const url = `${SERVER_PATH}/sei-basic/userFeatureRole/saveEffective`;
+  return request({
+    url,
+    method: 'POST',
+    data,
+  });
+}
+
+/**
+ * 保存已经分配数据角色的有效期
+ */
+export async function saveAssignDataRoleEffective(data) {
+  const url = `${SERVER_PATH}/sei-basic/userDataRole/saveEffective`;
+  return request({
+    url,
+    method: 'POST',
     data,
   });
 }

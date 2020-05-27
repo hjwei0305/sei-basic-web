@@ -11,6 +11,7 @@ import PageWrapper from './PageWrapper';
 import StationAssign from './StationAssign';
 import UserAssign from './UserAssign';
 import BannerTitle from './BannerTitle';
+import EffectDate from './EffectDate';
 
 export {
   Loader,
@@ -26,4 +27,5 @@ export {
   StationAssign,
   UserAssign,
   BannerTitle,
+  EffectDate,
 };

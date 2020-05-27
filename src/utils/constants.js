@@ -80,6 +80,11 @@ const EMPLOYEE_ACTION = {
   DATA_ROLE: 'data-role',
 };
 
+const SUPPLIER_ACTION = {
+  FEATURE_ROLE: 'feature-role',
+  DATA_ROLE: 'data-role',
+};
+
 export default {
   APP_BASE,
   LOCAL_PATH,
@@ -92,4 +97,5 @@ export default {
   ROLE_TYPE,
   POSITION_ACTION,
   EMPLOYEE_ACTION,
+  SUPPLIER_ACTION,
 };

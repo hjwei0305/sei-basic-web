@@ -14,13 +14,13 @@ class FeatureRoleAssigned extends PureComponent {
   static listCardRef;
 
   static propTypes = {
-    currentEmployee: PropTypes.object,
+    currentSupplier: PropTypes.object,
     onShowAssign: PropTypes.func,
     onSaveEffectDate: PropTypes.func,
   };
 
   static defaultProps = {
-    currentEmployee: null,
+    currentSupplier: null,
   };
 
   constructor(props) {
@@ -207,9 +207,9 @@ class FeatureRoleAssigned extends PureComponent {
   };
 
   render() {
-    const { currentEmployee } = this.props;
+    const { currentSupplier } = this.props;
     const { selectedKeys } = this.state;
-    const positionId = get(currentEmployee, 'id', null);
+    const positionId = get(currentSupplier, 'id', null);
     const assignedListCardProps = {
       className: 'station-box',
       bordered: false,

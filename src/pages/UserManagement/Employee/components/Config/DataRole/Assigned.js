@@ -5,7 +5,7 @@ import { get } from 'lodash';
 import { Button, Drawer, Popconfirm, Tag } from 'antd';
 import { ListCard, ExtIcon } from 'suid';
 import { constants } from '@/utils';
-import EffectDate from '../../EffectDate';
+import { EffectDate } from '@/components';
 import styles from './Assigned.less';
 
 const { SERVER_PATH } = constants;

@@ -3,16 +3,20 @@ import { connect } from 'dva';
 import cls from 'classnames';
 import { Button, Popconfirm, Tag } from 'antd';
 import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale';
-import { ExtTable, utils, ExtIcon } from 'suid';
+import { ExtTable, ExtIcon } from 'suid';
 import { constants } from '@/utils';
+import FeatureRoleModal from './components/Config/FeatureRole';
+import DataRoleModal from './components/Config/DataRole';
+import ExtAction from './components/ExtAction';
 import FormModal from './FormModal';
-import styles from '../../index.less';
+import styles from './index.less';
 
-const { APP_MODULE_BTN_KEY, SERVER_PATH } = constants;
-const { authAction } = utils;
+const { SERVER_PATH, SUPPLIER_ACTION } = constants;
 
 @connect(({ supplierUser, loading }) => ({ supplierUser, loading }))
-class TablePanel extends Component {
+class SupplierUser extends Component {
+  static tableRef;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -31,19 +35,19 @@ class TablePanel extends Component {
     dispatch({
       type: 'supplierUser/updateState',
       payload: {
-        showModal: true,
-        rowData: null,
+        showFormModal: true,
+        currentSupplier: null,
       },
     });
   };
 
-  edit = rowData => {
+  edit = currentSupplier => {
     const { dispatch } = this.props;
     dispatch({
       type: 'supplierUser/updateState',
       payload: {
-        showModal: true,
-        rowData,
+        showFormModal: true,
+        currentSupplier,
       },
     });
   };
@@ -55,16 +59,12 @@ class TablePanel extends Component {
       payload: {
         ...data,
       },
-    }).then(res => {
-      if (res.success) {
-        dispatch({
-          type: 'supplierUser/updateState',
-          payload: {
-            showModal: false,
-          },
-        });
-        this.reloadData();
-      }
+      callback: res => {
+        if (res.success) {
+          this.closeFormModal();
+          this.reloadData();
+        }
+      },
     });
   };
 
@@ -80,27 +80,17 @@ class TablePanel extends Component {
           payload: {
             id: record.id,
           },
-        }).then(res => {
-          if (res.success) {
-            this.setState({
-              delRowId: null,
-            });
-            this.reloadData();
-          }
+          callback: res => {
+            if (res.success) {
+              this.setState({
+                delRowId: null,
+              });
+              this.reloadData();
+            }
+          },
         });
       },
     );
-  };
-
-  handleConfig = rowData => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'supplierUser/updateState',
-      payload: {
-        showConfig: true,
-        rowData,
-      },
-    });
   };
 
   closeFormModal = () => {
@@ -108,9 +98,32 @@ class TablePanel extends Component {
     dispatch({
       type: 'supplierUser/updateState',
       payload: {
-        showModal: false,
-        showCopyModal: false,
-        rowData: null,
+        showFormModal: false,
+        showConfigFeatrueRole: false,
+        showConfigDataRole: false,
+        currentSupplier: null,
+      },
+    });
+  };
+
+  handlerAction = (key, supplier) => {
+    const { dispatch } = this.props;
+    const payload = { currentSupplier: supplier };
+    const extData = {};
+    switch (key) {
+      case SUPPLIER_ACTION.FEATURE_ROLE:
+        extData.showConfigFeatrueRole = true;
+        break;
+      case SUPPLIER_ACTION.DATA_ROLE:
+        extData.showConfigDataRole = true;
+        break;
+      default:
+    }
+    dispatch({
+      type: 'supplierUser/updateState',
+      payload: {
+        ...payload,
+        ...extData,
       },
     });
   };
@@ -121,34 +134,36 @@ class TablePanel extends Component {
     if (loading.effects['supplierUser/del'] && delRowId === row.id) {
       return <ExtIcon className="del-loading" type="loading" antd />;
     }
-    return <ExtIcon className="del" type="delete" tooltip={{ title: '删除' }} antd />;
+    return <ExtIcon className="del" type="delete" antd />;
   };
 
-  getExtableProps = () => {
+  render() {
+    const { supplierUser, loading } = this.props;
+    const {
+      showFormModal,
+      showConfigDataRole,
+      showConfigFeatrueRole,
+      currentSupplier,
+    } = supplierUser;
     const columns = [
       {
         title: formatMessage({ id: 'global.operation', defaultMessage: '操作' }),
         key: 'operation',
-        width: 150,
+        width: 120,
         align: 'center',
         dataIndex: 'id',
         className: 'action',
         required: true,
-        render: (text, record) => (
+        render: (_text, record) => (
           <span className={cls('action-box')}>
-            {authAction(
-              <ExtIcon
-                key={APP_MODULE_BTN_KEY.EDIT}
-                className="edit"
-                onClick={() => this.edit(record)}
-                type="edit"
-                tooltip={{ title: '编辑' }}
-                ignore="true"
-                antd
-              />,
-            )}
+            <ExtIcon
+              className="edit"
+              onClick={() => this.edit(record)}
+              type="edit"
+              ignore="true"
+              antd
+            />
             <Popconfirm
-              key={APP_MODULE_BTN_KEY.DELETE}
               placement="topLeft"
               title={formatMessage({
                 id: 'global.delete.confirm',
@@ -158,13 +173,7 @@ class TablePanel extends Component {
             >
               {this.renderDelBtn(record)}
             </Popconfirm>
-            <ExtIcon
-              className="tool"
-              onClick={() => this.handleConfig(record)}
-              tooltip={{ title: '配置' }}
-              type="tool"
-              antd
-            />
+            <ExtAction supplierData={record} onAction={this.handlerAction} />
           </span>
         ),
       },
@@ -173,6 +182,19 @@ class TablePanel extends Component {
         dataIndex: 'code',
         width: 120,
         required: true,
+        render: (text, record) => {
+          if (record.frozen) {
+            return (
+              <>
+                {text}
+                <Tag color="red" style={{ marginLeft: 8 }}>
+                  已冻结
+                </Tag>
+              </>
+            );
+          }
+          return text;
+        },
       },
       {
         title: '名称',
@@ -192,63 +214,58 @@ class TablePanel extends Component {
         width: 220,
         required: true,
       },
-      {
-        title: '冻结',
-        dataIndex: 'frozen',
-        width: 120,
-        required: true,
-        render: text => <Tag color={text ? 'red' : 'green'}>{text ? '冻结' : '可用'}</Tag>,
-      },
     ];
+    const formModalProps = {
+      save: this.save,
+      currentSupplier,
+      showFormModal,
+      closeFormModal: this.closeFormModal,
+      saving: loading.effects['supplierUser/save'],
+    };
+    const featureRoleModalProps = {
+      currentSupplier,
+      showModal: showConfigFeatrueRole,
+      closeModal: this.closeFormModal,
+    };
+    const dataRoleModalProps = {
+      currentSupplier,
+      showModal: showConfigDataRole,
+      closeModal: this.closeFormModal,
+    };
     const toolBarProps = {
       left: (
         <>
-          {authAction(
-            <Button key={APP_MODULE_BTN_KEY.CREATE} type="primary" onClick={this.add} ignore="true">
-              <FormattedMessage id="global.add" defaultMessage="新建" />
-            </Button>,
-          )}
+          <Button type="primary" onClick={this.add} ignore="true">
+            <FormattedMessage id="global.add" defaultMessage="新建" />
+          </Button>
           <Button onClick={this.reloadData}>
             <FormattedMessage id="global.refresh" defaultMessage="刷新" />
           </Button>
         </>
       ),
     };
-    return {
+    const tableProps = {
       bordered: false,
       columns,
       toolBar: toolBarProps,
+      searchWidth: 260,
       store: {
         type: 'POST',
         url: `${SERVER_PATH}/sei-basic/supplierUser/findVoByPage`,
       },
+      sort: {
+        field: { code: 'asc', name: null, supplierCode: null, supplierName: null },
+      },
     };
-  };
-
-  getFormModalProps = () => {
-    const { loading, supplierUser } = this.props;
-    const { showModal, rowData } = supplierUser;
-
-    return {
-      save: this.save,
-      rowData,
-      showModal,
-      closeFormModal: this.closeFormModal,
-      saving: loading.effects['supplierUser/save'],
-    };
-  };
-
-  render() {
-    const { supplierUser } = this.props;
-    const { showModal } = supplierUser;
-
     return (
       <div className={cls(styles['container-box'])}>
-        <ExtTable onTableRef={inst => (this.tableRef = inst)} {...this.getExtableProps()} />
-        {showModal ? <FormModal {...this.getFormModalProps()} /> : null}
+        <ExtTable {...tableProps} />
+        <FormModal {...formModalProps} />
+        <FeatureRoleModal {...featureRoleModalProps} />
+        <DataRoleModal {...dataRoleModalProps} />
       </div>
     );
   }
 }
 
-export default TablePanel;
+export default SupplierUser;

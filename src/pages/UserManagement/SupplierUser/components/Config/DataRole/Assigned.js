@@ -8,19 +8,18 @@ import { constants } from '@/utils';
 import { EffectDate } from '@/components';
 import styles from './Assigned.less';
 
-const { SERVER_PATH, ROLE_TYPE } = constants;
+const { SERVER_PATH } = constants;
 
-class FeatureRoleAssigned extends PureComponent {
+class DataRoleAssigned extends PureComponent {
   static listCardRef;
 
   static propTypes = {
-    currentEmployee: PropTypes.object,
+    currentSupplier: PropTypes.object,
     onShowAssign: PropTypes.func,
-    onSaveEffectDate: PropTypes.func,
   };
 
   static defaultProps = {
-    currentEmployee: null,
+    currentSupplier: null,
   };
 
   constructor(props) {
@@ -96,7 +95,7 @@ class FeatureRoleAssigned extends PureComponent {
     return (
       <>
         <Button type="primary" icon="plus" onClick={this.handlerShowAssign}>
-          添加功能角色
+          添加数据角色
         </Button>
         <Drawer
           placement="top"
@@ -196,20 +195,10 @@ class FeatureRoleAssigned extends PureComponent {
     );
   };
 
-  renderRoleTypeRemark = item => {
-    switch (item.roleType) {
-      case ROLE_TYPE.CAN_USE:
-        return <span style={{ color: '#52c41a', fontSize: 12 }}>{item.roleTypeRemark}</span>;
-      case ROLE_TYPE.CAN_ASSIGN:
-        return <span style={{ color: '#fa8c16', fontSize: 12 }}>{item.roleTypeRemark}</span>;
-      default:
-    }
-  };
-
   render() {
-    const { currentEmployee } = this.props;
+    const { currentSupplier } = this.props;
     const { selectedKeys } = this.state;
-    const positionId = get(currentEmployee, 'id', null);
+    const employeeId = get(currentSupplier, 'id', null);
     const assignedListCardProps = {
       className: 'station-box',
       bordered: false,
@@ -219,12 +208,11 @@ class FeatureRoleAssigned extends PureComponent {
       itemField: {
         title: item => this.renderName(item),
         description: item => this.renderDescription(item),
-        extra: item => this.renderRoleTypeRemark(item),
       },
       store: {
-        url: `${SERVER_PATH}/sei-basic/userFeatureRole/getChildrenFromParentId`,
+        url: `${SERVER_PATH}/sei-basic/userDataRole/getChildrenFromParentId`,
         params: {
-          parentId: positionId,
+          parentId: employeeId,
         },
       },
       showArrow: false,
@@ -236,10 +224,10 @@ class FeatureRoleAssigned extends PureComponent {
     };
     return (
       <div className={cls(styles['assigned-box'])}>
-        {positionId && <ListCard {...assignedListCardProps} />}
+        {employeeId && <ListCard {...assignedListCardProps} />}
       </div>
     );
   }
 }
 
-export default FeatureRoleAssigned;
+export default DataRoleAssigned;

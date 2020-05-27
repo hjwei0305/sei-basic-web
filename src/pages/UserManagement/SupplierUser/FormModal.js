@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
-import { Form, Input, Checkbox } from 'antd';
+import { get } from 'lodash';
+import { Form, Input, Switch } from 'antd';
 import { formatMessage } from 'umi-plugin-react/locale';
 import { ExtModal } from 'suid';
 
@@ -16,45 +17,50 @@ const formItemLayout = {
 @Form.create()
 class FormModal extends PureComponent {
   onFormSubmit = () => {
-    const { form, save, rowData } = this.props;
+    const { form, save, currentSupplier } = this.props;
     form.validateFields((err, formData) => {
       if (err) {
         return;
       }
       const params = {};
-      Object.assign(params, rowData || {});
+      Object.assign(params, currentSupplier || {});
       Object.assign(params);
       Object.assign(params, formData);
       save(params);
     });
   };
 
+  handlerCloseModal = () => {
+    const { closeFormModal } = this.props;
+    if (closeFormModal) {
+      closeFormModal();
+    }
+  };
+
   render() {
-    const { form, rowData, closeFormModal, saving, showModal } = this.props;
+    const { form, currentSupplier, saving, showFormModal } = this.props;
     const { getFieldDecorator } = form;
-    const title = rowData
+    const title = currentSupplier
       ? formatMessage({
           id: 'global.edit',
           defaultMessage: '编辑',
         })
       : formatMessage({ id: 'global.add', defaultMessage: '新建' });
-
     return (
       <ExtModal
         destroyOnClose
-        onCancel={closeFormModal}
-        visible={showModal}
+        onCancel={this.handlerCloseModal}
+        visible={showFormModal}
         centered
         confirmLoading={saving}
         maskClosable={false}
         title={title}
-        okText="保存"
         onOk={this.onFormSubmit}
       >
         <Form {...formItemLayout} layout="horizontal">
           <FormItem label="帐号">
             {getFieldDecorator('code', {
-              initialValue: rowData ? rowData.code : '',
+              initialValue: get(currentSupplier, 'code'),
               rules: [
                 {
                   required: true,
@@ -65,7 +71,7 @@ class FormModal extends PureComponent {
           </FormItem>
           <FormItem label={formatMessage({ id: 'global.name', defaultMessage: '名称' })}>
             {getFieldDecorator('name', {
-              initialValue: rowData ? rowData.name : '',
+              initialValue: get(currentSupplier, 'name'),
               rules: [
                 {
                   required: true,
@@ -79,9 +85,9 @@ class FormModal extends PureComponent {
           </FormItem>
           <FormItem label="冻结">
             {getFieldDecorator('frozen', {
+              initialValue: get(currentSupplier, 'frozen', false),
               valuePropName: 'checked',
-              initialValue: rowData && rowData.frozen,
-            })(<Checkbox />)}
+            })(<Switch size="small" />)}
           </FormItem>
         </Form>
       </ExtModal>

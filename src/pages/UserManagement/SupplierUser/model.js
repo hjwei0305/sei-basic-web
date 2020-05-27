@@ -1,9 +1,3 @@
-/*
- * @Author: zp
- * @Date:   2020-02-02 11:57:38
- * @Last Modified by: Eason
- * @Last Modified time: 2020-03-06 13:35:06
- */
 import { message } from 'antd';
 import { formatMessage } from 'umi-plugin-react/locale';
 import { utils } from 'suid';
@@ -14,6 +8,8 @@ import {
   unAssignFeatureRole,
   assignDataRole,
   unAssignDataRole,
+  saveAssignFeatureRoleEffective,
+  saveAssignDataRoleEffective,
 } from './service';
 
 const { dvaModel } = utils;
@@ -23,16 +19,13 @@ export default modelExtend(model, {
   namespace: 'supplierUser',
 
   state: {
-    list: [],
-    rowData: null,
-    showModal: false,
-    showCopyModal: false,
-    treeData: [],
-    currNode: null,
-    showConfig: false,
+    showFormModal: false,
+    showConfigFeatrueRole: false,
+    showConfigDataRole: false,
+    currentSupplier: null,
   },
   effects: {
-    *save({ payload }, { call }) {
+    *save({ payload, callback }, { call }) {
       const re = yield call(save, payload);
       message.destroy();
       if (re.success) {
@@ -40,10 +33,11 @@ export default modelExtend(model, {
       } else {
         message.error(re.message);
       }
-
-      return re;
+      if (callback && callback instanceof Function) {
+        callback(re);
+      }
     },
-    *del({ payload }, { call }) {
+    *del({ payload, callback }, { call }) {
       const re = yield call(del, payload);
       message.destroy();
       if (re.success) {
@@ -51,10 +45,11 @@ export default modelExtend(model, {
       } else {
         message.error(re.message);
       }
-
-      return re;
+      if (callback && callback instanceof Function) {
+        callback(re);
+      }
     },
-    *assignFeatureRole({ payload }, { call }) {
+    *assignFeatureRole({ payload, callback }, { call }) {
       const re = yield call(assignFeatureRole, payload);
       message.destroy();
       if (re.success) {
@@ -62,9 +57,11 @@ export default modelExtend(model, {
       } else {
         message.error(re.message);
       }
-      return re;
+      if (callback && callback instanceof Function) {
+        callback(re);
+      }
     },
-    *unAssignFeatureRole({ payload }, { call }) {
+    *unAssignFeatureRole({ payload, callback }, { call }) {
       const re = yield call(unAssignFeatureRole, payload);
       message.destroy();
       if (re.success) {
@@ -72,9 +69,11 @@ export default modelExtend(model, {
       } else {
         message.error(re.message);
       }
-      return re;
+      if (callback && callback instanceof Function) {
+        callback(re);
+      }
     },
-    *assignDataRole({ payload }, { call }) {
+    *assignDataRole({ payload, callback }, { call }) {
       const re = yield call(assignDataRole, payload);
       message.destroy();
       if (re.success) {
@@ -82,9 +81,11 @@ export default modelExtend(model, {
       } else {
         message.error(re.message);
       }
-      return re;
+      if (callback && callback instanceof Function) {
+        callback(re);
+      }
     },
-    *unAssignDataRole({ payload }, { call }) {
+    *unAssignDataRole({ payload, callback }, { call }) {
       const re = yield call(unAssignDataRole, payload);
       message.destroy();
       if (re.success) {
@@ -92,7 +93,33 @@ export default modelExtend(model, {
       } else {
         message.error(re.message);
       }
-      return re;
+      if (callback && callback instanceof Function) {
+        callback(re);
+      }
+    },
+    *saveAssignFeatureRoleEffective({ payload, callback }, { call }) {
+      const re = yield call(saveAssignFeatureRoleEffective, payload);
+      message.destroy();
+      if (re.success) {
+        message.success(formatMessage({ id: 'global.save-success', defaultMessage: '保存成功' }));
+      } else {
+        message.error(re.message);
+      }
+      if (callback && callback instanceof Function) {
+        callback(re);
+      }
+    },
+    *saveAssignDataRoleEffective({ payload, callback }, { call }) {
+      const re = yield call(saveAssignDataRoleEffective, payload);
+      message.destroy();
+      if (re.success) {
+        message.success(formatMessage({ id: 'global.save-success', defaultMessage: '保存成功' }));
+      } else {
+        message.error(re.message);
+      }
+      if (callback && callback instanceof Function) {
+        callback(re);
+      }
     },
   },
 });
