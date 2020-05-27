@@ -6,10 +6,18 @@
   overflow: hidden;
   :global {
     .step-box {
+      height: 90px;
       padding: 8px 16px;
+      background-color: @page-background-color;
     }
     .copy-body {
-      padding: 24px;
+      height: ~'calc(100% - 90px)';
+      padding: 0 16px 16px 16px;
+      background-color: @page-background-color;
+      .ant-row,
+      .ant-col {
+        height: 100%;
+      }
     }
   }
 }

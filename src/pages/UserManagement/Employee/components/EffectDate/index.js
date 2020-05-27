@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import cls from 'classnames';
 import moment from 'moment';
+import PropTypes from 'prop-types';
 import { Button, message } from 'antd';
 import { ScopeDatePicker, ExtIcon } from 'suid';
 import styles from './index.less';
@@ -9,6 +10,21 @@ const format = 'YYYY-MM-DD';
 
 class EffectDate extends PureComponent {
   static effectDate = null;
+
+  static propTypes = {
+    effectiveFrom: PropTypes.string,
+    effectiveTo: PropTypes.string,
+    itemId: PropTypes.string,
+    onSaveEffectDate: PropTypes.func,
+    saving: PropTypes.bool,
+    isView: PropTypes.bool,
+  };
+
+  static defaultProps = {
+    effectiveFrom: '',
+    effectiveTo: '',
+    isView: false,
+  };
 
   constructor(props) {
     super(props);
@@ -62,7 +78,7 @@ class EffectDate extends PureComponent {
   };
 
   renderView = () => {
-    const { effectiveFrom, effectiveTo } = this.props;
+    const { effectiveFrom, effectiveTo, isView } = this.props;
     if (effectiveFrom && effectiveTo) {
       return (
         <div className="effect-body" onClick={e => e.stopPropagation()}>
@@ -70,21 +86,25 @@ class EffectDate extends PureComponent {
             <span className="label">有效期</span>
             <span className="value">{`${effectiveFrom} 至 ${effectiveTo}`}</span>
           </div>
-          <ExtIcon
-            style={{ marginLeft: 8 }}
-            className="btn"
-            onClick={this.handlerSetEffectDate}
-            type="edit"
-            antd
-          />
+          {!isView ? (
+            <ExtIcon
+              style={{ marginLeft: 8 }}
+              className="btn"
+              onClick={this.handlerSetEffectDate}
+              type="edit"
+              antd
+            />
+          ) : null}
         </div>
       );
     }
-    return (
-      <Button type="link" style={{ padding: 0 }} onClick={e => this.handlerSetEffectDate(e)}>
-        设置有效期
-      </Button>
-    );
+    if (!isView) {
+      return (
+        <Button type="link" style={{ padding: 0 }} onClick={e => this.handlerSetEffectDate(e)}>
+          设置有效期
+        </Button>
+      );
+    }
   };
 
   renderSaveBtn = itemId => {

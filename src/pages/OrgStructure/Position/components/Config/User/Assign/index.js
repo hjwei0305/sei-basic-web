@@ -2,7 +2,7 @@
  * @Author: Eason
  * @Date: 2020-02-15 11:53:29
  * @Last Modified by: Eason
- * @Last Modified time: 2020-05-26 13:48:45
+ * @Last Modified time: 2020-05-27 11:30:31
  */
 import React, { Component } from 'react';
 import cls from 'classnames';
@@ -103,7 +103,7 @@ class UserAssign extends Component {
       className: 'anyone-user-box',
       title: '可选择的用户',
       bordered: false,
-      searchPlaceHolder: '输入用户代码或名称关键字查询',
+      searchPlaceHolder: '输入代码或姓名关键字查询',
       searchProperties: ['code', 'userName'],
       checkbox: true,
       selectedKeys,
@@ -125,7 +125,7 @@ class UserAssign extends Component {
       store: {
         type: 'POST',
         url: `${SERVER_PATH}/sei-basic/employee/queryEmployees`,
-        params: { positionId: get(currentPosition, 'id', null), includeSubNode: true },
+        params: { excludePositionId: get(currentPosition, 'id', null), includeSubNode: true },
       },
       onListCardRef: ref => (this.listCardRef = ref),
       onSelectChange: this.handerAssignUserSelectChange,
