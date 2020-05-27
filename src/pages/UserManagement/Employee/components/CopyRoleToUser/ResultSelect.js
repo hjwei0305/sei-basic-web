@@ -96,7 +96,7 @@ const ResultSelect = ({ featureRoleSelected, dataRoleSelected, userSelected }) =
     dataSource: getDataSource(featureRoleSelected),
   };
   const dataRoleProps = {
-    title: '选择的功能角色',
+    title: '选择的数据角色',
     bordered: false,
     pagination: false,
     showArrow: false,
