@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import cls from 'classnames';
 import { connect } from 'dva';
-import { debounce } from 'lodash';
+import { debounce, trim } from 'lodash';
 import { Layout, Empty, Input, message, Tag } from 'antd';
 import { ListCard } from 'suid';
 import { EffectDate } from '@/components';
@@ -25,12 +25,11 @@ class DataView extends PureComponent {
   }
 
   handlerAccountChange = v => {
-    this.account = v;
+    this.account = trim(v);
     this.quickSearch();
   };
 
-  getRoleList = e => {
-    e && e.stopPropagation();
+  getRoleList = () => {
     if (this.account) {
       const { dispatch } = this.props;
       dispatch({
@@ -135,7 +134,8 @@ class DataView extends PureComponent {
             style={{ width: 180, marginRight: 8 }}
             placeholder="请输入用户账号"
             onChange={e => this.handlerAccountChange(e.target.value)}
-            onPressEnter={e => this.getRoleList(e)}
+            onSearch={this.getRoleList}
+            onPressEnter={this.getRoleList}
           />
         </div>
       </>
