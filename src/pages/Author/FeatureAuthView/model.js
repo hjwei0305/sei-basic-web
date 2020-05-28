@@ -17,17 +17,19 @@ export default modelExtend(model, {
   effects: {
     *getRoleList({ payload }, { call, put }) {
       const re = yield call(getRoleList, payload);
+      let roleList = [];
       if (re.success) {
-        yield put({
-          type: 'updateState',
-          payload: {
-            roleList: re.data,
-          },
-        });
+        roleList = re.data;
       } else {
         message.destroy();
         message.error(re.message);
       }
+      yield put({
+        type: 'updateState',
+        payload: {
+          roleList,
+        },
+      });
     },
     *getAssignFeatureItem({ payload, callback }, { call, put }) {
       const re = yield call(getAssignFeatureItem, payload);
