@@ -147,7 +147,7 @@ class DataView extends PureComponent {
     const { currentRoleId, currentRoleName, roleList } = featureView;
     const roleListLoading = loading.effects['featureView/getRoleList'];
     const roleListProps = {
-      title: '用户角色列表',
+      title: '用户的功能角色列表',
       dataSource: roleList,
       showSearch: false,
       loading: roleListLoading,
