@@ -1,11 +1,12 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import cls from 'classnames';
-import { TreePanel } from '@/components';
+import { get } from 'lodash';
+import { TreePanel, BannerTitle } from '@/components';
 import styles from './TreeAssign.less';
 
 @connect(({ dataView, loading }) => ({ dataView, loading }))
-class TreeAssign extends PureComponent {
+class ListAssign extends PureComponent {
   componentDidMount() {
     this.loadAssignedData();
   }
@@ -29,17 +30,24 @@ class TreeAssign extends PureComponent {
     return (
       <div className={cls(styles['tree-assign-box'])}>
         <div className="header-box">
-          <span>{currentDataAuthorType.name}</span>
+          <span>
+            <BannerTitle
+              title={get(currentDataAuthorType, 'name', '')}
+              subTitle="已配置的数据权限"
+            />
+          </span>
         </div>
-        <TreePanel
-          className="assign-box"
-          checkable={false}
-          dataSource={assignData}
-          loading={loading.effects['dataView/getAssignedAuthTreeDataList']}
-        />
+        <div className={cls('list-body')}>
+          <TreePanel
+            className="assign-box"
+            checkable={false}
+            dataSource={assignData}
+            loading={loading.effects['dataView/getAssignedAuthTreeDataList']}
+          />
+        </div>
       </div>
     );
   }
 }
 
-export default TreeAssign;
+export default ListAssign;

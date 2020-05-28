@@ -32,6 +32,7 @@ export default modelExtend(model, {
           },
         });
       } else {
+        message.destroy();
         message.error(re.message);
       }
     },
@@ -45,6 +46,7 @@ export default modelExtend(model, {
           },
         });
       } else {
+        message.destroy();
         message.error(re.message);
       }
     },
@@ -58,6 +60,7 @@ export default modelExtend(model, {
           },
         });
       } else {
+        message.destroy();
         message.error(re.message);
       }
     },
@@ -71,6 +74,7 @@ export default modelExtend(model, {
           },
         });
       } else {
+        message.destroy();
         message.error(re.message);
       }
     },

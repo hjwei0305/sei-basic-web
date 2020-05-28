@@ -51,7 +51,7 @@ class Assign extends Component {
     return (
       <Popover
         trigger="click"
-        placement="leftTop"
+        placement="rightTop"
         visible={visible}
         key="assign-popover-box"
         destroyTooltipOnHide
@@ -60,11 +60,7 @@ class Assign extends Component {
         content={this.renderPopoverContent()}
       >
         <span className={cls('assign-popover-box-trigger')}>
-          <ExtIcon
-            type="security-scan"
-            antd
-            tooltip={{ title: '权限数据查看', placement: 'right' }}
-          />
+          <ExtIcon type="profile" antd tooltip={{ title: '查看数据权限', placement: 'left' }} />
         </span>
       </Popover>
     );

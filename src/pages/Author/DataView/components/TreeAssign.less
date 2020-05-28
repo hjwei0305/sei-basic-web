@@ -8,27 +8,30 @@
       display: flex;
       align-items: center;
       height: 42px;
+      padding-left: 16px;
       color: fade(@black, 85%);
       font-weight: 700;
       font-size: 16px;
       line-height: 42px;
     }
-    .assign-box {
+    .list-body {
       height: calc(100% - 42px);
-      .ant-card-head {
-        height: 42px;
-        padding: 0 16px;
-        line-height: 42px;
-        border-bottom-width: 0;
-        .ant-card-extra {
-          padding: 0;
+      .list-left,
+      .list-right {
+        height: 100%;
+      }
+      .ant-card-extra {
+        float: none;
+        width: 100%;
+        margin-left: 0;
+        .ant-input-search {
+          width: 100% !important;
         }
       }
-      .ant-card-body {
-        height: calc(100% - 42px);
-        .tree-body {
-          height: 100%;
-        }
+    }
+    .assign-box {
+      .ant-card-head-title {
+        color: @success-color;
       }
     }
   }

@@ -8,9 +8,14 @@
   :global {
     .desc-box {
       .field-item {
-        .label::after {
-          margin: 0 4px;
-          content: ':';
+        .label {
+          display: inline-block;
+          width: 80px;
+          &::after {
+            margin: 0 4px;
+            letter-spacing: 0;
+            content: ':';
+          }
         }
       }
     }

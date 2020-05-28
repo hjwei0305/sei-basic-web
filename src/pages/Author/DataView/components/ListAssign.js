@@ -1,29 +1,24 @@
 import React, { PureComponent } from 'react';
-import { connect } from 'dva';
 import cls from 'classnames';
+import { get } from 'lodash';
 import { Input } from 'antd';
 import { ListCard } from 'suid';
+import { BannerTitle } from '@/components';
+import { constants } from '@/utils';
 import styles from './ListAssign.less';
 
+const { SERVER_PATH } = constants;
 const { Search } = Input;
 
-@connect(({ dataView, loading }) => ({ dataView, loading }))
 class ListAssign extends PureComponent {
-  componentDidMount() {
-    this.loadAssignedData();
-  }
+  static listCardRef;
 
-  loadAssignedData = () => {
-    const { dispatch, currentDataAuthorType, currentRoleId } = this.props;
-    if (currentDataAuthorType && currentRoleId) {
-      dispatch({
-        type: 'dataView/getAssignedAuthDataList',
-        payload: {
-          authTypeId: currentDataAuthorType.id,
-          roleId: currentRoleId,
-        },
-      });
-    }
+  handlerSearchChange = v => {
+    this.listCardRef.handlerSearchChange(v);
+  };
+
+  handlerSearch = () => {
+    this.listCardRef.handlerSearch();
   };
 
   handlerSearchChange = v => {
@@ -34,36 +29,55 @@ class ListAssign extends PureComponent {
     this.listCardRef.handlerSearch();
   };
 
-  renderCustomTool = () => (
-    <>
-      <span />
-      <Search
-        placeholder="可输入名称关键字查询"
-        onChange={e => this.handlerSearchChange(e.target.value)}
-        onSearch={this.handlerSearch}
-        onPressEnter={this.handlerSearch}
-        style={{ width: 172 }}
-      />
-    </>
-  );
+  renderCustomTool = ({ total }) => {
+    return (
+      <>
+        <span style={{ marginRight: 8 }}>{`共 ${total} 项`}</span>
+        <Search
+          placeholder="输入代码或名称关键字查询"
+          onChange={e => this.handlerSearchChange(e.target.value)}
+          onSearch={this.handlerSearch}
+          onPressEnter={this.handlerSearch}
+          style={{ width: 220 }}
+        />
+      </>
+    );
+  };
 
   render() {
-    const { currentDataAuthorType, dataView, loading } = this.props;
-    const { assignData } = dataView;
+    const { currentDataAuthorType, currentRoleId } = this.props;
+    const listCardProps = {
+      className: 'assign-box',
+      bordered: false,
+      itemField: {
+        title: item => item.name,
+        description: item => item.code,
+      },
+      store: {
+        url: `${SERVER_PATH}/sei-basic/dataRoleAuthTypeValue/getAssignedAuthDatas`,
+        params: {
+          authTypeId: currentDataAuthorType.id,
+          roleId: currentRoleId,
+        },
+      },
+      showArrow: false,
+      showSearch: false,
+      customTool: this.renderCustomTool,
+      onListCardRef: ref => (this.listCardRef = ref),
+    };
     return (
       <div className={cls(styles['list-assign-box'])}>
         <div className="header-box">
-          <span>{currentDataAuthorType.name}</span>
+          <span>
+            <BannerTitle
+              title={get(currentDataAuthorType, 'name', '')}
+              subTitle="已配置的数据权限"
+            />
+          </span>
         </div>
-        <ListCard
-          className="assign-box"
-          showArrow={false}
-          showSearch={false}
-          dataSource={assignData}
-          loading={loading.effects['dataView/getAssignedAuthDataList']}
-          onListCardRef={ref => (this.listCardRef = ref)}
-          customTool={this.renderCustomTool}
-        />
+        <div className={cls('list-body')}>
+          <ListCard {...listCardProps} />
+        </div>
       </div>
     );
   }

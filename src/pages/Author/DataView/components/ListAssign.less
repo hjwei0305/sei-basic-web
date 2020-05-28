@@ -8,13 +8,18 @@
       display: flex;
       align-items: center;
       height: 42px;
+      padding-left: 16px;
       color: fade(@black, 85%);
       font-weight: 700;
       font-size: 16px;
       line-height: 42px;
     }
-    .assign-box {
+    .list-body {
       height: calc(100% - 42px);
+      .list-left,
+      .list-right {
+        height: 100%;
+      }
     }
   }
 }

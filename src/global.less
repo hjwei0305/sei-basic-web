@@ -88,8 +88,9 @@ li {
         i {
           display: inline-block;
           width: 32px;
-          height: 100%;
-          line-height: 32px;
+          height: 32px;
+          margin-right: 8px;
+          line-height: 36px;
           border-radius: 4px;
           cursor: pointer;
           transition: all ease-in 0.2s;
@@ -106,6 +107,9 @@ li {
           &.ant-popover-open {
             color: @error-color;
             background-color: fade(@error-color, 15%);
+          }
+          &:last-child {
+            margin-right: 0;
           }
         }
       }
