@@ -6,6 +6,8 @@ import BasicInfo from './components/BasicInfo';
 import PositionInfo from './components/PositionInfo';
 import MailInfo from './components/MailInfo';
 import AccountInfo from './components/AccountInfo';
+import FeatureAuthView from './FeatureAuthView';
+import DataAuthView from './DataAuthView';
 
 import styles from './index.less';
 
@@ -51,6 +53,12 @@ class UserProfile extends React.Component {
             <Card title="邮件提醒" bordered={false}>
               <MailInfo />
             </Card>
+          </TabPane>
+          <TabPane tab="功能角色" key="featureAuth">
+            <FeatureAuthView />
+          </TabPane>
+          <TabPane tab="数据角色" key="dataAuth">
+            <DataAuthView />
           </TabPane>
         </Tabs>
       </div>

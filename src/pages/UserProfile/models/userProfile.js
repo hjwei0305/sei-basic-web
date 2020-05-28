@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-02-17 11:36:34
  * @Last Modified by: Eason
- * @Last Modified time: 2020-05-28 12:44:29
+ * @Last Modified time: 2020-05-28 20:59:10
  */
 import { message } from 'antd';
 import { utils } from 'suid';
@@ -15,7 +15,7 @@ import {
   createAccount,
   updateAccount,
   updatePwd,
-} from './service';
+} from '../service';
 
 const { dvaModel, pathMatchRegexp } = utils;
 const { modelExtend, model } = dvaModel;
