@@ -5,6 +5,7 @@ import { debounce, trim } from 'lodash';
 import { Layout, Empty, Input, message, Tag } from 'antd';
 import { ListCard } from 'suid';
 import { EffectDate } from '@/components';
+import { constants } from '@/utils';
 import empty from '@/assets/item_empty.svg';
 import AssignedFeature from './components/AssignedFeature';
 import styles from './index.less';
@@ -12,6 +13,8 @@ import styles from './index.less';
 const { Sider, Content } = Layout;
 
 const { Search } = Input;
+
+const { ROLE_TYPE } = constants;
 
 @connect(({ featureView, loading }) => ({ featureView, loading }))
 class DataView extends PureComponent {
@@ -125,6 +128,16 @@ class DataView extends PureComponent {
     );
   };
 
+  renderRoleTypeRemark = item => {
+    switch (item.roleType) {
+      case ROLE_TYPE.CAN_USE:
+        return <span style={{ color: '#52c41a' }}>{item.roleTypeRemark}</span>;
+      case ROLE_TYPE.CAN_ASSIGN:
+        return <span style={{ color: '#fa8c16' }}>{item.roleTypeRemark}</span>;
+      default:
+    }
+  };
+
   renderCustomTool = ({ total }) => {
     return (
       <>
@@ -156,6 +169,7 @@ class DataView extends PureComponent {
       itemField: {
         title: this.renderRoleName,
         description: this.renderRoleDescription,
+        extra: this.renderRoleTypeRemark,
       },
     };
     return (
