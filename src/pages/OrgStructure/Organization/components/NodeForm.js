@@ -4,6 +4,7 @@ import { cloneDeep, get, isEqual } from 'lodash';
 import { formatMessage } from 'umi-plugin-react/locale';
 import { Button, Form, Input, Popconfirm, InputNumber, Switch } from 'antd';
 import { ScrollBar, ExtIcon } from 'suid';
+import { BannerTitle } from '@/components';
 import styles from './NodeForm.less';
 
 const FormItem = Form.Item;
@@ -110,7 +111,7 @@ class NodeForm extends PureComponent {
       return (
         <>
           <Button onClick={e => this.handlerAddChild(e, editData)}>新建下级组织</Button>
-          {editData.parentId ? (
+          {editData.parentId && (!editData.children || editData.children.length === 0) ? (
             <Popconfirm
               overlayClassName={cls(styles['pop-confirm-box'])}
               title={this.renderPopconfirmTitle('确定要删除吗？', '提示：删除后不能恢复')}
@@ -142,10 +143,15 @@ class NodeForm extends PureComponent {
   getFormTitle = () => {
     const { editData } = this.props;
     let title = '';
-    if (editData) {
-      title = editData.id ? editData.name : '新建下级组织';
+    let subTitle = '';
+    if (editData.id) {
+      title = editData.name;
+      subTitle = '编辑';
+    } else {
+      title = editData.parentName;
+      subTitle = '新建下级组织';
     }
-    return title;
+    return <BannerTitle title={title} subTitle={subTitle} />;
   };
 
   render() {

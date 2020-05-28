@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'dva';
 import cls from 'classnames';
 import { isEqual, trim } from 'lodash';
-import { Card, Input, Tree, Empty, Layout } from 'antd';
+import { Card, Input, Tree, Empty, Layout, Tag } from 'antd';
 import { ScrollBar, ExtIcon, ListLoader } from 'suid';
 import empty from '@/assets/item_empty.svg';
 import NodeForm from './components/NodeForm';
@@ -96,6 +96,7 @@ class Organization extends Component {
       this.setState({ childParentNode: parent });
       const currentNode = {
         parentId: parent.id,
+        parentName: parent.name,
         [childFieldKey]: [],
       };
       const { dispatch } = this.props;
@@ -261,6 +262,20 @@ class Organization extends Component {
     };
     forFn(treeData, id);
     return temp;
+  };
+
+  renderNodeTitle = (title, frozen) => {
+    if (frozen) {
+      return (
+        <>
+          {title}
+          <Tag color="red" style={{ marginLeft: 8 }}>
+            已冻结
+          </Tag>
+        </>
+      );
+    }
+    return title;
   };
 
   renderTreeNodes = treeData => {
