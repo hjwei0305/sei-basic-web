@@ -222,7 +222,7 @@ class FeatureView extends Component {
                 onChange={e => this.handlerSearchChange(e.target.value)}
                 onSearch={this.handlerSearch}
                 onPressEnter={this.handlerSearch}
-                style={{ width: 172 }}
+                style={{ width: 260 }}
               />
             </div>
           </div>
