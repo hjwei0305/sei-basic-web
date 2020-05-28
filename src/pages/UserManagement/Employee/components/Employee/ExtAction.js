@@ -11,16 +11,6 @@ const { Item } = Menu;
 
 const menuData = () => [
   {
-    title: '重置密码',
-    key: EMPLOYEE_ACTION.RESET_PASSWORD,
-    disabled: false,
-  },
-  {
-    title: '复制权限到用户',
-    key: EMPLOYEE_ACTION.COPY_AUTH,
-    disabled: false,
-  },
-  {
     title: '配置岗位',
     key: EMPLOYEE_ACTION.STATION,
     disabled: false,
@@ -33,6 +23,16 @@ const menuData = () => [
   {
     title: '配置数据角色',
     key: EMPLOYEE_ACTION.DATA_ROLE,
+    disabled: false,
+  },
+  {
+    title: '重置密码',
+    key: EMPLOYEE_ACTION.RESET_PASSWORD,
+    disabled: false,
+  },
+  {
+    title: '复制权限到用户',
+    key: EMPLOYEE_ACTION.COPY_AUTH,
     disabled: false,
   },
 ];

@@ -11,11 +11,6 @@ const { Item } = Menu;
 
 const menuData = () => [
   {
-    title: '复制岗位',
-    key: POSITION_ACTION.COPY,
-    disabled: false,
-  },
-  {
     title: '配置用户',
     key: POSITION_ACTION.USER,
     disabled: false,
@@ -28,6 +23,11 @@ const menuData = () => [
   {
     title: '配置数据角色',
     key: POSITION_ACTION.DATA_ROLE,
+    disabled: false,
+  },
+  {
+    title: '复制岗位',
+    key: POSITION_ACTION.COPY,
     disabled: false,
   },
 ];
