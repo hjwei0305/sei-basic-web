@@ -100,9 +100,6 @@ class AccountInfo extends Component {
     const toolBar = {
       left: (
         <>
-          <Button type="primary" onClick={() => this.handleEvent('add')}>
-            <FormattedMessage id="global.add" defaultMessage="新建" />
-          </Button>
           <Button onClick={this.reloadData}>
             <FormattedMessage id="global.refresh" defaultMessage="刷新" />
           </Button>
@@ -113,21 +110,13 @@ class AccountInfo extends Component {
       {
         title: formatMessage({ id: 'global.operation', defaultMessage: '操作' }),
         key: 'operation',
-        width: 150,
+        width: 100,
         align: 'center',
         dataIndex: 'id',
         className: 'action',
         required: true,
         render: (text, record) => (
           <span className={cls('action-box')}>
-            <ExtIcon
-              className="edit"
-              onClick={() => this.handleEvent('edit', record)}
-              type="edit"
-              ignore="true"
-              tooltip={{ title: '编辑' }}
-              antd
-            />
             <ExtIcon
               onClick={() => this.handleEvent('password', record)}
               className="lock"
@@ -141,13 +130,13 @@ class AccountInfo extends Component {
       {
         title: '帐号',
         dataIndex: 'account',
-        width: 120,
+        width: 180,
         required: true,
       },
       {
         title: '名称',
         dataIndex: 'name',
-        width: 120,
+        width: 380,
         required: true,
       },
     ];
@@ -156,6 +145,8 @@ class AccountInfo extends Component {
       columns,
       toolBar,
       bordered: false,
+      searchPlaceHolder: '输入账号或名称关键字查询',
+      searchWidth: 280,
       store: {
         params: {
           userId: user.userId,

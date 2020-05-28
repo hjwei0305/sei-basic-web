@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'dva';
 import { Tabs, Card } from 'antd';
 import cls from 'classnames';
-import { PageWrapper } from '@/components';
 import BasicInfo from './components/BasicInfo';
 import PositionInfo from './components/PositionInfo';
 import MailInfo from './components/MailInfo';
@@ -25,11 +24,11 @@ class UserProfile extends React.Component {
   };
 
   render() {
-    const { loading, userProfile } = this.props;
+    const { userProfile } = this.props;
     const { activeTabKey } = userProfile;
 
     return (
-      <PageWrapper loading={loading.global} className={cls(styles['container-box'])}>
+      <div className={cls(styles['container-box'])}>
         <Tabs activeKey={activeTabKey} tabPosition="left" onChange={this.handleActiveChange}>
           <TabPane tab="基本信息" key="baiscInfo">
             <Card title="基本信息" bordered={false}>
@@ -54,7 +53,7 @@ class UserProfile extends React.Component {
             </Card>
           </TabPane>
         </Tabs>
-      </PageWrapper>
+      </div>
     );
   }
 }

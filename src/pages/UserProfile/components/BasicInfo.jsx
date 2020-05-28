@@ -11,7 +11,7 @@ const formItemLayout = {
   wrapperCol: { span: 12 },
 };
 
-@connect(({ userProfile }) => ({ userProfile }))
+@connect(({ userProfile, loading }) => ({ userProfile, loading }))
 @Form.create()
 class BasicInfo extends React.Component {
   handleSave = () => {
@@ -42,7 +42,7 @@ class BasicInfo extends React.Component {
   };
 
   render() {
-    const { form, userProfile } = this.props;
+    const { form, userProfile, loading } = this.props;
     const { getFieldDecorator } = form;
     const { basicInfo } = userProfile;
 
@@ -162,7 +162,11 @@ class BasicInfo extends React.Component {
                 offset: 8,
               }}
             >
-              <Button type="primary" onClick={this.handleSave}>
+              <Button
+                loading={loading.effects['userProfile/save']}
+                type="primary"
+                onClick={this.handleSave}
+              >
                 更新信息
               </Button>
             </FormItem>

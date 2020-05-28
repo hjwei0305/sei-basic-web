@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-02-17 11:36:34
  * @Last Modified by: Eason
- * @Last Modified time: 2020-04-26 20:34:47
+ * @Last Modified time: 2020-05-28 12:44:29
  */
 import { message } from 'antd';
 import { utils } from 'suid';
@@ -60,7 +60,6 @@ export default modelExtend(model, {
     },
     *getUserInfo({ payload }, { call, put }) {
       const res = yield call(findByUserId, payload);
-      message.destroy();
       if (res.success) {
         yield put({
           type: 'updateState',
@@ -69,6 +68,7 @@ export default modelExtend(model, {
           },
         });
       } else {
+        message.destroy();
         message.error(res.message);
       }
 
@@ -78,6 +78,7 @@ export default modelExtend(model, {
       const res = yield call(saveEmailAlert, payload);
       message.destroy();
       if (res.success) {
+        message.success(res.message);
         yield put({
           type: 'updateState',
           payload: {
@@ -92,7 +93,6 @@ export default modelExtend(model, {
     },
     *getEmailAlert({ payload }, { call, put }) {
       const res = yield call(findMyEmailAlert, payload);
-      message.destroy();
       if (res.success) {
         yield put({
           type: 'updateState',
@@ -101,6 +101,7 @@ export default modelExtend(model, {
           },
         });
       } else {
+        message.destroy();
         message.error(res.message);
       }
 

@@ -11,7 +11,7 @@ const formItemLayout = {
   wrapperCol: { span: 12 },
 };
 
-@connect(({ userProfile }) => ({ userProfile }))
+@connect(({ userProfile, loading }) => ({ userProfile, loading }))
 @Form.create()
 class MailInfo extends React.Component {
   componentDidMount() {
@@ -41,7 +41,7 @@ class MailInfo extends React.Component {
   };
 
   render() {
-    const { form, userProfile } = this.props;
+    const { form, userProfile, loading } = this.props;
     const { getFieldDecorator } = form;
     const { mailAlert } = userProfile;
 
@@ -81,7 +81,11 @@ class MailInfo extends React.Component {
             offset: 8,
           }}
         >
-          <Button type="primary" onClick={this.handleSave}>
+          <Button
+            type="primary"
+            loading={loading.effects['userProfile/saveEmailAlert']}
+            onClick={this.handleSave}
+          >
             更新
           </Button>
         </FormItem>
