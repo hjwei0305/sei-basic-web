@@ -4,6 +4,7 @@ import { cloneDeep, get, isEqual } from 'lodash';
 import { formatMessage } from 'umi-plugin-react/locale';
 import { Button, Form, Input, Popconfirm, InputNumber } from 'antd';
 import { ScrollBar, ExtIcon, ComboGrid } from 'suid';
+import { BannerTitle } from '@/components';
 import { constants } from '@/utils';
 import styles from './NodeForm.less';
 
@@ -151,14 +152,24 @@ class NodeForm extends PureComponent {
   getFormTitle = () => {
     const { editData } = this.props;
     let title = '';
+    let subTitle = '';
     if (editData) {
       if (editData.parentId) {
-        title = editData.id ? editData.name : '新建子菜单';
+        if (editData.id) {
+          title = editData.name;
+          subTitle = '编辑';
+        } else {
+          title = editData.parentName;
+          subTitle = '新建子菜单';
+        }
+      } else if (editData.id) {
+        title = editData.name;
+        subTitle = '编辑';
       } else {
-        title = editData.id ? editData.name : '新建根菜单';
+        title = '新建根菜单';
       }
     }
-    return title;
+    return <BannerTitle title={title} subTitle={subTitle} />;
   };
 
   render() {
