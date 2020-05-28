@@ -298,7 +298,7 @@ class Organization extends Component {
         );
       if (readerChildren && readerChildren.length > 0) {
         return (
-          <TreeNode title={title} key={item.id}>
+          <TreeNode title={this.renderNodeTitle(title, item.frozen)} key={item.id}>
             {this.renderTreeNodes(readerChildren)}
           </TreeNode>
         );
@@ -306,7 +306,7 @@ class Organization extends Component {
       return (
         <TreeNode
           switcherIcon={<ExtIcon type="dian" style={{ fontSize: 12 }} />}
-          title={title}
+          title={this.renderNodeTitle(title, item.frozen)}
           key={item.id}
         />
       );
