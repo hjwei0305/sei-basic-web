@@ -6,14 +6,14 @@ import { Layout, Empty, Input, message, Tag } from 'antd';
 import { ListCard } from 'suid';
 import { EffectDate } from '@/components';
 import empty from '@/assets/item_empty.svg';
-import DataAuthorType from './components/DataAuthorType';
+import AssignedFeature from './components/AssignedFeature';
 import styles from './index.less';
 
 const { Sider, Content } = Layout;
 
 const { Search } = Input;
 
-@connect(({ dataView, loading }) => ({ dataView, loading }))
+@connect(({ featureView, loading }) => ({ featureView, loading }))
 class DataView extends PureComponent {
   static account = '';
 
@@ -34,7 +34,7 @@ class DataView extends PureComponent {
     if (this.account) {
       const { dispatch } = this.props;
       dispatch({
-        type: 'dataView/getRoleList',
+        type: 'featureView/getRoleList',
         payload: {
           account: this.account,
         },
@@ -48,7 +48,7 @@ class DataView extends PureComponent {
   handlerRoleSelect = (keys, items) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'dataView/updateState',
+      type: 'featureView/updateState',
       payload: {
         currentRoleId: keys[0],
         currentRoleName: items[0].name,
@@ -143,9 +143,9 @@ class DataView extends PureComponent {
   };
 
   render() {
-    const { loading, dataView } = this.props;
-    const { currentRoleId, currentRoleName, roleList } = dataView;
-    const roleListLoading = loading.effects['dataView/getRoleList'];
+    const { loading, featureView } = this.props;
+    const { currentRoleId, currentRoleName, roleList } = featureView;
+    const roleListLoading = loading.effects['featureView/getRoleList'];
     const roleListProps = {
       title: '用户角色列表',
       dataSource: roleList,
@@ -165,7 +165,7 @@ class DataView extends PureComponent {
         </Sider>
         <Content className={cls('main-content', 'auto-height')} style={{ paddingLeft: 8 }}>
           {currentRoleId ? (
-            <DataAuthorType currentRoleName={currentRoleName} currentRoleId={currentRoleId} />
+            <AssignedFeature currentRoleName={currentRoleName} currentRoleId={currentRoleId} />
           ) : (
             <div className="blank-empty">
               <Empty image={empty} description="选择相应的角色项显示权限" />
