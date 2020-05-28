@@ -23,6 +23,7 @@ class RoleView extends PureComponent {
     const { featureId } = this.props;
     const listCardProps = {
       className: 'role-box',
+      title: '功能角色分布',
       bordered: false,
       pagination: false,
       itemField: {

@@ -146,12 +146,14 @@ class FeaturePage extends Component {
     }
     return (
       <Popconfirm
-        title={formatMessage({ id: 'global.remove.confirm', defaultMessage: '确定要移除吗?' })}
+        title={formatMessage({
+          id: 'global.remove.confirm',
+          defaultMessage: '确定要移除功能项吗?',
+        })}
         onConfirm={() => this.removeAssignFeatureItem([item.id])}
+        placement="topLeft"
       >
-        <Tooltip title="移除功能项" placement="right">
-          {icon}
-        </Tooltip>
+        {icon}
       </Popconfirm>
     );
   };
@@ -261,10 +263,12 @@ class FeaturePage extends Component {
       const nodeTitle = (
         <>
           <Tooltip {...this.getTooltip(item.code)}>{title}</Tooltip>
-          {item.featureType === FEATURE_TYPE.PAGE || item.featureType === FEATURE_TYPE.OPERATE ? (
-            <RoleView featureId={item.id} />
-          ) : null}
-          {this.renderRemoveBtn(item)}
+          <div className="action-box">
+            {item.featureType === FEATURE_TYPE.PAGE || item.featureType === FEATURE_TYPE.OPERATE ? (
+              <RoleView featureId={item.id} />
+            ) : null}
+            {this.renderRemoveBtn(item)}
+          </div>
         </>
       );
       if (readerChildren && readerChildren.length > 0) {
