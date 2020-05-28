@@ -1,7 +1,5 @@
 import React, { PureComponent } from 'react';
 import cls from 'classnames';
-import { connect } from 'dva';
-import { isEqual } from 'lodash';
 import { Dropdown, Menu } from 'antd';
 import { utils, ExtIcon } from 'suid';
 import { constants } from '@/utils';
@@ -36,74 +34,22 @@ const menuData = () => [
   },
 ];
 
-@connect(({ dataRole, loading }) => ({ dataRole, loading }))
 class ExtAction extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
       menuShow: false,
       selectedKeys: '',
-      assignUserData: [],
-      assinStationData: [],
     };
   }
-
-  componentDidUpdate() {
-    const { dataRole } = this.props;
-    const { assignUserData: stateAssignUserData } = this.state;
-    if (!isEqual(stateAssignUserData, dataRole.assignUserData)) {
-      this.setState({
-        assignUserData: dataRole.assignUserData,
-      });
-    }
-    if (!isEqual(stateAssignUserData, dataRole.assinStationData)) {
-      this.setState({
-        assinStationData: dataRole.assinStationData,
-      });
-    }
-  }
-
-  getUserData = () => {
-    const { roleData, dispatch } = this.props;
-    if (roleData) {
-      dispatch({
-        type: 'dataRole/getAssignedEmployeesByDataRole',
-        payload: {
-          childId: roleData.id,
-        },
-      });
-    }
-  };
-
-  getStationData = () => {
-    const { roleData, dispatch } = this.props;
-    if (roleData) {
-      dispatch({
-        type: 'dataRole/getAssignedPositionsByDataRole',
-        payload: {
-          childId: roleData.id,
-        },
-      });
-    }
-  };
 
   onActionOperation = e => {
     e.domEvent.stopPropagation();
     if (e.key === ROLE_VIEW.STATION || e.key === ROLE_VIEW.USER) {
-      this.setState(
-        {
-          selectedKeys: e.key,
-          menuShow: true,
-        },
-        () => {
-          if (e.key === ROLE_VIEW.USER) {
-            this.getUserData();
-          }
-          if (e.key === ROLE_VIEW.STATION) {
-            this.getStationData();
-          }
-        },
-      );
+      this.setState({
+        selectedKeys: e.key,
+        menuShow: true,
+      });
     } else {
       this.setState({
         selectedKeys: '',
@@ -117,8 +63,7 @@ class ExtAction extends PureComponent {
   };
 
   getMenu = (menus, record) => {
-    const { loading } = this.props;
-    const { selectedKeys, assignUserData, assinStationData } = this.state;
+    const { selectedKeys } = this.state;
     const menuId = getUUID();
     return (
       <Menu
@@ -131,27 +76,14 @@ class ExtAction extends PureComponent {
           if (m.key === ROLE_VIEW.USER) {
             return (
               <Item key={m.key}>
-                <UserView
-                  key={`user-${m.key}`}
-                  loading={loading.effects['dataRole/getAssignedEmployeesByDataRole']}
-                  assignUserData={assignUserData}
-                  menuId={menuId}
-                  title={m.title}
-                  icon={m.icon}
-                />
+                <UserView roleData={record} key={`user-${m.key}`} menuId={menuId} title={m.title} />
               </Item>
             );
           }
           if (m.key === ROLE_VIEW.STATION) {
             return (
               <Item key={m.key}>
-                <StationView
-                  loading={loading.effects['dataRole/getAssignedPositionsByDataRole']}
-                  assinStationData={assinStationData}
-                  menuId={menuId}
-                  title={m.title}
-                  icon={m.icon}
-                />
+                <StationView roleData={record} menuId={menuId} title={m.title} />
               </Item>
             );
           }

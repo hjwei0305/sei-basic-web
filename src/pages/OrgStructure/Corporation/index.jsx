@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import withRouter from 'umi/withRouter';
 import { connect } from 'dva';
 import cls from 'classnames';
 import { Button, Popconfirm, Tag } from 'antd';
 import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale';
 import { ExtTable, utils, ExtIcon, DataAudit } from 'suid';
-import { PageWrapper } from '@/components';
 import { constants } from '@/utils';
 import FormModal from './FormModal';
 import styles from './index.less';
@@ -14,7 +12,6 @@ const { DataAduitButton } = DataAudit;
 const { APP_MODULE_BTN_KEY } = constants;
 const { authAction } = utils;
 
-@withRouter
 @connect(({ corporation, loading }) => ({ corporation, loading }))
 class Corporation extends Component {
   constructor(props) {
@@ -272,10 +269,10 @@ class Corporation extends Component {
 
   render() {
     return (
-      <PageWrapper className={cls(styles['container-box'])}>
+      <div className={cls(styles['container-box'])}>
         <ExtTable {...this.getExtableProps()} />
         <FormModal {...this.getFormModalProps()} />
-      </PageWrapper>
+      </div>
     );
   }
 }

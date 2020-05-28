@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
-import withRouter from 'umi/withRouter';
 import { connect } from 'dva';
 import cls from 'classnames';
 import { Spin, Empty } from 'antd';
-import { CascadeLayout, PageWrapper } from '@/components';
+import { CascadeLayout } from '@/components';
 import TreePanel from './components/TreePanel';
 import FormPanel from './components/FormPanel';
 import styles from './index.less';
 
-@withRouter
 @connect(({ professionalDomain, loading }) => ({ professionalDomain, loading }))
 class ProfessionalDomain extends Component {
   render() {
@@ -16,7 +14,7 @@ class ProfessionalDomain extends Component {
     const { selectedTreeNode } = professionalDomain;
 
     return (
-      <PageWrapper className={cls(styles['container-box'])}>
+      <div className={cls(styles['container-box'])}>
         <Spin spinning={loading.global} wrapperClassName={cls('spin-wrapper')}>
           <CascadeLayout title={['专业领域', selectedTreeNode && selectedTreeNode.name]}>
             <TreePanel slot="left" />
@@ -31,7 +29,7 @@ class ProfessionalDomain extends Component {
             )}
           </CascadeLayout>
         </Spin>
-      </PageWrapper>
+      </div>
     );
   }
 }

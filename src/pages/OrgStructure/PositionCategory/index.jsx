@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-import withRouter from 'umi/withRouter';
 import { connect } from 'dva';
 import cls from 'classnames';
 import { isEqual } from 'lodash';
 import { Button, Popconfirm } from 'antd';
 import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale';
 import { ExtTable, utils, ExtIcon } from 'suid';
-import { PageWrapper } from '@/components';
 import { constants } from '@/utils';
 import FormModal from './FormModal';
 import styles from './index.less';
@@ -14,7 +12,6 @@ import styles from './index.less';
 const { APP_MODULE_BTN_KEY } = constants;
 const { authAction } = utils;
 
-@withRouter
 @connect(({ positionCategory, loading }) => ({ positionCategory, loading }))
 class PositionCategory extends Component {
   constructor(props) {
@@ -217,10 +214,10 @@ class PositionCategory extends Component {
 
   render() {
     return (
-      <PageWrapper className={cls(styles['container-box'])}>
+      <div className={cls(styles['container-box'])}>
         <ExtTable {...this.getExtableProps()} />
         <FormModal {...this.getFormModalProps()} />
-      </PageWrapper>
+      </div>
     );
   }
 }

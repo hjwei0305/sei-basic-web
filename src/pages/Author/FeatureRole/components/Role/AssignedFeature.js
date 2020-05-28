@@ -6,7 +6,8 @@ import { FormattedMessage, formatMessage } from 'umi-plugin-react/locale';
 import { Card, Popconfirm, Button, Drawer, Empty, Tree, Input, Tooltip } from 'antd';
 import { ScrollBar, ListLoader, ExtIcon } from 'suid';
 import { BannerTitle } from '@/components';
-import { constants } from '../../../../../utils';
+import { constants } from '@/utils';
+import RoleView from './RoleView';
 import styles from './AssignedFeature.less';
 
 const { FEATURE_TYPE } = constants;
@@ -260,6 +261,9 @@ class FeaturePage extends Component {
       const nodeTitle = (
         <>
           <Tooltip {...this.getTooltip(item.code)}>{title}</Tooltip>
+          {item.featureType === FEATURE_TYPE.PAGE || item.featureType === FEATURE_TYPE.OPERATE ? (
+            <RoleView featureId={item.id} />
+          ) : null}
           {this.renderRemoveBtn(item)}
         </>
       );

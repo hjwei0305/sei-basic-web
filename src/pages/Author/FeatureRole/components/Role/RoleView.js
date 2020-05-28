@@ -1,13 +1,13 @@
 import React, { PureComponent } from 'react';
-import { Popover } from 'antd';
 import cls from 'classnames';
-import { ListCard } from 'suid';
+import { Popover } from 'antd';
+import { ListCard, ExtIcon } from 'suid';
 import { constants } from '@/utils';
 import styles from './View.less';
 
 const { SERVER_PATH } = constants;
 
-class StationView extends PureComponent {
+class RoleView extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -20,24 +20,19 @@ class StationView extends PureComponent {
   };
 
   renderList = () => {
-    const { roleData } = this.props;
+    const { featureId } = this.props;
     const listCardProps = {
       className: 'role-box',
       bordered: false,
       pagination: false,
       itemField: {
-        title: item => (
-          <>
-            {item.name}
-            <span style={{ color: '#999', marginLeft: 8 }}>{`(${item.code})`}</span>
-          </>
-        ),
-        description: item => item.organizationNamePath,
+        title: item => item.name,
+        description: item => item.code,
       },
       store: {
-        url: `${SERVER_PATH}/sei-basic/positionDataRole/getParentsFromChildId`,
+        url: `${SERVER_PATH}/sei-basic/featureRoleFeature/getParentsFromChildId`,
         params: {
-          childId: roleData.id,
+          childId: featureId,
         },
       },
       showArrow: false,
@@ -49,23 +44,26 @@ class StationView extends PureComponent {
 
   render() {
     const { visible } = this.state;
-    const { title, menuId } = this.props;
     return (
       <Popover
         trigger="click"
         placement="rightTop"
         visible={visible}
-        key="role-station-view-popover-box"
+        key="role-view-popover-box"
         destroyTooltipOnHide
-        getPopupContainer={() => document.getElementById(menuId)}
         onVisibleChange={v => this.handlerShowChange(v)}
         overlayClassName={cls(styles['view-popover-box'])}
         content={this.renderList()}
       >
-        <span className={cls('view-popover-box-trigger')}>{title}</span>
+        <ExtIcon
+          className={cls('view-popover-box-trigger')}
+          type="security-scan"
+          antd
+          tooltip={{ title: '查看角色分布' }}
+        />
       </Popover>
     );
   }
 }
 
-export default StationView;
+export default RoleView;
