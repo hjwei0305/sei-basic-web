@@ -31,8 +31,8 @@ class DataView extends PureComponent {
 
   getRoleList = e => {
     e && e.stopPropagation();
+    const { dispatch } = this.props;
     if (this.account) {
-      const { dispatch } = this.props;
       dispatch({
         type: 'dataView/getRoleList',
         payload: {
@@ -40,6 +40,12 @@ class DataView extends PureComponent {
         },
       });
     } else {
+      dispatch({
+        type: 'dataView/updateState',
+        payload: {
+          roleList: [],
+        },
+      });
       message.destroy();
       message.warning('请输入用户账号');
     }
