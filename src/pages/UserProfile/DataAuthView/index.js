@@ -50,18 +50,9 @@ class DataView extends PureComponent {
   };
 
   renderRoleDescription = item => {
-    let pubUserType;
     let publicOrg;
     let roleGroup;
     let roleSource;
-    if (item.publicUserType) {
-      pubUserType = (
-        <div className="field-item info">
-          <span className="label">用户类型</span>
-          <span className="value">{item.userTypeRemark}</span>
-        </div>
-      );
-    }
     if (item.publicOrgId) {
       publicOrg = (
         <div className="field-item info">
@@ -91,12 +82,7 @@ class DataView extends PureComponent {
         <div className="field-item">{item.code}</div>
         {roleGroup}
         {roleSource}
-        {publicOrg || pubUserType ? (
-          <div className="public-box">
-            {pubUserType}
-            {publicOrg}
-          </div>
-        ) : null}
+        {publicOrg ? <div className="public-box">{publicOrg}</div> : null}
         <EffectDate isView effectiveFrom={item.effectiveFrom} effectiveTo={item.effectiveTo} />
       </div>
     );
