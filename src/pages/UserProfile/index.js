@@ -54,10 +54,10 @@ class UserProfile extends React.Component {
               <MailInfo />
             </Card>
           </TabPane>
-          <TabPane tab="功能角色" key="featureAuth">
+          <TabPane tab="功能权限" key="featureAuth">
             <FeatureAuthView />
           </TabPane>
-          <TabPane tab="数据角色" key="dataAuth">
+          <TabPane tab="数据权限" key="dataAuth">
             <DataAuthView />
           </TabPane>
         </Tabs>
