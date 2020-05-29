@@ -5,6 +5,9 @@
   padding: 0;
   background-color: @white;
   :global {
+    .scrollbar-container {
+      width: 100%;
+    }
     .base-view-body {
       height: 100%;
       background-color: @white;
@@ -55,8 +58,42 @@
         height: calc(100% - 120px);
         background-color: fade(@black, 1%);
         .form-body {
-          width: 480px;
-          padding: 24px 0;
+          width: 520px;
+          padding: 24px;
+          .box-item {
+            .title {
+              color: fade(@black, 85%);
+              &::before {
+                display: inline-block;
+                margin-right: 4px;
+                color: #f5222d;
+                font-size: 14px;
+                font-family: SimSun, sans-serif;
+                line-height: 1;
+                content: '*';
+              }
+            }
+            .app-icon-box {
+              height: 120px;
+              .app-icon {
+                text-align: center;
+                img {
+                  width: 44px;
+                  height: 44px;
+                  border-radius: 4px;
+                }
+              }
+              .tool-box {
+                width: 360px;
+                > * {
+                  width: 100%;
+                }
+                .desc {
+                  margin-top: 8px;
+                }
+              }
+            }
+          }
         }
       }
     }

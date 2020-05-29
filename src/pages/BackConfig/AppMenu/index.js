@@ -362,7 +362,7 @@ class AppMenu extends Component {
               className="left-content"
               extra={
                 <Button icon="plus" type="link" onClick={e => this.addParent(e)}>
-                  根菜单
+                  新建应用
                 </Button>
               }
             >
