@@ -3,6 +3,7 @@ import cls from 'classnames';
 import { Popover } from 'antd';
 import { ListCard, ExtIcon } from 'suid';
 import { constants } from '@/utils';
+import { BannerTitle } from '@/components';
 import styles from './View.less';
 
 const { SERVER_PATH } = constants;
@@ -20,10 +21,10 @@ class RoleView extends PureComponent {
   };
 
   renderList = () => {
-    const { featureId } = this.props;
+    const { feature } = this.props;
     const listCardProps = {
       className: 'role-box',
-      title: '功能角色分布',
+      title: <BannerTitle title={feature.name} subTitle="功能角色分布" />,
       bordered: false,
       pagination: false,
       itemField: {
@@ -33,7 +34,7 @@ class RoleView extends PureComponent {
       store: {
         url: `${SERVER_PATH}/sei-basic/featureRoleFeature/getParentsFromChildId`,
         params: {
-          childId: featureId,
+          childId: feature.id,
         },
       },
       showArrow: false,

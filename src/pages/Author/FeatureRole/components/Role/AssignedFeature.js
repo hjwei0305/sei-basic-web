@@ -265,7 +265,7 @@ class FeaturePage extends Component {
           <Tooltip {...this.getTooltip(item.code)}>{title}</Tooltip>
           <div className="action-box">
             {item.featureType === FEATURE_TYPE.PAGE || item.featureType === FEATURE_TYPE.OPERATE ? (
-              <RoleView featureId={item.id} />
+              <RoleView feature={item} />
             ) : null}
             {this.renderRemoveBtn(item)}
           </div>
