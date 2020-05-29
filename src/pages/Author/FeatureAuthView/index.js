@@ -96,11 +96,11 @@ class DataView extends PureComponent {
         </div>
       );
     }
-    if (item.dataRoleGroupName) {
+    if (item.featureRoleGroupName) {
       roleGroup = (
         <div className="field-item info">
           <span className="label">角色组</span>
-          <span className="value">{item.dataRoleGroupName}</span>
+          <span className="value">{item.featureRoleGroupName}</span>
         </div>
       );
     }
