@@ -155,7 +155,7 @@ class NodeForm extends PureComponent {
   };
 
   render() {
-    const { form, loading } = this.props;
+    const { form, loading, editData, moveChild, } = this.props;
     const { getFieldDecorator } = form;
     const title = this.getFormTitle();
     return (
@@ -171,6 +171,15 @@ class NodeForm extends PureComponent {
               >
                 保存
               </Button>
+              { editData.parentId ? (
+                <Button
+                  loading={loading.effects['organization/move']}
+                  onClick={e => moveChild(e)}
+                >
+                  移动
+                </Button>
+              ) : (null) }
+
               {this.getExtAction()}
             </div>
             <div className="tool-right-box" />

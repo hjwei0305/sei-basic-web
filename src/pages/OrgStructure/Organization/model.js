@@ -1,7 +1,7 @@
 import { message } from 'antd';
 import { formatMessage } from 'umi-plugin-react/locale';
 import { utils } from 'suid';
-import { del, getOrgList, save } from './service';
+import { del, getOrgList, save, move, } from './service';
 
 const { pathMatchRegexp, dvaModel } = utils;
 const { modelExtend, model } = dvaModel;
@@ -12,6 +12,7 @@ export default modelExtend(model, {
   state: {
     treeData: [],
     currentNode: null,
+    moveVisible: false,
   },
   subscriptions: {
     setup({ dispatch, history }) {
@@ -68,6 +69,27 @@ export default modelExtend(model, {
           payload: {
             currentNode: null,
           },
+        });
+      } else {
+        message.error(re.message);
+      }
+      if (callback && callback instanceof Function) {
+        callback(re);
+      }
+    },
+    *move({ payload, callback }, { call, put }) {
+      const re = yield call(move, payload);
+      message.destroy();
+      if (re.success) {
+        message.success('移动成功');
+        yield put({
+          type: 'updateState',
+          payload: {
+            moveVisible: false,
+          },
+        });
+        yield put({
+          type: 'getOrgList',
         });
       } else {
         message.error(re.message);

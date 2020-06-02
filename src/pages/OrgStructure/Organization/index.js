@@ -7,6 +7,7 @@ import { ScrollBar, ExtIcon, ListLoader } from 'suid';
 import empty from '@/assets/item_empty.svg';
 import NodeForm from './components/NodeForm';
 import styles from './index.less';
+import MoveNodeDrawer from './components/MoveNodeDrawer';
 
 const { Search } = Input;
 const { TreeNode } = Tree;
@@ -90,6 +91,17 @@ class Organization extends Component {
       },
     });
   };
+
+  moveChild = (e) => {
+    e && e.stopPropagation();
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'organization/updateState',
+      payload: {
+        moveVisible: true,
+      },
+    });
+  }
 
   addChild = parent => {
     if (parent) {
@@ -246,6 +258,28 @@ class Organization extends Component {
     });
   };
 
+  handleCloseMoveDrawer = () => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'organization/updateState',
+      payload: {
+        moveVisible: false,
+      },
+    });
+  }
+
+  handleMoveNode = (targetNode) => {
+    const { organization, dispatch } = this.props;
+    const { currentNode, } = organization;
+    dispatch({
+      type: 'organization/move',
+      payload: {
+        nodeId: currentNode.id,
+        targetParentId: targetNode.id,
+      },
+    });
+  }
+
   getCurrentNodeAllParents = (treeData, id) => {
     const temp = [];
     const forFn = (arr, tempId) => {
@@ -316,7 +350,7 @@ class Organization extends Component {
   render() {
     const { loading, organization } = this.props;
     const { allValue, treeData, expandedKeys, selectedKeys, autoExpandParent } = this.state;
-    const { currentNode } = organization;
+    const { currentNode, moveVisible, } = organization;
     const nodeFormProps = {
       loading,
       editData: currentNode,
@@ -325,6 +359,15 @@ class Organization extends Component {
       deleteOrg: this.deleteOrg,
       moveChild: this.moveChild,
       goBackToChildParent: this.goBackToChildParent,
+
+    };
+    const moveNodeProps = {
+      title: `移动节点【${currentNode && currentNode.name}】`,
+      treeData,
+      visible: moveVisible,
+      onClose: this.handleCloseMoveDrawer,
+      onMove: this.handleMoveNode,
+      saveing: loading.effects['organization/move'],
     };
     return (
       <div className={cls(styles['container-box'])}>
@@ -369,6 +412,7 @@ class Organization extends Component {
                 <Empty image={empty} description="可选择左侧节点获得相关的操作" />
               </div>
             )}
+            { moveVisible ? <MoveNodeDrawer {...moveNodeProps} /> : null }
           </Content>
         </Layout>
       </div>

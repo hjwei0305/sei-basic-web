@@ -32,3 +32,13 @@ export async function del(params) {
     method: 'DELETE',
   });
 }
+
+/** 移动 */
+export async function move(data) {
+  const url = `${SERVER_PATH}/sei-basic/organization/move`;
+  return request({
+    url,
+    method: 'POST',
+    data,
+  });
+}

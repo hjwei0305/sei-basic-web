@@ -141,10 +141,25 @@ class TreeView extends Component {
     data.map(item => {
       const { children, name, id } = item;
       const { selectable } = this.props;
+      const { searchValue, } = this.state;
+
+      const index = name.indexOf(searchValue);
+      const beforeStr = name.substr(0, index);
+      const afterStr = name.substr(index + searchValue.length);
+      const title =
+      index > -1 ? (
+        <span>
+          {beforeStr}
+          <span style={{ color: '#f50' }}>{searchValue}</span>
+          {afterStr}
+        </span>
+      ) : (
+        <span>{name}</span>
+      );
 
       if (children && children.length > 0) {
         return (
-          <TreeNode title={name} key={id} dataRef={item} selectable={selectable}>
+          <TreeNode title={title} key={id} dataRef={item} selectable={selectable}>
             {this.getTreeNodes(children)}
           </TreeNode>
         );
@@ -153,7 +168,7 @@ class TreeView extends Component {
       return (
         <TreeNode
           switcherIcon={<ExtIcon type="dian" />}
-          title={name}
+          title={title}
           key={id}
           dataRef={item}
           isLeaf
