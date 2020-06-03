@@ -60,6 +60,15 @@ class MenuMoveModal extends Component {
     });
   };
 
+  handlerCloseMenuMoveModal = () => {
+    const { closeMenuMoveModal } = this.props;
+    this.setState({ targetParentId: null }, () => {
+      if (closeMenuMoveModal) {
+        closeMenuMoveModal();
+      }
+    });
+  };
+
   renderTreeNodes = treeData => {
     const searchValue = this.allValue || '';
     return treeData.map(item => {
@@ -101,11 +110,11 @@ class MenuMoveModal extends Component {
 
   render() {
     const { targetParentId, treeData } = this.state;
-    const { closeMenuMoveModal, showMove, currentNode, loading } = this.props;
+    const { showMove, currentNode, loading } = this.props;
     const title = currentNode ? `将菜单【${currentNode.name}】移动到...` : '';
     const modalProps = {
       destroyOnClose: true,
-      onCancel: closeMenuMoveModal,
+      onCancel: this.handlerCloseMenuMoveModal,
       visible: showMove,
       centered: true,
       title,
