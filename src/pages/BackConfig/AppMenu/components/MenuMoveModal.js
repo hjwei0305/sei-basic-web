@@ -102,7 +102,7 @@ class MenuMoveModal extends Component {
   render() {
     const { targetParentId, treeData } = this.state;
     const { closeMenuMoveModal, showMove, currentNode, loading } = this.props;
-    const title = currentNode ? `将菜单【${currentNode.name}】移动到` : '';
+    const title = currentNode ? `将菜单【${currentNode.name}】移动到...` : '';
     const modalProps = {
       destroyOnClose: true,
       onCancel: closeMenuMoveModal,
