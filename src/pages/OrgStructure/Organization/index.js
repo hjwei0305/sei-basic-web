@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
 import cls from 'classnames';
-import { isEqual, trim } from 'lodash';
+import { isEqual, trim, } from 'lodash';
 import { Card, Input, Tree, Empty, Layout, Tag } from 'antd';
 import { ScrollBar, ExtIcon, ListLoader } from 'suid';
 import empty from '@/assets/item_empty.svg';
@@ -347,6 +347,22 @@ class Organization extends Component {
     });
   };
 
+  excludeNode = (treeData, excludeNodeId) => {
+    const tempData = treeData.map(treeNode => {
+      if(treeNode.id !== excludeNodeId) {
+        const node = { ...treeNode };
+        if(node.children && node.children.length) {
+          node.children = this.excludeNode(node.children, excludeNodeId);
+        }
+
+        return node;
+      }
+      return null;
+    });
+
+    return tempData.filter(node => !!node);
+  }
+
   render() {
     const { loading, organization } = this.props;
     const { allValue, treeData, expandedKeys, selectedKeys, autoExpandParent } = this.state;
@@ -361,9 +377,10 @@ class Organization extends Component {
       goBackToChildParent: this.goBackToChildParent,
 
     };
+
     const moveNodeProps = {
-      title: `移动节点【${currentNode && currentNode.name}】`,
-      treeData,
+      title: `移动节点【${currentNode && currentNode.name}】到`,
+      treeData: this.excludeNode(treeData, currentNode && currentNode.id),
       visible: moveVisible,
       onClose: this.handleCloseMoveDrawer,
       onMove: this.handleMoveNode,

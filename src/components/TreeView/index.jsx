@@ -15,7 +15,7 @@ class TreeView extends Component {
     super(props);
     this.treeData = props.treeData;
     this.state = {
-      expandedKeys: [],
+      expandedKeys: props.expandedKeys || [],
       checkedKeys: [],
       selectedKeys: [],
       searchValue: '',

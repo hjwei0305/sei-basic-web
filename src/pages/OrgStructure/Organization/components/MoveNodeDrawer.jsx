@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Drawer, Button } from 'antd';
+import cls from 'classnames';
 import TreeView from '@/components/TreeView';
+import styles from './MoveNodeDrawer.less';
 
 class MoveNodeDrawer extends Component {
 
@@ -25,7 +27,7 @@ class MoveNodeDrawer extends Component {
           }}
           loading={saveing}
         >
-          移动
+          确定
         </Button>
       ),
     }
@@ -39,15 +41,17 @@ class MoveNodeDrawer extends Component {
 
   render() {
     const { title, treeData, visible, onClose, closable=true } = this.props;
+    const expandedKeys = (treeData || []).map(node => node.id);
     return (
       <Drawer
         title={title}
         visible={visible}
         onClose={onClose}
         closable={closable}
+        className={cls(styles['custom-drawer-wrapper'])}
         width={500}
       >
-        <TreeView toolBar={this.getToolBarProps()} onChange={this.handleNodeChange} treeData={treeData} />
+        <TreeView expandedKeys={expandedKeys} toolBar={this.getToolBarProps()} onChange={this.handleNodeChange} treeData={treeData} />
       </Drawer>
     );
   }
