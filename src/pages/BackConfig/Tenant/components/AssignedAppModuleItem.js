@@ -23,6 +23,13 @@ class TenantAssignedAppModuleItem extends Component {
     };
   }
 
+  componentDidMount() {
+    const { onAssignedRef } = this.props;
+    if (onAssignedRef) {
+      onAssignedRef(this);
+    }
+  }
+
   componentDidUpdate(prevProps) {
     const {
       dispatch,
@@ -65,23 +72,6 @@ class TenantAssignedAppModuleItem extends Component {
       type: 'tenant/getUnAssignedAppModuleItemList',
       payload: {
         parentId: currentTenant.id,
-      },
-    });
-  };
-
-  assignAppModuleItem = childIds => {
-    const { tenant, dispatch } = this.props;
-    const { currentTenant } = tenant;
-    dispatch({
-      type: 'tenant/assignAppModuleItem',
-      payload: {
-        parentId: currentTenant.id,
-        childIds,
-      },
-      callback: res => {
-        if (res.success) {
-          this.reloadData();
-        }
       },
     });
   };
@@ -229,6 +219,8 @@ class TenantAssignedAppModuleItem extends Component {
       checkbox: true,
       onSelectRow: this.handlerSelectRow,
       selectedRowKeys,
+      searchPlaceHolder: '请输入代码或名称关键字查询',
+      searchWidth: 260,
       cascadeParams: { parentId: currentTenant ? currentTenant.id : null },
       onTableRef: ref => (this.appModuleTableRef = ref),
       store: {

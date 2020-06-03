@@ -19,6 +19,8 @@ const { Sider, Content } = Layout;
 
 @connect(({ tenant, loading }) => ({ tenant, loading }))
 class Tenant extends Component {
+  static assignedRef;
+
   static allValue = '';
 
   static data = [];
@@ -195,6 +197,23 @@ class Tenant extends Component {
     });
   };
 
+  assignAppModuleItem = childIds => {
+    const { tenant, dispatch } = this.props;
+    const { currentTenant } = tenant;
+    dispatch({
+      type: 'tenant/assignAppModuleItem',
+      payload: {
+        parentId: currentTenant.id,
+        childIds,
+      },
+      callback: res => {
+        if (res.success && this.assignedRef) {
+          this.assignedRef.reloadData();
+        }
+      },
+    });
+  };
+
   renderAdmin = item => {
     const { loading } = this.props;
     const saving = loading.effects['tenant/saveTenantAdmin'];
@@ -230,6 +249,7 @@ class Tenant extends Component {
     const saving = loading.effects['tenant/saveTenant'];
     const assignedAppModuleItemProps = {
       currentTenant,
+      onAssignedRef: ref => (this.assignedRef = ref),
     };
     const unAssignAppModuleItemProps = {
       loading: loading.effects['tenant/getUnAssignedAppModuleItemList'],
