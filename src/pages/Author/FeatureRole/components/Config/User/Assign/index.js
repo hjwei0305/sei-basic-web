@@ -2,7 +2,7 @@
  * @Author: Eason
  * @Date: 2020-02-15 11:53:29
  * @Last Modified by: Eason
- * @Last Modified time: 2020-05-25 15:23:29
+ * @Last Modified time: 2020-06-04 13:51:51
  */
 import React, { Component } from 'react';
 import cls from 'classnames';
@@ -124,7 +124,7 @@ class UserAssign extends Component {
     };
     return (
       <Layout className={cls(styles['user-panel-box'])}>
-        <Content className={cls('auto-height')} style={{ paddingLeft: 4 }}>
+        <Content className={cls('auto-height')}>
           <ListCard {...listCardProps} />
         </Content>
       </Layout>
