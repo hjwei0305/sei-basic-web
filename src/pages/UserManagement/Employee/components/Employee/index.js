@@ -166,6 +166,7 @@ class EmployeeHome extends Component {
       showCopyModal,
       currentOrgNode,
       currentEmployee,
+      treeData,
     } = employee;
     const columns = [
       {
@@ -246,6 +247,7 @@ class EmployeeHome extends Component {
       currentOrgNode,
       currentEmployee,
       showFormModal,
+      orgData: treeData,
       closeFormModal: this.closeFormModal,
       saving: loading.effects['employee/save'],
     };
