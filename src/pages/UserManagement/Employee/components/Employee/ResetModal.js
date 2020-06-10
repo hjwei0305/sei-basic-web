@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import { get, trim } from 'lodash';
 import { Form, Input } from 'antd';
 import { ExtModal } from 'suid';
+import md5 from 'md5';
 import { BannerTitle } from '@/components';
 
 const FormItem = Form.Item;
@@ -26,7 +27,9 @@ class ResetFormModal extends PureComponent {
         tenant: currentEmployee.tenantCode,
         account: currentEmployee.code,
       };
-      Object.assign(params, formData);
+      Object.assign(params, formData, {
+        password: md5(formData.password),
+      });
       save(params);
     });
   };
