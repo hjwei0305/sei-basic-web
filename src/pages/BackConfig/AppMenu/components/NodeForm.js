@@ -269,7 +269,7 @@ class NodeForm extends PureComponent {
         field: ['id', 'code'],
       },
     };
-    const hasAppIcon = !editData.id || editData.nodeLevel === 0;
+    const hasAppIcon = (!editData.id && !editData.parentId) || editData.nodeLevel === 0;
     const hasIcon = editData.nodeLevel === 1;
     const uploadProps = {
       customRequest: this.customRequest,
