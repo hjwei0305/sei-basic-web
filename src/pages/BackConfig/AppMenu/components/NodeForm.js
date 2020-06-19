@@ -270,7 +270,7 @@ class NodeForm extends PureComponent {
       },
     };
     const hasAppIcon = (!editData.id && !editData.parentId) || editData.nodeLevel === 0;
-    const hasIcon = editData.nodeLevel === 1;
+    const hasIcon = (!editData.id && editData.parentId) || editData.nodeLevel === 1;
     const uploadProps = {
       customRequest: this.customRequest,
       showUploadList: false, // 不展示文件列表
