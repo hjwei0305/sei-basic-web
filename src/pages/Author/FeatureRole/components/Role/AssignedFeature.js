@@ -24,6 +24,8 @@ class FeaturePage extends Component {
     const { featureRole } = props;
     const { assignListData = [] } = featureRole;
     this.state = {
+      expandedKeys: [],
+      autoExpandParent: true,
       allValue: '',
       assignListData,
       checkedKeys: [],
@@ -37,19 +39,24 @@ class FeaturePage extends Component {
 
   componentDidUpdate(prevProps) {
     const { featureRole } = this.props;
-    if (!isEqual(prevProps.featureRole.currentRole, featureRole.currentRole)) {
+    const { assignListData, currentRole } = featureRole;
+    if (!isEqual(prevProps.featureRole.currentRole, currentRole)) {
       this.setState(
         {
           delRowId: null,
+          autoExpandParent: true,
+          expandedKeys: [],
           checkedKeys: [],
         },
         this.getAssignData,
       );
     }
-    if (!isEqual(prevProps.featureRole.assignListData, featureRole.assignListData)) {
+    if (!isEqual(prevProps.featureRole.assignListData, assignListData)) {
       this.setState({
         allValue: '',
-        assignListData: featureRole.assignListData,
+        assignListData,
+        autoExpandParent: true,
+        expandedKeys: this.getAllExpandKeys(assignListData),
       });
     }
   }
@@ -188,7 +195,10 @@ class FeaturePage extends Component {
     if (searchValue) {
       newData = this.filterNodes(searchValue.toLowerCase(), newData);
     }
-    return { assignListData: newData };
+    return {
+      assignListData: newData,
+      expandedKeys: this.getAllExpandKeys(newData),
+    };
   };
 
   handlerSearchChange = v => {
@@ -196,12 +206,34 @@ class FeaturePage extends Component {
   };
 
   handlerSearch = () => {
-    const { assignListData } = this.getLocalFilterData();
-    this.setState({ assignListData });
+    const { assignListData, expandedKeys } = this.getLocalFilterData();
+    this.setState({ assignListData, expandedKeys, autoExpandParent: true });
   };
 
   handlerCheckedChange = checkedKeys => {
     this.setState({ checkedKeys });
+  };
+
+  handlerExpand = expandedKeys => {
+    this.setState({
+      expandedKeys,
+      autoExpandParent: false,
+    });
+  };
+
+  getAllExpandKeys = treeData => {
+    const temp = [];
+    const forFn = arr => {
+      for (let i = 0; i < arr.length; i += 1) {
+        const item = arr[i];
+        if (item[childFieldKey] && item[childFieldKey].length > 0) {
+          temp.push(item.id);
+          forFn(item[childFieldKey]);
+        }
+      }
+    };
+    forFn(treeData);
+    return temp;
   };
 
   renderNodeIcon = featureType => {
@@ -290,7 +322,8 @@ class FeaturePage extends Component {
   };
 
   renderTree = () => {
-    const { checkedKeys, assignListData } = this.state;
+    const { checkedKeys, assignListData, expandedKeys, autoExpandParent } = this.state;
+    console.log(expandedKeys);
     if (assignListData.length === 0) {
       return (
         <div className="blank-empty">
@@ -305,9 +338,12 @@ class FeaturePage extends Component {
         defaultExpandAll
         blockNode
         showIcon
+        autoExpandParent={autoExpandParent}
+        expandedKeys={expandedKeys}
         switcherIcon={<ExtIcon type="down" antd style={{ fontSize: 12 }} />}
         onCheck={this.handlerCheckedChange}
         checkedKeys={checkedKeys}
+        onExpand={this.handlerExpand}
       >
         {this.renderTreeNodes(assignListData)}
       </Tree>
