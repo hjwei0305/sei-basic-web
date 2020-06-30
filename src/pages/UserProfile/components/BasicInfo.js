@@ -130,7 +130,7 @@ class BasicInfo extends PureComponent {
                       上传头像
                     </Button>
                   </Upload>
-                  <div className="desc">图片为png格式,图片长宽都为44px，大小在10Kb以内;</div>
+                  <div className="desc">图片为png格式，大小在10Kb以内;</div>
                 </div>
               </div>
             </div>
