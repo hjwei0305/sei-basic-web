@@ -22,7 +22,6 @@ export default [
           { path: '/backConfig/authorType', component: './BackConfig/AuthorType' },
           { path: '/backConfig/dataAuthorType', component: './BackConfig/DataAuthorType' },
           { path: '/backConfig/tenant', component: './BackConfig/Tenant' },
-          { path: '/backConfig/globalConfig', component: './BackConfig/TenantGlobalConfig' },
         ],
       },
       {

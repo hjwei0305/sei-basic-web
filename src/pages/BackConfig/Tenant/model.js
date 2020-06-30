@@ -10,6 +10,8 @@ import {
   assignAppModuleItem,
   removeAssignedAppModuleItem,
   getUnAssignedAppModuleItemList,
+  getTenantSetting,
+  saveTenantSetting,
 } from './service';
 
 const { pathMatchRegexp, dvaModel } = utils;
@@ -23,6 +25,8 @@ export default modelExtend(model, {
     currentTenant: null,
     showAssignAppModule: false,
     unAssignListData: [],
+    configTenant: null,
+    tenantSetting: null,
     tenantAdmin: null,
     tenantRootOrganization: null,
   },
@@ -145,6 +149,33 @@ export default modelExtend(model, {
             unAssignListData: re.data,
           },
         });
+      } else {
+        message.error(re.message);
+      }
+    },
+    *getTenantSetting({ payload }, { call, put }) {
+      const re = yield call(getTenantSetting, payload);
+      if (re.success) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            tenantSetting: re.data,
+          },
+        });
+      } else {
+        message.error(re.message);
+      }
+    },
+    *saveTenantSetting({ payload }, { call, put }) {
+      const re = yield call(saveTenantSetting, payload);
+      if (re.success) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            tenantSetting: payload,
+          },
+        });
+        message.success(re.message);
       } else {
         message.error(re.message);
       }
