@@ -30,6 +30,34 @@
             }
           }
         }
+        .box-item {
+          display: inline-block;
+          margin-left: 13%;
+          .title {
+            color: fade(@black, 85%);
+          }
+          .head-icon-box {
+            height: 120px;
+            .head-icon {
+              min-width: 120px;
+              text-align: center;
+              img {
+                width: 44px;
+                height: 44px;
+                border-radius: 4px;
+              }
+            }
+            .tool-box {
+              width: 360px;
+              > * {
+                width: 100%;
+              }
+              .desc {
+                margin-top: 8px;
+              }
+            }
+          }
+        }
       }
     }
   }
