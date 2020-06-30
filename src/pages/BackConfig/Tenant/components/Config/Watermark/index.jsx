@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Empty, Form, Input, InputNumber, Button, Spin } from 'antd';
+import { Empty, Form, Input, InputNumber, Button, Spin, Switch, Row, Col } from 'antd';
 import cls from 'classnames';
 import { ColumnLayout, ColorPicker } from '@/components';
 import { watermark } from '@/utils';
@@ -7,12 +7,30 @@ import styles from './index.less';
 
 const formItemLayout = {
   labelCol: {
-    span: 6,
+    span: 5,
   },
   wrapperCol: {
-    span: 18,
+    span: 19,
   },
 };
+
+const colFormItemLayout = {
+  labelCol: {
+    span: 10,
+  },
+  wrapperCol: {
+    span: 14,
+  },
+};
+
+// const formItemLayout = {
+//   labelCol: {
+//     span: 6,
+//   },
+//   wrapperCol: {
+//     span: 18,
+//   },
+// };
 
 const tailFormItemLayout = {
   wrapperCol: {
@@ -21,8 +39,8 @@ const tailFormItemLayout = {
       offset: 0,
     },
     sm: {
-      span: 18,
-      offset: 6,
+      span: 19,
+      offset: 5,
     },
   },
 };
@@ -109,6 +127,8 @@ class FormPanel extends Component {
       fontSize = 20,
       width = 300,
       height = 150,
+      disabled = false,
+      isUseUserNameText = false,
     } = editData || {};
 
     return (
@@ -132,6 +152,62 @@ class FormPanel extends Component {
                 ],
               })(<Input />)}
             </FormItem>
+            <Row>
+              <Col span={12}>
+                <FormItem label="字号" {...colFormItemLayout}>
+                  {getFieldDecorator('fontSize', {
+                    initialValue: fontSize,
+                    rules: [
+                      {
+                        required: true,
+                        message: '字号不能为空',
+                      },
+                    ],
+                  })(<InputNumber style={{ width: '100%' }} max={50} min={10} precision={0} />)}
+                </FormItem>
+              </Col>
+              <Col span={12}>
+                <FormItem label="旋转角度" {...colFormItemLayout}>
+                  {getFieldDecorator('rotate', {
+                    initialValue: rotate,
+                    rules: [
+                      {
+                        required: true,
+                        message: '旋转角度不能为空',
+                      },
+                    ],
+                  })(<InputNumber style={{ width: '100%' }} />)}
+                </FormItem>
+              </Col>
+            </Row>
+            <Row>
+              <Col span={12}>
+                <FormItem label="宽度" {...colFormItemLayout}>
+                  {getFieldDecorator('width', {
+                    initialValue: width,
+                    rules: [
+                      {
+                        required: true,
+                        message: '宽度不能为空',
+                      },
+                    ],
+                  })(<InputNumber style={{ width: '100%' }} min={50} precision={0} />)}
+                </FormItem>
+              </Col>
+              <Col span={12}>
+                <FormItem label="高度" {...colFormItemLayout}>
+                  {getFieldDecorator('height', {
+                    initialValue: height,
+                    rules: [
+                      {
+                        required: true,
+                        message: '高度不能为空',
+                      },
+                    ],
+                  })(<InputNumber style={{ width: '100%' }} min={50} precision={0} />)}
+                </FormItem>
+              </Col>
+            </Row>
             <FormItem label="颜色">
               {getFieldDecorator('color', {
                 initialValue: color,
@@ -141,52 +217,26 @@ class FormPanel extends Component {
                     message: '颜色不能为空',
                   },
                 ],
-              })(<ColorPicker />)}
+              })(<ColorPicker style={{ width: '100%' }} />)}
             </FormItem>
-            <FormItem label="旋转角度">
-              {getFieldDecorator('rotate', {
-                initialValue: rotate,
-                rules: [
-                  {
-                    required: true,
-                    message: '旋转角度不能为空',
-                  },
-                ],
-              })(<InputNumber />)}
-            </FormItem>
-            <FormItem label="字号">
-              {getFieldDecorator('fontSize', {
-                initialValue: fontSize,
-                rules: [
-                  {
-                    required: true,
-                    message: '字号不能为空',
-                  },
-                ],
-              })(<InputNumber max={50} min={10} precision={0} />)}
-            </FormItem>
-            <FormItem label="宽度">
-              {getFieldDecorator('width', {
-                initialValue: width,
-                rules: [
-                  {
-                    required: true,
-                    message: '宽度不能为空',
-                  },
-                ],
-              })(<InputNumber min={50} precision={0} />)}
-            </FormItem>
-            <FormItem label="高度">
-              {getFieldDecorator('height', {
-                initialValue: height,
-                rules: [
-                  {
-                    required: true,
-                    message: '高度不能为空',
-                  },
-                ],
-              })(<InputNumber min={50} precision={0} />)}
-            </FormItem>
+            <Row>
+              <Col span={12}>
+                <FormItem label="用户名文案" {...colFormItemLayout}>
+                  {getFieldDecorator('isUseUserNameText', {
+                    valuePropName: 'checked',
+                    initialValue: isUseUserNameText,
+                  })(<Switch />)}
+                </FormItem>
+              </Col>
+              <Col span={12}>
+                <FormItem label="禁用" {...colFormItemLayout}>
+                  {getFieldDecorator('disabled', {
+                    valuePropName: 'checked',
+                    initialValue: disabled,
+                  })(<Switch />)}
+                </FormItem>
+              </Col>
+            </Row>
             <FormItem {...tailFormItemLayout}>
               <Button style={{ marginRight: 8 }} type="primary" onClick={this.handleSave}>
                 保存
@@ -194,7 +244,6 @@ class FormPanel extends Component {
               <Button style={{ marginRight: 8 }} onClick={this.handlePreview}>
                 预览
               </Button>
-              <Button onClick={this.handleDel}>删除</Button>
             </FormItem>
           </Spin>
         </Form>

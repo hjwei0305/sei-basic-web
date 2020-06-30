@@ -51,7 +51,6 @@ class index extends PureComponent {
     const { configTenant, tenantSetting } = tenant;
     const { watermark = null } = tenantSetting || {};
     const editData = JSON.parse(watermark);
-    console.log('index -> render -> editData', editData);
 
     return (
       <div className={cls(styles['container-box'])}>
