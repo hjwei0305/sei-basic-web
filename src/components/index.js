@@ -8,6 +8,7 @@ import StationAssign from './StationAssign';
 import UserAssign from './UserAssign';
 import BannerTitle from './BannerTitle';
 import EffectDate from './EffectDate';
+import ColorPicker from './ColorPicker';
 
 export {
   Loader,
@@ -20,4 +21,5 @@ export {
   UserAssign,
   BannerTitle,
   EffectDate,
+  ColorPicker,
 };

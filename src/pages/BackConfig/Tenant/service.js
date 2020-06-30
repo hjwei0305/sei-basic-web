@@ -99,3 +99,28 @@ export async function getUnAssignedAppModuleItemList(params) {
     params,
   });
 }
+
+/**
+ * 根据租户通过租户代码获取租户配置
+ * params tenantCode
+ */
+export async function getTenantSetting(params) {
+  const url = `${SERVER_PATH}/sei-basic/tenantSetting/findOne`;
+  return request({
+    url,
+    method: 'GET',
+    params,
+  });
+}
+
+/**
+ * 保存租户配置
+ */
+export async function saveTenantSetting(data) {
+  const url = `${SERVER_PATH}/sei-basic/tenantSetting/save`;
+  return request({
+    url,
+    method: 'POST',
+    data,
+  });
+}

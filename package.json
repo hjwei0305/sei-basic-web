@@ -29,6 +29,7 @@
     "prop-types": "^15.7.2",
     "qs": "^6.9.3",
     "react": "^16.8.6",
+    "react-color": "^2.18.1",
     "react-dom": "^16.8.6",
     "suid": "^1.2.88",
     "umi-plugin-react": "^1.8.4"

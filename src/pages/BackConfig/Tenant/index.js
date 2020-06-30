@@ -12,6 +12,7 @@ import AdminAdd from './components/AdminForm/Add';
 import AdminEdit from './components/AdminForm/Edit';
 import AssignedAppModuleItem from './components/AssignedAppModuleItem';
 import UnAssignAppModuleItem from './components/UnAssignAppModuleItem';
+import Config from './components/Config';
 import styles from './index.less';
 
 const { Search } = Input;
@@ -169,6 +170,28 @@ class Tenant extends Component {
     });
   };
 
+  handleBack = () => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'tenant/updateState',
+      payload: {
+        configTenant: null,
+        tenantSetting: null,
+      },
+    });
+  };
+
+  handleConfig = (configTenant, e) => {
+    e.stopPropagation();
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'tenant/updateState',
+      payload: {
+        configTenant,
+      },
+    });
+  };
+
   saveTenantAdmin = (data, handlerPopoverHide) => {
     const { dispatch } = this.props;
     dispatch({
@@ -243,7 +266,7 @@ class Tenant extends Component {
 
   render() {
     const { loading, tenant } = this.props;
-    const { currentTenant, unAssignListData, showAssignAppModule } = tenant;
+    const { currentTenant, unAssignListData, showAssignAppModule, configTenant } = tenant;
     const { allValue, listData, pagination, delTenantId } = this.state;
     const listLoading = loading.effects['tenant/getTenantList'];
     const saving = loading.effects['tenant/saveTenant'];
@@ -261,7 +284,7 @@ class Tenant extends Component {
     };
     return (
       <div className={cls(styles['container-box'])}>
-        <Layout className="auto-height">
+        <Layout className="auto-height" style={{ display: configTenant ? 'none' : '' }}>
           <Sider width={320} className="auto-height" theme="light">
             <Card title="租户列表" bordered={false} className="left-content">
               <div className="header-tool-box">
@@ -298,6 +321,17 @@ class Tenant extends Component {
                           </div>
                         </Skeleton>
                         <div className="tool-action" onClick={e => e.stopPropagation()}>
+                          <ExtIcon
+                            className={cls('action-item')}
+                            type="setting"
+                            tooltip={{
+                              title: '配置',
+                            }}
+                            antd
+                            onClick={e => {
+                              this.handleConfig(item, e);
+                            }}
+                          />
                           <TenantEdit
                             saving={saving}
                             saveTenant={this.saveTenant}
@@ -339,6 +373,8 @@ class Tenant extends Component {
             )}
           </Content>
         </Layout>
+        {configTenant ? <Config configTenant={configTenant} onBack={this.handleBack} /> : null}
+
         <UnAssignAppModuleItem {...unAssignAppModuleItemProps} />
       </div>
     );
