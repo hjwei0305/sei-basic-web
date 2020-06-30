@@ -132,6 +132,17 @@ class FormPanel extends Component {
                 ],
               })(<Input />)}
             </FormItem>
+            <FormItem label="颜色">
+              {getFieldDecorator('color', {
+                initialValue: color,
+                rules: [
+                  {
+                    required: true,
+                    message: '颜色不能为空',
+                  },
+                ],
+              })(<ColorPicker />)}
+            </FormItem>
             <FormItem label="旋转角度">
               {getFieldDecorator('rotate', {
                 initialValue: rotate,
@@ -175,17 +186,6 @@ class FormPanel extends Component {
                   },
                 ],
               })(<InputNumber min={50} precision={0} />)}
-            </FormItem>
-            <FormItem label="颜色">
-              {getFieldDecorator('color', {
-                initialValue: color,
-                rules: [
-                  {
-                    required: true,
-                    message: '颜色不能为空',
-                  },
-                ],
-              })(<ColorPicker />)}
             </FormItem>
             <FormItem {...tailFormItemLayout}>
               <Button style={{ marginRight: 8 }} type="primary" onClick={this.handleSave}>
