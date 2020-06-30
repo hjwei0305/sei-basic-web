@@ -79,7 +79,7 @@ class ExtAction extends PureComponent {
       <>
         {menusData.length > 0 ? (
           <Dropdown
-            trigger={['hover', 'click']}
+            trigger={['click']}
             overlay={this.getMenu(menusData)}
             className="action-drop-down"
             placement="bottomLeft"
