@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import cls from 'classnames';
 import { connect } from 'dva';
-import { debounce, trim } from 'lodash';
+import { trim } from 'lodash';
 import { Layout, Empty, Input, message, Tag } from 'antd';
 import { ListCard } from 'suid';
 import { EffectDate } from '@/components';
@@ -17,16 +17,8 @@ const { Search } = Input;
 class DataView extends PureComponent {
   static account = '';
 
-  static quickSearch;
-
-  constructor(props) {
-    super(props);
-    this.quickSearch = debounce(this.getRoleList, 500);
-  }
-
   handlerAccountChange = v => {
     this.account = trim(v);
-    this.quickSearch();
   };
 
   getRoleList = e => {
