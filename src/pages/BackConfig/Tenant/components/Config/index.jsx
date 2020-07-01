@@ -3,6 +3,7 @@ import cls from 'classnames';
 import { Tabs, Button } from 'antd';
 import { connect } from 'dva';
 import Watermark from './Watermark';
+import SystemLogo from './SystemLogo';
 import styles from './index.less';
 
 const { TabPane } = Tabs;
@@ -46,11 +47,25 @@ class index extends PureComponent {
     });
   };
 
+  handleSaveLogo = values => {
+    const { dispatch, tenant } = this.props;
+    const { tenantSetting, configTenant } = tenant;
+    dispatch({
+      type: 'tenant/saveTenantSetting',
+      payload: {
+        ...tenantSetting,
+        code: configTenant.code,
+        logo: values ? JSON.stringify(values) : null,
+      },
+    });
+  };
+
   render() {
     const { tenant, loading } = this.props;
     const { configTenant, tenantSetting } = tenant;
-    const { watermark = null } = tenantSetting || {};
-    const editData = JSON.parse(watermark);
+    const { watermark = null, logo = null } = tenantSetting || {};
+    const watermarkObj = JSON.parse(watermark);
+    const logoObj = JSON.parse(logo);
 
     return (
       <div className={cls(styles['container-box'])}>
@@ -61,12 +76,20 @@ class index extends PureComponent {
         >
           <TabPane tab={`租户【${configTenant.name}】水印`} key="watermark">
             <Watermark
-              key={editData && editData.id}
+              key={watermarkObj && watermarkObj.id}
               opting={loading.global}
               onSave={this.handleSaveWatermark}
               onDel={this.handleSaveWatermark}
-              editData={editData}
+              editData={watermarkObj}
               tenant={configTenant}
+            />
+          </TabPane>
+          <TabPane tab={`租户【${configTenant.name}】图标`} key="SystemLogo">
+            <SystemLogo
+              key={logoObj && logoObj.id}
+              opting={loading.global}
+              editData={logoObj}
+              onSave={this.handleSaveLogo}
             />
           </TabPane>
         </Tabs>
