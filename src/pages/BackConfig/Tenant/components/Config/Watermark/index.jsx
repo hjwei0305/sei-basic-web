@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { Empty, Form, Input, InputNumber, Button, Spin, Switch, Row, Col } from 'antd';
 import cls from 'classnames';
 import { ColumnLayout, ColorPicker } from '@/components';
-import { watermark } from '@/utils';
+import { watermark, userUtils } from '@/utils';
 import styles from './index.less';
 
+const { getCurrentUser } = userUtils;
 const formItemLayout = {
   labelCol: {
     span: 5,
@@ -54,6 +55,7 @@ class FormPanel extends Component {
     const { editData = null } = props;
     this.state = {
       watermarkImg: editData ? editData.watermarkImg : null,
+      isUseUserName: editData ? editData.isUseUserNameText : null,
     };
   }
 
@@ -112,7 +114,7 @@ class FormPanel extends Component {
   };
 
   render() {
-    const { watermarkImg } = this.state;
+    const { watermarkImg, isUseUserName } = this.state;
     const { editData, form, opting } = this.props;
     const { getFieldDecorator } = form;
     const {
@@ -130,7 +132,7 @@ class FormPanel extends Component {
       disabled = false,
       isUseUserNameText = false,
     } = editData || {};
-
+    const user = getCurrentUser();
     return (
       <ColumnLayout title={['水印设计', '水印预览']}>
         <Form
@@ -141,17 +143,31 @@ class FormPanel extends Component {
           onSubmit={this.onSubmit}
         >
           <Spin spinning={opting}>
-            <FormItem label="文案">
-              {getFieldDecorator('watermarkText', {
-                initialValue: watermarkText,
-                rules: [
-                  {
-                    required: true,
-                    message: '文案不能为空',
-                  },
-                ],
-              })(<Input />)}
-            </FormItem>
+            {!isUseUserName ? (
+              <FormItem label="文案">
+                {getFieldDecorator('watermarkText', {
+                  initialValue: watermarkText,
+                  rules: [
+                    {
+                      required: true,
+                      message: '文案不能为空',
+                    },
+                  ],
+                })(<Input />)}
+              </FormItem>
+            ) : (
+              <FormItem label="文案">
+                {getFieldDecorator('watermarkText', {
+                  initialValue: user.userName,
+                  rules: [
+                    {
+                      required: true,
+                      message: '文案不能为空',
+                    },
+                  ],
+                })(<Input disabled />)}
+              </FormItem>
+            )}
             <Row>
               <Col span={12}>
                 <FormItem label="字号" {...colFormItemLayout}>
@@ -225,7 +241,15 @@ class FormPanel extends Component {
                   {getFieldDecorator('isUseUserNameText', {
                     valuePropName: 'checked',
                     initialValue: isUseUserNameText,
-                  })(<Switch />)}
+                  })(
+                    <Switch
+                      onChange={value => {
+                        this.setState({
+                          isUseUserName: value,
+                        });
+                      }}
+                    />,
+                  )}
                 </FormItem>
               </Col>
               <Col span={12}>
