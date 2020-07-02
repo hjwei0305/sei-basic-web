@@ -38,6 +38,7 @@ export default class PositionInfo extends React.PureComponent {
     return {
       columns,
       bordered: false,
+      showSearch: false,
       store: {
         params: {
           parentId: user.userId,
