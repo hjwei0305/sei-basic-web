@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { Button } from 'antd';
 import { ExtTable, ExtIcon } from 'suid';
 import { connect } from 'dva';
 import cls from 'classnames';
-import { FormattedMessage, formatMessage } from 'umi-plugin-react/locale';
+import { formatMessage } from 'umi-plugin-react/locale';
 import { constants, userUtils } from '@/utils';
 import EidtModal from './FormModal';
 import ResetModal from './ResetModal';
@@ -97,15 +96,6 @@ class AccountInfo extends Component {
 
   getTableProps = () => {
     const user = getCurrentUser() || {};
-    const toolBar = {
-      left: (
-        <>
-          <Button onClick={this.reloadData}>
-            <FormattedMessage id="global.refresh" defaultMessage="刷新" />
-          </Button>
-        </>
-      ),
-    };
     const columns = [
       {
         title: formatMessage({ id: 'global.operation', defaultMessage: '操作' }),
@@ -140,13 +130,10 @@ class AccountInfo extends Component {
         required: true,
       },
     ];
-
     return {
       columns,
-      toolBar,
       bordered: false,
-      searchPlaceHolder: '输入账号或名称关键字查询',
-      searchWidth: 280,
+      showSearch: false,
       store: {
         params: {
           userId: user.userId,
