@@ -210,7 +210,7 @@ class EmployeeHome extends Component {
       },
       {
         title: '组织机构',
-        dataIndex: 'organizationName',
+        dataIndex: 'organizationNamePath',
         width: 420,
         required: true,
       },
