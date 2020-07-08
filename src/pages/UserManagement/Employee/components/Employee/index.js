@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
 import cls from 'classnames';
+import { takeRight } from 'lodash';
 import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale';
-import { Button, Card, Tag } from 'antd';
+import { Button, Card, Tag, Tooltip } from 'antd';
 import { ExtTable, ExtIcon } from 'suid';
 import { BannerTitle } from '@/components';
 import { constants } from '@/utils';
@@ -210,9 +211,14 @@ class EmployeeHome extends Component {
       },
       {
         title: '组织机构',
-        dataIndex: 'organizationNamePath',
+        dataIndex: 'organizationName',
         width: 420,
         required: true,
+        render: (text, record) => {
+          const paths = record.organizationNamePath.split('/');
+          const fullPath = takeRight(paths, paths.length - 1).join('/');
+          return <Tooltip title={fullPath}>{text}</Tooltip>;
+        },
       },
     ];
     const toolBarProps = {
