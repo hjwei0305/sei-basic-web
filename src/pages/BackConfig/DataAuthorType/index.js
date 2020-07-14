@@ -184,9 +184,14 @@ class DataAuthorType extends Component {
         required: true,
       },
       {
-        title: '功能项',
+        title: '功能项代码',
+        dataIndex: 'featureCode',
+        width: 220,
+      },
+      {
+        title: '功能项名称',
         dataIndex: 'featureName',
-        width: 140,
+        width: 160,
       },
     ];
     const formModalProps = {
