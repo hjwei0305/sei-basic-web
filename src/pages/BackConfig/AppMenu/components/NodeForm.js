@@ -226,6 +226,7 @@ class NodeForm extends PureComponent {
     getFieldDecorator('featureCode', { initialValue: this.getInitValueByFields('featureCode') });
     const featureProps = {
       form,
+      allowClear: true,
       remotePaging: true,
       name: 'featureName',
       field: ['featureId', 'featureCode'],
