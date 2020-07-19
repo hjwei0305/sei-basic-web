@@ -172,7 +172,7 @@ export default modelExtend(model, {
         yield put({
           type: 'updateState',
           payload: {
-            tenantSetting: payload,
+            tenantSetting: re.data,
           },
         });
         message.success(re.message);
