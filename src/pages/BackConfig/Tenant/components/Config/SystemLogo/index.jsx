@@ -100,7 +100,7 @@ class SystemLogo extends Component {
           onSubmit={this.onSubmit}
         >
           <Spin spinning={!!opting}>
-            <FormItem label="收缩LOGO">
+            <FormItem label="收缩LOGO" extra="请上传40*40px或者整数倍数的，背景透明的svg格式的图片">
               {getFieldDecorator('collapsedMenuLogo', {
                 initialValue: collapsedMenuLogo,
                 rules: [
@@ -111,7 +111,10 @@ class SystemLogo extends Component {
                 ],
               })(<ExtUpload />)}
             </FormItem>
-            <FormItem label="展开LOGO">
+            <FormItem
+              label="展开LOGO"
+              extra="请上传200*40px或者整数倍数的，背景透明的svg格式的图片"
+            >
               {getFieldDecorator('menuLogo', {
                 initialValue: menuLogo,
                 rules: [
