@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { connect } from 'dva';
-import { Popconfirm, Button, message } from 'antd';
-import { formatMessage } from 'umi-plugin-react/locale';
 import { cloneDeep } from 'lodash';
+import { connect } from 'dva';
+import { Popconfirm, Button } from 'antd';
+import { formatMessage } from 'umi-plugin-react/locale';
+import { message } from 'suid';
 import TreeView from '@/components/TreeView';
 import CreateFormModal from './CreateFormModal';
 import MoveTreeModal from './MoveTreeModal';

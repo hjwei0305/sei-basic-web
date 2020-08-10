@@ -2,10 +2,9 @@
  * @Author: zp
  * @Date:   2020-02-17 11:36:34
  * @Last Modified by: Eason
- * @Last Modified time: 2020-05-28 20:59:10
+ * @Last Modified time: 2020-08-10 09:13:22
  */
-import { message } from 'antd';
-import { utils } from 'suid';
+import { utils, message } from 'suid';
 import { userUtils } from '@/utils';
 import {
   findByUserId,

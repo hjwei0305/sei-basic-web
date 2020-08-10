@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import { get, isEqual } from 'lodash';
-import { Form, Radio, Input, Button, Select, Row, Col, message, Upload } from 'antd';
+import { Form, Radio, Input, Button, Select, Row, Col, Upload } from 'antd';
+import { message } from 'suid';
 import { userUtils } from '@/utils';
 
 const { getCurrentUser } = userUtils;

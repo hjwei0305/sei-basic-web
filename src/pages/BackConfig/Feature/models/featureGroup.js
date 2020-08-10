@@ -1,6 +1,5 @@
-import { message } from 'antd';
 import { formatMessage } from 'umi-plugin-react/locale';
-import { utils } from 'suid';
+import { utils, message } from 'suid';
 import { delFeatureGroup, getFeatureGroupList, saveFeatureGroup } from '../service';
 
 const { pathMatchRegexp, dvaModel } = utils;

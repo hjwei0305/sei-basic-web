@@ -2,11 +2,10 @@
  * @Author: zp
  * @Date:   2020-02-02 11:57:38
  * @Last Modified by: Eason
- * @Last Modified time: 2020-05-25 12:37:34
+ * @Last Modified time: 2020-08-10 09:10:47
  */
-import { message } from 'antd';
 import { formatMessage } from 'umi-plugin-react/locale';
-import { utils } from 'suid';
+import { utils, message } from 'suid';
 import {
   del,
   save,

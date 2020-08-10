@@ -2,8 +2,8 @@ import React, { PureComponent } from 'react';
 import { get, isObject } from 'lodash';
 import cls from 'classnames';
 import { connect } from 'dva';
-import { Steps, Button, message } from 'antd';
-import { ExtModal } from 'suid';
+import { Steps, Button } from 'antd';
+import { ExtModal, message } from 'suid';
 import { BannerTitle } from '@/components';
 import RoleSelect from './RoleSelect';
 import UserSelect from './UserSelect';
@@ -53,7 +53,8 @@ class CopyAuthModal extends PureComponent {
     message.destroy();
     if (
       step === 0 &&
-      this.featureRoleSelected.keys.length === 0 && this.dataRoleSelected.keys.length === 0
+      this.featureRoleSelected.keys.length === 0 &&
+      this.dataRoleSelected.keys.length === 0
     ) {
       message.error('请选择角色后再试');
       return;

@@ -1,7 +1,6 @@
-import { message } from 'antd';
 import { formatMessage } from 'umi-plugin-react/locale';
-import { utils } from 'suid';
-import { del, getOrgList, save, move, } from './service';
+import { utils, message } from 'suid';
+import { del, getOrgList, save, move } from './service';
 
 const { pathMatchRegexp, dvaModel } = utils;
 const { modelExtend, model } = dvaModel;

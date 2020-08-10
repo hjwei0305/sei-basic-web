@@ -2,8 +2,8 @@ import React, { PureComponent } from 'react';
 import cls from 'classnames';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import { Button, message } from 'antd';
-import { ScopeDatePicker, ExtIcon } from 'suid';
+import { Button } from 'antd';
+import { ScopeDatePicker, ExtIcon, message } from 'suid';
 import styles from './index.less';
 
 const format = 'YYYY-MM-DD';
