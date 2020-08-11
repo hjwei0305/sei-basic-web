@@ -70,7 +70,7 @@ class FormModal extends PureComponent {
                   }),
                 },
               ],
-            })(<Input />)}
+            })(<Input disabled={rowData} />)}
           </FormItem>
           <FormItem label={formatMessage({ id: 'global.name', defaultMessage: '名称' })}>
             {getFieldDecorator('name', {
