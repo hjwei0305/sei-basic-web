@@ -2,7 +2,7 @@
  * @Author: Eason
  * @Date: 2020-02-15 11:53:29
  * @Last Modified by: Eason
- * @Last Modified time: 2020-05-26 13:48:58
+ * @Last Modified time: 2020-08-31 10:05:38
  */
 import React, { Component } from 'react';
 import cls from 'classnames';
@@ -45,8 +45,12 @@ class FeatureRoleAssign extends Component {
     this.listCardRef.handlerSearchChange(v);
   };
 
-  handlerSearch = () => {
-    this.listCardRef.handlerSearch();
+  handlerPressEnter = () => {
+    this.listCardRef.handlerPressEnter();
+  };
+
+  handlerSearch = v => {
+    this.listCardRef.handlerSearch(v);
   };
 
   assignedSave = () => {
@@ -149,7 +153,7 @@ class FeatureRoleAssign extends Component {
               placeholder="输入名称关键字查询"
               onChange={e => this.handlerSearchChange(e.target.value)}
               onSearch={this.handlerSearch}
-              onPressEnter={this.handlerSearch}
+              onPressEnter={this.handlerPressEnter}
               style={{ width: 132 }}
             />
           </Tooltip>

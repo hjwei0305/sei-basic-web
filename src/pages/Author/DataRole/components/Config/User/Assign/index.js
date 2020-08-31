@@ -2,7 +2,7 @@
  * @Author: Eason
  * @Date: 2020-02-15 11:53:29
  * @Last Modified by: Eason
- * @Last Modified time: 2020-06-04 13:52:27
+ * @Last Modified time: 2020-08-31 09:51:59
  */
 import React, { Component } from 'react';
 import cls from 'classnames';
@@ -38,8 +38,12 @@ class UserAssign extends Component {
     this.listCardRef.handlerSearchChange(v);
   };
 
-  handlerSearch = () => {
-    this.listCardRef.handlerSearch();
+  handlerPressEnter = () => {
+    this.listCardRef.handlerPressEnter();
+  };
+
+  handlerSearch = v => {
+    this.listCardRef.handlerSearch(v);
   };
 
   assignedSave = () => {
@@ -82,7 +86,7 @@ class UserAssign extends Component {
             placeholder="输入名称关键字查询"
             onChange={e => this.handlerSearchChange(e.target.value)}
             onSearch={this.handlerSearch}
-            onPressEnter={this.handlerSearch}
+            onPressEnter={this.handlerPressEnter}
             style={{ width: 220 }}
           />
         </div>

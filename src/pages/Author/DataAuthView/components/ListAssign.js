@@ -21,12 +21,16 @@ class ListAssign extends PureComponent {
     this.listCardRef.handlerSearch();
   };
 
+  handlerPressEnter = () => {
+    this.listCardRef.handlerPressEnter();
+  };
+
   handlerSearchChange = v => {
     this.listCardRef.handlerSearchChange(v);
   };
 
-  handlerSearch = () => {
-    this.listCardRef.handlerSearch();
+  handlerSearch = v => {
+    this.listCardRef.handlerSearch(v);
   };
 
   renderCustomTool = ({ total }) => {
@@ -37,7 +41,7 @@ class ListAssign extends PureComponent {
           placeholder="输入代码或名称关键字查询"
           onChange={e => this.handlerSearchChange(e.target.value)}
           onSearch={this.handlerSearch}
-          onPressEnter={this.handlerSearch}
+          onPressEnter={this.handlerPressEnter}
           style={{ width: 220 }}
         />
       </>
