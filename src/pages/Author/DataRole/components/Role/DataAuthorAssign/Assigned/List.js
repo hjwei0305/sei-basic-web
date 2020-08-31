@@ -97,6 +97,7 @@ class List extends PureComponent {
         </Button>
         <span>
           <Search
+            allowClear
             placeholder="输入代码或名称关键字查询"
             onChange={e => this.handlerSearchChange(e.target.value)}
             onSearch={this.handlerSearch}

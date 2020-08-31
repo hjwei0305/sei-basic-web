@@ -2,7 +2,7 @@
  * @Author: Eason
  * @Date: 2020-02-15 11:53:29
  * @Last Modified by: Eason
- * @Last Modified time: 2020-08-31 10:03:38
+ * @Last Modified time: 2020-08-31 17:04:19
  */
 import React, { PureComponent } from 'react';
 import cls from 'classnames';
@@ -79,6 +79,7 @@ class UserSelect extends PureComponent {
       <>
         <Tooltip title="输入代码或姓名关键字查询">
           <Search
+            allowClear
             placeholder="输入代码或姓名关键字查询"
             onChange={e => this.handlerSearchChange(e.target.value)}
             onSearch={this.handlerSearch}

@@ -2,7 +2,7 @@
  * @Author: Eason
  * @Date: 2020-02-15 11:53:29
  * @Last Modified by: Eason
- * @Last Modified time: 2020-05-26 13:48:54
+ * @Last Modified time: 2020-08-31 17:02:19
  */
 import React, { Component } from 'react';
 import cls from 'classnames';
@@ -45,8 +45,12 @@ class DataRoleAssign extends Component {
     this.listCardRef.handlerSearchChange(v);
   };
 
-  handlerSearch = () => {
-    this.listCardRef.handlerSearch();
+  handlerPressEnter = () => {
+    this.listCardRef.handlerPressEnter();
+  };
+
+  handlerSearch = v => {
+    this.listCardRef.handlerSearch(v);
   };
 
   assignedSave = () => {
@@ -136,10 +140,11 @@ class DataRoleAssign extends Component {
         <div>
           <Tooltip title="输入名称关键字查询">
             <Search
+              allowClear
               placeholder="输入名称关键字查询"
               onChange={e => this.handlerSearchChange(e.target.value)}
               onSearch={this.handlerSearch}
-              onPressEnter={this.handlerSearch}
+              onPressEnter={this.handlerPressEnter}
               style={{ width: 132 }}
             />
           </Tooltip>
@@ -164,17 +169,21 @@ class DataRoleAssign extends Component {
       },
       showArrow: false,
       showSearch: false,
-      cascadeParams: {
-        dataRoleGroupId: roleGroupId,
-      },
-      store: {
-        url: `${SERVER_PATH}/sei-basic/employee/getCanAssignedDataRoles`,
-        params: { userId: get(currentEmployee, 'id', null) },
-      },
       onListCardRef: ref => (this.listCardRef = ref),
       onSelectChange: this.handerAssignUserSelectChange,
       customTool: this.renderCustomTool,
     };
+    if (roleGroupId) {
+      Object.assign(listCardProps, {
+        store: {
+          url: `${SERVER_PATH}/sei-basic/employee/getCanAssignedDataRoles`,
+          params: { userId: get(currentEmployee, 'id', null) },
+        },
+        cascadeParams: {
+          dataRoleGroupId: roleGroupId,
+        },
+      });
+    }
     return (
       <Layout className={cls(styles['user-panel-box'])}>
         <Sider width={280} className={cls('auto-height')} theme="light">

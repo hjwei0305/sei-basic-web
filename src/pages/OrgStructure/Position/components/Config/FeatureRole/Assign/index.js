@@ -2,7 +2,7 @@
  * @Author: Eason
  * @Date: 2020-02-15 11:53:29
  * @Last Modified by: Eason
- * @Last Modified time: 2020-08-31 09:57:57
+ * @Last Modified time: 2020-08-31 17:03:52
  */
 import React, { Component } from 'react';
 import cls from 'classnames';
@@ -150,6 +150,7 @@ class FeatureRoleAssign extends Component {
         <div>
           <Tooltip title="输入名称关键字查询">
             <Search
+              allowClear
               placeholder="输入名称关键字查询"
               onChange={e => this.handlerSearchChange(e.target.value)}
               onSearch={this.handlerSearch}

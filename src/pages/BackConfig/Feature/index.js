@@ -122,6 +122,7 @@ class Feature extends Component {
   renderCustomTool = () => (
     <>
       <Search
+        allowClear
         placeholder="输入代码、名称、应用模块关键字查询"
         onChange={e => this.handlerSearchChange(e.target.value)}
         onSearch={this.handlerSearch}

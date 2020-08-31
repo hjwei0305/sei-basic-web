@@ -37,6 +37,7 @@ class RoleGroup extends PureComponent {
   renderCustomTool = () => (
     <>
       <Search
+        allowClear
         placeholder="输入代码或名称关键字查询"
         onChange={e => this.handlerSearchChange(e.target.value)}
         onSearch={this.handlerSearch}

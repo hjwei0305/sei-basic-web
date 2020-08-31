@@ -73,6 +73,7 @@ class List extends PureComponent {
         <div>
           <Tooltip title="输入名称关键字查询">
             <Search
+              allowClear
               placeholder="输入名称关键字查询"
               onChange={e => this.handlerSearchChange(e.target.value)}
               onSearch={this.handlerSearch}

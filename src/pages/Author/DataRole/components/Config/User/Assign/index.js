@@ -2,7 +2,7 @@
  * @Author: Eason
  * @Date: 2020-02-15 11:53:29
  * @Last Modified by: Eason
- * @Last Modified time: 2020-08-31 09:51:59
+ * @Last Modified time: 2020-08-31 17:03:12
  */
 import React, { Component } from 'react';
 import cls from 'classnames';
@@ -83,6 +83,7 @@ class UserAssign extends Component {
         </div>
         <div>
           <Search
+            allowClear
             placeholder="输入名称关键字查询"
             onChange={e => this.handlerSearchChange(e.target.value)}
             onSearch={this.handlerSearch}
