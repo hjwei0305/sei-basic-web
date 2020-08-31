@@ -105,9 +105,8 @@ class FeatureRole extends Component {
       },
     });
     dispatch({
-      type: 'role/updateState',
+      type: 'dataRole/updateState',
       payload: {
-        showAssignFeature: false,
         currentRole: null,
       },
     });
