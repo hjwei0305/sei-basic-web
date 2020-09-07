@@ -57,6 +57,38 @@ export const updateAccount = data =>
     data,
   });
 
+/** 根据当前用户，更新账户 */
+export const sendVerifyCode = params =>
+  request({
+    method: 'GET',
+    url: `${SERVER_PATH}/sei-auth/verifyCode/sendVerifyCode`,
+    params,
+  });
+
+/** 绑定帐号 */
+export const bindAccount = data =>
+  request({
+    method: 'POST',
+    url: `${SERVER_PATH}/sei-auth/account/binding`,
+    data,
+  });
+
+/** 解绑定帐号 */
+export const unBindAccount = data =>
+  request({
+    method: 'POST',
+    url: `${SERVER_PATH}/sei-auth/account/unbinding`,
+    data,
+  });
+
+/** 获取帐号 */
+export const getAccount = params =>
+  request({
+    method: 'GET',
+    url: `${SERVER_PATH}/sei-auth/account/getByUserId`,
+    params,
+  });
+
 /** 更新密码 */
 export const updatePwd = data =>
   request({

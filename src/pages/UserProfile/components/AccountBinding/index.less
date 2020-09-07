@@ -1,0 +1,57 @@
+.account-binding-items {
+  width: 80%;
+  margin: 0 auto;
+  padding: 0;
+  :global {
+    .binding-item {
+      height: 40px;
+      margin: 10px;
+      overflow: hidden;
+      line-height: 40px;
+      background-color: #f2f2f2;
+      border: 2px solid #e0e0e0;
+      transition: all 0.2s ease-in;
+      .logo-warpper {
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+      }
+      .item-title {
+        font-weight: bold;
+        font-size: 14px;
+      }
+      .bind-status {
+        margin-left: 200px;
+        .title {
+          margin-right: 30px;
+        }
+      }
+      .item-extra {
+        float: right;
+      }
+      .binding-form-wrapper {
+        border-top: 2px solid #e0e0e0;
+        .binding-form {
+          width: 50%;
+          padding-top: 15px;
+        }
+      }
+      .pwd-form-wrapper {
+        position: relative;
+        border-top: 2px solid #e0e0e0;
+        .update-pwd-form {
+          width: 50%;
+          padding-top: 15px;
+        }
+      }
+    }
+    .unfold {
+      height: 238px;
+    }
+    .unfold-pwd-form {
+      height: 430px;
+    }
+  }
+}

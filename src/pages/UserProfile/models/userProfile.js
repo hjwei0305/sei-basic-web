@@ -14,6 +14,10 @@ import {
   createAccount,
   updateAccount,
   updatePwd,
+  sendVerifyCode,
+  bindAccount,
+  unBindAccount,
+  getAccount,
 } from '../service';
 
 const { dvaModel, pathMatchRegexp } = utils;
@@ -29,6 +33,7 @@ export default modelExtend(model, {
     editAccountVisable: false,
     resetPwdVisable: false,
     currAccount: null,
+    userAccounts: [],
   },
   subscriptions: {
     setup({ dispatch, history }) {
@@ -125,6 +130,64 @@ export default modelExtend(model, {
         message.success(res.message);
       } else {
         message.error(res.message);
+      }
+
+      return res;
+    },
+    *sendVerifyCode({ payload }, { call }) {
+      const res = yield call(sendVerifyCode, payload);
+      message.destroy();
+      if (res.success) {
+        message.success(res.message);
+      } else {
+        message.error(res.message);
+      }
+
+      return res;
+    },
+    *bindAccount({ payload }, { call, put }) {
+      const res = yield call(bindAccount, payload);
+      message.destroy();
+      if (res.success) {
+        message.success(res.message);
+        yield put({
+          type: 'getAccount',
+        });
+      } else {
+        message.error(res.message);
+      }
+
+      return res;
+    },
+    *unBindAccount({ payload }, { call, put }) {
+      const res = yield call(unBindAccount, payload);
+      message.destroy();
+      if (res.success) {
+        message.success(res.message);
+        yield put({
+          type: 'getAccount',
+        });
+      } else {
+        message.error(res.message);
+      }
+
+      return res;
+    },
+    *getAccount(_, { call, put }) {
+      const user = getCurrentUser();
+      const res = yield call(getAccount, { userId: user.userId });
+      const { message: msg, data: userAccounts, success } = res || {};
+      message.destroy();
+      if (success) {
+        // message.success(msg);
+        yield put({
+          type: 'updateState',
+          payload: {
+            userAccounts,
+          },
+        });
+      } else {
+        message.error(msg);
       }
 
       return res;
