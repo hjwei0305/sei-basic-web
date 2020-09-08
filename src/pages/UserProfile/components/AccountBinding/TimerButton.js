@@ -26,11 +26,14 @@ class TimerButton extends Component {
       if (onClick) {
         onClick();
       }
+      clearInterval(this.intervalTimer);
       this.intervalTimer = setInterval(() => {
         const { count } = this.state;
-        this.setState({
-          count: count - 1,
-        });
+        if (count > 0) {
+          this.setState({
+            count: count - 1,
+          });
+        }
       }, 1000);
       setTimeout(() => {
         this.setState({
