@@ -6,7 +6,7 @@ import cls from 'classnames';
 import BasicInfo from './components/BasicInfo';
 import PositionInfo from './components/PositionInfo';
 import MailInfo from './components/MailInfo';
-import AccountInfo from './components/AccountInfo';
+// import AccountInfo from './components/AccountInfo';
 // import UpdatePwd from './components/UpdatePwd';
 import AccountBinding from './components/AccountBinding';
 import FeatureAuthView from './FeatureAuthView';
@@ -40,18 +40,18 @@ class UserProfile extends React.Component {
               <BasicInfo />
             </Card>
           </TabPane>
-          <TabPane tab="帐号绑定" key="accountBinding">
-            <Card title="帐号绑定" bordered={false}>
+          <TabPane tab="账号信息" key="accountBinding">
+            <Card title="账号信息" bordered={false}>
               <ScrollBar>
                 <AccountBinding />
               </ScrollBar>
             </Card>
           </TabPane>
-          <TabPane tab="账号信息" key="accountInfo">
+          {/* <TabPane tab="账号信息" key="accountInfo">
             <Card title="账号信息" bordered={false}>
               <AccountInfo />
             </Card>
-          </TabPane>
+          </TabPane> */}
           <TabPane tab="岗位信息" key="positionInfo">
             <Card title="岗位信息" bordered={false}>
               <PositionInfo />
