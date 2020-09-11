@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Icon, Button, Popconfirm } from 'antd';
+import { Icon, Button, Popconfirm, Tag } from 'antd';
 import { connect } from 'dva';
 import { utils } from 'suid';
 import { get } from 'lodash';
@@ -122,6 +122,11 @@ class AccountBinding extends Component {
             <span className={cls('bind-status')}>
               <span className={cls('title')}>已绑定</span>
               {openId}
+              {openId === account ? (
+                <Tag style={{ marginLeft: 8 }} color="green">
+                  主帐号
+                </Tag>
+              ) : null}
             </span>
             <span className={cls('item-extra')}>
               {updatePwdAccount === openId ? (
