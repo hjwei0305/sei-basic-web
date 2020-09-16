@@ -96,3 +96,14 @@ export const updatePwd = data =>
     url: `${SERVER_PATH}/sei-auth/account/updatePassword`,
     data,
   });
+
+/** 获取生成二维码配置信息 */
+export async function authorizeData(authType = 'weChat') {
+  return request({
+    method: 'GET',
+    url: `${SERVER_PATH}/sei-auth/sso/authorizeData?authType=${authType}`,
+    headers: {
+      needToken: false,
+    },
+  });
+}

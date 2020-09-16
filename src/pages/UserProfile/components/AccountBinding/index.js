@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Icon, Button, Popconfirm, Tag } from 'antd';
+import { Icon, Button, Popconfirm, Tag, message } from 'antd';
 import { connect } from 'dva';
 import { utils } from 'suid';
 import { get } from 'lodash';
@@ -68,7 +68,28 @@ class AccountBinding extends Component {
     });
   };
 
+  handleClick = () => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'userProfile/authorizeData',
+    })
+      .then(result => {
+        const { success, data, message: msg } = result || {};
+        if (success && data) {
+          const { appid, agentid, redirect_uri: redirectUri, state } = data;
+          const qstr = `?appid=${appid}&agentid=${agentid}&redirect_uri=${redirectUri}&state=${state}`;
+          window.open(`https://open.work.weixin.qq.com/wwopen/sso/qrConnect${qstr}`, '_self');
+        } else {
+          message.error(msg);
+        }
+      })
+      .catch(err => {
+        message.error(err && err.message);
+      });
+  };
+
   getExtraCmp = index => {
+    const { loading } = this.props;
     const { unfolds } = this.state;
     const isBind = this.hasBind();
     const item = isBind[index];
@@ -87,7 +108,11 @@ class AccountBinding extends Component {
 
     if (index === 2) {
       return (
-        <Button type="link" disabled>
+        <Button
+          type="link"
+          onClick={this.handleClick}
+          loading={loading.effects['userProfile/authorizeData']}
+        >
           绑定
         </Button>
       );

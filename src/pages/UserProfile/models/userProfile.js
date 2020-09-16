@@ -18,6 +18,7 @@ import {
   bindAccount,
   unBindAccount,
   getAccount,
+  authorizeData,
 } from '../service';
 
 const { dvaModel, pathMatchRegexp } = utils;
@@ -34,6 +35,7 @@ export default modelExtend(model, {
     resetPwdVisable: false,
     currAccount: null,
     userAccounts: [],
+    qrConfig: null,
   },
   subscriptions: {
     setup({ dispatch, history }) {
@@ -94,6 +96,22 @@ export default modelExtend(model, {
       }
 
       return res;
+    },
+    *authorizeData(_, { call, put }) {
+      const result = yield call(authorizeData);
+      const { success, message: msg, data } = result || {};
+      if (success) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            qrConfig: data,
+          },
+        });
+      } else {
+        message.error(msg);
+      }
+
+      return result;
     },
     *getEmailAlert({ payload }, { call, put }) {
       const res = yield call(findMyEmailAlert, payload);
