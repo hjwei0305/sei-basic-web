@@ -78,7 +78,7 @@ class AccountBinding extends Component {
         if (success && data) {
           const { appid, agentid, redirect_uri: redirectUri, state } = data;
           const qstr = `?appid=${appid}&agentid=${agentid}&redirect_uri=${redirectUri}&state=${state}`;
-          window.open(`https://open.work.weixin.qq.com/wwopen/sso/qrConnect${qstr}`, '_self');
+          window.top.open(`https://open.work.weixin.qq.com/wwopen/sso/qrConnect${qstr}`, '_self');
         } else {
           message.error(msg);
         }
