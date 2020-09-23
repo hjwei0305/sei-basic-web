@@ -116,3 +116,20 @@ export async function findByReceiverCode(params) {
     params,
   });
 }
+
+/** 删除个人支付信息 */
+export async function deletePayment({ id }) {
+  return request({
+    method: 'DELETE',
+    url: `${SERVER_PATH}/sei-fim/personalPaymentInfo/delete/${id}`,
+  });
+}
+
+/** 保存个人支付信息 */
+export async function savePayment(data) {
+  return request({
+    method: 'POST',
+    url: `${SERVER_PATH}/sei-fim/personalPaymentInfo/save`,
+    data,
+  });
+}

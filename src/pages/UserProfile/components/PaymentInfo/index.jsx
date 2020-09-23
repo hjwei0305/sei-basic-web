@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ExtTable, ExtIcon } from 'suid';
-import { Popconfirm } from 'antd';
+import { Popconfirm, Button } from 'antd';
 import { connect } from 'dva';
 import cls from 'classnames';
 import { formatMessage } from 'umi-plugin-react/locale';
@@ -52,8 +52,8 @@ class PaymentInfo extends Component {
           },
           () => {
             dispatch({
-              type: 'userProfile/delAccount',
-              payload: row.id,
+              type: 'userProfile/deletePayment',
+              payload: { id: row.id },
             }).then(res => {
               if (res && res.success) {
                 this.setState({
@@ -129,7 +129,7 @@ class PaymentInfo extends Component {
                 id: 'global.delete.confirm',
                 defaultMessage: '确定要删除吗？提示：删除后不可恢复',
               })}
-              onConfirm={() => this.del(record)}
+              onConfirm={() => this.handleEvent('del', record)}
             >
               {this.renderDelBtn(record)}
             </Popconfirm>
@@ -163,9 +163,24 @@ class PaymentInfo extends Component {
       },
     ];
     return {
+      toolBar: {
+        left: (
+          <>
+            <Button
+              type="primary"
+              onClick={() => {
+                this.handleEvent('add');
+              }}
+            >
+              新建
+            </Button>
+            <Button onClick={this.reloadData}>刷新</Button>
+          </>
+        ),
+      },
       columns,
       bordered: false,
-      showSearch: false,
+      searchProperties: ['bank.code', 'bank.name', 'bankAccountNumber'],
       store: {
         params: {
           receiverCode: basicInfo ? basicInfo.employeeCode : '',

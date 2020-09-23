@@ -19,6 +19,8 @@ import {
   unBindAccount,
   getAccount,
   authorizeData,
+  deletePayment,
+  savePayment,
 } from '../service';
 
 const { dvaModel, pathMatchRegexp } = utils;
@@ -56,6 +58,28 @@ export default modelExtend(model, {
   effects: {
     *save({ payload }, { call }) {
       const res = yield call(saveProfile, payload);
+      message.destroy();
+      if (res.success) {
+        message.success(res.message);
+      } else {
+        message.error(res.message);
+      }
+
+      return res;
+    },
+    *savePayment({ payload }, { call }) {
+      const res = yield call(savePayment, payload);
+      message.destroy();
+      if (res.success) {
+        message.success(res.message);
+      } else {
+        message.error(res.message);
+      }
+
+      return res;
+    },
+    *deletePayment({ payload }, { call }) {
+      const res = yield call(deletePayment, payload);
       message.destroy();
       if (res.success) {
         message.success(res.message);
