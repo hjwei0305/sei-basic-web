@@ -107,3 +107,12 @@ export async function authorizeData(authType = 'weChat') {
     },
   });
 }
+
+/** 通过收款方代码获取银行支付信息 */
+export async function findByReceiverCode(params) {
+  return request({
+    method: 'GET',
+    url: `${SERVER_PATH}/sei-fim/personalPaymentInfo/findByReceiverCode`,
+    params,
+  });
+}

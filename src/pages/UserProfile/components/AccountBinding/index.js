@@ -147,7 +147,7 @@ class AccountBinding extends Component {
               'binding-item': true,
               'unfold-pwd-form': updatePwdAccount === openId,
             })}
-            key={account}
+            key={openId}
           >
             <span className="logo-warpper">
               <Icon type="appstore" />

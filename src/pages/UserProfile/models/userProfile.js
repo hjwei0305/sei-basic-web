@@ -36,6 +36,7 @@ export default modelExtend(model, {
     currAccount: null,
     userAccounts: [],
     qrConfig: null,
+    editPaymentVisable: false,
   },
   subscriptions: {
     setup({ dispatch, history }) {
