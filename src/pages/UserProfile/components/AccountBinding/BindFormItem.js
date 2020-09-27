@@ -5,7 +5,7 @@ import { connect } from 'dva';
 import TimerButton from './TimerButton';
 
 const emailReg = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
-const mobileReg = /^(0|86|17951)?(13[0-9]|15[012356789]|166|17[3678]|18[0-9]|14[57])[0-9]{8}$/;
+const mobileReg = /^(0|86|17951)?(1[3456789][0-9])[0-9]{8}$/;
 const FormItem = Form.Item;
 const formItemLayout = {
   labelCol: {

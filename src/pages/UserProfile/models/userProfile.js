@@ -18,6 +18,9 @@ import {
   bindAccount,
   unBindAccount,
   getAccount,
+  authorizeData,
+  deletePayment,
+  savePayment,
 } from '../service';
 
 const { dvaModel, pathMatchRegexp } = utils;
@@ -34,6 +37,8 @@ export default modelExtend(model, {
     resetPwdVisable: false,
     currAccount: null,
     userAccounts: [],
+    qrConfig: null,
+    editPaymentVisable: false,
   },
   subscriptions: {
     setup({ dispatch, history }) {
@@ -53,6 +58,28 @@ export default modelExtend(model, {
   effects: {
     *save({ payload }, { call }) {
       const res = yield call(saveProfile, payload);
+      message.destroy();
+      if (res.success) {
+        message.success(res.message);
+      } else {
+        message.error(res.message);
+      }
+
+      return res;
+    },
+    *savePayment({ payload }, { call }) {
+      const res = yield call(savePayment, payload);
+      message.destroy();
+      if (res.success) {
+        message.success(res.message);
+      } else {
+        message.error(res.message);
+      }
+
+      return res;
+    },
+    *deletePayment({ payload }, { call }) {
+      const res = yield call(deletePayment, payload);
       message.destroy();
       if (res.success) {
         message.success(res.message);
@@ -94,6 +121,22 @@ export default modelExtend(model, {
       }
 
       return res;
+    },
+    *authorizeData(_, { call, put }) {
+      const result = yield call(authorizeData);
+      const { success, message: msg, data } = result || {};
+      if (success) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            qrConfig: data,
+          },
+        });
+      } else {
+        message.error(msg);
+      }
+
+      return result;
     },
     *getEmailAlert({ payload }, { call, put }) {
       const res = yield call(findMyEmailAlert, payload);

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Icon, Button, Popconfirm, Tag } from 'antd';
+import { Icon, Button, Popconfirm, Tag, message } from 'antd';
 import { connect } from 'dva';
 import { utils } from 'suid';
 import { get } from 'lodash';
@@ -15,6 +15,7 @@ const channelMap = {
   SEI: 5,
   Mobile: 0,
   EMAIL: 1,
+  WeChat: 2,
 };
 
 @connect(({ userProfile, loading }) => ({ userProfile, loading }))
@@ -67,7 +68,28 @@ class AccountBinding extends Component {
     });
   };
 
+  handleClick = () => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'userProfile/authorizeData',
+    })
+      .then(result => {
+        const { success, data, message: msg } = result || {};
+        if (success && data) {
+          const { appid, agentid, redirect_uri: redirectUri, state } = data;
+          const qstr = `?appid=${appid}&agentid=${agentid}&redirect_uri=${redirectUri}&state=${state}`;
+          window.top.open(`https://open.work.weixin.qq.com/wwopen/sso/qrConnect${qstr}`, '_self');
+        } else {
+          message.error(msg);
+        }
+      })
+      .catch(err => {
+        message.error(err && err.message);
+      });
+  };
+
   getExtraCmp = index => {
+    const { loading } = this.props;
     const { unfolds } = this.state;
     const isBind = this.hasBind();
     const item = isBind[index];
@@ -81,6 +103,18 @@ class AccountBinding extends Component {
         >
           <Button type="link">解绑</Button>
         </Popconfirm>
+      );
+    }
+
+    if (index === 2) {
+      return (
+        <Button
+          type="link"
+          onClick={this.handleClick}
+          loading={loading.effects['userProfile/authorizeData']}
+        >
+          绑定
+        </Button>
       );
     }
 
@@ -113,7 +147,7 @@ class AccountBinding extends Component {
               'binding-item': true,
               'unfold-pwd-form': updatePwdAccount === openId,
             })}
-            key={account}
+            key={openId}
           >
             <span className="logo-warpper">
               <Icon type="appstore" />
@@ -188,7 +222,7 @@ class AccountBinding extends Component {
   render() {
     const { unfolds } = this.state;
     const [unfoldPhone, unfoldMail] = unfolds;
-    const [mobileBind, emailBind] = this.hasBind();
+    const [mobileBind, emailBind, weChatBind] = this.hasBind();
     return (
       <ul className={cls(styles['account-binding-items'])}>
         {this.getSeiAccountCmp()}
@@ -235,10 +269,15 @@ class AccountBinding extends Component {
             <Icon type="wechat" />
           </span>
           <span className={cls('item-title')}>绑定企业微信</span>
+          <span className={cls('bind-status')}>
+            <span className={cls('title')}>{weChatBind ? '已绑定' : '未绑定'}</span>
+            {weChatBind ? weChatBind.openId : null}
+          </span>
           <span className={cls('item-extra')}>
-            <Button type="link" disabled>
-              绑定
-            </Button>
+            {this.getExtraCmp(2)}
+            {/* <Button type="link" disabled>
+              解绑
+            </Button> */}
           </span>
         </li>
         <li className={cls('binding-item')}>

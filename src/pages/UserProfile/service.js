@@ -96,3 +96,40 @@ export const updatePwd = data =>
     url: `${SERVER_PATH}/sei-auth/account/updatePassword`,
     data,
   });
+
+/** 获取生成二维码配置信息 */
+export async function authorizeData(authType = 'weChat') {
+  return request({
+    method: 'GET',
+    url: `${SERVER_PATH}/sei-auth/sso/authorizeData?authType=${authType}`,
+    headers: {
+      needToken: false,
+    },
+  });
+}
+
+/** 通过收款方代码获取银行支付信息 */
+export async function findByReceiverCode(params) {
+  return request({
+    method: 'GET',
+    url: `${SERVER_PATH}/sei-fim/personalPaymentInfo/findByReceiverCode`,
+    params,
+  });
+}
+
+/** 删除个人支付信息 */
+export async function deletePayment({ id }) {
+  return request({
+    method: 'DELETE',
+    url: `${SERVER_PATH}/sei-fim/personalPaymentInfo/delete/${id}`,
+  });
+}
+
+/** 保存个人支付信息 */
+export async function savePayment(data) {
+  return request({
+    method: 'POST',
+    url: `${SERVER_PATH}/sei-fim/personalPaymentInfo/save`,
+    data,
+  });
+}

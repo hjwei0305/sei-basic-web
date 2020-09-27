@@ -6,7 +6,7 @@ import cls from 'classnames';
 import BasicInfo from './components/BasicInfo';
 import PositionInfo from './components/PositionInfo';
 import MailInfo from './components/MailInfo';
-// import AccountInfo from './components/AccountInfo';
+import PaymentInfo from './components/PaymentInfo';
 // import UpdatePwd from './components/UpdatePwd';
 import AccountBinding from './components/AccountBinding';
 import FeatureAuthView from './FeatureAuthView';
@@ -47,11 +47,11 @@ class UserProfile extends React.Component {
               </ScrollBar>
             </Card>
           </TabPane>
-          {/* <TabPane tab="账号信息" key="accountInfo">
-            <Card title="账号信息" bordered={false}>
-              <AccountInfo />
+          <TabPane tab="支付信息" key="paymentInfo">
+            <Card title="支付信息" bordered={false}>
+              <PaymentInfo />
             </Card>
-          </TabPane> */}
+          </TabPane>
           <TabPane tab="岗位信息" key="positionInfo">
             <Card title="岗位信息" bordered={false}>
               <PositionInfo />
