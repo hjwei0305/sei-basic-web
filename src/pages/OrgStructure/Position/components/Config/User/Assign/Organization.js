@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import { trim } from 'lodash';
 import { Input, Tree } from 'antd';
 import { ScrollBar, ExtIcon, ListLoader, utils } from 'suid';
 import { constants } from '@/utils';
@@ -97,10 +98,15 @@ class Organization extends PureComponent {
   };
 
   handlerSearchChange = v => {
-    this.allValue = v || '';
+    this.allValue = trim(v);
   };
 
-  handlerSearch = () => {
+  handlerPressEnter = () => {
+    this.handlerSearch(this.allValue);
+  };
+
+  handlerSearch = v => {
+    this.allValue = v;
     const { treeData, expandedKeys } = this.getLocalFilterData();
     this.setState({
       treeData,
@@ -199,11 +205,12 @@ class Organization extends PureComponent {
       <div className="org-box">
         <div className="search-box">
           <Search
+            allowClear
             placeholder="输入名称关键字查询"
             defaultValue={allValue}
             onChange={e => this.handlerSearchChange(e.target.value)}
             onSearch={this.handlerSearch}
-            onPressEnter={this.handlerSearch}
+            onPressEnter={this.handlerPressEnter}
             style={{ width: '100%' }}
           />
         </div>

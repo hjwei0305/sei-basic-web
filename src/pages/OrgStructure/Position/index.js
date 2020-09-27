@@ -114,7 +114,12 @@ class PositionHome extends Component {
     this.allValue = trim(v);
   };
 
-  handlerSearch = () => {
+  handlerPressEnter = () => {
+    this.handlerSearch(this.allValue);
+  };
+
+  handlerSearch = v => {
+    this.allValue = v;
     const { treeData, expandedKeys } = this.getLocalFilterData();
     this.setState({
       treeData,
@@ -231,11 +236,12 @@ class PositionHome extends Component {
             <Card title="组织机构" bordered={false} className="left-content">
               <div className="header-tool-box">
                 <Search
+                  allowClear
                   placeholder="输入名称关键字查询"
                   defaultValue={allValue}
                   onChange={e => this.handlerSearchChange(e.target.value)}
                   onSearch={this.handlerSearch}
-                  onPressEnter={this.handlerSearch}
+                  onPressEnter={this.handlerPressEnter}
                 />
               </div>
               <div className="tree-body">
