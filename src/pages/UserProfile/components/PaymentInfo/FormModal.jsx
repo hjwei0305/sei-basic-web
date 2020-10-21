@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Form, Input } from 'antd';
+import { Form, Input, InputNumber } from 'antd';
 import { formatMessage } from 'umi-plugin-react/locale';
 import { ExtModal, ComboGrid } from 'suid';
 import { userUtils, constants } from '@/utils';
@@ -154,7 +154,13 @@ class FormModal extends PureComponent {
           <FormItem label="排序">
             {getFieldDecorator('rank', {
               initialValue: editData ? editData.rank : '',
-            })(<Input />)}
+              rules: [
+                {
+                  required: true,
+                  message: '银行帐号',
+                },
+              ],
+            })(<InputNumber style={{ width: '100%' }} />)}
           </FormItem>
         </Form>
       </ExtModal>
