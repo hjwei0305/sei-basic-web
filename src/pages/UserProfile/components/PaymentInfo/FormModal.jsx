@@ -119,7 +119,7 @@ class FormModal extends PureComponent {
               rules: [
                 {
                   required: true,
-                  message: '收款方名称',
+                  message: '请输入收款方名称',
                 },
               ],
             })(<Input />)}
@@ -135,7 +135,7 @@ class FormModal extends PureComponent {
               rules: [
                 {
                   required: true,
-                  message: '银行',
+                  message: '请输入银行',
                 },
               ],
             })(<ComboGrid {...this.getComboGridProps()} />)}
@@ -146,7 +146,7 @@ class FormModal extends PureComponent {
               rules: [
                 {
                   required: true,
-                  message: '银行帐号',
+                  message: '请输入银行帐号',
                 },
               ],
             })(<Input />)}
@@ -157,7 +157,7 @@ class FormModal extends PureComponent {
               rules: [
                 {
                   required: true,
-                  message: '银行帐号',
+                  message: '请输入排序',
                 },
               ],
             })(<InputNumber style={{ width: '100%' }} />)}
