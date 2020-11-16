@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import cls from 'classnames';
-import { isEqual } from 'lodash';
+import { isEqual, without, uniqBy, get } from 'lodash';
 import { connect } from 'dva';
 import { Button, Input, Drawer, Tree, Empty, Tooltip } from 'antd';
 import { ScrollBar, ListLoader, ExtIcon, ComboList } from 'suid';
-import { constants } from '@/utils';
+import { constants, getAllParentIdsByNode, getAllChildIdsByNode } from '@/utils';
 import styles from './UnAssignFeatureItem.less';
 
 const { FEATURE_TYPE, SERVER_PATH } = constants;
@@ -22,7 +22,6 @@ class UnAssignFeatureItem extends Component {
       appModuleId: '',
       appModuleName: '',
       checkedKeys: [],
-      pageKeys: [],
       unAssignListData: [],
     };
   }
@@ -39,7 +38,6 @@ class UnAssignFeatureItem extends Component {
       this.setState(
         {
           checkedKeys: [],
-          pageKeys: [],
         },
         this.getUnAssignData,
       );
@@ -78,9 +76,8 @@ class UnAssignFeatureItem extends Component {
     e && e.stopPropagation();
     const { featureRole, dispatch } = this.props;
     const { currentRole } = featureRole;
-    const { checkedKeys, pageKeys } = this.state;
-    if (checkedKeys.length > 0) {
-      const childIds = checkedKeys.concat(pageKeys);
+    const { checkedKeys: childIds } = this.state;
+    if (childIds.length > 0) {
       dispatch({
         type: 'featureRole/assignFeatureItem',
         payload: {
@@ -112,14 +109,29 @@ class UnAssignFeatureItem extends Component {
     this.setState({ unAssignListData });
   };
 
-  handlerCheckedChange = (checkedKeys, { halfCheckedKeys: pageKeys }) => {
-    this.setState({ checkedKeys, pageKeys });
+  handlerCheckedChange = (checkedKeys, e) => {
+    const { unAssignListData } = this.state;
+    const { checked: nodeChecked } = e;
+    const nodeId = get(e, 'node.props.eventKey', null) || null;
+    const { checked } = checkedKeys;
+    let originCheckedKeys = [...checked];
+    const pids = getAllParentIdsByNode(unAssignListData, nodeId);
+    const cids = getAllChildIdsByNode(unAssignListData, nodeId);
+    if (nodeChecked) {
+      // 选中：所有父节点选中，及所有子节点选中
+      originCheckedKeys.push(...pids);
+      originCheckedKeys.push(...cids);
+    } else {
+      // 取消：父节点状态不变，所有子节点取消选中
+      originCheckedKeys = without(originCheckedKeys, ...cids);
+    }
+    const checkedData = uniqBy([...originCheckedKeys], id => id);
+    this.setState({ checkedKeys: checkedData });
   };
 
   onCancelBatchAssignedFeatureItem = () => {
     this.setState({
       checkedKeys: [],
-      pageKeys: [],
     });
   };
 
@@ -247,6 +259,7 @@ class UnAssignFeatureItem extends Component {
         defaultExpandAll
         blockNode
         showIcon
+        checkStrictly
         autoExpandParent={false}
         switcherIcon={<ExtIcon type="down" antd style={{ fontSize: 12 }} />}
         onCheck={this.handlerCheckedChange}

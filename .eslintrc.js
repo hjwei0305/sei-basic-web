@@ -37,6 +37,7 @@ module.exports = {
     'object-curly-newline': 0,
     'implicit-arrow-linebreak': 0,
     'no-unused-expressions': 0,
+    'no-restricted-syntax': 0,
     'consistent-return': 0,
   },
 };

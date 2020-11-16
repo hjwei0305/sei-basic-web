@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
 import cls from 'classnames';
-import { isEqual } from 'lodash';
+import { isEqual, get, uniqBy, without } from 'lodash';
 import { FormattedMessage, formatMessage } from 'umi-plugin-react/locale';
 import { Card, Popconfirm, Button, Drawer, Empty, Tree, Input, Tooltip } from 'antd';
 import { ScrollBar, ListLoader, ExtIcon } from 'suid';
 import { BannerTitle } from '@/components';
-import { constants } from '@/utils';
+import { constants, getAllChildIdsByNode } from '@/utils';
 import RoleView from './RoleView';
 import styles from './AssignedFeature.less';
 
@@ -210,8 +210,22 @@ class FeaturePage extends Component {
     this.setState({ assignListData, expandedKeys, autoExpandParent: true });
   };
 
-  handlerCheckedChange = checkedKeys => {
-    this.setState({ checkedKeys });
+  handlerCheckedChange = (checkedKeys, e) => {
+    const { assignListData } = this.state;
+    const { checked: nodeChecked } = e;
+    const nodeId = get(e, 'node.props.eventKey', null) || null;
+    const { checked } = checkedKeys;
+    let originCheckedKeys = [...checked];
+    const cids = getAllChildIdsByNode(assignListData, nodeId);
+    if (nodeChecked) {
+      // 选中：所有子节点选中
+      originCheckedKeys.push(...cids);
+    } else {
+      // 取消：父节点状态不变，所有子节点取消选中
+      originCheckedKeys = without(originCheckedKeys, ...cids);
+    }
+    const checkedData = uniqBy([...originCheckedKeys], id => id);
+    this.setState({ checkedKeys: checkedData });
   };
 
   handlerExpand = expandedKeys => {
@@ -323,7 +337,6 @@ class FeaturePage extends Component {
 
   renderTree = () => {
     const { checkedKeys, assignListData, expandedKeys, autoExpandParent } = this.state;
-    console.log(expandedKeys);
     if (assignListData.length === 0) {
       return (
         <div className="blank-empty">
@@ -338,6 +351,7 @@ class FeaturePage extends Component {
         defaultExpandAll
         blockNode
         showIcon
+        checkStrictly
         autoExpandParent={autoExpandParent}
         expandedKeys={expandedKeys}
         switcherIcon={<ExtIcon type="down" antd style={{ fontSize: 12 }} />}
