@@ -95,7 +95,7 @@ class List extends PureComponent {
       className: 'anyone-user-box',
       bordered: false,
       searchPlaceHolder: '输入用户代码或名称关键字查询',
-      searchProperties: ['code', 'userName'],
+      searchProperties: ['code', 'name'],
       checkbox: true,
       selectedKeys,
       itemField: {
