@@ -121,9 +121,9 @@ class DataAuthorType extends Component {
     const { loading } = this.props;
     const { delRowId } = this.state;
     if (loading.effects['dataAuthorType/del'] && delRowId === row.id) {
-      return <ExtIcon className="del-loading" type="loading" antd/>;
+      return <ExtIcon className="del-loading" type="loading" antd />;
     }
-    return <ExtIcon className="del" type="delete" antd/>;
+    return <ExtIcon className="del" type="delete" antd />;
   };
 
   render() {
@@ -184,14 +184,9 @@ class DataAuthorType extends Component {
         required: true,
       },
       {
-        title: '功能项代码',
+        title: '功能码',
         dataIndex: 'featureCode',
         width: 220,
-      },
-      {
-        title: '功能项名称',
-        dataIndex: 'featureName',
-        width: 160,
       },
     ];
     const formModalProps = {
@@ -206,11 +201,11 @@ class DataAuthorType extends Component {
         <>
           {authAction(
             <Button key={APP_MODULE_BTN_KEY.CREATE} type="primary" onClick={this.add} ignore="true">
-              <FormattedMessage id="global.add" defaultMessage="新建"/>
+              <FormattedMessage id="global.add" defaultMessage="新建" />
             </Button>,
           )}
           <Button onClick={this.reloadData}>
-            <FormattedMessage id="global.refresh" defaultMessage="刷新"/>
+            <FormattedMessage id="global.refresh" defaultMessage="刷新" />
           </Button>
         </>
       ),
@@ -223,9 +218,9 @@ class DataAuthorType extends Component {
           toolBar={toolBarProps}
           columns={columns}
           dataSource={list}
-          searchProperties={['code', 'name', 'authorizeEntityTypeName', 'featureName']}
+          searchProperties={['code', 'name', 'authorizeEntityTypeName']}
           sort={{
-            field: { code: 'asc', name: null, authorizeEntityTypeName: null, featureName: null },
+            field: { code: 'asc', name: null, authorizeEntityTypeName: null },
           }}
         />
         <FormModal {...formModalProps} />
