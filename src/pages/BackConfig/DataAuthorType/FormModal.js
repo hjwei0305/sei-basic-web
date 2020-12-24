@@ -1,11 +1,11 @@
 import React, { PureComponent } from 'react';
 import { toUpper, trim } from 'lodash';
-import { Form, Input, Tag } from 'antd';
+import { Form, Input } from 'antd';
 import { formatMessage } from 'umi-plugin-react/locale';
-import { ExtModal, ComboList, ComboGrid } from 'suid';
+import { ExtModal, ComboList } from 'suid';
 import { constants } from '@/utils';
 
-const { SERVER_PATH, FEATURE_TYPE } = constants;
+const { SERVER_PATH } = constants;
 const FormItem = Form.Item;
 const formItemLayout = {
   labelCol: {
@@ -32,16 +32,6 @@ class FormModal extends PureComponent {
     });
   };
 
-  renderFeatureType = row => {
-    switch (row.featureType) {
-      case FEATURE_TYPE.PAGE:
-        return <Tag color="cyan">菜单项</Tag>;
-      case FEATURE_TYPE.OPERATE:
-        return <Tag color="blue">操作项</Tag>;
-      default:
-    }
-  };
-
   render() {
     const { form, rowData, closeFormModal, saving, showModal } = this.props;
     const { getFieldDecorator } = form;
@@ -49,7 +39,6 @@ class FormModal extends PureComponent {
     getFieldDecorator('authorizeEntityTypeId', {
       initialValue: rowData ? rowData.authorizeEntityTypeId : null,
     });
-    getFieldDecorator('featureId', { initialValue: rowData ? rowData.featureId : null });
     const authorizeEntityTypeNameProps = {
       form,
       name: 'authorizeEntityTypeName',
@@ -57,49 +46,6 @@ class FormModal extends PureComponent {
       searchPlaceHolder: '输入名称关键字查询',
       store: {
         url: `${SERVER_PATH}/sei-basic/authorizeEntityType/findAll`,
-      },
-      reader: {
-        name: 'name',
-        field: ['id'],
-      },
-    };
-    const featureNameProps = {
-      form,
-      remotePaging: true,
-      name: 'featureName',
-      field: ['featureId'],
-      searchPlaceHolder: '输入名称或代码关键字查询',
-      searchProperties: ['name', 'code'],
-      allowClear: true,
-      width: 520,
-      columns: [
-        {
-          title: '名称',
-          width: 220,
-          dataIndex: 'name',
-        },
-        {
-          title: '类别',
-          dataIndex: 'featureType',
-          width: 80,
-          required: true,
-          align: 'center',
-          render: (_text, record) => this.renderFeatureType(record),
-        },
-        {
-          title: '代码',
-          width: 180,
-          dataIndex: 'code',
-        },
-        {
-          title: '应用模块',
-          width: 180,
-          dataIndex: 'appModuleName',
-        },
-      ],
-      store: {
-        type: 'POST',
-        url: `${SERVER_PATH}/sei-basic/feature/findByPage`,
       },
       reader: {
         name: 'name',
@@ -164,10 +110,16 @@ class FormModal extends PureComponent {
               ],
             })(<ComboList {...authorizeEntityTypeNameProps} />)}
           </FormItem>
-          <FormItem label="功能项">
-            {getFieldDecorator('featureName', {
-              initialValue: rowData ? rowData.featureName : null,
-            })(<ComboGrid {...featureNameProps} />)}
+          <FormItem label="功能码">
+            {getFieldDecorator('featureCode', {
+              initialValue: rowData ? rowData.featureCode : null,
+              rules: [
+                {
+                  max: 50,
+                  message: '功能码不能超过50个字符',
+                },
+              ],
+            })(<Input />)}
           </FormItem>
         </Form>
       </ExtModal>
