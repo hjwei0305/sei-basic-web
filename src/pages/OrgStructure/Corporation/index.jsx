@@ -221,6 +221,15 @@ class Corporation extends Component {
         optional: true,
       },
       {
+        title: formatMessage({
+          id: 'corporation.internalSupplier',
+          defaultMessage: '内部供应商代码',
+        }),
+        dataIndex: 'internalSupplier',
+        width: 100,
+        optional: true,
+      },
+      {
         title: formatMessage({ id: 'corporation.frozen', defaultMessage: '冻结' }),
         dataIndex: 'frozen',
         width: 80,

@@ -186,6 +186,25 @@ class FormModal extends PureComponent {
             <Col span={12}>
               <FormItem
                 {...colFormItemLayout}
+                label={formatMessage({
+                  id: 'corporation.internalSupplier',
+                  defaultMessage: '内部供应商代码',
+                })}
+              >
+                {getFieldDecorator('internalSupplier', {
+                  initialValue: rowData ? rowData.internalSupplier : '',
+                  rules: [
+                    {
+                      max: 20,
+                      message: '内部供应商代码不能超过20个字符',
+                    },
+                  ],
+                })(<Input />)}
+              </FormItem>
+            </Col>
+            <Col span={12}>
+              <FormItem
+                {...colFormItemLayout}
                 label={formatMessage({ id: 'global.rank', defaultMessage: '序号' })}
               >
                 {getFieldDecorator('rank', {
@@ -200,17 +219,6 @@ class FormModal extends PureComponent {
                     },
                   ],
                 })(<InputNumber style={{ width: '100%' }} precision={0} />)}
-              </FormItem>
-            </Col>
-            <Col span={12}>
-              <FormItem
-                {...colFormItemLayout}
-                label={formatMessage({ id: 'corporation.frozen', defaultMessage: '冻结' })}
-              >
-                {getFieldDecorator('frozen', {
-                  valuePropName: 'checked',
-                  initialValue: rowData ? rowData.frozen : false,
-                })(<Checkbox />)}
               </FormItem>
             </Col>
           </Row>
@@ -239,6 +247,19 @@ class FormModal extends PureComponent {
                 {getFieldDecorator('weixinSecret', {
                   initialValue: rowData ? rowData.weixinSecret : '',
                 })(<Input />)}
+              </FormItem>
+            </Col>
+          </Row>
+          <Row>
+            <Col span={12}>
+              <FormItem
+                {...colFormItemLayout}
+                label={formatMessage({ id: 'corporation.frozen', defaultMessage: '冻结' })}
+              >
+                {getFieldDecorator('frozen', {
+                  valuePropName: 'checked',
+                  initialValue: rowData ? rowData.frozen : false,
+                })(<Checkbox />)}
               </FormItem>
             </Col>
           </Row>
