@@ -2,6 +2,20 @@ import constants from './constants';
 import * as userUtils from './user';
 import watermark from './watermark';
 
+const getAllNodeKeys = treeData => {
+  const ids = [];
+  const getKeys = (tree, idKeys) => {
+    for (const data of tree) {
+      idKeys.push(data.id);
+      if (data.children) {
+        getKeys(data.children, idKeys);
+      }
+    }
+  };
+  getKeys(treeData, ids);
+  return ids;
+};
+
 const getAllParentIdsByNode = (treeData, nodeId) => {
   const treeFindPath = (tree, func, path = []) => {
     if (!tree) return [];
@@ -48,4 +62,11 @@ const getAllChildIdsByNode = (treeData, nodeId) => {
   return ids;
 };
 
-export { constants, userUtils, watermark, getAllParentIdsByNode, getAllChildIdsByNode };
+export {
+  constants,
+  userUtils,
+  watermark,
+  getAllParentIdsByNode,
+  getAllChildIdsByNode,
+  getAllNodeKeys,
+};

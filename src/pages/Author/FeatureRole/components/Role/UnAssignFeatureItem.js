@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import cls from 'classnames';
 import { isEqual, without, uniqBy, get } from 'lodash';
 import { connect } from 'dva';
-import { Button, Input, Drawer, Tree, Empty, Tooltip } from 'antd';
+import { Button, Input, Drawer, Tree, Empty, Tooltip, Checkbox } from 'antd';
 import { ScrollBar, ListLoader, ExtIcon, ComboList } from 'suid';
-import { constants, getAllParentIdsByNode, getAllChildIdsByNode } from '@/utils';
+import { constants, getAllParentIdsByNode, getAllChildIdsByNode, getAllNodeKeys } from '@/utils';
 import styles from './UnAssignFeatureItem.less';
 
 const { FEATURE_TYPE, SERVER_PATH } = constants;
@@ -23,6 +23,7 @@ class UnAssignFeatureItem extends Component {
       appModuleName: '',
       checkedKeys: [],
       unAssignListData: [],
+      selectAll: false,
     };
   }
 
@@ -132,6 +133,7 @@ class UnAssignFeatureItem extends Component {
   onCancelBatchAssignedFeatureItem = () => {
     this.setState({
       checkedKeys: [],
+      selectAll: false,
     });
   };
 
@@ -166,6 +168,21 @@ class UnAssignFeatureItem extends Component {
       newData = this.filterNodes(searchValue.toLowerCase(), newData);
     }
     return { unAssignListData: newData };
+  };
+
+  handlerSelectAll = e => {
+    const { featureRole } = this.props;
+    const { unAssignListData } = featureRole;
+    let checkedKeys = [];
+    let selectAll = false;
+    if (e.target.checked) {
+      selectAll = true;
+      checkedKeys = getAllNodeKeys(unAssignListData);
+    }
+    this.setState({
+      checkedKeys,
+      selectAll,
+    });
   };
 
   getTooltip = code => {
@@ -273,7 +290,15 @@ class UnAssignFeatureItem extends Component {
   render() {
     const { showAssignFeature, loading } = this.props;
     const assigning = loading.effects['featureRole/assignFeatureItem'];
-    const { checkedKeys, appModuleName, allValue, appModuleId } = this.state;
+    const {
+      checkedKeys,
+      appModuleName,
+      allValue,
+      appModuleId,
+      unAssignListData,
+      selectAll,
+    } = this.state;
+    const diabledSelectAll = unAssignListData.length === 0;
     const checkCount = checkedKeys.length;
     const loadingUnAssigned = loading.effects['featureRole/getUnAssignedFeatureItemList'];
     const appModulePros = {
@@ -310,18 +335,25 @@ class UnAssignFeatureItem extends Component {
         style={{ position: 'absolute' }}
       >
         <div className="header-tool-box">
+          <Checkbox
+            checked={selectAll}
+            onChange={this.handlerSelectAll}
+            disabled={diabledSelectAll || loadingUnAssigned}
+            style={{ marginLeft: 25 }}
+          >
+            全选
+          </Checkbox>
           <div className="app-box">
-            <span className="label">应用模块</span>
             <ComboList {...appModulePros} />
           </div>
           <div className="tool-search-box">
             <Search
-              placeholder="输入名称关键字查询"
+              placeholder="输入名称关键字"
               value={allValue}
               onChange={e => this.handlerSearchChange(e.target.value)}
               onSearch={this.handlerSearch}
               onPressEnter={this.handlerSearch}
-              style={{ width: 172 }}
+              style={{ width: 142 }}
             />
             {appModuleId ? (
               <ExtIcon
