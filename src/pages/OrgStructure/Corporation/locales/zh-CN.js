@@ -12,6 +12,7 @@ export default {
   'corporation.baseCurrencyName': '本位币货币名称',
   'corporation.defaultTradePartner': '默认贸易伙伴代码',
   'corporation.relatedTradePartner': '关联交易贸易伙伴',
+  'corporation.internalSupplier': '内部供应商代码',
   'corporation.frozen': '冻结',
   'corporation.weixinAppid': '微信用户凭证',
   'corporation.weixinSecret': '微信用户凭证密钥',

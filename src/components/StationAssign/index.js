@@ -48,8 +48,12 @@ class StationAssign extends Component {
     this.listCardRef.handlerSearchChange(v);
   };
 
-  handlerSearch = () => {
-    this.listCardRef.handlerSearch();
+  handlerSearch = (v) => {
+    this.listCardRef.handlerSearch(v);
+  };
+
+  handlerPressEnter = () => {
+    this.listCardRef.handlerPressEnter();
   };
 
   assignedSave = () => {
@@ -93,7 +97,7 @@ class StationAssign extends Component {
               placeholder="输入代码或名称关键字查询"
               onChange={e => this.handlerSearchChange(e.target.value)}
               onSearch={this.handlerSearch}
-              onPressEnter={this.handlerSearch}
+              onPressEnter={this.handlerPressEnter}
               style={{ width: 132 }}
             />
           </Tooltip>
