@@ -4,7 +4,7 @@ import { isEqual, without, uniqBy, get } from 'lodash';
 import { connect } from 'dva';
 import { Button, Input, Drawer, Tree, Empty, Tooltip, Checkbox } from 'antd';
 import { ScrollBar, ListLoader, ExtIcon, ComboList } from 'suid';
-import { constants, getAllParentIdsByNode, getAllChildIdsByNode, getAllNodeKeys } from '@/utils';
+import { constants, getAllParentIdsByNode, getAllChildIdsByNode } from '@/utils';
 import styles from './UnAssignFeatureItem.less';
 
 const { FEATURE_TYPE, SERVER_PATH } = constants;
@@ -172,12 +172,12 @@ class UnAssignFeatureItem extends Component {
 
   handlerSelectAll = e => {
     const { featureRole } = this.props;
-    const { unAssignListData } = featureRole;
+    const { unAssignListKeys } = featureRole;
     let checkedKeys = [];
     let selectAll = false;
     if (e.target.checked) {
       selectAll = true;
-      checkedKeys = getAllNodeKeys(unAssignListData);
+      checkedKeys = [...unAssignListKeys];
     }
     this.setState({
       checkedKeys,

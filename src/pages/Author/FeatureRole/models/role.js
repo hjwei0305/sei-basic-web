@@ -1,5 +1,6 @@
 import { formatMessage } from 'umi-plugin-react/locale';
 import { utils, message } from 'suid';
+import { getAllNodeKeys } from '@/utils';
 import {
   delFeatureRole,
   saveFeatureRole,
@@ -30,6 +31,7 @@ export default modelExtend(model, {
     showConfigUser: false,
     assignListData: [],
     unAssignListData: [],
+    unAssignListKeys: [],
     assignUserData: [],
     assinStationData: [],
   },
@@ -133,17 +135,21 @@ export default modelExtend(model, {
     },
     *getUnAssignedFeatureItemList({ payload }, { call, put }) {
       const re = yield call(getUnAssignedFeatureItemList, payload);
+      const unAssignListData = re.data || [];
+      const unAssignListKeys = getAllNodeKeys(unAssignListData);
       yield put({
         type: 'updateState',
         payload: {
           unAssignListData: [],
+          unAssignListKeys: [],
         },
       });
       if (re.success) {
         yield put({
           type: 'updateState',
           payload: {
-            unAssignListData: re.data,
+            unAssignListData,
+            unAssignListKeys,
           },
         });
       } else {
