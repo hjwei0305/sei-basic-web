@@ -32,6 +32,7 @@ class UnAssignFeatureItem extends Component {
     if (!isEqual(prevProps.featureRole.currentRole, featureRole.currentRole)) {
       this.setState({
         checkedKeys: [],
+        selectAll: false,
         unAssignListData: [],
       });
     }
@@ -39,6 +40,7 @@ class UnAssignFeatureItem extends Component {
       this.setState(
         {
           checkedKeys: [],
+          selectAll: false,
         },
         this.getUnAssignData,
       );
@@ -47,6 +49,7 @@ class UnAssignFeatureItem extends Component {
       this.setState(
         {
           unAssignListData: featureRole.unAssignListData,
+          selectAll: false,
         },
         () => {
           const { allValue } = this.state;
