@@ -142,7 +142,15 @@ class FeatureRole extends Component {
         },
       },
       () => {
-        const newData = this.getLocalFilterData();
+        let newData = [...this.data];
+        if (this.allValue) {
+          const valueKey = this.allValue.toLowerCase();
+          newData = newData.filter(
+            ds =>
+              ds.name.toLowerCase().indexOf(valueKey) > -1 ||
+              ds.code.toLowerCase().indexOf(valueKey) > -1,
+          );
+        }
         const listData = newData.slice((current - 1) * pageSize, current * pageSize);
         this.setState({
           listData,
