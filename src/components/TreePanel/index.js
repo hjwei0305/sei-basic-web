@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import cls from 'classnames';
-import { isEqual, trim } from 'lodash';
+import { isEqual, trim, get } from 'lodash';
 import PropTypes from 'prop-types';
 import { Input, Tree, Card, Empty } from 'antd';
 import { ScrollBar, ListLoader, ExtIcon } from 'suid';
@@ -162,7 +162,7 @@ class TreePanel extends PureComponent {
         );
       if (readerChildren && readerChildren.length > 0) {
         return (
-          <TreeNode title={title} key={item.id}>
+          <TreeNode title={<span title={get(item, 'namePath')}>{title}</span>} key={item.id}>
             {this.renderTreeNodes(readerChildren)}
           </TreeNode>
         );
@@ -170,7 +170,7 @@ class TreePanel extends PureComponent {
       return (
         <TreeNode
           switcherIcon={<ExtIcon type="dian" style={{ fontSize: 12 }} />}
-          title={title}
+          title={<span title={get(item, 'namePath')}>{title}</span>}
           key={item.id}
         />
       );
