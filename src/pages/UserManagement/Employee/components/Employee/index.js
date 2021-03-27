@@ -180,8 +180,8 @@ class EmployeeHome extends Component {
         required: true,
         render: (_text, record) => (
           <span className={cls('action-box')}>
-            <ExtIcon className="edit" onClick={() => this.edit(record)} type="edit" antd />
-            <ExtAction employeeData={record} onAction={this.handlerAction} />
+            <ExtIcon className="edit" onClick={() => this.edit(record)} type="edit" antd/>
+            <ExtAction employeeData={record} onAction={this.handlerAction}/>
           </span>
         ),
       },
@@ -225,10 +225,10 @@ class EmployeeHome extends Component {
       left: (
         <>
           <Button type="primary" onClick={this.add}>
-            <FormattedMessage id="global.add" defaultMessage="新建" />
+            <FormattedMessage id="global.add" defaultMessage="新建"/>
           </Button>
           <Button onClick={this.reloadData}>
-            <FormattedMessage id="global.refresh" defaultMessage="刷新" />
+            <FormattedMessage id="global.refresh" defaultMessage="刷新"/>
           </Button>
         </>
       ),
@@ -245,7 +245,7 @@ class EmployeeHome extends Component {
       store: {
         type: 'POST',
         url: `${SERVER_PATH}/sei-basic/employee/queryEmployees`,
-        params: { includeSubNode: true },
+        params: { includeSubNode: true, includeFrozen: true },
       },
     };
     const formModalProps = {
@@ -287,7 +287,7 @@ class EmployeeHome extends Component {
     return (
       <div className={cls(styles['employee-box'])}>
         <Card
-          title={<BannerTitle title={currentOrgNode.name} subTitle="员工列表" />}
+          title={<BannerTitle title={currentOrgNode.name} subTitle="员工列表"/>}
           bordered={false}
         >
           <ExtTable {...extTableProps} />
