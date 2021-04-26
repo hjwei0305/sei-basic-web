@@ -32,7 +32,7 @@ class FormModal extends PureComponent {
       }
       const params = {};
       Object.assign(params, rowData || {});
-      Object.assign(params, formData);
+      Object.assign(params, formData, { erpCode: formData.code });
       save(params);
     });
   };
@@ -58,7 +58,7 @@ class FormModal extends PureComponent {
         onOk={this.onFormSubmit}
       >
         <Form {...formItemLayout} layout="horizontal">
-          <FormItem label={formatMessage({ id: 'global.code', defaultMessage: '代码' })}>
+          <FormItem label={formatMessage({ id: 'corporation.erpCode', defaultMessage: 'ERP公司代码' })}>
             {getFieldDecorator('code', {
               initialValue: rowData ? rowData.code : '',
               rules: [
@@ -66,7 +66,7 @@ class FormModal extends PureComponent {
                   required: true,
                   message: formatMessage({
                     id: 'global.code.required',
-                    defaultMessage: '代码不能为空',
+                    defaultMessage: 'ERP公司代码不能为空',
                   }),
                 },
               ],
@@ -97,24 +97,6 @@ class FormModal extends PureComponent {
                 })(<Input />)}
               </FormItem>
             </Col>
-            <Col span={12}>
-              <FormItem
-                {...colFormItemLayout}
-                label={formatMessage({ id: 'corporation.erpCode', defaultMessage: 'ERP公司代码' })}
-              >
-                {getFieldDecorator('erpCode', {
-                  initialValue: rowData ? rowData.erpCode : '',
-                  rules: [
-                    {
-                      required: true,
-                      message: 'ERP公司代码不能为空',
-                    },
-                  ],
-                })(<Input />)}
-              </FormItem>
-            </Col>
-          </Row>
-          <Row>
             <Col span={12}>
               <FormItem
                 {...colFormItemLayout}
@@ -153,8 +135,6 @@ class FormModal extends PureComponent {
                 })(<Input />)}
               </FormItem>
             </Col>
-          </Row>
-          <Row>
             <Col span={12}>
               <FormItem
                 {...colFormItemLayout}
@@ -181,8 +161,6 @@ class FormModal extends PureComponent {
                 })(<Input />)}
               </FormItem>
             </Col>
-          </Row>
-          <Row>
             <Col span={12}>
               <FormItem
                 {...colFormItemLayout}
@@ -221,8 +199,6 @@ class FormModal extends PureComponent {
                 })(<InputNumber style={{ width: '100%' }} precision={0} />)}
               </FormItem>
             </Col>
-          </Row>
-          <Row>
             <Col span={12}>
               <FormItem
                 {...colFormItemLayout}
@@ -249,8 +225,6 @@ class FormModal extends PureComponent {
                 })(<Input />)}
               </FormItem>
             </Col>
-          </Row>
-          <Row>
             <Col span={12}>
               <FormItem
                 {...colFormItemLayout}

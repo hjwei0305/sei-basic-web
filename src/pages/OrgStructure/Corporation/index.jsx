@@ -161,7 +161,7 @@ class Corporation extends Component {
         width: 80,
       },
       {
-        title: formatMessage({ id: 'global.code', defaultMessage: '代码' }),
+        title: formatMessage({ id: 'corporation.erpCode', defaultMessage: 'ERP公司代码' }),
         dataIndex: 'code',
         width: 120,
         required: true,
@@ -177,12 +177,6 @@ class Corporation extends Component {
         dataIndex: 'shortName',
         width: 120,
         required: true,
-      },
-      {
-        title: formatMessage({ id: 'corporation.erpCode', defaultMessage: 'ERP公司代码' }),
-        dataIndex: 'erpCode',
-        width: 80,
-        optional: true,
       },
       {
         title: formatMessage({
