@@ -32,7 +32,7 @@ class FormModal extends PureComponent {
       }
       const params = {};
       Object.assign(params, rowData || {});
-      Object.assign(params, formData, { erpCode: formData.code });
+      Object.assign(params, formData, { code: formData.erpCode });
       save(params);
     });
   };
@@ -59,13 +59,13 @@ class FormModal extends PureComponent {
       >
         <Form {...formItemLayout} layout="horizontal">
           <FormItem label={formatMessage({ id: 'corporation.erpCode', defaultMessage: 'ERP公司代码' })}>
-            {getFieldDecorator('code', {
-              initialValue: rowData ? rowData.code : '',
+            {getFieldDecorator('erpCode', {
+              initialValue: rowData ? rowData.erpCode : '',
               rules: [
                 {
                   required: true,
                   message: formatMessage({
-                    id: 'global.code.required',
+                    id: 'global.erpCode.required',
                     defaultMessage: 'ERP公司代码不能为空',
                   }),
                 },
