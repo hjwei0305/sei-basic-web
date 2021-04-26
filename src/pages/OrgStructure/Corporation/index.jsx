@@ -162,7 +162,7 @@ class Corporation extends Component {
       },
       {
         title: formatMessage({ id: 'corporation.erpCode', defaultMessage: 'ERP公司代码' }),
-        dataIndex: 'code',
+        dataIndex: 'erpCode',
         width: 120,
         required: true,
       },
