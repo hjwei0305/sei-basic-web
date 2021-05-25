@@ -1,8 +1,11 @@
 import React, { PureComponent } from 'react';
 import { Row, Col, Form, Input, InputNumber, Checkbox } from 'antd';
 import { formatMessage } from 'umi-plugin-react/locale';
-import { ExtModal } from 'suid';
+import { ExtModal, ComboTree } from 'suid';
+import { get } from 'lodash';
+import { constants } from '@/utils';
 
+const { SERVER_PATH } = constants;
 const FormItem = Form.Item;
 const formItemLayout = {
   labelCol: {
@@ -37,6 +40,22 @@ class FormModal extends PureComponent {
     });
   };
 
+  getComboTreeProps = () => {
+    const { form } = this.props;
+    return {
+      form,
+      name: 'organizationName',
+      field: ['organizationId'],
+      store: {
+        url: `${SERVER_PATH}/sei-basic/organization/findOrgTreeWithoutFrozen`,
+      },
+      reader: {
+        name: 'name',
+        field: ['id'],
+      },
+    };
+  };
+
   render() {
     const { form, rowData, closeFormModal, saving, showModal } = this.props;
     const { getFieldDecorator } = form;
@@ -58,7 +77,9 @@ class FormModal extends PureComponent {
         onOk={this.onFormSubmit}
       >
         <Form {...formItemLayout} layout="horizontal">
-          <FormItem label={formatMessage({ id: 'corporation.erpCode', defaultMessage: 'ERP公司代码' })}>
+          <FormItem
+            label={formatMessage({ id: 'corporation.erpCode', defaultMessage: 'ERP公司代码' })}
+          >
             {getFieldDecorator('erpCode', {
               initialValue: rowData ? rowData.erpCode : '',
               rules: [
@@ -85,6 +106,16 @@ class FormModal extends PureComponent {
                 },
               ],
             })(<Input />)}
+          </FormItem>
+          <FormItem label="组织机构id" hidden>
+            {getFieldDecorator('organizationId', {
+              initialValue: get(rowData, 'organizationId', undefined),
+            })(<Input />)}
+          </FormItem>
+          <FormItem label="组织机构">
+            {getFieldDecorator('organization.name', {
+              initialValue: get(rowData, 'organization.name', ''),
+            })(<ComboTree allowClear {...this.getComboTreeProps()} />)}
           </FormItem>
           <Row>
             <Col span={12}>
