@@ -113,7 +113,7 @@ class FormModal extends PureComponent {
             })(<Input />)}
           </FormItem>
           <FormItem label="组织机构">
-            {getFieldDecorator('organization.name', {
+            {getFieldDecorator('organizationName', {
               initialValue: get(rowData, 'organization.name', ''),
             })(<ComboTree allowClear {...this.getComboTreeProps()} />)}
           </FormItem>
