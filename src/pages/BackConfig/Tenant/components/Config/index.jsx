@@ -4,6 +4,7 @@ import { Tabs, Button } from 'antd';
 import { connect } from 'dva';
 import Watermark from './Watermark';
 import SystemLogo from './SystemLogo';
+import FlowEngineCode from './FlowEngineCode';
 import styles from './index.less';
 
 const { TabPane } = Tabs;
@@ -60,10 +61,23 @@ class index extends PureComponent {
     });
   };
 
+  handleSaveFlowEnginCode = values => {
+    const { dispatch, tenant } = this.props;
+    const { tenantSetting, configTenant } = tenant;
+    dispatch({
+      type: 'tenant/saveTenantSetting',
+      payload: {
+        ...tenantSetting,
+        code: configTenant.code,
+        flowEngineCode: values,
+      },
+    });
+  };
+
   render() {
     const { tenant, loading } = this.props;
     const { configTenant, tenantSetting } = tenant;
-    const { watermark = null, logo = null } = tenantSetting || {};
+    const { watermark = null, logo = null, flowEngineCode = null } = tenantSetting || {};
     const watermarkObj = JSON.parse(watermark);
     const logoObj = JSON.parse(logo);
 
@@ -90,6 +104,14 @@ class index extends PureComponent {
               opting={loading.global}
               editData={logoObj}
               onSave={this.handleSaveLogo}
+            />
+          </TabPane>
+          <TabPane tab={`租户【${configTenant.name}】流程引擎代码`} key="flowEngineCode">
+            <FlowEngineCode
+              key={flowEngineCode}
+              opting={loading.global}
+              editData={flowEngineCode}
+              onSave={this.handleSaveFlowEnginCode}
             />
           </TabPane>
         </Tabs>
