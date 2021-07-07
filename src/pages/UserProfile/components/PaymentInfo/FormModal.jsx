@@ -124,6 +124,17 @@ class FormModal extends PureComponent {
               ],
             })(<Input />)}
           </FormItem>
+          <FormItem label="银行开户名">
+            {getFieldDecorator('bankAccountName', {
+              initialValue: editData ? editData.bankAccountName : receiverName,
+              rules: [
+                {
+                  required: true,
+                  message: '请输入银行开户名',
+                },
+              ],
+            })(<Input />)}
+          </FormItem>
           <FormItem label="银行id" hidden>
             {getFieldDecorator('bankId', {
               initialValue: editData ? editData.bankId : '',

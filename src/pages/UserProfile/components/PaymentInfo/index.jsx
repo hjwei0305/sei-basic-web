@@ -142,6 +142,11 @@ class PaymentInfo extends Component {
         width: 200,
       },
       {
+        title: '银行开户名',
+        dataIndex: 'bankAccountName',
+        width: 200,
+      },
+      {
         title: '银行代码',
         dataIndex: 'bank.code',
         width: 200,
