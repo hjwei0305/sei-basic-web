@@ -103,8 +103,8 @@ class FormModal extends PureComponent {
                   message: '员工编号不能为空',
                 },
                 {
-                  pattern: '^[A-Za-z0-9]{1,10}$',
-                  message: '允许输入字母和数字,且不超过10个字符!',
+                  pattern: '^[A-Za-z0-9]{1,20}$',
+                  message: '允许输入字母和数字,且不超过20个字符!',
                 },
               ],
             })(<Input disabled={!!currentEmployee} />)}
