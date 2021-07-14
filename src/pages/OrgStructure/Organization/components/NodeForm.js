@@ -34,6 +34,9 @@ const formItemLayout = {
       shortName: Form.createFormField({
         value: editData.shortName,
       }),
+      refCode: Form.createFormField({
+        value: editData.refCode,
+      }),
       frozen: Form.createFormField({
         value: editData.frozen,
       }),
@@ -203,6 +206,11 @@ class NodeForm extends PureComponent {
                 <FormItem label="简称">
                   {getFieldDecorator('shortName', {
                     initialValue: this.getInitValueByFields('shortName'),
+                  })(<Input />)}
+                </FormItem>
+                <FormItem label="参考码">
+                  {getFieldDecorator('refCode', {
+                    initialValue: this.getInitValueByFields('refCode'),
                   })(<Input />)}
                 </FormItem>
                 <FormItem label="序号">
