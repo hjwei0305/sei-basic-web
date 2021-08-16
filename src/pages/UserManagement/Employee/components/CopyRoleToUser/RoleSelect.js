@@ -5,6 +5,7 @@ import { Row, Col, Tag } from 'antd';
 import { ListCard } from 'suid';
 import { constants } from '@/utils';
 import { EffectDate } from '@/components';
+import { formatMessage } from 'umi-plugin-react/locale';
 
 const { SERVER_PATH, ROLE_TYPE } = constants;
 
@@ -77,7 +78,7 @@ class RoleSelect extends PureComponent {
     if (row.publicOrgId) {
       publicOrg = (
         <div className="field-item info">
-          <span className="label">组织机构</span>
+          <span className="label">{formatMessage({id: 'basic_000018', defaultMessage: '组织机构'})}</span>
           <span className="value">{row.publicOrgName}</span>
         </div>
       );

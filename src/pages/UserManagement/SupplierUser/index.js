@@ -147,7 +147,7 @@ class SupplierUser extends Component {
     } = supplierUser;
     const columns = [
       {
-        title: formatMessage({ id: 'global.operation', defaultMessage: '操作' }),
+        title: formatMessage({ id: 'global.operation', defaultMessage: formatMessage({id: 'basic_000019', defaultMessage: '操作'}) }),
         key: 'operation',
         width: 120,
         align: 'center',
@@ -167,7 +167,7 @@ class SupplierUser extends Component {
               placement="topLeft"
               title={formatMessage({
                 id: 'global.delete.confirm',
-                defaultMessage: '确定要删除吗？提示：删除后不可恢复',
+                defaultMessage: formatMessage({id: 'basic_000021', defaultMessage: '确定要删除吗？提示：删除后不可恢复'}),
               })}
               onConfirm={() => this.del(record)}
             >

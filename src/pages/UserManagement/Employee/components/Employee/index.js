@@ -171,7 +171,7 @@ class EmployeeHome extends Component {
     } = employee;
     const columns = [
       {
-        title: formatMessage({ id: 'global.operation', defaultMessage: '操作' }),
+        title: formatMessage({ id: 'global.operation', defaultMessage: formatMessage({id: 'basic_000019', defaultMessage: '操作'}) }),
         key: 'operation',
         width: 120,
         align: 'center',
@@ -210,7 +210,7 @@ class EmployeeHome extends Component {
         },
       },
       {
-        title: '组织机构',
+        title: formatMessage({id: 'basic_000018', defaultMessage: '组织机构'}),
         dataIndex: 'organizationName',
         width: 420,
         required: true,

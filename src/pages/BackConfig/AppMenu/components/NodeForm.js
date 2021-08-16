@@ -176,14 +176,14 @@ class NodeForm extends PureComponent {
     if (editData.parentId) {
       if (editData.id) {
         title = editData.name;
-        subTitle = '编辑';
+        subTitle = formatMessage({id: 'basic_000020', defaultMessage: '编辑'});
       } else {
         title = editData.parentName;
         subTitle = '新建子菜单';
       }
     } else if (editData.id) {
       title = editData.name;
-      subTitle = '编辑';
+      subTitle = formatMessage({id: 'basic_000020', defaultMessage: '编辑'});
     } else {
       title = '新建应用';
     }

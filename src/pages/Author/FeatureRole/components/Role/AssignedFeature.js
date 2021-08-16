@@ -372,7 +372,7 @@ class FeaturePage extends Component {
     const loadingAssigned = loading.effects['featureRole/getAssignFeatureItem'];
     return (
       <div className={cls(styles['assigned-feature-box'])}>
-        <Card title={<BannerTitle title={currentRole.name} subTitle="功能权限" />} bordered={false}>
+        <Card title={<BannerTitle title={currentRole.name} subTitle={formatMessage({id: 'basic_000005', defaultMessage: '功能权限'})} />} bordered={false}>
           <div className={cls('tool-box')}>
             <Button
               icon="plus"

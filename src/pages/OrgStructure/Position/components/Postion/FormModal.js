@@ -54,7 +54,7 @@ class FormModal extends PureComponent {
     const title = currentPosition
       ? formatMessage({
           id: 'global.edit',
-          defaultMessage: '编辑',
+          defaultMessage: formatMessage({id: 'basic_000020', defaultMessage: '编辑'}),
         })
       : formatMessage({ id: 'global.add', defaultMessage: '新建' });
     const comboListProps = {
@@ -82,12 +82,12 @@ class FormModal extends PureComponent {
         onOk={this.onFormSubmit}
       >
         <Form {...formItemLayout} layout="horizontal">
-          <FormItem label="组织机构">
+          <FormItem label={formatMessage({id: 'basic_000018', defaultMessage: '组织机构'})}>
             {getFieldDecorator('organizationName', {
               initialValue: currentOrgNode && currentOrgNode.name,
             })(<Input disabled={!!currentOrgNode} />)}
           </FormItem>
-          <FormItem label="岗位类别">
+          <FormItem label={formatMessage({id: 'basic_000017', defaultMessage: '岗位类别'})}>
             {getFieldDecorator('positionCategoryName', {
               initialValue: currentPosition ? currentPosition.positionCategoryName : '',
               rules: [

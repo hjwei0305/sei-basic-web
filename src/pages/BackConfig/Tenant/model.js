@@ -1,5 +1,5 @@
-import { formatMessage } from 'umi-plugin-react/locale';
 import { utils, message } from 'suid';
+import { formatMessage } from 'umi-plugin-react/locale';
 import {
   delTenant,
   getTenantList,

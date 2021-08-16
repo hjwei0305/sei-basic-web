@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import cls from 'classnames';
 import { FormattedMessage } from 'umi-plugin-react/locale';
 import { Button, Form, Input } from 'antd';
+import { formatMessage } from 'umi-plugin-react/locale';
 import styles from './Form.less';
 
 const FormItem = Form.Item;
@@ -45,7 +46,7 @@ class TenantAdminForm extends PureComponent {
             <span className="title">{title}</span>
           </div>
           <Form {...formItemLayout}>
-            <FormItem label="组织机构">
+            <FormItem label={formatMessage({id: 'basic_000018', defaultMessage: '组织机构'})}>
               {getFieldDecorator('tenantRootOrganizationName', {
                 initialValue: organizationDto ? organizationDto.name : '',
                 rules: [

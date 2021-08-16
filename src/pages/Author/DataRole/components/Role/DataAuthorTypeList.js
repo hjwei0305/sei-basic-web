@@ -64,7 +64,7 @@ class DataAuthorTypeList extends PureComponent {
     const { currentAppModuleId } = this.state;
     const columns = [
       {
-        title: formatMessage({ id: 'global.operation', defaultMessage: '操作' }),
+        title: formatMessage({ id: 'global.operation', defaultMessage: formatMessage({id: 'basic_000019', defaultMessage: '操作'}) }),
         key: 'operation',
         width: 100,
         align: 'center',

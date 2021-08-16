@@ -62,7 +62,7 @@ class FormModal extends PureComponent {
     const title = rowData
       ? formatMessage({
           id: 'global.edit',
-          defaultMessage: '编辑',
+          defaultMessage: formatMessage({id: 'basic_000020', defaultMessage: '编辑'}),
         })
       : formatMessage({ id: 'global.add', defaultMessage: '新建' });
     return (
@@ -107,12 +107,12 @@ class FormModal extends PureComponent {
               ],
             })(<Input />)}
           </FormItem>
-          <FormItem label="组织机构id" hidden>
+          <FormItem label={formatMessage({id: 'basic_000405', defaultMessage: '组织机构id'})} hidden>
             {getFieldDecorator('organizationId', {
               initialValue: get(rowData, 'organizationId', undefined),
             })(<Input />)}
           </FormItem>
-          <FormItem label="组织机构">
+          <FormItem label={formatMessage({id: 'basic_000018', defaultMessage: '组织机构'})}>
             {getFieldDecorator('organizationName', {
               initialValue: get(rowData, 'organization.name', ''),
             })(<ComboTree allowClear {...this.getComboTreeProps()} />)}

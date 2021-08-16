@@ -5,6 +5,7 @@ import { isEqual, trim } from 'lodash';
 import { Card, Input, Tree, Empty, Layout } from 'antd';
 import { ScrollBar, ExtIcon, ListLoader } from 'suid';
 import empty from '@/assets/item_empty.svg';
+import { formatMessage } from 'umi-plugin-react/locale';
 import Postion from './components/Postion';
 import styles from './index.less';
 
@@ -233,7 +234,7 @@ class PositionHome extends Component {
       <div className={cls(styles['container-box'])}>
         <Layout className="auto-height">
           <Sider width={380} className="auto-height" theme="light">
-            <Card title="组织机构" bordered={false} className="left-content">
+            <Card title={formatMessage({id: 'basic_000018', defaultMessage: '组织机构'})} bordered={false} className="left-content">
               <div className="header-tool-box">
                 <Search
                   allowClear

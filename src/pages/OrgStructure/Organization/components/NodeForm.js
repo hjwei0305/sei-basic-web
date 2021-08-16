@@ -149,7 +149,7 @@ class NodeForm extends PureComponent {
     let subTitle = '';
     if (editData.id) {
       title = editData.name;
-      subTitle = '编辑';
+      subTitle = formatMessage({id: 'basic_000020', defaultMessage: '编辑'});
     } else {
       title = editData.parentName;
       subTitle = '新建下级组织';

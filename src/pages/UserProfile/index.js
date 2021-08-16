@@ -3,6 +3,7 @@ import { connect } from 'dva';
 import { Tabs, Card } from 'antd';
 import { ScrollBar } from 'suid';
 import cls from 'classnames';
+import { formatMessage } from 'umi-plugin-react/locale';
 import BasicInfo from './components/BasicInfo';
 import PositionInfo from './components/PositionInfo';
 import MailInfo from './components/MailInfo';
@@ -35,41 +36,41 @@ class UserProfile extends React.Component {
     return (
       <div className={cls(styles['container-box'])}>
         <Tabs activeKey={activeTabKey} tabPosition="left" onChange={this.handleActiveChange}>
-          <TabPane tab="基本信息" key="baiscInfo">
-            <Card title="基本信息" bordered={false}>
+          <TabPane tab={formatMessage({id: 'basic_000000', defaultMessage: '基本信息'})} key="baiscInfo">
+            <Card title={formatMessage({id: 'basic_000000', defaultMessage: '基本信息'})} bordered={false}>
               <BasicInfo />
             </Card>
           </TabPane>
-          <TabPane tab="账号信息" key="accountBinding">
-            <Card title="账号信息" bordered={false}>
+          <TabPane tab={formatMessage({id: 'basic_000000', defaultMessage: '基本信息'})} key="accountBinding">
+            <Card title={formatMessage({id: 'basic_000000', defaultMessage: '基本信息'})} bordered={false}>
               <ScrollBar>
                 <AccountBinding />
               </ScrollBar>
             </Card>
           </TabPane>
-          <TabPane tab="支付信息" key="paymentInfo">
-            <Card title="支付信息" bordered={false}>
+          <TabPane tab={formatMessage({id: 'basic_000002', defaultMessage: '支付信息'})} key="paymentInfo">
+            <Card title={formatMessage({id: 'basic_000002', defaultMessage: '支付信息'})} bordered={false}>
               <PaymentInfo />
             </Card>
           </TabPane>
-          <TabPane tab="岗位信息" key="positionInfo">
-            <Card title="岗位信息" bordered={false}>
+          <TabPane tab={formatMessage({id: 'basic_000003', defaultMessage: '岗位信息'})} key="positionInfo">
+            <Card title={formatMessage({id: 'basic_000003', defaultMessage: '岗位信息'})} bordered={false}>
               <PositionInfo />
             </Card>
           </TabPane>
-          <TabPane tab="邮件提醒" key="mailInfo">
-            <Card title="邮件提醒" bordered={false}>
+          <TabPane tab={formatMessage({id: 'basic_000004', defaultMessage: '邮件提醒'})} key="mailInfo">
+            <Card title={formatMessage({id: 'basic_000004', defaultMessage: '邮件提醒'})} bordered={false}>
               <MailInfo />
             </Card>
           </TabPane>
-          <TabPane tab="功能权限" key="featureAuth">
+          <TabPane tab={formatMessage({id: 'basic_000005', defaultMessage: '功能权限'})} key="featureAuth">
             <FeatureAuthView />
           </TabPane>
-          <TabPane tab="数据权限" key="dataAuth">
+          <TabPane tab={formatMessage({id: 'basic_000006', defaultMessage: '数据权限'})} key="dataAuth">
             <DataAuthView />
           </TabPane>
-          {/* <TabPane tab="修改密码" key="updatePwd">
-            <Card title="修改密码" bordered={false}>
+          {/* <TabPane tab={formatMessage({id: 'basic_000007', defaultMessage: '修改密码'})} key="updatePwd">
+            <Card title={formatMessage({id: 'basic_000007', defaultMessage: '修改密码'})} bordered={false}>
               <UpdatePwd />
             </Card>
           </TabPane> */}

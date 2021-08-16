@@ -3,6 +3,7 @@ import { Form, Input } from 'antd';
 import { ExtModal } from 'suid';
 import md5 from 'md5';
 import { userUtils } from '@/utils';
+import { formatMessage } from 'umi-plugin-react/locale';
 
 const { getCurrentUser } = userUtils;
 const FormItem = Form.Item;
@@ -38,7 +39,7 @@ class ResetPwdModal extends PureComponent {
 
   checkPassword = (_rule, password, callback) => {
     if (!password || password.length < 8) {
-      callback('密码须包含字母、数字、特殊字符至少2种,密码长度不能小于8位');
+      callback(formatMessage({id: 'basic_000008', defaultMessage: '密码须包含字母、数字、特殊字符至少2种,密码长度不能小于8位'}));
       return false;
     }
     let iNow = 0;
@@ -52,7 +53,7 @@ class ResetPwdModal extends PureComponent {
       iNow += 1;
     }
     if (iNow < 2) {
-      callback('密码须包含字母、数字、特殊字符至少2种,密码长度不能小于8位');
+      callback(formatMessage({id: 'basic_000008', defaultMessage: '密码须包含字母、数字、特殊字符至少2种,密码长度不能小于8位'}));
       return false;
     }
     callback();
@@ -93,7 +94,7 @@ class ResetPwdModal extends PureComponent {
               rules: [{ required: true, message: '请填写旧密码!' }],
             })(<Input.Password visibilityToggle />)}
           </FormItem>
-          <FormItem {...formItemLayout} label="新密码">
+          <FormItem {...formItemLayout} label={formatMessage({id: 'basic_000012', defaultMessage: '新密码'})}>
             {getFieldDecorator('newPassword', {
               initialValue: '',
               rules: [
@@ -102,7 +103,7 @@ class ResetPwdModal extends PureComponent {
               ],
             })(<Input.Password visibilityToggle />)}
           </FormItem>
-          <FormItem {...formItemLayout} label="确认新密码">
+          <FormItem {...formItemLayout} label={formatMessage({id: 'basic_000013', defaultMessage: '确认新密码'})}>
             {getFieldDecorator('confirmNewPassword', {
               initialValue: '',
               rules: [

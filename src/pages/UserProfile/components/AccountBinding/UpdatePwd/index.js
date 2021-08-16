@@ -4,7 +4,7 @@ import cls from 'classnames';
 import { Form, Input, Button, Icon } from 'antd';
 import { userUtils } from '@/utils';
 import md5 from 'md5';
-
+import { formatMessage } from 'umi-plugin-react/locale';
 import styles from './index.less';
 
 const { getCurrentUser } = userUtils;
@@ -49,7 +49,7 @@ class UpdatePwd extends React.Component {
 
   checkPassword = (_, password, callback) => {
     if (!password || password.length < 8) {
-      callback('密码须包含字母、数字、特殊字符至少2种,密码长度不能小于8位');
+      callback(formatMessage({id: 'basic_000008', defaultMessage: '密码须包含字母、数字、特殊字符至少2种,密码长度不能小于8位'}));
       return false;
     }
     let iNow = 0;
@@ -63,7 +63,7 @@ class UpdatePwd extends React.Component {
       iNow += 1;
     }
     if (iNow < 2) {
-      callback('密码须包含字母、数字、特殊字符至少2种,密码长度不能小于8位');
+      callback(formatMessage({id: 'basic_000008', defaultMessage: '密码须包含字母、数字、特殊字符至少2种,密码长度不能小于8位'}));
       return false;
     }
     callback();
@@ -85,16 +85,16 @@ class UpdatePwd extends React.Component {
           >
             <div className={cls(styles['info-tip-wrapper'])}>
               <Icon type="info-circle" />
-              <span className={cls('tip-text')}>为保障您的帐号安全，修改密码前请填写原密码</span>
+              <span className={cls('tip-text')}>{formatMessage({id: 'basic_000008', defaultMessage: '密码须包含字母、数字、特殊字符至少2种,密码长度不能小于8位'})}</span>
             </div>
           </FormItem>
-          <FormItem label="原密码">
+          <FormItem label={formatMessage({id: 'basic_000010', defaultMessage: '原密码'})}>
             {getFieldDecorator('oldPassword', {
               initialValue: '',
-              rules: [{ required: true, message: '请填写原密码!' }],
+              rules: [{ required: true, message: formatMessage({id: 'basic_000011', defaultMessage: '原密码'}) }],
             })(<Input.Password visibilityToggle disabled={!!saving} />)}
           </FormItem>
-          <FormItem label="新密码">
+          <FormItem label={formatMessage({id: 'basic_000012', defaultMessage: '新密码'})}>
             {getFieldDecorator('newPassword', {
               initialValue: '',
               rules: [
@@ -103,7 +103,7 @@ class UpdatePwd extends React.Component {
               ],
             })(<Input.Password visibilityToggle disabled={!!saving} />)}
           </FormItem>
-          <FormItem label="确认新密码">
+          <FormItem label={formatMessage({id: 'basic_000013', defaultMessage: '确认新密码'})}>
             {getFieldDecorator('confirmNewPassword', {
               initialValue: '',
               rules: [
@@ -118,7 +118,7 @@ class UpdatePwd extends React.Component {
             }}
           >
             <Button type="primary" loading={saving} onClick={this.handleSave}>
-              立即修改
+            {formatMessage({id: 'basic_000014', defaultMessage: '立即修改'})}
             </Button>
           </FormItem>
         </Form>

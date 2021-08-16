@@ -107,7 +107,7 @@ class PaymentInfo extends Component {
     const { basicInfo } = userProfile;
     const columns = [
       {
-        title: formatMessage({ id: 'global.operation', defaultMessage: '操作' }),
+        title: formatMessage({ id: 'global.operation', defaultMessage: formatMessage({id: 'basic_000019', defaultMessage: '操作'}) }),
         key: 'operation',
         width: 100,
         align: 'center',
@@ -121,13 +121,13 @@ class PaymentInfo extends Component {
               className="edit"
               type="edit"
               antd
-              tooltip={{ title: '编辑' }}
+              tooltip={{ title: formatMessage({id: 'basic_000020', defaultMessage: '编辑'}) }}
             />
             <Popconfirm
               placement="topLeft"
               title={formatMessage({
                 id: 'global.delete.confirm',
-                defaultMessage: '确定要删除吗？提示：删除后不可恢复',
+                defaultMessage: formatMessage({id: 'basic_000021', defaultMessage: '确定要删除吗？提示：删除后不可恢复'}),
               })}
               onConfirm={() => this.handleEvent('del', record)}
             >
@@ -137,32 +137,32 @@ class PaymentInfo extends Component {
         ),
       },
       {
-        title: '收款方名称',
+        title: formatMessage({id: 'basic_000022', defaultMessage: '收款方名称'}),
         dataIndex: 'receiverName',
         width: 200,
       },
       {
-        title: '银行开户名',
+        title: formatMessage({id: 'basic_000023', defaultMessage: '银行开户名'}),
         dataIndex: 'bankAccountName',
         width: 200,
       },
       {
-        title: '银行代码',
+        title: formatMessage({id: 'basic_000024', defaultMessage: '银行代码'}),
         dataIndex: 'bank.code',
         width: 200,
       },
       {
-        title: '银行名称',
+        title: formatMessage({id: 'basic_000025', defaultMessage: '银行名称'}),
         dataIndex: 'bank.name',
         width: 340,
       },
       {
-        title: '银行账号',
+        title: formatMessage({id: 'basic_000026', defaultMessage: '银行账号'}),
         dataIndex: 'bankAccountNumber',
         width: 200,
       },
       {
-        title: '排序',
+        title: formatMessage({id: 'basic_000027', defaultMessage: '排序'}),
         dataIndex: 'rank',
         width: 80,
       },

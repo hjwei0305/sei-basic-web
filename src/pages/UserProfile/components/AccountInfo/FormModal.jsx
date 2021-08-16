@@ -46,7 +46,7 @@ class FormModal extends PureComponent {
     const title = editData
       ? formatMessage({
           id: 'global.edit',
-          defaultMessage: '编辑',
+          defaultMessage: formatMessage({id: 'basic_000020', defaultMessage: '编辑'}),
         })
       : formatMessage({ id: 'global.add', defaultMessage: '新建' });
 

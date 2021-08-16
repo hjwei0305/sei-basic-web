@@ -81,7 +81,7 @@ class FormModal extends PureComponent {
     const title = editData
       ? formatMessage({
           id: 'global.edit',
-          defaultMessage: '编辑',
+          defaultMessage: formatMessage({id: 'basic_000020', defaultMessage: '编辑'}),
         })
       : formatMessage({ id: 'global.add', defaultMessage: '新建' });
 
@@ -113,7 +113,7 @@ class FormModal extends PureComponent {
               initialValue: editData ? editData.receiverCode : receiverCode,
             })(<Input />)}
           </FormItem>
-          <FormItem label="收款方名称">
+          <FormItem label={formatMessage({id: 'basic_000022', defaultMessage: '收款方名称'})}>
             {getFieldDecorator('receiverName', {
               initialValue: editData ? editData.receiverName : receiverName,
               rules: [
@@ -124,7 +124,7 @@ class FormModal extends PureComponent {
               ],
             })(<Input />)}
           </FormItem>
-          <FormItem label="银行开户名">
+          <FormItem label={formatMessage({id: 'basic_000023', defaultMessage: '银行开户名'})}>
             {getFieldDecorator('bankAccountName', {
               initialValue: editData ? editData.bankAccountName : receiverName,
               rules: [
@@ -162,7 +162,7 @@ class FormModal extends PureComponent {
               ],
             })(<Input />)}
           </FormItem>
-          <FormItem label="排序">
+          <FormItem label={formatMessage({id: 'basic_000027', defaultMessage: '排序'})}>
             {getFieldDecorator('rank', {
               initialValue: editData ? editData.rank : '',
               rules: [

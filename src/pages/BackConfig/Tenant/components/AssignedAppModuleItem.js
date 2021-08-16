@@ -134,7 +134,7 @@ class TenantAssignedAppModuleItem extends Component {
     const { currentTenant } = tenant;
     const columns = [
       {
-        title: formatMessage({ id: 'global.operation', defaultMessage: '操作' }),
+        title: formatMessage({ id: 'global.operation', defaultMessage: formatMessage({id: 'basic_000019', defaultMessage: '操作'}) }),
         key: 'operation',
         width: 80,
         align: 'center',

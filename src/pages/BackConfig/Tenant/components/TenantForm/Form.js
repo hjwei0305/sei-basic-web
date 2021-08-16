@@ -94,7 +94,7 @@ class TenantForm extends PureComponent {
                 ],
               })(<Input />)}
             </FormItem>
-            <FormItem label="组织机构">
+            <FormItem label={formatMessage({id: 'basic_000018', defaultMessage: '组织机构'})}>
               {getFieldDecorator('tenantRootOrganizationName', {
                 initialValue: tenantRootOrganization ? tenantRootOrganization.name : '',
                 rules: [

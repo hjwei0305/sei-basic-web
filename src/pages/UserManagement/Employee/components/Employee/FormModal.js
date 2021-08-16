@@ -60,7 +60,7 @@ class FormModal extends PureComponent {
     const title = currentEmployee
       ? formatMessage({
           id: 'global.edit',
-          defaultMessage: '编辑',
+          defaultMessage: formatMessage({id: 'basic_000020', defaultMessage: '编辑'}),
         })
       : formatMessage({ id: 'global.add', defaultMessage: '新建' });
     const comboTreeProps = {
@@ -85,7 +85,7 @@ class FormModal extends PureComponent {
         onOk={this.onFormSubmit}
       >
         <Form {...formItemLayout} layout="horizontal">
-          <FormItem label="组织机构">
+          <FormItem label={formatMessage({id: 'basic_000018', defaultMessage: '组织机构'})}>
             {getFieldDecorator('organizationName', {
               initialValue: get(
                 currentEmployee,

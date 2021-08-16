@@ -201,7 +201,7 @@ class TreePanel extends Component {
             placement="topLeft"
             title={formatMessage({
               id: 'global.delete.confirm',
-              defaultMessage: '确定要删除吗？提示：删除后不可恢复',
+              defaultMessage: formatMessage({id: 'basic_000021', defaultMessage: '确定要删除吗？提示：删除后不可恢复'}),
             })}
             onConfirm={() => {
               this.handleTreeOpt('delNode');
@@ -240,7 +240,7 @@ class TreePanel extends Component {
           <MoveTreeModal
             treeData={moveTreeData}
             visible={mTmVisible}
-            title={`移动结点【${selectedTreeNode.name}】到:`}
+            title={formatMessage({id: 'basic_000188', defaultMessage: '移动结点【{node}】到'}, {node: selectedTreeNode.name})}
             onCancel={() => {
               this.handleCancel('move');
             }}

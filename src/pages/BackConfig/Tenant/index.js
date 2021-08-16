@@ -341,7 +341,7 @@ class Tenant extends Component {
                           <Popconfirm
                             title={formatMessage({
                               id: 'global.delete.confirm',
-                              defaultMessage: '确定要删除吗？提示：删除后不可恢复',
+                              defaultMessage: formatMessage({id: 'basic_000021', defaultMessage: '确定要删除吗？提示：删除后不可恢复'}),
                             })}
                             onConfirm={e => this.delTenant(item, e)}
                           >

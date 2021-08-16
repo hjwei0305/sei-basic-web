@@ -11,6 +11,7 @@ import { get } from 'lodash';
 import { Layout, Button, Input, Tooltip, Tag } from 'antd';
 import { ListCard } from 'suid';
 import { constants } from '@/utils';
+import { formatMessage } from 'umi-plugin-react/locale';
 import RoleGroup from './RoleGroup';
 import styles from './index.less';
 
@@ -100,7 +101,7 @@ class DataRoleAssign extends Component {
     if (row.publicOrgId) {
       publicOrg = (
         <div className="field-item info">
-          <span className="label">组织机构</span>
+          <span className="label">{formatMessage({id: 'basic_000018', defaultMessage: '组织机构'})}</span>
           <span className="value">{row.publicOrgName}</span>
         </div>
       );

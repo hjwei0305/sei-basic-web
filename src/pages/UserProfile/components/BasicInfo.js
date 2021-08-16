@@ -4,6 +4,7 @@ import { get, isEqual } from 'lodash';
 import { Form, Radio, Input, Button, Select, Row, Col, Upload } from 'antd';
 import { message } from 'suid';
 import { userUtils } from '@/utils';
+import { formatMessage } from 'umi-plugin-react/locale';
 
 const { getCurrentUser } = userUtils;
 const FormItem = Form.Item;
@@ -153,7 +154,7 @@ class BasicInfo extends PureComponent {
         </Row>
         <Row>
           <Col span={12}>
-            <FormItem label="组织机构" {...formItemLayout}>
+            <FormItem label={formatMessage({id: 'basic_000018', defaultMessage: '组织机构'})} {...formItemLayout}>
               {getFieldDecorator('organizationName', {
                 initialValue: organizationName,
               })(<Input disabled />)}

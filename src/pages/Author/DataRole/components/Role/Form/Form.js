@@ -174,7 +174,7 @@ class RoleGroupForm extends PureComponent {
                     ],
                   })(<ComboList {...publicUserTypeProps} />)}
                 </FormItem>
-                <FormItem label="组织机构">
+                <FormItem label={formatMessage({id: 'basic_000018', defaultMessage: '组织机构'})}>
                   {getFieldDecorator('publicOrgName', {
                     initialValue: roleData ? roleData.publicOrgName : null,
                     rules: [

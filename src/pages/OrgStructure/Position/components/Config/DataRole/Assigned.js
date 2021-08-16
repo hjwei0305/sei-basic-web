@@ -5,6 +5,7 @@ import { get } from 'lodash';
 import { Button, Drawer, Popconfirm, Tag } from 'antd';
 import { ListCard, ExtIcon } from 'suid';
 import { constants } from '@/utils';
+import { formatMessage } from 'umi-plugin-react/locale';
 import styles from './Assigned.less';
 
 const { SERVER_PATH } = constants;
@@ -139,7 +140,7 @@ class DataRoleAssigned extends PureComponent {
     if (row.publicOrgId) {
       publicOrg = (
         <div className="field-item info">
-          <span className="label">组织机构</span>
+          <span className="label">{formatMessage({id: 'basic_000018', defaultMessage: '组织机构'})}</span>
           <span className="value">{row.publicOrgName}</span>
         </div>
       );

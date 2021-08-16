@@ -189,7 +189,7 @@ class PositionHome extends Component {
     } = position;
     const columns = [
       {
-        title: formatMessage({ id: 'global.operation', defaultMessage: '操作' }),
+        title: formatMessage({ id: 'global.operation', defaultMessage: formatMessage({id: 'basic_000019', defaultMessage: '操作'}) }),
         key: 'operation',
         width: 120,
         align: 'center',
@@ -225,7 +225,7 @@ class PositionHome extends Component {
         required: true,
       },
       {
-        title: '岗位类别',
+        title: formatMessage({id: 'basic_000017', defaultMessage: '岗位类别'}),
         dataIndex: 'positionCategoryName',
         width: 220,
         required: true,

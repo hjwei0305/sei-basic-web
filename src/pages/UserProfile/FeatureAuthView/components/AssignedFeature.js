@@ -7,6 +7,7 @@ import { Card, Button, Empty, Tree, Input, Tooltip } from 'antd';
 import { ScrollBar, ListLoader, ExtIcon } from 'suid';
 import { BannerTitle } from '@/components';
 import { constants } from '@/utils';
+import { formatMessage } from 'umi-plugin-react/locale';
 import styles from './AssignedFeature.less';
 
 const { FEATURE_TYPE } = constants;
@@ -210,7 +211,7 @@ class FeatureView extends Component {
     const loadingAssigned = loading.effects['userFeatureAuthView/getAssignFeatureItem'];
     return (
       <div className={cls(styles['assigned-feature-box'])}>
-        <Card title={<BannerTitle title={currentRoleName} subTitle="功能权限" />} bordered={false}>
+        <Card title={<BannerTitle title={currentRoleName} subTitle={formatMessage({id: 'basic_000005', defaultMessage: '功能权限'})} />} bordered={false}>
           <div className={cls('tool-box')}>
             <Button onClick={this.getAssignData} loading={loadingAssigned} icon="reload">
               <FormattedMessage id="global.refresh" defaultMessage="刷新" />

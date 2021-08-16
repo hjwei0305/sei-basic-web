@@ -145,7 +145,7 @@ class FeaturePage extends Component {
     const { showFormModal, currentPageRow } = feature;
     const columns = [
       {
-        title: formatMessage({ id: 'global.operation', defaultMessage: '操作' }),
+        title: formatMessage({ id: 'global.operation', defaultMessage: formatMessage({id: 'basic_000019', defaultMessage: '操作'}) }),
         key: 'operation',
         width: 120,
         align: 'center',

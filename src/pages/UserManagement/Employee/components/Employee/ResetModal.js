@@ -3,6 +3,7 @@ import { get, trim } from 'lodash';
 import { Form, Input } from 'antd';
 import { ExtModal } from 'suid';
 import md5 from 'md5';
+import { formatMessage } from 'umi-plugin-react/locale';
 import { BannerTitle } from '@/components';
 
 const FormItem = Form.Item;
@@ -37,7 +38,7 @@ class ResetFormModal extends PureComponent {
   checkPassword = (_rule, password, callback) => {
     const pws = trim(password);
     if (!pws || pws.length < 8) {
-      callback('密码须包含字母、数字、特殊字符至少2种,密码长度不能小于8位');
+      callback(formatMessage({id: 'basic_000008', defaultMessage: '密码须包含字母、数字、特殊字符至少2种,密码长度不能小于8位'}));
       return false;
     }
     let iNow = 0;
@@ -51,7 +52,7 @@ class ResetFormModal extends PureComponent {
       iNow += 1;
     }
     if (iNow < 2) {
-      callback('密码须包含字母、数字、特殊字符至少2种,密码长度不能小于8位');
+      callback(formatMessage({id: 'basic_000008', defaultMessage: '密码须包含字母、数字、特殊字符至少2种,密码长度不能小于8位'}));
       return false;
     }
     callback();
@@ -79,7 +80,7 @@ class ResetFormModal extends PureComponent {
         onOk={this.handlerFormSubmit}
       >
         <Form {...formItemLayout} layout="horizontal">
-          <FormItem label="新密码">
+          <FormItem label={formatMessage({id: 'basic_000012', defaultMessage: '新密码'})}>
             {getFieldDecorator('password', {
               initialValue: '',
               rules: [

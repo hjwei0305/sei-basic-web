@@ -6,6 +6,7 @@ import { ListCard } from 'suid';
 import { EffectDate } from '@/components';
 import empty from '@/assets/item_empty.svg';
 import { constants, userUtils } from '@/utils';
+import { formatMessage } from 'umi-plugin-react/locale';
 import DataAuthorType from './components/DataAuthorType';
 import styles from './index.less';
 
@@ -56,7 +57,7 @@ class DataView extends PureComponent {
     if (item.publicOrgId) {
       publicOrg = (
         <div className="field-item info">
-          <span className="label">组织机构</span>
+          <span className="label">{formatMessage({id: 'basic_000018', defaultMessage: '组织机构'})}</span>
           <span className="value">{item.publicOrgName}</span>
         </div>
       );

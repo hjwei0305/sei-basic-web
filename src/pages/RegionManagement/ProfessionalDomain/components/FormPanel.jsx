@@ -122,7 +122,7 @@ class FormModal extends PureComponent {
               ],
             })(<Input />)}
           </FormItem>
-          <FormItem label="排序">
+          <FormItem label={formatMessage({id: 'basic_000027', defaultMessage: '排序'})}>
             {getFieldDecorator('rank', {
               initialValue: rank,
               rules: [

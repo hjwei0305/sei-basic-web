@@ -226,7 +226,7 @@ class Role extends Component {
     if (row.publicOrgId) {
       publicOrg = (
         <div className="field-item info">
-          <span className="label">组织机构</span>
+          <span className="label">{formatMessage({id: 'basic_000018', defaultMessage: '组织机构'})}</span>
           <span className="value">{row.publicOrgName}</span>
         </div>
       );
@@ -320,7 +320,7 @@ class Role extends Component {
                           <Popconfirm
                             title={formatMessage({
                               id: 'global.delete.confirm',
-                              defaultMessage: '确定要删除吗？提示：删除后不可恢复',
+                              defaultMessage: formatMessage({id: 'basic_000021', defaultMessage: '确定要删除吗？提示：删除后不可恢复'}),
                             })}
                             onConfirm={e => this.delDataRole(item, e)}
                           >
