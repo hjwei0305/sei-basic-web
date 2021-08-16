@@ -5,6 +5,7 @@ import { get } from 'lodash';
 import { Button, Drawer, Popconfirm } from 'antd';
 import { ListCard, ExtIcon } from 'suid';
 import { constants } from '@/utils';
+import { formatMessage } from 'umi-plugin-react/locale';
 import styles from './Assigned.less';
 
 const { SERVER_PATH } = constants;

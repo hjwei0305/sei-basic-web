@@ -3,6 +3,7 @@ import { connect } from 'dva';
 import cls from 'classnames';
 import { get } from 'lodash';
 import { TreePanel, BannerTitle } from '@/components';
+import { formatMessage } from 'umi-plugin-react/locale';
 import styles from './TreeAssign.less';
 
 @connect(({ userDataAuthView, loading }) => ({ userDataAuthView, loading }))

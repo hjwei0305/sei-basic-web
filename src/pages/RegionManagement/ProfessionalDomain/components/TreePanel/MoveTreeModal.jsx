@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { ExtModal } from 'suid';
 import TreeView from '@/components/TreeView';
+import { formatMessage } from 'umi-plugin-react/locale';
 
 class MoveTreeModal extends PureComponent {
   render() {

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Popover, Tooltip } from 'antd';
 import { ExtIcon } from 'suid';
 import cls from 'classnames';
+import { formatMessage } from 'umi-plugin-react/locale';
 import Form from './Form';
 import styles from './index.less';
 

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Drawer, Button } from 'antd';
 import cls from 'classnames';
 import TreeView from '@/components/TreeView';
+import { formatMessage } from 'umi-plugin-react/locale';
 import styles from './MoveNodeDrawer.less';
 
 class MoveNodeDrawer extends Component {

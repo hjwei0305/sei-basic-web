@@ -3,6 +3,7 @@ import { connect } from 'dva';
 import cls from 'classnames';
 import { Spin, Empty } from 'antd';
 import { CascadeLayout } from '@/components';
+import { formatMessage } from 'umi-plugin-react/locale';
 import TreePanel from './components/TreePanel';
 import FormPanel from './components/FormPanel';
 import styles from './index.less';

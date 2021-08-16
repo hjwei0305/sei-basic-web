@@ -4,6 +4,7 @@ import { isEqual, cloneDeep } from 'lodash';
 
 import { Button, Input, Pagination, List, Skeleton, Checkbox, Drawer } from 'antd';
 import { ScrollBar } from 'suid';
+import { formatMessage } from 'umi-plugin-react/locale';
 import styles from './UnAssignAppModuleItem.less';
 
 const { Search } = Input;

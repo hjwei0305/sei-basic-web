@@ -4,6 +4,7 @@ import { Popover } from 'antd';
 import { ListCard, ExtIcon } from 'suid';
 import { constants } from '@/utils';
 import { BannerTitle } from '@/components';
+import { formatMessage } from 'umi-plugin-react/locale';
 import styles from './View.less';
 
 const { SERVER_PATH } = constants;

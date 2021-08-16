@@ -177,7 +177,7 @@ class PaymentInfo extends Component {
                 this.handleEvent('add');
               }}
             >
-              {formatMessage({id: 'basic_000028', defaultMessage: '新建'})}
+              {formatMessage({id: 'basic_000028', defaultMessage: formatMessage({id: 'basic_000028', defaultMessage: '新建'})})}
             </Button>
             <Button onClick={this.reloadData}>{formatMessage({id: 'basic_000029', defaultMessage: '刷新'})}</Button>
           </>

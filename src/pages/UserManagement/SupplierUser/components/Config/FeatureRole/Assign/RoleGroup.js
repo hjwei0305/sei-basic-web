@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import { Input } from 'antd';
 import { ListCard } from 'suid';
 import { constants } from '@/utils';
+import { formatMessage } from 'umi-plugin-react/locale';
 
 const { Search } = Input;
 const { SERVER_PATH } = constants;

@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import cls from 'classnames';
 import { Tabs, Button } from 'antd';
 import { connect } from 'dva';
+import { formatMessage } from 'umi-plugin-react/locale';
 import Watermark from './Watermark';
 import SystemLogo from './SystemLogo';
 import FlowEngineCode from './FlowEngineCode';

@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import { Input, Tree } from 'antd';
 import { ScrollBar, ExtIcon, ListLoader, utils } from 'suid';
 import { constants } from '@/utils';
+import { formatMessage } from 'umi-plugin-react/locale';
 
 const { request } = utils;
 const { Search } = Input;

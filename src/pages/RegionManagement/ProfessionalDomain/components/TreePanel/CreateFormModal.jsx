@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { ExtModal } from 'suid';
+import { formatMessage } from 'umi-plugin-react/locale';
 import FormPanel from '../FormPanel';
 
 class CreateFormModal extends PureComponent {

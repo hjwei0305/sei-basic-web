@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'dva';
 import { Form, Input, Button } from 'antd';
 import { userUtils } from '@/utils';
+import { formatMessage } from 'umi-plugin-react/locale';
 
 const { getCurrentUser } = userUtils;
 

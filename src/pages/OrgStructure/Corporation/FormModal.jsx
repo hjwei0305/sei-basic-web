@@ -64,7 +64,7 @@ class FormModal extends PureComponent {
           id: 'global.edit',
           defaultMessage: formatMessage({id: 'basic_000020', defaultMessage: '编辑'}),
         })
-      : formatMessage({ id: 'global.add', defaultMessage: '新建' });
+      : formatMessage({ id: 'global.add', defaultMessage: formatMessage({id: 'basic_000028', defaultMessage: '新建'}) });
     return (
       <ExtModal
         destroyOnClose
@@ -107,7 +107,7 @@ class FormModal extends PureComponent {
               ],
             })(<Input />)}
           </FormItem>
-          <FormItem label={formatMessage({id: 'basic_000405', defaultMessage: '组织机构id'})} hidden>
+          <FormItem label={formatMessage({id: 'basic_000235', defaultMessage: '组织机构id'})} hidden>
             {getFieldDecorator('organizationId', {
               initialValue: get(rowData, 'organizationId', undefined),
             })(<Input />)}

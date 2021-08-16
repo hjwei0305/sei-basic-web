@@ -3,6 +3,7 @@ import { Empty, Form, Input, InputNumber, Button, Spin, Switch, Row, Col } from 
 import cls from 'classnames';
 import { ColumnLayout, ColorPicker } from '@/components';
 import { watermark, userUtils } from '@/utils';
+import { formatMessage } from 'umi-plugin-react/locale';
 import styles from './index.less';
 
 const { getCurrentUser } = userUtils;

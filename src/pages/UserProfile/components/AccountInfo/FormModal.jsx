@@ -48,7 +48,7 @@ class FormModal extends PureComponent {
           id: 'global.edit',
           defaultMessage: formatMessage({id: 'basic_000020', defaultMessage: '编辑'}),
         })
-      : formatMessage({ id: 'global.add', defaultMessage: '新建' });
+      : formatMessage({ id: 'global.add', defaultMessage: formatMessage({id: 'basic_000028', defaultMessage: '新建'}) });
 
     return (
       <ExtModal

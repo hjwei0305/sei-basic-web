@@ -3,6 +3,7 @@ import { Form, Button, Spin } from 'antd';
 import cls from 'classnames';
 import { ComboList } from 'suid';
 import { constants } from '@/utils';
+import { formatMessage } from 'umi-plugin-react/locale';
 import styles from './index.less';
 
 const { SERVER_PATH } = constants;

@@ -383,7 +383,7 @@ class FeaturePage extends Component {
               {formatMessage({id: 'basic_000392', defaultMessage: '我要分配功能项'})}
             </Button>
             <Button onClick={this.getAssignData} loading={loadingAssigned} icon="reload">
-              <FormattedMessage id="global.refresh" defaultMessage="刷新" />
+              <FormattedMessage id="global.refresh" defaultMessage={formatMessage({id: 'basic_000029', defaultMessage: '刷新'})} />
             </Button>
             <div className="tool-search-box">
               <Search

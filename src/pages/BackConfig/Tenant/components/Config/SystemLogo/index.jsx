@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Empty, Form, Button, Spin, Switch } from 'antd';
 import cls from 'classnames';
 import { ColumnLayout } from '@/components';
+import { formatMessage } from 'umi-plugin-react/locale';
 import ExtUpload from './Upload';
 import SiderDemo from './SiderDemo';
 import styles from './index.less';

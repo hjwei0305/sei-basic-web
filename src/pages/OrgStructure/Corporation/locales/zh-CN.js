@@ -4,6 +4,7 @@
  * @Last Modified by:   zp
  * @Last Modified time: 2020-02-02 15:30:27
  */
+import { formatMessage } from 'umi-plugin-react/locale';
 export default {
   corporation: formatMessage({id: 'basic_000225', defaultMessage: '预算公司'}),
   'corporation.shortName': formatMessage({id: 'basic_000222', defaultMessage: '简称'}),

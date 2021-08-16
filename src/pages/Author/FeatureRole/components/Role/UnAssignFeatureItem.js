@@ -5,6 +5,7 @@ import { connect } from 'dva';
 import { Button, Input, Drawer, Tree, Empty, Tooltip, Checkbox } from 'antd';
 import { ScrollBar, ListLoader, ExtIcon, ComboList } from 'suid';
 import { constants, getAllParentIdsByNode, getAllChildIdsByNode } from '@/utils';
+import { formatMessage } from 'umi-plugin-react/locale';
 import styles from './UnAssignFeatureItem.less';
 
 const { FEATURE_TYPE, SERVER_PATH } = constants;

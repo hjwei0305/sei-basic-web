@@ -10,6 +10,7 @@ import PropTypes from 'prop-types';
 import { Layout, Button, Input } from 'antd';
 import { ListCard } from 'suid';
 import { constants } from '@/utils';
+import { formatMessage } from 'umi-plugin-react/locale';
 import styles from './index.less';
 
 const { SERVER_PATH } = constants;

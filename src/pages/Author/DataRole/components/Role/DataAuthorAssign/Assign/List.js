@@ -5,6 +5,7 @@ import { get } from 'lodash';
 import { Button, Tooltip, Input } from 'antd';
 import { ListCard } from 'suid';
 import { constants } from '@/utils';
+import { formatMessage } from 'umi-plugin-react/locale';
 import styles from './List.less';
 
 const { SERVER_PATH } = constants;

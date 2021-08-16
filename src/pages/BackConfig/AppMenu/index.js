@@ -5,6 +5,7 @@ import { isEqual, trim } from 'lodash';
 import { Button, Card, Input, Tree, Empty, Layout } from 'antd';
 import { ScrollBar, ExtIcon, ListLoader } from 'suid';
 import empty from '@/assets/item_empty.svg';
+import { formatMessage } from 'umi-plugin-react/locale';
 import NodeForm from './components/NodeForm';
 import MenuMoveModal from './components/MenuMoveModal';
 import styles from './index.less';

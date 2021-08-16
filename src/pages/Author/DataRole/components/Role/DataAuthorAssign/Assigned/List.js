@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { Button, Drawer, Popconfirm, Input } from 'antd';
 import { ListCard, ExtIcon } from 'suid';
+import { formatMessage } from 'umi-plugin-react/locale';
 import { constants } from '@/utils';
 import styles from './List.less';
 

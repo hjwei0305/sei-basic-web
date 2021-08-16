@@ -5,6 +5,7 @@ import { Input } from 'antd';
 import { ListCard } from 'suid';
 import { BannerTitle } from '@/components';
 import { constants } from '@/utils';
+import { formatMessage } from 'umi-plugin-react/locale';
 import styles from './ListAssign.less';
 
 const { SERVER_PATH } = constants;

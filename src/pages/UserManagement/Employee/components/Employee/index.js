@@ -225,10 +225,10 @@ class EmployeeHome extends Component {
       left: (
         <>
           <Button type="primary" onClick={this.add}>
-            <FormattedMessage id="global.add" defaultMessage="新建"/>
+            <FormattedMessage id="global.add" defaultMessage={formatMessage({id: 'basic_000028', defaultMessage: '新建'})}/>
           </Button>
           <Button onClick={this.reloadData}>
-            <FormattedMessage id="global.refresh" defaultMessage="刷新"/>
+            <FormattedMessage id="global.refresh" defaultMessage={formatMessage({id: 'basic_000029', defaultMessage: '刷新'})}/>
           </Button>
         </>
       ),

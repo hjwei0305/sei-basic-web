@@ -1,6 +1,7 @@
 import React from 'react';
 import { Layout, Menu, Icon } from 'antd';
 import cls from 'classnames';
+import { formatMessage } from 'umi-plugin-react/locale';
 
 import styles from './SiderDemo.less';
 

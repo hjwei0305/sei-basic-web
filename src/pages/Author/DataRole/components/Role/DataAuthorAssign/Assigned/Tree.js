@@ -3,6 +3,7 @@ import { connect } from 'dva';
 import cls from 'classnames';
 import { Button, Drawer, Popconfirm, Input } from 'antd';
 import { TreePanel } from '@/components';
+import { formatMessage } from 'umi-plugin-react/locale';
 import styles from './Tree.less';
 
 const { Search } = Input;

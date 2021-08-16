@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import { Form, Input, Switch } from 'antd';
 import { ExtModal, ComboTree, utils } from 'suid';
 import { constants } from '@/utils';
+import { formatMessage } from 'umi-plugin-react/locale';
 
 const { objectAssignHave } = utils;
 const { SERVER_PATH } = constants;

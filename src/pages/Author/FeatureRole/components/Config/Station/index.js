@@ -4,6 +4,7 @@ import cls from 'classnames';
 import { connect } from 'dva';
 import { ExtModal, ExtIcon } from 'suid';
 import { StationAssign, BannerTitle } from '@/components';
+import { formatMessage } from 'umi-plugin-react/locale';
 import Assinged from './Assigned';
 import styles from './index.less';
 

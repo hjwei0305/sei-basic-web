@@ -3,6 +3,7 @@ import cls from 'classnames';
 import { Dropdown, Menu } from 'antd';
 import { utils, ExtIcon } from 'suid';
 import { constants } from '@/utils';
+import { formatMessage } from 'umi-plugin-react/locale';
 import UserView from './UserView';
 import StationView from './StationView';
 import styles from './ExtAction.less';

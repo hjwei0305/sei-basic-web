@@ -2,6 +2,7 @@ import React, { Component, Suspense } from 'react';
 import cls from 'classnames';
 import { Popover } from 'antd';
 import { ExtIcon, ListLoader } from 'suid';
+import { formatMessage } from 'umi-plugin-react/locale';
 import styles from './Assign.less';
 
 const ListAssign = React.lazy(() => import('./ListAssign'));

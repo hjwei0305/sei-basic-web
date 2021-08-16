@@ -5,6 +5,7 @@ import { utils } from 'suid';
 import { get } from 'lodash';
 import cls from 'classnames';
 import { userUtils } from '@/utils';
+import { formatMessage } from 'umi-plugin-react/locale';
 import BindFormItem from './BindFormItem';
 import UpdatePwd from './UpdatePwd/index';
 

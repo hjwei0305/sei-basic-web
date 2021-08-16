@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Input, Form, Button } from 'antd';
 import cls from 'classnames';
 import { connect } from 'dva';
+import { formatMessage } from 'umi-plugin-react/locale';
 import TimerButton from './TimerButton';
 
 const emailReg = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;

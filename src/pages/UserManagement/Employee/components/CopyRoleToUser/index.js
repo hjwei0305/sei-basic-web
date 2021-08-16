@@ -5,6 +5,7 @@ import { connect } from 'dva';
 import { Steps, Button } from 'antd';
 import { ExtModal, message } from 'suid';
 import { BannerTitle } from '@/components';
+import { formatMessage } from 'umi-plugin-react/locale';
 import RoleSelect from './RoleSelect';
 import UserSelect from './UserSelect';
 import ResultSelect from './ResultSelect';

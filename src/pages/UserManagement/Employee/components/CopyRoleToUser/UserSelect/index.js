@@ -10,6 +10,7 @@ import PropTypes from 'prop-types';
 import { Layout, Input, Tooltip } from 'antd';
 import { ListLoader, ListCard } from 'suid';
 import { constants } from '@/utils';
+import { formatMessage } from 'umi-plugin-react/locale';
 import Organization from './Organization';
 import styles from './index.less';
 
