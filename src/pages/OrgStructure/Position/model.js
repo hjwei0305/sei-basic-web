@@ -88,7 +88,7 @@ export default modelExtend(model, {
       const re = yield call(copyToOrgNodes, payload);
       message.destroy();
       if (re.success) {
-        message.success('复制成功');
+        message.success(formatMessage({id: 'basic_000142', defaultMessage: '复制成功'}));
       } else {
         message.error(re.message);
       }

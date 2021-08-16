@@ -62,7 +62,7 @@ class ResetPwdModal extends PureComponent {
   render() {
     const { form, editData, onClose, saving, visible } = this.props;
     const { getFieldDecorator } = form;
-    const title = '更新密码';
+    const title ={formatMessage({id: 'basic_000070', defaultMessage: '更新密码'})};
 
     return (
       <ExtModal
@@ -73,25 +73,25 @@ class ResetPwdModal extends PureComponent {
         confirmLoading={saving}
         maskClosable={false}
         title={title}
-        okText="保存"
+        okText={formatMessage({id: 'basic_000034', defaultMessage: '保存'})}
         onOk={this.onFormSubmit}
       >
         <Form {...formItemLayout} layout="horizontal">
-          <FormItem label="帐号">
+          <FormItem label={formatMessage({id: 'basic_000071', defaultMessage: '帐号'})}>
             {getFieldDecorator('account', {
               initialValue: editData.account,
               rules: [
                 {
                   required: true,
-                  message: '帐号不能为空',
+                  message: formatMessage({id: 'basic_000072', defaultMessage: '帐号不能为空'}),
                 },
               ],
             })(<Input disabled />)}
           </FormItem>
-          <FormItem {...formItemLayout} label="旧密码">
+          <FormItem {...formItemLayout} label={formatMessage({id: 'basic_000073', defaultMessage: '旧密码'})}>
             {getFieldDecorator('oldPassword', {
               initialValue: '',
-              rules: [{ required: true, message: '请填写旧密码!' }],
+              rules: [{ required: true, message: formatMessage({id: 'basic_000074', defaultMessage: '请填写旧密码!'}) }],
             })(<Input.Password visibilityToggle />)}
           </FormItem>
           <FormItem {...formItemLayout} label={formatMessage({id: 'basic_000012', defaultMessage: '新密码'})}>

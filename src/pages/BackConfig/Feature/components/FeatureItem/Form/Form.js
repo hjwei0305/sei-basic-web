@@ -109,7 +109,7 @@ class FeatureGroupForm extends PureComponent {
                 />,
               )}
             </FormItem>
-            <FormItem label="功能路径">
+            <FormItem label={formatMessage({id: 'basic_000334', defaultMessage: '功能路径'})}>
               {getFieldDecorator('url', {
                 initialValue: featureData ? featureData.url : '',
               })(<Input />)}

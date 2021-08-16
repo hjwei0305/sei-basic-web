@@ -82,12 +82,12 @@ class BasicInfo extends PureComponent {
   beforeUpload = file => {
     const isJpgOrPng = file.type === 'image/png';
     if (!isJpgOrPng) {
-      message.error('只能上传PNG文件!');
+      message.error(formatMessage({id: 'basic_000052', defaultMessage: '只能上传PNG文件!'}));
       return false;
     }
     const isLt10K = file.size / 1024 <= 10;
     if (!isLt10K) {
-      message.error('图片大小需小于10Kb!');
+      message.error(formatMessage({id: 'basic_000053', defaultMessage: '图片大小需小于10Kb!'}));
       return false;
     }
     return isJpgOrPng && isLt10K;
@@ -121,7 +121,7 @@ class BasicInfo extends PureComponent {
         <Row>
           <Col span={24}>
             <div className="box-item">
-              <div className="title">我的头像</div>
+              <div className="title">{formatMessage({id: 'basic_000054', defaultMessage: '我的头像'})}</div>
               <div className="head-icon-box horizontal">
                 <div className="row-start head-icon">
                   <img alt="" src={headIcon || defaultHeadIcon} />
@@ -129,23 +129,23 @@ class BasicInfo extends PureComponent {
                 <div className="tool-box vertical">
                   <Upload {...uploadProps}>
                     <Button type="primary" icon="upload" ghost>
-                      上传头像
+                      {formatMessage({id: 'basic_000055', defaultMessage: '上传头像'})}
                     </Button>
                   </Upload>
-                  <div className="desc">图片为png格式，大小在10Kb以内;</div>
+                  <div className="desc">{formatMessage({id: 'basic_000056', defaultMessage: '图片为png格式，大小在10Kb以内'})};</div>
                 </div>
               </div>
             </div>
           </Col>
           <Col span={12}>
-            <FormItem label="姓名" {...formItemLayout}>
+            <FormItem label={formatMessage({id: 'basic_000057', defaultMessage: '姓名'})} {...formItemLayout}>
               {getFieldDecorator('userName', {
                 initialValue: userName,
               })(<Input disabled />)}
             </FormItem>
           </Col>
           <Col span={12}>
-            <FormItem label="用户类型" {...formItemLayout}>
+            <FormItem label={formatMessage({id: 'basic_000058', defaultMessage: '用户类型'})} {...formItemLayout}>
               {getFieldDecorator('userTypeRemark', {
                 initialValue: userTypeRemark,
               })(<Input disabled />)}
@@ -161,7 +161,7 @@ class BasicInfo extends PureComponent {
             </FormItem>
           </Col>
           <Col span={12}>
-            <FormItem label="员工编号" {...formItemLayout}>
+            <FormItem label={formatMessage({id: 'basic_000059', defaultMessage: '员工编号'})} {...formItemLayout}>
               {getFieldDecorator('employeeCode', {
                 initialValue: employeeCode,
               })(<Input disabled />)}
@@ -170,19 +170,19 @@ class BasicInfo extends PureComponent {
         </Row>
         <Row>
           <Col span={12}>
-            <FormItem {...formItemLayout} label="性别">
+            <FormItem {...formItemLayout} label={formatMessage({id: 'basic_000060', defaultMessage: '性别'})}>
               {getFieldDecorator('gender', {
                 initialValue: gender,
               })(
                 <RadioGroup>
-                  <Radio value>男</Radio>
-                  <Radio value={false}>女</Radio>
+                  <Radio value>{formatMessage({id: 'basic_000061', defaultMessage: '男'})}</Radio>
+                  <Radio value={false}>{formatMessage({id: 'basic_000062', defaultMessage: '女'})}</Radio>
                 </RadioGroup>,
               )}
             </FormItem>
           </Col>
           <Col span={12}>
-            <FormItem {...formItemLayout} label="身份证号">
+            <FormItem {...formItemLayout} label={formatMessage({id: 'basic_000063', defaultMessage: '身份证号'})}>
               {getFieldDecorator('idCard', {
                 initialValue: idCard,
               })(<Input />)}
@@ -191,14 +191,14 @@ class BasicInfo extends PureComponent {
         </Row>
         <Row>
           <Col span={12}>
-            <FormItem {...formItemLayout} label="邮箱">
+            <FormItem {...formItemLayout} label={formatMessage({id: 'basic_000064', defaultMessage: '邮箱'})}>
               {getFieldDecorator('email', {
                 initialValue: email,
               })(<Input />)}
             </FormItem>
           </Col>
           <Col span={12}>
-            <FormItem {...formItemLayout} label="移动电话">
+            <FormItem {...formItemLayout} label={formatMessage({id: 'basic_000065', defaultMessage: '移动电话'})}>
               {getFieldDecorator('mobile', {
                 initialValue: mobile,
               })(<Input />)}
@@ -207,13 +207,13 @@ class BasicInfo extends PureComponent {
         </Row>
         <Row>
           <Col span={12}>
-            <FormItem {...formItemLayout} label="语言代码">
+            <FormItem {...formItemLayout} label={formatMessage({id: 'basic_000066', defaultMessage: '语言代码'})}>
               {getFieldDecorator('languageCode', {
                 initialValue: languageCode,
               })(
                 <Select>
                   <Select.Option value="zh_CN" key="zh_CN">
-                    简体中文
+                    {formatMessage({id: 'basic_000067', defaultMessage: '简体中文'})}
                   </Select.Option>
                   <Select.Option value="en_US" key="en_US">
                     English
@@ -223,7 +223,7 @@ class BasicInfo extends PureComponent {
             </FormItem>
           </Col>
           <Col span={12}>
-            <FormItem {...formItemLayout} label="记账用户">
+            <FormItem {...formItemLayout} label={formatMessage({id: 'basic_000068', defaultMessage: '记账用户'})}>
               {getFieldDecorator('accountor', {
                 initialValue: accountor,
               })(<Input />)}
@@ -242,7 +242,7 @@ class BasicInfo extends PureComponent {
                 type="primary"
                 onClick={this.handleSave}
               >
-                更新信息
+                {formatMessage({id: 'basic_000069', defaultMessage: '更新信息'})}
               </Button>
             </FormItem>
           </Col>

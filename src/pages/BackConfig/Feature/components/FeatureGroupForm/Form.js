@@ -56,14 +56,14 @@ class FeatureGroupForm extends PureComponent {
     const { currentAppModuleCode } = this.state;
     const { form, groupData, saving } = this.props;
     const { getFieldDecorator } = form;
-    const title = groupData ? '编辑功能项组' : '新建功能项组';
+    const title = groupData ? formatMessage({id: 'basic_000338', defaultMessage: '编辑功能项组'}) : formatMessage({id: 'basic_000339', defaultMessage: '新建功能项组'});
     getFieldDecorator('appModuleId', { initialValue: groupData ? groupData.appModuleId : '' });
     getFieldDecorator('appModuleCode', { initialValue: groupData ? groupData.appModuleCode : '' });
     const appModuleProps = {
       form,
       name: 'appModuleName',
       field: ['appModuleId', 'appModuleCode'],
-      searchPlaceHolder: '输入名称关键字查询',
+      searchPlaceHolder: formatMessage({id: 'basic_000112', defaultMessage: '输入名称关键字查询'}),
       store: {
         url: `${SERVER_PATH}/sei-basic/appModule/findAllUnfrozen`,
       },
@@ -82,7 +82,7 @@ class FeatureGroupForm extends PureComponent {
             <span className="title">{title}</span>
           </div>
           <Form {...formItemLayout}>
-            <FormItem label="应用模块">
+            <FormItem label={formatMessage({id: 'basic_000108', defaultMessage: '应用模块'})}>
               {getFieldDecorator('appModuleName', {
                 initialValue: groupData ? groupData.appModuleName : '',
                 rules: [
@@ -110,7 +110,7 @@ class FeatureGroupForm extends PureComponent {
                 ],
               })(<Input />)}
             </FormItem>
-            <FormItem label="代码">
+            <FormItem label={formatMessage({id: 'basic_000031', defaultMessage: '代码'})}>
               {getFieldDecorator('code', {
                 initialValue: this.getCode(),
                 rules: [

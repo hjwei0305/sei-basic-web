@@ -193,7 +193,7 @@ class UnAssignFeatureItem extends Component {
       placement: 'top',
       title: (
         <>
-          代码
+          {formatMessage({id: 'basic_000031', defaultMessage: '代码'})}
           <br />
           <span style={{ fontSize: 12, color: '#d2d2d2' }}>{code}</span>
         </>
@@ -208,17 +208,17 @@ class UnAssignFeatureItem extends Component {
         icon = (
           <ExtIcon
             type="appstore"
-            tooltip={{ title: '应用模块' }}
+            tooltip={{ title: formatMessage({id: 'basic_000108', defaultMessage: '应用模块'}) }}
             antd
             style={{ color: '#13c2c2' }}
           />
         );
         break;
       case FEATURE_TYPE.PAGE:
-        icon = <ExtIcon type="doc" tooltip={{ title: '页面' }} style={{ color: '#722ed1' }} />;
+        icon = <ExtIcon type="doc" tooltip={{ title: formatMessage({id: 'basic_000109', defaultMessage: '页面'}) }} style={{ color: '#722ed1' }} />;
         break;
       case FEATURE_TYPE.OPERATE:
-        icon = <ExtIcon type="dian" tooltip={{ title: '功能项' }} />;
+        icon = <ExtIcon type="dian" tooltip={{ title: formatMessage({id: 'basic_000110', defaultMessage: '功能项'}) }} />;
         break;
       default:
     }
@@ -268,7 +268,7 @@ class UnAssignFeatureItem extends Component {
     if (unAssignListData.length === 0) {
       return (
         <div className="blank-empty">
-          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="暂时没有数据" />
+          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={formatMessage({id: 'basic_000111', defaultMessage: '暂时没有数据'})} />
         </div>
       );
     }
@@ -306,7 +306,7 @@ class UnAssignFeatureItem extends Component {
     const loadingUnAssigned = loading.effects['featureRole/getUnAssignedFeatureItemList'];
     const appModulePros = {
       style: { width: 180 },
-      placeholder: '请选择应用模块',
+      placeholder: formatMessage({id: 'basic_000340', defaultMessage: '请选择应用模块'}),
       store: {
         url: `${SERVER_PATH}/sei-basic/tenantAppModule/getTenantAppModules`,
       },
@@ -332,7 +332,7 @@ class UnAssignFeatureItem extends Component {
         getContainer={false}
         placement="right"
         visible={showAssignFeature}
-        title="分配功能项"
+        title={formatMessage({id: 'basic_000381', defaultMessage: '分配功能项'})}
         className={cls(styles['feature-item-box'])}
         onClose={this.handlerClose}
         style={{ position: 'absolute' }}
@@ -344,14 +344,14 @@ class UnAssignFeatureItem extends Component {
             disabled={diabledSelectAll || loadingUnAssigned}
             style={{ marginLeft: 25 }}
           >
-            全选
+            {formatMessage({id: 'basic_000262', defaultMessage: '全选'})}
           </Checkbox>
           <div className="app-box">
             <ComboList {...appModulePros} />
           </div>
           <div className="tool-search-box">
             <Search
-              placeholder="输入名称关键字"
+              placeholder={formatMessage({id: 'basic_000382', defaultMessage: '输入名称关键字'})}
               value={allValue}
               onChange={e => this.handlerSearchChange(e.target.value)}
               onSearch={this.handlerSearch}
@@ -383,7 +383,7 @@ class UnAssignFeatureItem extends Component {
               onClick={this.onCancelBatchAssignedFeatureItem}
               disabled={assigning}
             >
-              取消
+              {formatMessage({id: 'basic_000131', defaultMessage: '取消'})}
             </Button>
             <Button
               loading={assigning}
@@ -393,7 +393,7 @@ class UnAssignFeatureItem extends Component {
             >
               {`确定 (${checkCount})`}
             </Button>
-            <span className={cls('select')}>{`已选择 ${checkedKeys.length} 项`}</span>
+            <span className={cls('select')}>{`{formatMessage({id: 'basic_000134', defaultMessage: '已选择'})} ${checkedKeys.length} 项`}</span>
           </Drawer>
         </div>
         <div className="unassigned-body">

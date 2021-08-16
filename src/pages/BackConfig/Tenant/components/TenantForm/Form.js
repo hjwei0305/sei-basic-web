@@ -51,10 +51,10 @@ class TenantForm extends PureComponent {
   render() {
     const { form, tenantData, tenantRootOrganization, saving } = this.props;
     const { getFieldDecorator } = form;
-    const title = tenantData ? '编辑租户' : '新建租户';
+    const title = tenantData ? formatMessage({id: 'basic_000263', defaultMessage: '编辑租户'}) : formatMessage({id: 'basic_000264', defaultMessage: '新建租户'});
     const codeProps = {
       maxLength: 10,
-      placeholder: '租户代码一旦创建不能修改',
+      placeholder: formatMessage({id: 'basic_000265', defaultMessage: '租户代码一旦创建不能修改'}),
     };
     if (tenantData && tenantData.id) {
       codeProps.disabled = true;
@@ -66,7 +66,7 @@ class TenantForm extends PureComponent {
             <span className="title">{title}</span>
           </div>
           <Form {...formItemLayout}>
-            <FormItem label="租户代码">
+            <FormItem label={formatMessage({id: 'basic_000266', defaultMessage: '租户代码'})}>
               {getFieldDecorator('code', {
                 initialValue: tenantData ? tenantData.code : '',
                 rules: [
@@ -80,7 +80,7 @@ class TenantForm extends PureComponent {
                 ],
               })(<Input {...codeProps} />)}
             </FormItem>
-            <FormItem label="租户名称">
+            <FormItem label={formatMessage({id: 'basic_000267', defaultMessage: '租户名称'})}>
               {getFieldDecorator('name', {
                 initialValue: tenantData ? tenantData.name : '',
                 rules: [
@@ -100,13 +100,13 @@ class TenantForm extends PureComponent {
                 rules: [
                   {
                     required: true,
-                    message: '组织机构不能为空',
+                    message: formatMessage({id: 'basic_000268', defaultMessage: '组织机构不能为空'}),
                   },
                 ],
               })(<Input addonBefore={tenantRootOrganization ? tenantRootOrganization.code : ''} />)}
             </FormItem>
             {tenantData && tenantData.id ? (
-              <FormItem label="冻结">
+              <FormItem label={formatMessage({id: 'basic_000140', defaultMessage: '冻结'})}>
                 {getFieldDecorator('frozen', {
                   initialValue: tenantData ? tenantData.frozen || false : false,
                   valuePropName: 'checked',

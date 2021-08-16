@@ -113,17 +113,17 @@ class NodeForm extends PureComponent {
     if (editData && editData.id) {
       return (
         <>
-          <Button onClick={e => this.handlerAddChild(e, editData)}>新建下级组织</Button>
+          <Button onClick={e => this.handlerAddChild(e, editData)}>{formatMessage({id: 'basic_000215', defaultMessage: '新建下级组织'})}</Button>
           {editData.parentId && (!editData.children || editData.children.length === 0) ? (
             <Popconfirm
               overlayClassName={cls(styles['pop-confirm-box'])}
-              title={this.renderPopconfirmTitle('确定要删除吗？', '提示：删除后不能恢复')}
+              title={this.renderPopconfirmTitle(formatMessage({id: 'basic_000216', defaultMessage: '确定要删除吗？'}), formatMessage({id: 'basic_000217', defaultMessage: '提示：删除后不能恢复'}))}
               placement="top"
               icon={<ExtIcon type="question-circle" antd />}
               onConfirm={e => this.handlerDelete(e, editData.id)}
             >
               <Button type="danger" loading={loading.effects['organization/del']}>
-                删除
+                {formatMessage({id: 'basic_000186', defaultMessage: '删除'})}
               </Button>
             </Popconfirm>
           ) : null}
@@ -133,12 +133,12 @@ class NodeForm extends PureComponent {
     return (
       <Popconfirm
         overlayClassName={cls(styles['pop-confirm-box'])}
-        title={this.renderPopconfirmTitle('确定要返回吗？', '提示：未保存的数据将会丢失')}
+        title={this.renderPopconfirmTitle(formatMessage({id: 'basic_000218', defaultMessage: '确定要返回吗？'}), formatMessage({id: 'basic_000219', defaultMessage: '提示：未保存的数据将会丢失'}))}
         placement="top"
         icon={<ExtIcon type="question-circle" antd />}
         onConfirm={e => this.handlerGoBackParent(e)}
       >
-        <Button type="danger">返回</Button>
+        <Button type="danger">{formatMessage({id: 'basic_000220', defaultMessage: '返回'})}</Button>
       </Popconfirm>
     );
   };
@@ -152,7 +152,7 @@ class NodeForm extends PureComponent {
       subTitle = formatMessage({id: 'basic_000020', defaultMessage: '编辑'});
     } else {
       title = editData.parentName;
-      subTitle = '新建下级组织';
+      subTitle ={formatMessage({id: 'basic_000215', defaultMessage: '新建下级组织'})};
     }
     return <BannerTitle title={title} subTitle={subTitle} />;
   };
@@ -172,11 +172,11 @@ class NodeForm extends PureComponent {
                 loading={loading.effects['organization/save']}
                 onClick={e => this.onFormSubmit(e)}
               >
-                保存
+                {formatMessage({id: 'basic_000034', defaultMessage: '保存'})}
               </Button>
               {editData.parentId && editData.id ? (
                 <Button loading={loading.effects['organization/move']} onClick={e => moveChild(e)}>
-                  移动
+                  {formatMessage({id: 'basic_000185', defaultMessage: '移动'})}
                 </Button>
               ) : null}
 
@@ -187,33 +187,33 @@ class NodeForm extends PureComponent {
           <div className="form-box">
             <ScrollBar>
               <Form {...formItemLayout} className="form-body">
-                <FormItem label="代码">
+                <FormItem label={formatMessage({id: 'basic_000031', defaultMessage: '代码'})}>
                   {getFieldDecorator('code', {
                     initialValue: this.getInitValueByFields('code'),
-                  })(<Input disabled placeholder="自动创建" />)}
+                  })(<Input disabled placeholder={formatMessage({id: 'basic_000221', defaultMessage: '自动创建'})} />)}
                 </FormItem>
-                <FormItem label="名称">
+                <FormItem label={formatMessage({id: 'basic_000032', defaultMessage: '名称'})}>
                   {getFieldDecorator('name', {
                     initialValue: this.getInitValueByFields('name'),
                     rules: [
                       {
                         required: true,
-                        message: '名称不能为空',
+                        message: formatMessage({id: 'basic_000075', defaultMessage: '名称不能为空'}),
                       },
                     ],
                   })(<Input />)}
                 </FormItem>
-                <FormItem label="简称">
+                <FormItem label={formatMessage({id: 'basic_000222', defaultMessage: '简称'})}>
                   {getFieldDecorator('shortName', {
                     initialValue: this.getInitValueByFields('shortName'),
                   })(<Input />)}
                 </FormItem>
-                <FormItem label="参考码">
+                <FormItem label={formatMessage({id: 'basic_000223', defaultMessage: '参考码'})}>
                   {getFieldDecorator('refCode', {
                     initialValue: this.getInitValueByFields('refCode'),
                   })(<Input />)}
                 </FormItem>
-                <FormItem label="序号">
+                <FormItem label={formatMessage({id: 'basic_000224', defaultMessage: '序号'})}>
                   {getFieldDecorator('rank', {
                     initialValue: this.getInitValueByFields('rank'),
                     rules: [
@@ -227,7 +227,7 @@ class NodeForm extends PureComponent {
                     ],
                   })(<InputNumber precision={0} min={0} style={{ width: '100%' }} />)}
                 </FormItem>
-                <FormItem label="冻结">
+                <FormItem label={formatMessage({id: 'basic_000140', defaultMessage: '冻结'})}>
                   {getFieldDecorator('frozen', {
                     initialValue: this.getInitValueByFields('frozen'),
                     valuePropName: 'checked',

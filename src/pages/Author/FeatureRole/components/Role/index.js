@@ -214,7 +214,7 @@ class Role extends Component {
     if (row.publicUserType && row.publicOrgId) {
       tag = (
         <Tag color="green" style={{ marginLeft: 8 }}>
-          公共角色
+          {formatMessage({id: 'basic_000103', defaultMessage: '公共角色'})}
         </Tag>
       );
     }
@@ -232,7 +232,7 @@ class Role extends Component {
     if (row.publicUserType) {
       pubUserType = (
         <div className="field-item info">
-          <span className="label">用户类型</span>
+          <span className="label">{formatMessage({id: 'basic_000058', defaultMessage: '用户类型'})}</span>
           <span className="value">{row.userTypeRemark}</span>
         </div>
       );
@@ -293,7 +293,7 @@ class Role extends Component {
         <Layout className="auto-height">
           <Sider width={320} className={cls('left-content', 'auto-height')} theme="light">
             <Card
-              title={<BannerTitle title={currentRoleGroup.name} subTitle="角色列表" />}
+              title={<BannerTitle title={currentRoleGroup.name} subTitle={formatMessage({id: 'basic_000379', defaultMessage: '角色列表'})} />}
               bordered={false}
               className={cls('list-box', 'auto-height')}
             >
@@ -304,7 +304,7 @@ class Role extends Component {
                   saveFeatureRole={this.saveFeatureRole}
                 />
                 <Search
-                  placeholder="输入名称关键字查询"
+                  placeholder={formatMessage({id: 'basic_000112', defaultMessage: '输入名称关键字查询'})}
                   onChange={e => this.handlerSearchChange(e.target.value)}
                   onSearch={this.handlerSearch}
                   onPressEnter={this.handlerSearch}
@@ -369,7 +369,7 @@ class Role extends Component {
               <AssignedFeature {...assignedFeatureProps} />
             ) : (
               <div className="blank-empty">
-                <Empty image={empty} description="选择角色列表项进行功能项配置" />
+                <Empty image={empty} description={formatMessage({id: 'basic_000380', defaultMessage: '选择角色列表项进行功能项配置'})} />
               </div>
             )}
           </Content>

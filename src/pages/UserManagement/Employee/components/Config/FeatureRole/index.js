@@ -77,11 +77,11 @@ class FeatureRoleModal extends PureComponent {
       return (
         <>
           <ExtIcon onClick={this.handlerBackAssigned} type="left" className="trigger-back" antd />
-          <BannerTitle title={title} subTitle="请选择要添加的功能角色" />
+          <BannerTitle title={title} subTitle={formatMessage({id: 'basic_000128', defaultMessage: '请选择要添加的功能角色'})} />
         </>
       );
     }
-    return <BannerTitle title={title} subTitle="已配置的功能角色" />;
+    return <BannerTitle title={title} subTitle={formatMessage({id: 'basic_000129', defaultMessage: '已配置的功能角色'})} />;
   };
 
   render() {

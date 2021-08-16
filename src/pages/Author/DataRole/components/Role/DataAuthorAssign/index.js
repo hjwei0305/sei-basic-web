@@ -74,11 +74,11 @@ class DataAuthorAssignModal extends PureComponent {
       return (
         <>
           <ExtIcon onClick={this.handlerBackAssigned} type="left" className="trigger-back" antd />
-          <BannerTitle title={title} subTitle="请选择要添加的数据权限" />
+          <BannerTitle title={title} subTitle={formatMessage({id: 'basic_000401', defaultMessage: '请选择要添加的数据权限'})} />
         </>
       );
     }
-    return <BannerTitle title={title} subTitle="已配置的数据权限" />;
+    return <BannerTitle title={title} subTitle={formatMessage({id: 'basic_000114', defaultMessage: '已配置的数据权限'})} />;
   };
 
   render() {

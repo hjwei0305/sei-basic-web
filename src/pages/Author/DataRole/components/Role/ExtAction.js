@@ -13,22 +13,22 @@ const { Item } = Menu;
 
 const menuData = () => [
   {
-    title: '查看岗位',
+    title: formatMessage({id: 'basic_000389', defaultMessage: '查看岗位'}),
     key: ROLE_VIEW.STATION,
     disabled: false,
   },
   {
-    title: '查看用户',
+    title: formatMessage({id: 'basic_000390', defaultMessage: '查看用户'}),
     key: ROLE_VIEW.USER,
     disabled: false,
   },
   {
-    title: '配置岗位',
+    title: formatMessage({id: 'basic_000151', defaultMessage: '配置岗位'}),
     key: ROLE_VIEW.CONFIG_STATION,
     disabled: false,
   },
   {
-    title: '配置用户',
+    title: formatMessage({id: 'basic_000200', defaultMessage: '配置用户'}),
     key: ROLE_VIEW.CONFIG_USER,
     disabled: false,
   },

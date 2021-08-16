@@ -83,7 +83,7 @@ class StationAssigned extends PureComponent {
     return (
       <>
         <Button type="primary" icon="plus" onClick={this.handlerShowAssign}>
-          添加岗位
+          {formatMessage({id: 'basic_000173', defaultMessage: '添加岗位'})}
         </Button>
         <Drawer
           placement="top"
@@ -95,14 +95,14 @@ class StationAssigned extends PureComponent {
           visible={hasSelected}
         >
           <Button onClick={this.onCancelBatchRemoveAssigned} disabled={saving}>
-            取消
+            {formatMessage({id: 'basic_000131', defaultMessage: '取消'})}
           </Button>
-          <Popconfirm title="确定要移除选择的用户吗？" onConfirm={this.batchRemoveAssigned}>
+          <Popconfirm title={formatMessage({id: 'basic_000174', defaultMessage: '确定要移除选择的用户吗？'})} onConfirm={this.batchRemoveAssigned}>
             <Button type="danger" loading={saving}>
-              批量移除
+              {formatMessage({id: 'basic_000133', defaultMessage: '批量移除'})}
             </Button>
           </Popconfirm>
-          <span className={cls('select')}>{`已选择 ${selectedKeys.length} 项`}</span>
+          <span className={cls('select')}>{`{formatMessage({id: 'basic_000134', defaultMessage: '已选择'})} ${selectedKeys.length} 项`}</span>
         </Drawer>
       </>
     );

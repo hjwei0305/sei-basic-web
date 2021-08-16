@@ -49,29 +49,29 @@ class MailInfo extends React.Component {
 
     return (
       <Form style={{ width: 600 }}>
-        <FormItem label="间隔时间(小时)" {...formItemLayout}>
+        <FormItem label={formatMessage({id: 'basic_000046', defaultMessage: '间隔时间(小时)'})} {...formItemLayout}>
           {getFieldDecorator('hours', {
             initialValue: hours,
             rules: [
               {
                 required: true,
-                message: '请填写间隔时间(小时)!',
+                message: formatMessage({id: 'basic_000047', defaultMessage: '请填写间隔时间(小时)!'}),
               },
             ],
           })(<Input />)}
         </FormItem>
-        <FormItem label="待办工作数量(个)" {...formItemLayout}>
+        <FormItem label={formatMessage({id: 'basic_000048', defaultMessage: '待办工作数量(个)'})} {...formItemLayout}>
           {getFieldDecorator('toDoAmount', {
             initialValue: toDoAmount,
             rules: [
               {
                 required: true,
-                message: '待办工作数量(个)!',
+                message: formatMessage({id: 'basic_000049', defaultMessage: '待办工作数量(个)!'}),
               },
             ],
           })(<Input />)}
         </FormItem>
-        <FormItem label="最后提醒时间" {...formItemLayout}>
+        <FormItem label={formatMessage({id: 'basic_000050', defaultMessage: '最后提醒时间'})} {...formItemLayout}>
           {getFieldDecorator('lastTime', {
             initialValue: lastTime,
           })(<Input disabled />)}
@@ -86,7 +86,7 @@ class MailInfo extends React.Component {
             loading={loading.effects['userProfile/saveEmailAlert']}
             onClick={this.handleSave}
           >
-            更新
+            {formatMessage({id: 'basic_000051', defaultMessage: '更新'})}
           </Button>
         </FormItem>
       </Form>

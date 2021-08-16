@@ -41,23 +41,23 @@ class FormModal extends PureComponent {
       remotePaging: true,
       name: 'bankName',
       field: ['bankId'],
-      searchPlaceHolder: '输入代码或名称关键字查询',
+      searchPlaceHolder: formatMessage({id: 'basic_000030', defaultMessage: '输入代码或名称关键字查询'}),
       searchProperties: ['name', 'code'],
       searchWidth: 220,
       width: 420,
       columns: [
         {
-          title: '代码',
+          title: formatMessage({id: 'basic_000031', defaultMessage: '代码'}),
           width: 180,
           dataIndex: 'code',
         },
         {
-          title: '名称',
+          title: formatMessage({id: 'basic_000032', defaultMessage: '名称'}),
           width: 220,
           dataIndex: 'name',
         },
         {
-          title: '银行类别',
+          title: formatMessage({id: 'basic_000033', defaultMessage: '银行类别'}),
           width: 180,
           dataIndex: 'bankCategory.name',
         },
@@ -94,21 +94,21 @@ class FormModal extends PureComponent {
         confirmLoading={saving}
         maskClosable={false}
         title={title}
-        okText="保存"
+        okText={formatMessage({id: 'basic_000034', defaultMessage: '保存'})}
         onOk={this.onFormSubmit}
       >
         <Form {...formItemLayout} layout="horizontal">
-          <FormItem label="收款方类型" hidden>
+          <FormItem label={formatMessage({id: 'basic_000035', defaultMessage: '收款方类型'})} hidden>
             {getFieldDecorator('receiverType', {
               initialValue: 'H',
             })(<Input />)}
           </FormItem>
-          <FormItem label="收款方Id" hidden>
+          <FormItem label={formatMessage({id: 'basic_000036', defaultMessage: '收款方Id'})} hidden>
             {getFieldDecorator('receiverId', {
               initialValue: editData ? editData.receiverId : receiverId,
             })(<Input />)}
           </FormItem>
-          <FormItem label="收款方代码" hidden>
+          <FormItem label={formatMessage({id: 'basic_000037', defaultMessage: '收款方代码'})} hidden>
             {getFieldDecorator('receiverCode', {
               initialValue: editData ? editData.receiverCode : receiverCode,
             })(<Input />)}
@@ -119,7 +119,7 @@ class FormModal extends PureComponent {
               rules: [
                 {
                   required: true,
-                  message: '请输入收款方名称',
+                  message: formatMessage({id: 'basic_000038', defaultMessage: '请输入收款方名称'}),
                 },
               ],
             })(<Input />)}
@@ -130,34 +130,34 @@ class FormModal extends PureComponent {
               rules: [
                 {
                   required: true,
-                  message: '请输入银行开户名',
+                  message: formatMessage({id: 'basic_000039', defaultMessage: '请输入银行开户名'}),
                 },
               ],
             })(<Input />)}
           </FormItem>
-          <FormItem label="银行id" hidden>
+          <FormItem label={formatMessage({id: 'basic_000040', defaultMessage: '银行id'})} hidden>
             {getFieldDecorator('bankId', {
               initialValue: editData ? editData.bankId : '',
             })(<Input />)}
           </FormItem>
-          <FormItem label="银行">
+          <FormItem label={formatMessage({id: 'basic_000041', defaultMessage: '银行'})}>
             {getFieldDecorator('bankName', {
               initialValue: editData ? editData.bank.name : '',
               rules: [
                 {
                   required: true,
-                  message: '请输入银行',
+                  message: formatMessage({id: 'basic_000042', defaultMessage: '请输入银行'}),
                 },
               ],
             })(<ComboGrid {...this.getComboGridProps()} />)}
           </FormItem>
-          <FormItem label="银行帐号">
+          <FormItem label={formatMessage({id: 'basic_000043', defaultMessage: '银行帐号'})}>
             {getFieldDecorator('bankAccountNumber', {
               initialValue: editData ? editData.bankAccountNumber : '',
               rules: [
                 {
                   required: true,
-                  message: '请输入银行帐号',
+                  message: formatMessage({id: 'basic_000044', defaultMessage: '请输入银行帐号'}),
                 },
               ],
             })(<Input />)}
@@ -168,7 +168,7 @@ class FormModal extends PureComponent {
               rules: [
                 {
                   required: true,
-                  message: '请输入排序',
+                  message: formatMessage({id: 'basic_000045', defaultMessage: '请输入排序'}),
                 },
               ],
             })(<InputNumber style={{ width: '100%' }} />)}

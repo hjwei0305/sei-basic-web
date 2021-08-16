@@ -91,7 +91,7 @@ class SystemLogo extends Component {
     const { collapsedMenuLogo = '', menuLogo = '', disabled = false } = editData || {};
 
     return (
-      <ColumnLayout title={['菜单LOGO', '预览']}>
+      <ColumnLayout title={[formatMessage({id: 'basic_000293', defaultMessage: '菜单LOGO'}), formatMessage({id: 'basic_000290', defaultMessage: '预览'})]}>
         <Form
           style={{ padding: 8 }}
           slot="left"
@@ -100,32 +100,32 @@ class SystemLogo extends Component {
           onSubmit={this.onSubmit}
         >
           <Spin spinning={!!opting}>
-            <FormItem label="收缩LOGO" extra="请上传40*40px或者整数倍数的，背景透明的svg格式的图片">
+            <FormItem label={formatMessage({id: 'basic_000294', defaultMessage: '收缩LOGO'})} extra="{formatMessage({id: 'basic_000295', defaultMessage: '请上传40'})}*{formatMessage({id: 'basic_000296', defaultMessage: '40px或者整数倍数的，背景透明的svg格式的图片'})}">
               {getFieldDecorator('collapsedMenuLogo', {
                 initialValue: collapsedMenuLogo,
                 rules: [
                   {
                     required: true,
-                    message: '收缩图标不能为空',
+                    message: formatMessage({id: 'basic_000297', defaultMessage: '收缩图标不能为空'}),
                   },
                 ],
               })(<ExtUpload />)}
             </FormItem>
             <FormItem
-              label="展开LOGO"
-              extra="请上传200*40px或者整数倍数的，背景透明的svg格式的图片"
+              label={formatMessage({id: 'basic_000298', defaultMessage: '展开LOGO'})}
+              extra="{formatMessage({id: 'basic_000299', defaultMessage: '请上传200'})}*{formatMessage({id: 'basic_000296', defaultMessage: '40px或者整数倍数的，背景透明的svg格式的图片'})}"
             >
               {getFieldDecorator('menuLogo', {
                 initialValue: menuLogo,
                 rules: [
                   {
                     required: true,
-                    message: '展开图标不能为空',
+                    message: formatMessage({id: 'basic_000300', defaultMessage: '展开图标不能为空'}),
                   },
                 ],
               })(<ExtUpload />)}
             </FormItem>
-            <FormItem label="禁用">
+            <FormItem label={formatMessage({id: 'basic_000289', defaultMessage: '禁用'})}>
               {getFieldDecorator('disabled', {
                 valuePropName: 'checked',
                 initialValue: disabled,
@@ -133,10 +133,10 @@ class SystemLogo extends Component {
             </FormItem>
             <FormItem {...tailFormItemLayout}>
               <Button style={{ marginRight: 8 }} type="primary" onClick={this.handleSave}>
-                保存
+                {formatMessage({id: 'basic_000034', defaultMessage: '保存'})}
               </Button>
               <Button style={{ marginRight: 8 }} onClick={this.handlePreview}>
-                预览
+                {formatMessage({id: 'basic_000290', defaultMessage: '预览'})}
               </Button>
             </FormItem>
           </Spin>
@@ -149,7 +149,7 @@ class SystemLogo extends Component {
           />
         ) : (
           <div className={cls(styles['empty-warpper'])} slot="right">
-            <Empty description="暂无菜单logo" />
+            <Empty description={formatMessage({id: 'basic_000301', defaultMessage: '暂无菜单logo'})} />
           </div>
         )}
       </ColumnLayout>

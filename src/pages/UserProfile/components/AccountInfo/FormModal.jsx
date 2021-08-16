@@ -59,17 +59,17 @@ class FormModal extends PureComponent {
         confirmLoading={saving}
         maskClosable={false}
         title={title}
-        okText="保存"
+        okText={formatMessage({id: 'basic_000034', defaultMessage: '保存'})}
         onOk={this.onFormSubmit}
       >
         <Form {...formItemLayout} layout="horizontal">
-          <FormItem label="帐号">
+          <FormItem label={formatMessage({id: 'basic_000071', defaultMessage: '帐号'})}>
             {getFieldDecorator('account', {
               initialValue: editData ? editData.account : '',
               rules: [
                 {
                   required: true,
-                  message: '帐号不能为空',
+                  message: formatMessage({id: 'basic_000072', defaultMessage: '帐号不能为空'}),
                 },
               ],
             })(<Input />)}

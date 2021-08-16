@@ -19,7 +19,7 @@ class index extends PureComponent {
     const { onBack } = this.props;
     return (
       <Button type="primary" onClick={onBack}>
-        返回
+        {formatMessage({id: 'basic_000220', defaultMessage: '返回'})}
       </Button>
     );
   };

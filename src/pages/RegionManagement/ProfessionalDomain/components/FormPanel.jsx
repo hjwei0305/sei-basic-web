@@ -89,7 +89,7 @@ class FormModal extends PureComponent {
     return (
       <ScrollBar>
         <Form {...formItemLayout} layout="horizontal">
-          <FormItem label="父节点" style={{ display: formType === 'addChildNode' ? '' : 'none' }}>
+          <FormItem label={formatMessage({id: 'basic_000191', defaultMessage: '父节点'})} style={{ display: formType === 'addChildNode' ? '' : 'none' }}>
             {getFieldDecorator('parentName', {
               initialValue: parentName,
             })(<Input disabled />)}

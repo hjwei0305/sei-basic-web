@@ -44,7 +44,7 @@ class WaterForm extends Component {
     const { form, editData } = this.props;
     const { getFieldDecorator } = form;
     const {
-      watermarkText = '请勿外传',
+      watermarkText ={formatMessage({id: 'basic_000292', defaultMessage: '请勿外传'})},
       color = {
         r: '241',
         g: '112',
@@ -58,76 +58,76 @@ class WaterForm extends Component {
     } = editData || {};
     return (
       <Form {...formItemLayout} layout="horizontal" onSubmit={this.onSubmit}>
-        <FormItem label="文案">
+        <FormItem label={formatMessage({id: 'basic_000276', defaultMessage: '文案'})}>
           {getFieldDecorator('watermarkText', {
             initialValue: watermarkText,
             rules: [
               {
                 required: true,
-                message: '文案不能为空',
+                message: formatMessage({id: 'basic_000277', defaultMessage: '文案不能为空'}),
               },
             ],
           })(<Input />)}
         </FormItem>
-        <FormItem label="旋转角度">
+        <FormItem label={formatMessage({id: 'basic_000280', defaultMessage: '旋转角度'})}>
           {getFieldDecorator('rotate', {
             initialValue: rotate,
             rules: [
               {
                 required: true,
-                message: '旋转角度不能为空',
+                message: formatMessage({id: 'basic_000281', defaultMessage: '旋转角度不能为空'}),
               },
             ],
           })(<InputNumber />)}
         </FormItem>
-        <FormItem label="字号">
+        <FormItem label={formatMessage({id: 'basic_000278', defaultMessage: '字号'})}>
           {getFieldDecorator('fontSize', {
             initialValue: fontSize,
             rules: [
               {
                 required: true,
-                message: '字号不能为空',
+                message: formatMessage({id: 'basic_000279', defaultMessage: '字号不能为空'}),
               },
             ],
           })(<InputNumber max={50} min={10} precision={0} />)}
         </FormItem>
-        <FormItem label="宽度">
+        <FormItem label={formatMessage({id: 'basic_000282', defaultMessage: '宽度'})}>
           {getFieldDecorator('width', {
             initialValue: width,
             rules: [
               {
                 required: true,
-                message: '宽度不能为空',
+                message: formatMessage({id: 'basic_000283', defaultMessage: '宽度不能为空'}),
               },
             ],
           })(<InputNumber min={50} precision={0} />)}
         </FormItem>
-        <FormItem label="高度">
+        <FormItem label={formatMessage({id: 'basic_000284', defaultMessage: '高度'})}>
           {getFieldDecorator('height', {
             initialValue: height,
             rules: [
               {
                 required: true,
-                message: '高度不能为空',
+                message: formatMessage({id: 'basic_000285', defaultMessage: '高度不能为空'}),
               },
             ],
           })(<InputNumber min={50} precision={0} />)}
         </FormItem>
-        <FormItem label="颜色">
+        <FormItem label={formatMessage({id: 'basic_000286', defaultMessage: '颜色'})}>
           {getFieldDecorator('color', {
             initialValue: color,
             rules: [
               {
                 required: true,
-                message: '颜色不能为空',
+                message: formatMessage({id: 'basic_000287', defaultMessage: '颜色不能为空'}),
               },
             ],
           })(<ColorPicker />)}
         </FormItem>
         <FormItem {...tailFormItemLayout}>
-          <Button htmlType="submit">预览</Button>
+          <Button htmlType="submit">{formatMessage({id: 'basic_000290', defaultMessage: '预览'})}</Button>
           <Button type="primary" onClick={this.handleSave}>
-            保存
+            {formatMessage({id: 'basic_000034', defaultMessage: '保存'})}
           </Button>
         </FormItem>
       </Form>

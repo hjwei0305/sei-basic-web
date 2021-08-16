@@ -11,57 +11,57 @@ const { SubMenu } = Menu;
 const menuData = [
   {
     id: '10',
-    name: '后台配置',
+    name: formatMessage({id: 'basic_000248', defaultMessage: '后台配置'}),
     children: [
       {
         id: '100',
-        name: '应用模块',
+        name: formatMessage({id: 'basic_000108', defaultMessage: '应用模块'}),
         path: '/backConfig/appModule',
       },
       {
         id: '101',
-        name: '功能项',
+        name: formatMessage({id: 'basic_000110', defaultMessage: '功能项'}),
         path: '/backConfig/feature',
       },
       {
         id: '102',
-        name: '应用菜单',
+        name: formatMessage({id: 'basic_000249', defaultMessage: '应用菜单'}),
         path: '/backConfig/appMenu',
       },
       {
         id: '103',
-        name: '权限对象',
+        name: formatMessage({id: 'basic_000250', defaultMessage: '权限对象'}),
         path: '/backConfig/authorType',
       },
       {
         id: '104',
-        name: '数据权限类型',
+        name: formatMessage({id: 'basic_000119', defaultMessage: '数据权限类型'}),
         path: '/backConfig/dataAuthorType',
       },
       {
         id: '105',
-        name: '租户管理',
+        name: formatMessage({id: 'basic_000251', defaultMessage: '租户管理'}),
         path: '/backConfig/tenant',
       },
     ],
   },
   {
     id: '20',
-    name: '权限管理',
+    name: formatMessage({id: 'basic_000252', defaultMessage: '权限管理'}),
     children: [
       {
         id: '201',
-        name: '功能角色',
+        name: formatMessage({id: 'basic_000165', defaultMessage: '功能角色'}),
         path: '/author/featureRole',
       },
       {
         id: '202',
-        name: '数据角色',
+        name: formatMessage({id: 'basic_000167', defaultMessage: '数据角色'}),
         path: '/author/dataRole',
       },
       {
         id: '203',
-        name: '数据权限显示',
+        name: formatMessage({id: 'basic_000253', defaultMessage: '数据权限显示'}),
         path: '/author/dataView',
       },
     ],
@@ -126,7 +126,7 @@ export default class Home extends Component {
   render() {
     return (
       <Layout className={cls(styles['main-box'])}>
-        <Header className={cls('menu-header')}>应用路由列表</Header>
+        <Header className={cls('menu-header')}>{formatMessage({id: 'basic_000254', defaultMessage: '应用路由列表'})}</Header>
         <Content className={cls('menu-box')}>
           <ScrollBar>
             <Menu key="Menu" mode="inline" theme="light">

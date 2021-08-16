@@ -305,7 +305,7 @@ class Organization extends Component {
         <>
           {title}
           <Tag color="red" style={{ marginLeft: 8 }}>
-            已冻结
+            {formatMessage({id: 'basic_000123', defaultMessage: '已冻结'})}
           </Tag>
         </>
       );
@@ -394,7 +394,7 @@ class Organization extends Component {
             <Card title={formatMessage({id: 'basic_000018', defaultMessage: '组织机构'})} bordered={false} className="left-content">
               <div className="header-tool-box">
                 <Search
-                  placeholder="输入名称关键字查询"
+                  placeholder={formatMessage({id: 'basic_000112', defaultMessage: '输入名称关键字查询'})}
                   defaultValue={allValue}
                   onChange={e => this.handlerSearchChange(e.target.value)}
                   onSearch={this.handlerSearch}
@@ -427,7 +427,7 @@ class Organization extends Component {
               <NodeForm {...nodeFormProps} />
             ) : (
               <div className="blank-empty">
-                <Empty image={empty} description="可选择左侧节点获得相关的操作" />
+                <Empty image={empty} description={formatMessage({id: 'basic_000143', defaultMessage: '可选择左侧节点获得相关的操作'})} />
               </div>
             )}
             { moveVisible ? <MoveNodeDrawer {...moveNodeProps} /> : null }

@@ -14,7 +14,7 @@ class MoveTreeModal extends PureComponent {
         maskClosable={false}
         title={title}
         onOk={onMove}
-        okText="移动"
+        okText={formatMessage({id: 'basic_000185', defaultMessage: '移动'})}
         width={400}
       >
         <TreeView height={300} onChange={onChange} treeData={treeData} />

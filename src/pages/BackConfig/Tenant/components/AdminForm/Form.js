@@ -38,7 +38,7 @@ class TenantAdminForm extends PureComponent {
     const { form, tenantData, tenantAdmin, saving } = this.props;
     const { organizationDto } = tenantData;
     const { getFieldDecorator } = form;
-    const title = tenantAdmin ? '编辑租户管理员' : '新建租户管理员';
+    const title = tenantAdmin ? formatMessage({id: 'basic_000312', defaultMessage: '编辑租户管理员'}) : formatMessage({id: 'basic_000313', defaultMessage: '新建租户管理员'});
     return (
       <div key="form-box" className={cls(styles['form-box'])}>
         <div className="base-view-body">
@@ -52,45 +52,45 @@ class TenantAdminForm extends PureComponent {
                 rules: [
                   {
                     required: true,
-                    message: '组织机构不能为空',
+                    message: formatMessage({id: 'basic_000268', defaultMessage: '组织机构不能为空'}),
                   },
                 ],
               })(<Input disabled addonBefore={organizationDto ? organizationDto.code : ''} />)}
             </FormItem>
-            <FormItem label="员工编号">
+            <FormItem label={formatMessage({id: 'basic_000059', defaultMessage: '员工编号'})}>
               {getFieldDecorator('code', {
                 initialValue: tenantAdmin ? tenantAdmin.code : '',
                 rules: [
                   {
                     required: true,
-                    message: '员工编号不能为空',
+                    message: formatMessage({id: 'basic_000148', defaultMessage: '员工编号不能为空'}),
                   },
                 ],
               })(<Input maxLength={10} />)}
             </FormItem>
-            <FormItem label="用户名称">
+            <FormItem label={formatMessage({id: 'basic_000314', defaultMessage: '用户名称'})}>
               {getFieldDecorator('userName', {
                 initialValue: tenantAdmin ? tenantAdmin.userName : '',
                 rules: [
                   {
                     required: true,
-                    message: '用户名称不能为空',
+                    message: formatMessage({id: 'basic_000315', defaultMessage: '用户名称不能为空'}),
                   },
                 ],
               })(<Input />)}
             </FormItem>
-            <FormItem label="电子邮箱">
+            <FormItem label={formatMessage({id: 'basic_000316', defaultMessage: '电子邮箱'})}>
               {getFieldDecorator('email', {
                 initialValue: tenantAdmin ? tenantAdmin.email : '',
                 rules: [
                   {
                     required: true,
-                    message: '电子邮箱不能为空',
+                    message: formatMessage({id: 'basic_000317', defaultMessage: '电子邮箱不能为空'}),
                   },
                 ],
               })(<Input />)}
             </FormItem>
-            <FormItem label="手机号">
+            <FormItem label={formatMessage({id: 'basic_000318', defaultMessage: '手机号'})}>
               {getFieldDecorator('mobile', {
                 initialValue: tenantAdmin ? tenantAdmin.mobile : '',
               })(<Input />)}

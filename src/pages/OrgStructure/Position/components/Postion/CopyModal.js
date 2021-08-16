@@ -48,12 +48,12 @@ class CopyModal extends PureComponent {
       field: ['positionCategoryId', 'positionCategoryCode'],
       columns: [
         {
-          title: '代码',
+          title: formatMessage({id: 'basic_000031', defaultMessage: '代码'}),
           width: 80,
           dataIndex: 'code',
         },
         {
-          title: '名称',
+          title: formatMessage({id: 'basic_000032', defaultMessage: '名称'}),
           width: 220,
           dataIndex: 'name',
         },
@@ -104,17 +104,17 @@ class CopyModal extends PureComponent {
         centered
         confirmLoading={saving}
         maskClosable={false}
-        title="复制岗位到指定组织机构"
-        okText="保存"
+        title={formatMessage({id: 'basic_000202', defaultMessage: '复制岗位到指定组织机构'})}
+        okText={formatMessage({id: 'basic_000034', defaultMessage: '保存'})}
         onOk={this.onFormSubmit}
       >
         <Form {...formItemLayout} layout="horizontal">
-          <FormItem label="源岗位Id" style={{ display: 'none' }}>
+          <FormItem label={formatMessage({id: 'basic_000203', defaultMessage: '源岗位Id'})} style={{ display: 'none' }}>
             {getFieldDecorator('positionId', {
               initialValue: currentPosition ? currentPosition.id : '',
             })(<Input />)}
           </FormItem>
-          <FormItem label="源岗位">
+          <FormItem label={formatMessage({id: 'basic_000204', defaultMessage: '源岗位'})}>
             {getFieldDecorator('positionName', {
               initialValue: currentPosition ? currentPosition.name : '',
               rules: [
@@ -124,23 +124,23 @@ class CopyModal extends PureComponent {
               ],
             })(<Input disabled />)}
           </FormItem>
-          <FormItem label="目标组织机构id" style={{ display: 'none' }}>
+          <FormItem label={formatMessage({id: 'basic_000205', defaultMessage: '目标组织机构id'})} style={{ display: 'none' }}>
             {getFieldDecorator('orgId', {
               initialValue: '',
             })(<Input />)}
           </FormItem>
-          <FormItem label="目标组织机构">
+          <FormItem label={formatMessage({id: 'basic_000206', defaultMessage: '目标组织机构'})}>
             {getFieldDecorator('orgName', {
               initialValue: '',
               rules: [
                 {
                   required: true,
-                  message: '目标组织机构不能为空',
+                  message: formatMessage({id: 'basic_000207', defaultMessage: '目标组织机构不能为空'}),
                 },
               ],
             })(<ComboTree {...this.getComboTreeProps()} />)}
           </FormItem>
-          <FormItem label="复制功能角色">
+          <FormItem label={formatMessage({id: 'basic_000208', defaultMessage: '复制功能角色'})}>
             {getFieldDecorator('copyFeatureRole', {
               initialValue: false,
               valuePropName: 'checked',

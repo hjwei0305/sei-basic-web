@@ -112,19 +112,19 @@ class AccountInfo extends Component {
               className="lock"
               type="lock"
               antd
-              tooltip={{ title: '更新密码' }}
+              tooltip={{ title: formatMessage({id: 'basic_000070', defaultMessage: '更新密码'}) }}
             />
           </span>
         ),
       },
       {
-        title: '帐号',
+        title: formatMessage({id: 'basic_000071', defaultMessage: '帐号'}),
         dataIndex: 'account',
         width: 180,
         required: true,
       },
       {
-        title: '名称',
+        title: formatMessage({id: 'basic_000032', defaultMessage: '名称'}),
         dataIndex: 'name',
         width: 380,
         required: true,

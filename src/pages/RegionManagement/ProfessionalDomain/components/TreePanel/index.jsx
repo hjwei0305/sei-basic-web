@@ -61,7 +61,7 @@ class TreePanel extends Component {
       case 'addChildNode':
         this.formType = type;
         if (type === 'addChildNode' && !selectedTreeNode) {
-          message.warn('请选择父亲节点！');
+          message.warn(formatMessage({id: 'basic_000178', defaultMessage: '请选择父亲节点！'}));
         } else {
           dispatch({
             type: 'professionalDomain/updateState',
@@ -78,10 +78,10 @@ class TreePanel extends Component {
               mTmVisible: true,
             });
           } else {
-            message.warn('根节点不能移动！');
+            message.warn(formatMessage({id: 'basic_000179', defaultMessage: '根节点不能移动！'}));
           }
         } else {
-          message.warn('请选择要移动的节点！');
+          message.warn(formatMessage({id: 'basic_000180', defaultMessage: '请选择要移动的节点！'}));
         }
         break;
       case 'moveNode':
@@ -111,7 +111,7 @@ class TreePanel extends Component {
             }
           });
         } else {
-          message.warn('请选择要移动到的父节点！');
+          message.warn(formatMessage({id: 'basic_000181', defaultMessage: '请选择要移动到的父节点！'}));
         }
         break;
       case 'delNode':
@@ -133,7 +133,7 @@ class TreePanel extends Component {
             }
           });
         } else {
-          message.warn('请选择要删除的节点！');
+          message.warn(formatMessage({id: 'basic_000182', defaultMessage: '请选择要删除的节点！'}));
         }
         break;
       default:
@@ -176,7 +176,7 @@ class TreePanel extends Component {
             this.handleTreeOpt('addRootNode');
           }}
         >
-          新增根节点
+          {formatMessage({id: 'basic_000183', defaultMessage: '新增根节点'})}
         </Button>
         <Button.Group
           onChange={e => {
@@ -188,14 +188,14 @@ class TreePanel extends Component {
               this.handleTreeOpt('addChildNode');
             }}
           >
-            创建节点
+            {formatMessage({id: 'basic_000184', defaultMessage: '创建节点'})}
           </Button>
           <Button
             onClick={() => {
               this.handleTreeOpt('showMoveModal');
             }}
           >
-            移动
+            {formatMessage({id: 'basic_000185', defaultMessage: '移动'})}
           </Button>
           <Popconfirm
             placement="topLeft"
@@ -207,7 +207,7 @@ class TreePanel extends Component {
               this.handleTreeOpt('delNode');
             }}
           >
-            <Button type="danger">删除</Button>
+            <Button type="danger">{formatMessage({id: 'basic_000186', defaultMessage: '删除'})}</Button>
           </Popconfirm>
         </Button.Group>
       </>
@@ -229,7 +229,7 @@ class TreePanel extends Component {
         {showCreateModal ? (
           <CreateFormModal
             formType={this.formType}
-            title={this.formType === 'addRootNode' ? '新增根节点' : '新增子节点'}
+            title={this.formType === 'addRootNode' ? formatMessage({id: 'basic_000183', defaultMessage: '新增根节点'}) : formatMessage({id: 'basic_000187', defaultMessage: '新增子节点'})}
             visible={showCreateModal}
             onCancel={() => {
               this.handleCancel('create');

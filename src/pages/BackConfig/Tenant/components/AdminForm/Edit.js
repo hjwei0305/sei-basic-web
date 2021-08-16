@@ -40,7 +40,7 @@ class GroupEdit extends Component {
         overlayClassName={cls(styles['form-popover-box'])}
         content={<Form {...popoverProps} />}
       >
-        <Tooltip title="管理员">
+        <Tooltip title={formatMessage({id: 'basic_000319', defaultMessage: '管理员'})}>
           <span className={cls('form-popover-box-trigger', 'action-item')}>
             <ExtIcon type="user" antd />
           </span>

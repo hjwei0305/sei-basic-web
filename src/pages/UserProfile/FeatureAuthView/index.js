@@ -38,7 +38,7 @@ class UserDataAuthView extends PureComponent {
     if (item.publicUserType && item.publicOrgId) {
       tag = (
         <Tag color="green" style={{ marginLeft: 8 }}>
-          公共角色
+          {formatMessage({id: 'basic_000103', defaultMessage: '公共角色'})}
         </Tag>
       );
     }
@@ -65,7 +65,7 @@ class UserDataAuthView extends PureComponent {
     if (item.featureRoleGroupName) {
       roleGroup = (
         <div className="field-item info">
-          <span className="label">角色组</span>
+          <span className="label">{formatMessage({id: 'basic_000104', defaultMessage: '角色组'})}</span>
           <span className="value">{item.featureRoleGroupName}</span>
         </div>
       );
@@ -73,7 +73,7 @@ class UserDataAuthView extends PureComponent {
     if (item.roleSourceType) {
       roleSource = (
         <div className="field-item info">
-          <span className="label">角色来源</span>
+          <span className="label">{formatMessage({id: 'basic_000105', defaultMessage: '角色来源'})}</span>
           <span className="value">{item.roleSourceTypeRemark}</span>
         </div>
       );
@@ -107,7 +107,7 @@ class UserDataAuthView extends PureComponent {
     const { userFeatureAuthView } = this.props;
     const { currentRoleId, currentRoleName } = userFeatureAuthView;
     const roleListProps = {
-      title: '我的功能角色',
+      title: formatMessage({id: 'basic_000106', defaultMessage: '我的功能角色'}),
       showSearch: false,
       onSelectChange: this.handlerRoleSelect,
       customTool: this.renderCustomTool,
@@ -133,7 +133,7 @@ class UserDataAuthView extends PureComponent {
             <AssignedFeature currentRoleName={currentRoleName} currentRoleId={currentRoleId} />
           ) : (
             <div className="blank-empty">
-              <Empty image={empty} description="选择相应的角色项显示权限" />
+              <Empty image={empty} description={formatMessage({id: 'basic_000107', defaultMessage: '选择相应的角色项显示权限'})} />
             </div>
           )}
         </Content>

@@ -178,13 +178,13 @@ class DataAuthorType extends Component {
         required: true,
       },
       {
-        title: '权限对象类型',
+        title: formatMessage({id: 'basic_000341', defaultMessage: '权限对象类型'}),
         dataIndex: 'authorizeEntityTypeName',
         width: 160,
         required: true,
       },
       {
-        title: '功能码',
+        title: formatMessage({id: 'basic_000342', defaultMessage: '功能码'}),
         dataIndex: 'featureCode',
         width: 220,
       },

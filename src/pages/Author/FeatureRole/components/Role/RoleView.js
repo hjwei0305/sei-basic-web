@@ -24,7 +24,7 @@ class RoleView extends PureComponent {
     const { feature } = this.props;
     const listCardProps = {
       className: 'role-box',
-      title: <BannerTitle title={feature.name} subTitle="功能角色分布" />,
+      title: <BannerTitle title={feature.name} subTitle={formatMessage({id: 'basic_000383', defaultMessage: '功能角色分布'})} />,
       bordered: false,
       pagination: false,
       itemField: {
@@ -61,7 +61,7 @@ class RoleView extends PureComponent {
           className={cls('view-popover-box-trigger')}
           type="security-scan"
           antd
-          tooltip={{ title: '查看角色分布' }}
+          tooltip={{ title: formatMessage({id: 'basic_000384', defaultMessage: '查看角色分布'}) }}
         />
       </Popover>
     );

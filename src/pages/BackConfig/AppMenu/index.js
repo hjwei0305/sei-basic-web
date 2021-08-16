@@ -358,18 +358,18 @@ class AppMenu extends Component {
         <Layout className="auto-height">
           <Sider width={380} className="auto-height" theme="light">
             <Card
-              title="应用菜单"
+              title={formatMessage({id: 'basic_000249', defaultMessage: '应用菜单'})}
               bordered={false}
               className="left-content"
               extra={
                 <Button icon="plus" type="link" onClick={e => this.addParent(e)}>
-                  新建应用
+                  {formatMessage({id: 'basic_000359', defaultMessage: '新建应用'})}
                 </Button>
               }
             >
               <div className="header-tool-box">
                 <Search
-                  placeholder="输入名称关键字查询"
+                  placeholder={formatMessage({id: 'basic_000112', defaultMessage: '输入名称关键字查询'})}
                   defaultValue={allValue}
                   onChange={e => this.handlerSearchChange(e.target.value)}
                   onSearch={this.handlerSearch}
@@ -402,7 +402,7 @@ class AppMenu extends Component {
               <NodeForm {...nodeFormProps} />
             ) : (
               <div className="blank-empty">
-                <Empty image={empty} description="可选择左侧菜单节点获得相关的操作" />
+                <Empty image={empty} description={formatMessage({id: 'basic_000360', defaultMessage: '可选择左侧菜单节点获得相关的操作'})} />
               </div>
             )}
           </Content>

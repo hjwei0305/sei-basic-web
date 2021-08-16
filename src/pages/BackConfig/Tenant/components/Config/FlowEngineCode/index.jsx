@@ -73,7 +73,7 @@ class FlowEngineCode extends Component {
       name: 'flowEngineCode',
       field: ['code'],
       allowClear: true,
-      placeholder: '选择流程引擎代码',
+      placeholder: formatMessage({id: 'basic_000303', defaultMessage: '选择流程引擎代码'}),
       store: {
         url: `${SERVER_PATH}/flow-agent/commonComponent/getAgentType`,
       },
@@ -92,20 +92,20 @@ class FlowEngineCode extends Component {
         onSubmit={this.onSubmit}
       >
         <Spin spinning={!!opting}>
-          <FormItem label="流程引擎代码">
+          <FormItem label={formatMessage({id: 'basic_000304', defaultMessage: '流程引擎代码'})}>
             {getFieldDecorator('flowEngineCode', {
               initialValue: editData,
               rules: [
                 {
                   required: true,
-                  message: '引擎代码不能为空',
+                  message: formatMessage({id: 'basic_000305', defaultMessage: '引擎代码不能为空'}),
                 },
               ],
             })(<ComboList {...flowEngineCodePros} />)}
           </FormItem>
           <FormItem {...tailFormItemLayout}>
             <Button style={{ marginRight: 8 }} type="primary" onClick={this.handleSave}>
-              保存
+              {formatMessage({id: 'basic_000034', defaultMessage: '保存'})}
             </Button>
           </FormItem>
         </Spin>

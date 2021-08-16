@@ -84,7 +84,7 @@ class FeatureRoleAssigned extends PureComponent {
     return (
       <>
         <Button type="primary" icon="plus" onClick={this.handlerShowAssign}>
-          添加功能角色
+          {formatMessage({id: 'basic_000130', defaultMessage: '添加功能角色'})}
         </Button>
         <Drawer
           placement="top"
@@ -96,14 +96,14 @@ class FeatureRoleAssigned extends PureComponent {
           visible={hasSelected}
         >
           <Button onClick={this.onCancelBatchRemoveAssigned} disabled={saving}>
-            取消
+            {formatMessage({id: 'basic_000131', defaultMessage: '取消'})}
           </Button>
-          <Popconfirm title="确定要移除选择的角色吗？" onConfirm={this.batchRemoveAssigned}>
+          <Popconfirm title={formatMessage({id: 'basic_000132', defaultMessage: '确定要移除选择的角色吗？'})} onConfirm={this.batchRemoveAssigned}>
             <Button type="danger" loading={saving}>
-              批量移除
+              {formatMessage({id: 'basic_000133', defaultMessage: '批量移除'})}
             </Button>
           </Popconfirm>
-          <span className={cls('select')}>{`已选择 ${selectedKeys.length} 项`}</span>
+          <span className={cls('select')}>{`{formatMessage({id: 'basic_000134', defaultMessage: '已选择'})} ${selectedKeys.length} 项`}</span>
         </Drawer>
       </>
     );
@@ -114,7 +114,7 @@ class FeatureRoleAssigned extends PureComponent {
     if (row.publicUserType && row.publicOrgId) {
       tag = (
         <Tag color="green" style={{ marginLeft: 8 }}>
-          公共角色
+          {formatMessage({id: 'basic_000103', defaultMessage: '公共角色'})}
         </Tag>
       );
     }
@@ -132,7 +132,7 @@ class FeatureRoleAssigned extends PureComponent {
     if (row.publicUserType) {
       pubUserType = (
         <div className="field-item info">
-          <span className="label">用户类型</span>
+          <span className="label">{formatMessage({id: 'basic_000058', defaultMessage: '用户类型'})}</span>
           <span className="value">{row.userTypeRemark}</span>
         </div>
       );

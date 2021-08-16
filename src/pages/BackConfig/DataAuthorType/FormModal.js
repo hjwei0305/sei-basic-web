@@ -35,7 +35,7 @@ class FormModal extends PureComponent {
   render() {
     const { form, rowData, closeFormModal, saving, showModal } = this.props;
     const { getFieldDecorator } = form;
-    const title = rowData ? '修改数据权限类型' : '新建数据权限类型';
+    const title = rowData ? formatMessage({id: 'basic_000343', defaultMessage: '修改数据权限类型'}) : formatMessage({id: 'basic_000344', defaultMessage: '新建数据权限类型'});
     getFieldDecorator('authorizeEntityTypeId', {
       initialValue: rowData ? rowData.authorizeEntityTypeId : null,
     });
@@ -43,7 +43,7 @@ class FormModal extends PureComponent {
       form,
       name: 'authorizeEntityTypeName',
       field: ['authorizeEntityTypeId'],
-      searchPlaceHolder: '输入名称关键字查询',
+      searchPlaceHolder: formatMessage({id: 'basic_000112', defaultMessage: '输入名称关键字查询'}),
       store: {
         url: `${SERVER_PATH}/sei-basic/authorizeEntityType/findAll`,
       },
@@ -99,24 +99,24 @@ class FormModal extends PureComponent {
               />,
             )}
           </FormItem>
-          <FormItem label="权限对象类型">
+          <FormItem label={formatMessage({id: 'basic_000341', defaultMessage: '权限对象类型'})}>
             {getFieldDecorator('authorizeEntityTypeName', {
               initialValue: rowData ? rowData.authorizeEntityTypeName : '',
               rules: [
                 {
                   required: true,
-                  message: '权限对象类型不能为空',
+                  message: formatMessage({id: 'basic_000345', defaultMessage: '权限对象类型不能为空'}),
                 },
               ],
             })(<ComboList {...authorizeEntityTypeNameProps} />)}
           </FormItem>
-          <FormItem label="功能码">
+          <FormItem label={formatMessage({id: 'basic_000342', defaultMessage: '功能码'})}>
             {getFieldDecorator('featureCode', {
               initialValue: rowData ? rowData.featureCode : null,
               rules: [
                 {
                   max: 50,
-                  message: '功能码不能超过50个字符',
+                  message: formatMessage({id: 'basic_000346', defaultMessage: '功能码不能超过50个字符'}),
                 },
               ],
             })(<Input />)}

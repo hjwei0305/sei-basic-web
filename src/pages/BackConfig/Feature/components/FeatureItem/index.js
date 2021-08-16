@@ -178,12 +178,12 @@ class FeatureItem extends Component {
   renderItemDescription = item => (
     <>
       <div className="desc-box">
-        <span className="label">功能代码</span>
+        <span className="label">{formatMessage({id: 'basic_000333', defaultMessage: '功能代码'})}</span>
         {item.code}
       </div>
       {item.url ? (
         <div className="desc-box">
-          <span className="label">功能路径</span>
+          <span className="label">{formatMessage({id: 'basic_000334', defaultMessage: '功能路径'})}</span>
           {item.url}
         </div>
       ) : null}
@@ -207,7 +207,7 @@ class FeatureItem extends Component {
         getContainer={false}
         placement="right"
         visible={showFeatureItem}
-        title="功能项列表"
+        title={formatMessage({id: 'basic_000335', defaultMessage: '功能项列表'})}
         style={{ position: 'absolute' }}
         className={cls(styles['feature-item-box'])}
         onClose={this.handlerClose}
@@ -220,7 +220,7 @@ class FeatureItem extends Component {
             save={this.save}
           />
           <Search
-            placeholder="输入名称关键字查询"
+            placeholder={formatMessage({id: 'basic_000112', defaultMessage: '输入名称关键字查询'})}
             value={allValue}
             onChange={e => this.handlerSearchChange(e.target.value)}
             onSearch={this.handlerSearch}

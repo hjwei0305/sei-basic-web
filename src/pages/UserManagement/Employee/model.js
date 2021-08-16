@@ -67,7 +67,7 @@ export default modelExtend(model, {
       const re = yield call(resetPassword, payload);
       message.destroy();
       if (re.success) {
-        message.success('密码重置成功');
+        message.success(formatMessage({id: 'basic_000141', defaultMessage: '密码重置成功'}));
       } else {
         message.error(re.message);
       }
@@ -91,7 +91,7 @@ export default modelExtend(model, {
       const re = yield call(copyToEmployees, payload);
       message.destroy();
       if (re.success) {
-        message.success('复制成功');
+        message.success(formatMessage({id: 'basic_000142', defaultMessage: '复制成功'}));
       } else {
         message.error(re.message);
       }

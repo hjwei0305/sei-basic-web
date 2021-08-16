@@ -66,11 +66,11 @@ class DataRoleModal extends PureComponent {
       return (
         <>
           <ExtIcon onClick={this.handlerBackAssigned} type="left" className="trigger-back" antd />
-          <BannerTitle title={title} subTitle="请选择要添加的数据角色" />
+          <BannerTitle title={title} subTitle={formatMessage({id: 'basic_000137', defaultMessage: '请选择要添加的数据角色'})} />
         </>
       );
     }
-    return <BannerTitle title={title} subTitle="已配置的数据角色" />;
+    return <BannerTitle title={title} subTitle={formatMessage({id: 'basic_000138', defaultMessage: '已配置的数据角色'})} />;
   };
 
   render() {

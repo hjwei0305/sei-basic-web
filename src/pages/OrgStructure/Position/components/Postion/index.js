@@ -247,7 +247,7 @@ class PositionHome extends Component {
       bordered: false,
       toolBar: toolBarProps,
       columns,
-      searchPlaceHolder: '请输入代码或名称关键字查询',
+      searchPlaceHolder: formatMessage({id: 'basic_000197', defaultMessage: '请输入代码或名称关键字查询'}),
       searchWidth: 260,
       cascadeParams: { organizationId: currentOrgNode ? currentOrgNode.id : null },
       onTableRef: ref => (this.tableRef = ref),
@@ -291,7 +291,7 @@ class PositionHome extends Component {
     return (
       <div className={cls(styles['position-box'])}>
         <Card
-          title={<BannerTitle title={currentOrgNode.name} subTitle="岗位列表" />}
+          title={<BannerTitle title={currentOrgNode.name} subTitle={formatMessage({id: 'basic_000198', defaultMessage: '岗位列表'})} />}
           bordered={false}
         >
           <ExtTable {...extTableProps} />

@@ -58,13 +58,13 @@ class FormModal extends PureComponent {
         onOk={this.onFormSubmit}
       >
         <Form {...formItemLayout} layout="horizontal">
-          <FormItem label="帐号">
+          <FormItem label={formatMessage({id: 'basic_000071', defaultMessage: '帐号'})}>
             {getFieldDecorator('code', {
               initialValue: get(currentSupplier, 'code'),
               rules: [
                 {
                   required: true,
-                  message: '帐号不能为空',
+                  message: formatMessage({id: 'basic_000072', defaultMessage: '帐号不能为空'}),
                 },
               ],
             })(<Input />)}
@@ -83,7 +83,7 @@ class FormModal extends PureComponent {
               ],
             })(<Input />)}
           </FormItem>
-          <FormItem label="冻结">
+          <FormItem label={formatMessage({id: 'basic_000140', defaultMessage: '冻结'})}>
             {getFieldDecorator('frozen', {
               initialValue: get(currentSupplier, 'frozen', false),
               valuePropName: 'checked',

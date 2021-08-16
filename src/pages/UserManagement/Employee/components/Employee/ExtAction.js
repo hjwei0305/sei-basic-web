@@ -11,27 +11,27 @@ const { Item } = Menu;
 
 const menuData = () => [
   {
-    title: '配置岗位',
+    title: formatMessage({id: 'basic_000151', defaultMessage: '配置岗位'}),
     key: EMPLOYEE_ACTION.STATION,
     disabled: false,
   },
   {
-    title: '配置功能角色',
+    title: formatMessage({id: 'basic_000126', defaultMessage: '配置功能角色'}),
     key: EMPLOYEE_ACTION.FEATURE_ROLE,
     disabled: false,
   },
   {
-    title: '配置数据角色',
+    title: formatMessage({id: 'basic_000127', defaultMessage: '配置数据角色'}),
     key: EMPLOYEE_ACTION.DATA_ROLE,
     disabled: false,
   },
   {
-    title: '重置密码',
+    title: formatMessage({id: 'basic_000147', defaultMessage: '重置密码'}),
     key: EMPLOYEE_ACTION.RESET_PASSWORD,
     disabled: false,
   },
   {
-    title: '复制权限到用户',
+    title: formatMessage({id: 'basic_000152', defaultMessage: '复制权限到用户'}),
     key: EMPLOYEE_ACTION.COPY_AUTH,
     disabled: false,
   },

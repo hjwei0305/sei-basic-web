@@ -93,7 +93,7 @@ class FormModal extends PureComponent {
               rules: [
                 {
                   required: true,
-                  message: '岗位类别不能为空',
+                  message: formatMessage({id: 'basic_000199', defaultMessage: '岗位类别不能为空'}),
                 },
               ],
             })(<ComboList {...comboListProps} />)}

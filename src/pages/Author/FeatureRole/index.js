@@ -216,11 +216,11 @@ class FeatureRole extends Component {
       <div className={cls(styles['container-box'])}>
         <Layout className="auto-height">
           <Sider width={280} className="auto-height" theme="light">
-            <Card title="角色组" bordered={false} className="left-content">
+            <Card title={formatMessage({id: 'basic_000104', defaultMessage: '角色组'})} bordered={false} className="left-content">
               <div className="header-tool-box">
                 <RoleGroupAdd saving={saving} saveRoleGroup={this.saveRoleGroup} />
                 <Search
-                  placeholder="输入名称关键字查询"
+                  placeholder={formatMessage({id: 'basic_000112', defaultMessage: '输入名称关键字查询'})}
                   onChange={e => this.handlerSearchChange(e.target.value)}
                   onSearch={this.handlerSearch}
                   onPressEnter={this.handlerSearch}
@@ -287,7 +287,7 @@ class FeatureRole extends Component {
               <Role {...roleProps} />
             ) : (
               <div className={cls('blank-empty', 'role-guide')}>
-                <Empty image={empty} description="功能权限配置过程向导" />
+                <Empty image={empty} description={formatMessage({id: 'basic_000376', defaultMessage: '功能权限配置过程向导'})} />
               </div>
             )}
           </Content>

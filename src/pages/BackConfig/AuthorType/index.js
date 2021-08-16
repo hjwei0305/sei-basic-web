@@ -173,12 +173,12 @@ class AuthorType extends Component {
         required: true,
       },
       {
-        title: '应用模块',
+        title: formatMessage({id: 'basic_000108', defaultMessage: '应用模块'}),
         dataIndex: 'appModuleName',
         width: 160,
       },
       {
-        title: '树形结构',
+        title: formatMessage({id: 'basic_000117', defaultMessage: '树形结构'}),
         dataIndex: 'beTree',
         width: 100,
         align: 'center',
@@ -190,13 +190,13 @@ class AuthorType extends Component {
         },
       },
       {
-        title: '实体类名',
+        title: formatMessage({id: 'basic_000347', defaultMessage: '实体类名'}),
         dataIndex: 'entityClassName',
         width: 320,
         optional: true,
       },
       {
-        title: 'API服务路径',
+        title: formatMessage({id: 'basic_000348', defaultMessage: 'API服务路径'}),
         dataIndex: 'apiPath',
         width: 200,
         optional: true,

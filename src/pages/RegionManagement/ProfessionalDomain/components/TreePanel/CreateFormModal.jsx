@@ -17,7 +17,7 @@ class CreateFormModal extends PureComponent {
         onOk={() => {
           this.formRef.onFormSubmit();
         }}
-        okText="新增"
+        okText={formatMessage({id: 'basic_000190', defaultMessage: '新增'})}
         width={600}
       >
         <FormPanel onRef={inst => (this.formRef = inst)} formType={formType} />

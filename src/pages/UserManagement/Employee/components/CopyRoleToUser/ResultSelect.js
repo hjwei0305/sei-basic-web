@@ -22,7 +22,7 @@ const renderName = row => {
   if (row.publicUserType && row.publicOrgId) {
     tag = (
       <Tag color="green" style={{ marginLeft: 8 }}>
-        公共角色
+        {formatMessage({id: 'basic_000103', defaultMessage: '公共角色'})}
       </Tag>
     );
   }
@@ -49,7 +49,7 @@ const renderDescription = row => {
   if (row.publicUserType) {
     pubUserType = (
       <div className="field-item info">
-        <span className="label">用户类型</span>
+        <span className="label">{formatMessage({id: 'basic_000058', defaultMessage: '用户类型'})}</span>
         <span className="value">{row.userTypeRemark}</span>
       </div>
     );
@@ -83,7 +83,7 @@ const getDataSource = selected => {
 
 const ResultSelect = ({ featureRoleSelected, dataRoleSelected, userSelected }) => {
   const featureRoleProps = {
-    title: '选择的功能角色',
+    title: formatMessage({id: 'basic_000168', defaultMessage: '选择的功能角色'}),
     bordered: false,
     pagination: false,
     showArrow: false,
@@ -97,7 +97,7 @@ const ResultSelect = ({ featureRoleSelected, dataRoleSelected, userSelected }) =
     dataSource: getDataSource(featureRoleSelected),
   };
   const dataRoleProps = {
-    title: '选择的数据角色',
+    title: formatMessage({id: 'basic_000169', defaultMessage: '选择的数据角色'}),
     bordered: false,
     pagination: false,
     showArrow: false,
@@ -110,7 +110,7 @@ const ResultSelect = ({ featureRoleSelected, dataRoleSelected, userSelected }) =
     dataSource: getDataSource(dataRoleSelected),
   };
   const userProps = {
-    title: '选择的用户',
+    title: formatMessage({id: 'basic_000170', defaultMessage: '选择的用户'}),
     bordered: false,
     pagination: false,
     showArrow: false,

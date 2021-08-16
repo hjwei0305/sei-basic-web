@@ -67,7 +67,7 @@ export default modelExtend(model, {
         ) {
           const org = yield call(saveTenantRootOrganization, { ...tenantRootOrganization });
           if (org.success) {
-            message.success('组织机构保存成功');
+            message.success(formatMessage({id: 'basic_000255', defaultMessage: '组织机构保存成功'}));
           } else {
             message.error(org.message);
           }

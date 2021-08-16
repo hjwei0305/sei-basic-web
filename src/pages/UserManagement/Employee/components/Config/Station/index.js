@@ -66,11 +66,11 @@ class UserModal extends PureComponent {
       return (
         <>
           <ExtIcon onClick={this.handlerBackAssigned} type="left" className="trigger-back" antd />
-          <BannerTitle title={title} subTitle="请选择要添加的岗位" />
+          <BannerTitle title={title} subTitle={formatMessage({id: 'basic_000171', defaultMessage: '请选择要添加的岗位'})} />
         </>
       );
     }
-    return <BannerTitle title={title} subTitle="已配置的岗位" />;
+    return <BannerTitle title={title} subTitle={formatMessage({id: 'basic_000172', defaultMessage: '已配置的岗位'})} />;
   };
 
   render() {

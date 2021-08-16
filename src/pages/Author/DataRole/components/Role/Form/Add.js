@@ -41,7 +41,7 @@ class RoleAdd extends Component {
       >
         <span className={cls('form-popover-box-trigger')}>
           <Button icon="plus" type="link">
-            新建角色
+            {formatMessage({id: 'basic_000386', defaultMessage: '新建角色'})}
           </Button>
         </span>
       </Popover>

@@ -134,7 +134,7 @@ class FormPanel extends Component {
     } = editData || {};
     const user = getCurrentUser();
     return (
-      <ColumnLayout title={['水印设计', '水印预览']}>
+      <ColumnLayout title={[formatMessage({id: 'basic_000274', defaultMessage: '水印设计'}), formatMessage({id: 'basic_000275', defaultMessage: '水印预览'})]}>
         <Form
           style={{ padding: 8 }}
           slot="left"
@@ -144,25 +144,25 @@ class FormPanel extends Component {
         >
           <Spin spinning={opting}>
             {!isUseUserName ? (
-              <FormItem label="文案">
+              <FormItem label={formatMessage({id: 'basic_000276', defaultMessage: '文案'})}>
                 {getFieldDecorator('watermarkText', {
                   initialValue: watermarkText,
                   rules: [
                     {
                       required: true,
-                      message: '文案不能为空',
+                      message: formatMessage({id: 'basic_000277', defaultMessage: '文案不能为空'}),
                     },
                   ],
                 })(<Input />)}
               </FormItem>
             ) : (
-              <FormItem label="文案">
+              <FormItem label={formatMessage({id: 'basic_000276', defaultMessage: '文案'})}>
                 {getFieldDecorator('watermarkText', {
                   initialValue: user.userName,
                   rules: [
                     {
                       required: true,
-                      message: '文案不能为空',
+                      message: formatMessage({id: 'basic_000277', defaultMessage: '文案不能为空'}),
                     },
                   ],
                 })(<Input disabled />)}
@@ -170,26 +170,26 @@ class FormPanel extends Component {
             )}
             <Row>
               <Col span={12}>
-                <FormItem label="字号" {...colFormItemLayout}>
+                <FormItem label={formatMessage({id: 'basic_000278', defaultMessage: '字号'})} {...colFormItemLayout}>
                   {getFieldDecorator('fontSize', {
                     initialValue: fontSize,
                     rules: [
                       {
                         required: true,
-                        message: '字号不能为空',
+                        message: formatMessage({id: 'basic_000279', defaultMessage: '字号不能为空'}),
                       },
                     ],
                   })(<InputNumber style={{ width: '100%' }} max={50} min={10} precision={0} />)}
                 </FormItem>
               </Col>
               <Col span={12}>
-                <FormItem label="旋转角度" {...colFormItemLayout}>
+                <FormItem label={formatMessage({id: 'basic_000280', defaultMessage: '旋转角度'})} {...colFormItemLayout}>
                   {getFieldDecorator('rotate', {
                     initialValue: rotate,
                     rules: [
                       {
                         required: true,
-                        message: '旋转角度不能为空',
+                        message: formatMessage({id: 'basic_000281', defaultMessage: '旋转角度不能为空'}),
                       },
                     ],
                   })(<InputNumber style={{ width: '100%' }} />)}
@@ -198,46 +198,46 @@ class FormPanel extends Component {
             </Row>
             <Row>
               <Col span={12}>
-                <FormItem label="宽度" {...colFormItemLayout}>
+                <FormItem label={formatMessage({id: 'basic_000282', defaultMessage: '宽度'})} {...colFormItemLayout}>
                   {getFieldDecorator('width', {
                     initialValue: width,
                     rules: [
                       {
                         required: true,
-                        message: '宽度不能为空',
+                        message: formatMessage({id: 'basic_000283', defaultMessage: '宽度不能为空'}),
                       },
                     ],
                   })(<InputNumber style={{ width: '100%' }} min={50} precision={0} />)}
                 </FormItem>
               </Col>
               <Col span={12}>
-                <FormItem label="高度" {...colFormItemLayout}>
+                <FormItem label={formatMessage({id: 'basic_000284', defaultMessage: '高度'})} {...colFormItemLayout}>
                   {getFieldDecorator('height', {
                     initialValue: height,
                     rules: [
                       {
                         required: true,
-                        message: '高度不能为空',
+                        message: formatMessage({id: 'basic_000285', defaultMessage: '高度不能为空'}),
                       },
                     ],
                   })(<InputNumber style={{ width: '100%' }} min={50} precision={0} />)}
                 </FormItem>
               </Col>
             </Row>
-            <FormItem label="颜色">
+            <FormItem label={formatMessage({id: 'basic_000286', defaultMessage: '颜色'})}>
               {getFieldDecorator('color', {
                 initialValue: color,
                 rules: [
                   {
                     required: true,
-                    message: '颜色不能为空',
+                    message: formatMessage({id: 'basic_000287', defaultMessage: '颜色不能为空'}),
                   },
                 ],
               })(<ColorPicker style={{ width: '100%' }} />)}
             </FormItem>
             <Row>
               <Col span={12}>
-                <FormItem label="用户名文案" {...colFormItemLayout}>
+                <FormItem label={formatMessage({id: 'basic_000288', defaultMessage: '用户名文案'})} {...colFormItemLayout}>
                   {getFieldDecorator('isUseUserNameText', {
                     valuePropName: 'checked',
                     initialValue: isUseUserNameText,
@@ -253,7 +253,7 @@ class FormPanel extends Component {
                 </FormItem>
               </Col>
               <Col span={12}>
-                <FormItem label="禁用" {...colFormItemLayout}>
+                <FormItem label={formatMessage({id: 'basic_000289', defaultMessage: '禁用'})} {...colFormItemLayout}>
                   {getFieldDecorator('disabled', {
                     valuePropName: 'checked',
                     initialValue: disabled,
@@ -263,10 +263,10 @@ class FormPanel extends Component {
             </Row>
             <FormItem {...tailFormItemLayout}>
               <Button style={{ marginRight: 8 }} type="primary" onClick={this.handleSave}>
-                保存
+                {formatMessage({id: 'basic_000034', defaultMessage: '保存'})}
               </Button>
               <Button style={{ marginRight: 8 }} onClick={this.handlePreview}>
-                预览
+                {formatMessage({id: 'basic_000290', defaultMessage: '预览'})}
               </Button>
             </FormItem>
           </Spin>
@@ -279,7 +279,7 @@ class FormPanel extends Component {
           />
         ) : (
           <div className={cls(styles['empty-warpper'])} slot="right">
-            <Empty description="暂无水印" />
+            <Empty description={formatMessage({id: 'basic_000291', defaultMessage: '暂无水印'})} />
           </div>
         )}
       </ColumnLayout>

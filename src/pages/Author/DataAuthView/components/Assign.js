@@ -60,7 +60,7 @@ class Assign extends Component {
         content={this.renderPopoverContent()}
       >
         <span className={cls('assign-popover-box-trigger')}>
-          <ExtIcon type="profile" antd tooltip={{ title: '查看数据权限', placement: 'left' }} />
+          <ExtIcon type="profile" antd tooltip={{ title: formatMessage({id: 'basic_000120', defaultMessage: '查看数据权限'}), placement: 'left' }} />
         </span>
       </Popover>
     );

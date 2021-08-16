@@ -206,7 +206,7 @@ class Organization extends PureComponent {
         <div className="search-box">
           <Search
             allowClear
-            placeholder="输入名称关键字查询"
+            placeholder={formatMessage({id: 'basic_000112', defaultMessage: '输入名称关键字查询'})}
             defaultValue={allValue}
             onChange={e => this.handlerSearchChange(e.target.value)}
             onSearch={this.handlerSearch}

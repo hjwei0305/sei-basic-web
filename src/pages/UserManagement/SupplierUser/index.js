@@ -178,7 +178,7 @@ class SupplierUser extends Component {
         ),
       },
       {
-        title: '帐号',
+        title: formatMessage({id: 'basic_000071', defaultMessage: '帐号'}),
         dataIndex: 'code',
         width: 120,
         required: true,
@@ -188,7 +188,7 @@ class SupplierUser extends Component {
               <>
                 {text}
                 <Tag color="red" style={{ marginLeft: 8 }}>
-                  已冻结
+                  {formatMessage({id: 'basic_000123', defaultMessage: '已冻结'})}
                 </Tag>
               </>
             );
@@ -197,19 +197,19 @@ class SupplierUser extends Component {
         },
       },
       {
-        title: '名称',
+        title: formatMessage({id: 'basic_000032', defaultMessage: '名称'}),
         dataIndex: 'name',
         width: 220,
         required: true,
       },
       {
-        title: '供应商代码',
+        title: formatMessage({id: 'basic_000124', defaultMessage: '供应商代码'}),
         dataIndex: 'supplierCode',
         width: 120,
         required: true,
       },
       {
-        title: '供应商名称',
+        title: formatMessage({id: 'basic_000125', defaultMessage: '供应商名称'}),
         dataIndex: 'supplierName',
         width: 220,
         required: true,

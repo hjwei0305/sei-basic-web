@@ -64,17 +64,17 @@ class List extends PureComponent {
       <>
         <div>
           <Button type="danger" ghost disabled={!hasSelected} onClick={this.assignCancel}>
-            取消
+            {formatMessage({id: 'basic_000131', defaultMessage: '取消'})}
           </Button>
           <Button type="primary" disabled={!hasSelected} loading={saving} onClick={this.assignSave}>
             {`确定 (${selectedKeys.length})`}
           </Button>
         </div>
         <div>
-          <Tooltip title="输入名称关键字查询">
+          <Tooltip title={formatMessage({id: 'basic_000112', defaultMessage: '输入名称关键字查询'})}>
             <Search
               allowClear
-              placeholder="输入名称关键字查询"
+              placeholder={formatMessage({id: 'basic_000112', defaultMessage: '输入名称关键字查询'})}
               onChange={e => this.handlerSearchChange(e.target.value)}
               onSearch={this.handlerSearch}
               onPressEnter={this.handlerPressEnter}
@@ -94,7 +94,7 @@ class List extends PureComponent {
     const listCardProps = {
       className: 'anyone-user-box',
       bordered: false,
-      searchPlaceHolder: '输入用户代码或名称关键字查询',
+      searchPlaceHolder: formatMessage({id: 'basic_000393', defaultMessage: '输入用户代码或名称关键字查询'}),
       searchProperties: ['code', 'name'],
       checkbox: true,
       selectedKeys,

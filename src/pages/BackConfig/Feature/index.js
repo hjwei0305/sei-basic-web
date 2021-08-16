@@ -123,7 +123,7 @@ class Feature extends Component {
     <>
       <Search
         allowClear
-        placeholder="输入代码、名称、应用模块关键字查询"
+        placeholder={formatMessage({id: 'basic_000321', defaultMessage: '输入代码、名称、应用模块关键字查询'})}
         onChange={e => this.handlerSearchChange(e.target.value)}
         onSearch={this.handlerSearch}
         onPressEnter={this.handlerPressEnter}
@@ -172,7 +172,7 @@ class Feature extends Component {
     const selectedKeys = currentFeatureGroup ? [currentFeatureGroup.id] : [];
     const featureGroupprops = {
       className: 'left-content',
-      title: '功能组',
+      title: formatMessage({id: 'basic_000322', defaultMessage: '功能组'}),
       showSearch: false,
       loading: listLoading,
       dataSource: listData,
@@ -207,7 +207,7 @@ class Feature extends Component {
               <PageFeature {...pageFeatureProps} />
             ) : (
               <div className="blank-empty">
-                <Empty image={empty} description="可选择左边列表项进行相应的操作" />
+                <Empty image={empty} description={formatMessage({id: 'basic_000323', defaultMessage: '可选择左边列表项进行相应的操作'})} />
               </div>
             )}
           </Content>

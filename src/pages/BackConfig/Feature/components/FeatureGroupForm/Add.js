@@ -41,7 +41,7 @@ class GroupAdd extends Component {
       >
         <span className={cls('form-popover-box-trigger')}>
           <Button icon="plus" type="link">
-            功能组
+            {formatMessage({id: 'basic_000322', defaultMessage: '功能组'})}
           </Button>
         </span>
       </Popover>

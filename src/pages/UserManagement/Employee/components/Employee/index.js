@@ -186,12 +186,12 @@ class EmployeeHome extends Component {
         ),
       },
       {
-        title: '员工编号',
+        title: formatMessage({id: 'basic_000059', defaultMessage: '员工编号'}),
         dataIndex: 'code',
         width: 120,
       },
       {
-        title: '员工姓名',
+        title: formatMessage({id: 'basic_000144', defaultMessage: '员工姓名'}),
         dataIndex: 'userName',
         width: 180,
         required: true,
@@ -201,7 +201,7 @@ class EmployeeHome extends Component {
               <>
                 {text}
                 <Tag color="red" style={{ marginLeft: 8 }}>
-                  已冻结
+                  {formatMessage({id: 'basic_000123', defaultMessage: '已冻结'})}
                 </Tag>
               </>
             );
@@ -240,7 +240,7 @@ class EmployeeHome extends Component {
       cascadeParams: { organizationId: currentOrgNode ? currentOrgNode.id : null },
       onTableRef: ref => (this.tableRef = ref),
       remotePaging: true,
-      searchPlaceHolder: '请输入员工编号或姓名关键字查询',
+      searchPlaceHolder: formatMessage({id: 'basic_000145', defaultMessage: '请输入员工编号或姓名关键字查询'}),
       searchWidth: 260,
       store: {
         type: 'POST',
@@ -287,7 +287,7 @@ class EmployeeHome extends Component {
     return (
       <div className={cls(styles['employee-box'])}>
         <Card
-          title={<BannerTitle title={currentOrgNode.name} subTitle="员工列表"/>}
+          title={<BannerTitle title={currentOrgNode.name} subTitle={formatMessage({id: 'basic_000146', defaultMessage: '员工列表'})}/>}
           bordered={false}
         >
           <ExtTable {...extTableProps} />

@@ -141,7 +141,7 @@ class FormModal extends PureComponent {
                   rules: [
                     {
                       required: true,
-                      message: '本位币货币代码不能为空',
+                      message: formatMessage({id: 'basic_000236', defaultMessage: '本位币货币代码不能为空'}),
                     },
                   ],
                 })(<Input />)}
@@ -160,7 +160,7 @@ class FormModal extends PureComponent {
                   rules: [
                     {
                       required: true,
-                      message: '本位币货币名称不能为空',
+                      message: formatMessage({id: 'basic_000237', defaultMessage: '本位币货币名称不能为空'}),
                     },
                   ],
                 })(<Input />)}
@@ -205,7 +205,7 @@ class FormModal extends PureComponent {
                   rules: [
                     {
                       max: 20,
-                      message: '内部供应商代码不能超过20个字符',
+                      message: formatMessage({id: 'basic_000238', defaultMessage: '内部供应商代码不能超过20个字符'}),
                     },
                   ],
                 })(<Input />)}

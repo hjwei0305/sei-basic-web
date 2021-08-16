@@ -94,22 +94,22 @@ class FormModal extends PureComponent {
               ),
             })(<ComboTree {...comboTreeProps} />)}
           </FormItem>
-          <FormItem label="员工编号">
+          <FormItem label={formatMessage({id: 'basic_000059', defaultMessage: '员工编号'})}>
             {getFieldDecorator('code', {
               initialValue: get(currentEmployee, 'code', null),
               rules: [
                 {
                   required: true,
-                  message: '员工编号不能为空',
+                  message: formatMessage({id: 'basic_000148', defaultMessage: '员工编号不能为空'}),
                 },
                 {
                   pattern: '^[A-Za-z0-9]{1,20}$',
-                  message: '允许输入字母和数字,且不超过20个字符!',
+                  message: formatMessage({id: 'basic_000149', defaultMessage: '允许输入字母和数字,且不超过20个字符!'}),
                 },
               ],
             })(<Input disabled={!!currentEmployee} />)}
           </FormItem>
-          <FormItem label="员工姓名">
+          <FormItem label={formatMessage({id: 'basic_000144', defaultMessage: '员工姓名'})}>
             {getFieldDecorator('userName', {
               initialValue: get(currentEmployee, 'userName', null),
               rules: [
@@ -123,7 +123,7 @@ class FormModal extends PureComponent {
               ],
             })(<Input />)}
           </FormItem>
-          <FormItem label="冻结">
+          <FormItem label={formatMessage({id: 'basic_000140', defaultMessage: '冻结'})}>
             {getFieldDecorator('frozen', {
               initialValue: get(currentEmployee, 'frozen', false),
               valuePropName: 'checked',

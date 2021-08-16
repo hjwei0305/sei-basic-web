@@ -80,7 +80,7 @@ class RoleGroupForm extends PureComponent {
     });
     getFieldDecorator('publicOrgId', { initialValue: roleData ? roleData.publicOrgId : null });
     getFieldDecorator('publicOrgCode', { initialValue: roleData ? roleData.publicOrgCode : null });
-    const title = roleData ? '修改角色' : '新建角色';
+    const title = roleData ? formatMessage({id: 'basic_000385', defaultMessage: '修改角色'}) : formatMessage({id: 'basic_000386', defaultMessage: '新建角色'});
     const publicUserTypeProps = {
       form,
       name: 'userTypeRemark',
@@ -150,7 +150,7 @@ class RoleGroupForm extends PureComponent {
                 />,
               )}
             </FormItem>
-            <FormItem label="公共角色">
+            <FormItem label={formatMessage({id: 'basic_000103', defaultMessage: '公共角色'})}>
               {getFieldDecorator('isPublicRole', {
                 initialValue: this.getIsPublicRole(roleData),
                 valuePropName: 'checked',
@@ -163,13 +163,13 @@ class RoleGroupForm extends PureComponent {
             </FormItem>
             {isPublicRole ? (
               <>
-                <FormItem label="用户类型">
+                <FormItem label={formatMessage({id: 'basic_000058', defaultMessage: '用户类型'})}>
                   {getFieldDecorator('userTypeRemark', {
                     initialValue: roleData ? roleData.userTypeRemark : null,
                     rules: [
                       {
                         required: false,
-                        message: '用户类型不能为空',
+                        message: formatMessage({id: 'basic_000388', defaultMessage: '用户类型不能为空'}),
                       },
                     ],
                   })(<ComboList {...publicUserTypeProps} />)}
@@ -180,7 +180,7 @@ class RoleGroupForm extends PureComponent {
                     rules: [
                       {
                         required: false,
-                        message: '组织机构不能为空',
+                        message: formatMessage({id: 'basic_000268', defaultMessage: '组织机构不能为空'}),
                       },
                     ],
                   })(<ComboTree {...publicOrgNameProps} />)}

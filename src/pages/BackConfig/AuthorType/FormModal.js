@@ -35,14 +35,14 @@ class FormModal extends PureComponent {
   render() {
     const { form, rowData, closeFormModal, saving, showModal } = this.props;
     const { getFieldDecorator } = form;
-    const title = rowData ? '修改权限对象' : '新建权限对象';
+    const title = rowData ? formatMessage({id: 'basic_000349', defaultMessage: '修改权限对象'}) : formatMessage({id: 'basic_000350', defaultMessage: '新建权限对象'});
     getFieldDecorator('appModuleId', { initialValue: rowData ? rowData.appModuleId : '' });
     getFieldDecorator('appModuleCode', { initialValue: rowData ? rowData.appModuleCode : '' });
     const appModuleProps = {
       form,
       name: 'appModuleName',
       field: ['appModuleId', 'appModuleCode'],
-      searchPlaceHolder: '输入名称关键字查询',
+      searchPlaceHolder: formatMessage({id: 'basic_000112', defaultMessage: '输入名称关键字查询'}),
       store: {
         url: `${SERVER_PATH}/sei-basic/appModule/findAllUnfrozen`,
       },
@@ -63,7 +63,7 @@ class FormModal extends PureComponent {
         title={title}
       >
         <Form {...formItemLayout} layout="horizontal">
-          <FormItem label="应用模块">
+          <FormItem label={formatMessage({id: 'basic_000108', defaultMessage: '应用模块'})}>
             {getFieldDecorator('appModuleName', {
               initialValue: rowData ? rowData.appModuleName : '',
               rules: [
@@ -91,29 +91,29 @@ class FormModal extends PureComponent {
               ],
             })(<Input />)}
           </FormItem>
-          <FormItem label="实体类名">
+          <FormItem label={formatMessage({id: 'basic_000347', defaultMessage: '实体类名'})}>
             {getFieldDecorator('entityClassName', {
               initialValue: rowData ? rowData.entityClassName : '',
               rules: [
                 {
                   required: true,
-                  message: '实体类名不能为空',
+                  message: formatMessage({id: 'basic_000351', defaultMessage: '实体类名不能为空'}),
                 },
               ],
             })(<Input />)}
           </FormItem>
-          <FormItem label="API服务路径">
+          <FormItem label={formatMessage({id: 'basic_000348', defaultMessage: 'API服务路径'})}>
             {getFieldDecorator('apiPath', {
               initialValue: rowData ? rowData.apiPath : '',
               rules: [
                 {
                   required: true,
-                  message: 'API服务路径不能为空',
+                  message: formatMessage({id: 'basic_000352', defaultMessage: 'API服务路径不能为空'}),
                 },
               ],
             })(<Input />)}
           </FormItem>
-          <FormItem label="树形结构">
+          <FormItem label={formatMessage({id: 'basic_000117', defaultMessage: '树形结构'})}>
             {getFieldDecorator('beTree', {
               initialValue: rowData ? rowData.beTree || false : false,
               valuePropName: 'checked',

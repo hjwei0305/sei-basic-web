@@ -80,16 +80,16 @@ class UserAssign extends Component {
     return (
       <>
         <Button type="danger" ghost disabled={!hasSelected} onClick={this.assignedCancel}>
-          取消
+          {formatMessage({id: 'basic_000131', defaultMessage: '取消'})}
         </Button>
         <Button type="primary" disabled={!hasSelected} loading={saving} onClick={this.assignedSave}>
           {`确定 (${selectedKeys.length})`}
         </Button>
         <div>
-          <Tooltip title="输入名称关键字查询">
+          <Tooltip title={formatMessage({id: 'basic_000112', defaultMessage: '输入名称关键字查询'})}>
             <Search
               allowClear
-              placeholder="输入名称关键字查询"
+              placeholder={formatMessage({id: 'basic_000112', defaultMessage: '输入名称关键字查询'})}
               onChange={e => this.handlerSearchChange(e.target.value)}
               onSearch={this.handlerSearch}
               onPressEnter={this.handlerPressEnter}
@@ -106,9 +106,9 @@ class UserAssign extends Component {
     const { currentEmployee } = this.props;
     const listCardProps = {
       className: 'anyone-user-box',
-      title: '可选择的岗位',
+      title: formatMessage({id: 'basic_000175', defaultMessage: '可选择的岗位'}),
       bordered: false,
-      searchPlaceHolder: '输入代码或名称关键字查询',
+      searchPlaceHolder: formatMessage({id: 'basic_000030', defaultMessage: '输入代码或名称关键字查询'}),
       checkbox: true,
       selectedKeys,
       itemField: {

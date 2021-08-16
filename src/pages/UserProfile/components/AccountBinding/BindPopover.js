@@ -27,7 +27,7 @@ class BindPopover extends Component {
     return (
       <Popover
         content={<BindFormItem editData={editData} onSave={this.handleSave} />}
-        title="绑定手机号"
+        title={formatMessage({id: 'basic_000090', defaultMessage: '绑定手机号'})}
         trigger="click"
         visible={visible}
         placement="right"

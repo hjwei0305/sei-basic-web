@@ -70,7 +70,7 @@ class UserAssign extends Component {
       <>
         <div>
           <Button type="danger" ghost disabled={!hasSelected} onClick={this.assignedCancel}>
-            取消
+            {formatMessage({id: 'basic_000131', defaultMessage: '取消'})}
           </Button>
           <Button
             type="primary"
@@ -84,7 +84,7 @@ class UserAssign extends Component {
         <div>
           <Search
             allowClear
-            placeholder="输入名称关键字查询"
+            placeholder={formatMessage({id: 'basic_000112', defaultMessage: '输入名称关键字查询'})}
             onChange={e => this.handlerSearchChange(e.target.value)}
             onSearch={this.handlerSearch}
             onPressEnter={this.handlerPressEnter}
@@ -101,7 +101,7 @@ class UserAssign extends Component {
     const listCardProps = {
       className: 'anyone-user-box',
       bordered: false,
-      searchPlaceHolder: '输入用户代码或名称关键字查询',
+      searchPlaceHolder: formatMessage({id: 'basic_000393', defaultMessage: '输入用户代码或名称关键字查询'}),
       searchProperties: ['code', 'userName'],
       checkbox: true,
       selectedKeys,

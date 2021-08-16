@@ -93,12 +93,12 @@ class List extends PureComponent {
     return (
       <>
         <Button type="primary" icon="plus" onClick={this.handlerShowAssign}>
-          添加数据权限
+          {formatMessage({id: 'basic_000402', defaultMessage: '添加数据权限'})}
         </Button>
         <span>
           <Search
             allowClear
-            placeholder="输入代码或名称关键字查询"
+            placeholder={formatMessage({id: 'basic_000030', defaultMessage: '输入代码或名称关键字查询'})}
             onChange={e => this.handlerSearchChange(e.target.value)}
             onSearch={this.handlerSearch}
             onPressEnter={this.handlerPressEnter}
@@ -114,14 +114,14 @@ class List extends PureComponent {
             visible={hasSelected}
           >
             <Button onClick={this.onCancelBatchRemoveAssigned} disabled={saving}>
-              取消
+              {formatMessage({id: 'basic_000131', defaultMessage: '取消'})}
             </Button>
-            <Popconfirm title="确定要移除吗？" onConfirm={this.batchRemoveAssigned}>
+            <Popconfirm title={formatMessage({id: 'basic_000307', defaultMessage: '确定要移除吗？'})} onConfirm={this.batchRemoveAssigned}>
               <Button type="danger" loading={saving}>
-                批量移除
+                {formatMessage({id: 'basic_000133', defaultMessage: '批量移除'})}
               </Button>
             </Popconfirm>
-            <span className={cls('select')}>{`已选择 ${selectedKeys.length} 项`}</span>
+            <span className={cls('select')}>{`{formatMessage({id: 'basic_000134', defaultMessage: '已选择'})} ${selectedKeys.length} 项`}</span>
           </Drawer>
         </span>
       </>

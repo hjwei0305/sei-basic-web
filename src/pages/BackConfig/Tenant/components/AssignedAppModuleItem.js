@@ -125,7 +125,7 @@ class TenantAssignedAppModuleItem extends Component {
     if (loading.effects['tenant/removeAssignedAppModuleItem'] && removeAppModuleId === row.id) {
       return <ExtIcon className="del-loading" type="loading" antd />;
     }
-    return <ExtIcon tooltip={{ title: '移除应用模块' }} className="del" type="minus-circle" antd />;
+    return <ExtIcon tooltip={{ title: formatMessage({id: 'basic_000306', defaultMessage: '移除应用模块'}) }} className="del" type="minus-circle" antd />;
   };
 
   render() {
@@ -179,7 +179,7 @@ class TenantAssignedAppModuleItem extends Component {
       left: (
         <>
           <Button type="primary" icon="plus" onClick={this.showAssignAppModule}>
-            分配应用模块
+            {formatMessage({id: 'basic_000309', defaultMessage: '分配应用模块'})}
           </Button>
           <Button onClick={this.reloadData}>
             <FormattedMessage id="global.refresh" defaultMessage="刷新" />
@@ -197,17 +197,17 @@ class TenantAssignedAppModuleItem extends Component {
               onClick={this.onCancelBatchRemoveAssignedAppModuleItem}
               disabled={loading.effects['tenant/removeAssignedAppModuleItem']}
             >
-              取消
+              {formatMessage({id: 'basic_000131', defaultMessage: '取消'})}
             </Button>
             <Popconfirm
-              title="确定要移除选择的项目吗？"
+              title={formatMessage({id: 'basic_000310', defaultMessage: '确定要移除选择的项目吗？'})}
               onConfirm={this.batchRemoveAssignedAppModuleItem}
             >
               <Button type="danger" loading={loading.effects['tenant/removeAssignedAppModuleItem']}>
-                批量移除
+                {formatMessage({id: 'basic_000133', defaultMessage: '批量移除'})}
               </Button>
             </Popconfirm>
-            <span className={cls('select')}>{`已选择 ${selectedRowKeys.length} 项`}</span>
+            <span className={cls('select')}>{`{formatMessage({id: 'basic_000134', defaultMessage: '已选择'})} ${selectedRowKeys.length} 项`}</span>
           </Drawer>
         </>
       ),
@@ -219,7 +219,7 @@ class TenantAssignedAppModuleItem extends Component {
       checkbox: true,
       onSelectRow: this.handlerSelectRow,
       selectedRowKeys,
-      searchPlaceHolder: '请输入代码或名称关键字查询',
+      searchPlaceHolder: formatMessage({id: 'basic_000197', defaultMessage: '请输入代码或名称关键字查询'}),
       searchWidth: 260,
       cascadeParams: { parentId: currentTenant ? currentTenant.id : null },
       onTableRef: ref => (this.appModuleTableRef = ref),
@@ -233,7 +233,7 @@ class TenantAssignedAppModuleItem extends Component {
     return (
       <div className={cls(styles['tenant-app-module-box'])}>
         <Card
-          title={<BannerTitle title={currentTenant.name} subTitle="可以使用的应用模块" />}
+          title={<BannerTitle title={currentTenant.name} subTitle={formatMessage({id: 'basic_000311', defaultMessage: '可以使用的应用模块'})} />}
           bordered={false}
         >
           <ExtTable {...extTableProps} />

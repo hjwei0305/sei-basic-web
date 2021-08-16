@@ -182,7 +182,7 @@ class UnAssignAppModuleItem extends Component {
         getContainer={false}
         placement="right"
         visible={showAssignAppModule}
-        title="未分配的应用模块"
+        title={formatMessage({id: 'basic_000261', defaultMessage: '未分配的应用模块'})}
         className={cls(styles['feature-item-box'])}
         onClose={this.handlerClose}
         style={{ position: 'absolute' }}
@@ -197,7 +197,7 @@ class UnAssignAppModuleItem extends Component {
             {`确定 (${checkCount})`}
           </Button>
           <Search
-            placeholder="输入名称关键字查询"
+            placeholder={formatMessage({id: 'basic_000112', defaultMessage: '输入名称关键字查询'})}
             defaultValue={allValue}
             onChange={e => this.handlerSearchChange(e.target.value)}
             onSearch={this.handlerSearch}
@@ -211,7 +211,7 @@ class UnAssignAppModuleItem extends Component {
             indeterminate={selectIndeterminate}
             onChange={this.onSelectAllChange}
           >
-            全选
+            {formatMessage({id: 'basic_000262', defaultMessage: '全选'})}
           </Checkbox>
           <span className="tool-desc">{`共 ${unAssignListData.length} 项`}</span>
         </div>

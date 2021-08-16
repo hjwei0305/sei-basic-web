@@ -61,7 +61,7 @@ class SiderDemo extends React.Component {
         <Layout>
           <Header />
           <Content style={{ margin: '8px' }}>
-            <div style={{ height: '100%', background: '#fff' }}>内容</div>
+            <div style={{ height: '100%', background: '#fff' }}>{formatMessage({id: 'basic_000302', defaultMessage: '内容'})}</div>
           </Content>
         </Layout>
       </Layout>

@@ -16,7 +16,7 @@ class ProfessionalDomain extends Component {
     return (
       <div className={cls(styles['container-box'])}>
         <Spin spinning={loading.global} wrapperClassName={cls('spin-wrapper')}>
-          <CascadeLayout title={['专业领域', selectedTreeNode && selectedTreeNode.name]}>
+          <CascadeLayout title={[formatMessage({id: 'basic_000176', defaultMessage: '专业领域'}), selectedTreeNode && selectedTreeNode.name]}>
             <TreePanel slot="left" />
             {selectedTreeNode ? (
               <FormPanel slot="right" />
@@ -24,7 +24,7 @@ class ProfessionalDomain extends Component {
               <Empty
                 slot="right"
                 className={cls('empty-wrapper')}
-                description="请选择左边的树节点进行操作"
+                description={formatMessage({id: 'basic_000177', defaultMessage: '请选择左边的树节点进行操作'})}
               />
             )}
           </CascadeLayout>

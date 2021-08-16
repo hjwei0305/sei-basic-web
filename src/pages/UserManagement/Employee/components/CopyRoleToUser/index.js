@@ -56,11 +56,11 @@ class CopyAuthModal extends PureComponent {
       this.featureRoleSelected.keys.length === 0 &&
       this.dataRoleSelected.keys.length === 0
     ) {
-      message.error('请选择角色后再试');
+      message.error(formatMessage({id: 'basic_000153', defaultMessage: '请选择角色后再试'}));
       return;
     }
     if (step === 1 && this.userSelected.keys.length === 0) {
-      message.error('请选择目标用户后再试');
+      message.error(formatMessage({id: 'basic_000154', defaultMessage: '请选择目标用户后再试'}));
       return;
     }
     this.setState(state => ({ step: state.step + 1 }));
@@ -117,7 +117,7 @@ class CopyAuthModal extends PureComponent {
     const saving = loading.effects['employee/copyToEmployees'];
     const btns = [
       <Button key="back" disabled={step === 0 || saving} onClick={this.handlerPrev}>
-        上一步
+        {formatMessage({id: 'basic_000155', defaultMessage: '上一步'})}
       </Button>,
     ];
     if (step === 2) {
@@ -129,13 +129,13 @@ class CopyAuthModal extends PureComponent {
           type="primary"
           onClick={this.handlerSave}
         >
-          完成
+          {formatMessage({id: 'basic_000156', defaultMessage: '完成'})}
         </Button>,
       );
     } else {
       btns.push(
         <Button key="submit" type="primary" onClick={this.handlerNext}>
-          下一步
+          {formatMessage({id: 'basic_000157', defaultMessage: '下一步'})}
         </Button>,
       );
     }
@@ -187,15 +187,15 @@ class CopyAuthModal extends PureComponent {
       width: 680,
       bodyStyle: { padding: 0, height: 520, overflow: 'hidden' },
       footer: this.renderFootBtn(),
-      title: <BannerTitle title={title} subTitle="复制权限" />,
+      title: <BannerTitle title={title} subTitle={formatMessage({id: 'basic_000158', defaultMessage: '复制权限'})} />,
     };
     return (
       <ExtModal {...extModalProps}>
         <div className="step-box">
           <Steps current={step}>
-            <Step title="选择角色" description="选择想复制的功能角色、数据角色。" />
-            <Step title="选择用户" description="选择想将角色复制给指定的用户" />
-            <Step title="完成" description="保存选择的结果" />
+            <Step title={formatMessage({id: 'basic_000159', defaultMessage: '选择角色'})} description="{formatMessage({id: 'basic_000160', defaultMessage: '选择想复制的功能角色、数据角色'})}。" />
+            <Step title={formatMessage({id: 'basic_000161', defaultMessage: '选择用户'})} description={formatMessage({id: 'basic_000162', defaultMessage: '选择想将角色复制给指定的用户'})} />
+            <Step title={formatMessage({id: 'basic_000156', defaultMessage: '完成'})} description={formatMessage({id: 'basic_000163', defaultMessage: '保存选择的结果'})} />
           </Steps>
         </div>
         <div className="copy-body">{this.renderStepContent()}</div>

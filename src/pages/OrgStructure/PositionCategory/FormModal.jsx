@@ -62,7 +62,7 @@ class FormModal extends PureComponent {
                 },
                 {
                   max: 5,
-                  message: '岗位类别代码不能超过5个字符',
+                  message: formatMessage({id: 'basic_000195', defaultMessage: '岗位类别代码不能超过5个字符'}),
                 },
               ],
             })(<Input disabled={!!rowData} />)}

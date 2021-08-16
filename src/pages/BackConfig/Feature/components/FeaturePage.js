@@ -126,7 +126,7 @@ class FeaturePage extends Component {
     if (row.tenantCanUse) {
       tag = (
         <Tag color="green" style={{ marginLeft: 8 }}>
-          租户可用
+          {formatMessage({id: 'basic_000330', defaultMessage: '租户可用'})}
         </Tag>
       );
     }
@@ -169,7 +169,7 @@ class FeaturePage extends Component {
               className="edit"
               onClick={() => this.showFeatureItem(record)}
               type="safety"
-              tooltip={{ title: '页面功能项' }}
+              tooltip={{ title: formatMessage({id: 'basic_000331', defaultMessage: '页面功能项'}) }}
               antd
             />
           </span>
@@ -189,7 +189,7 @@ class FeaturePage extends Component {
         render: (_text, record) => this.renderName(record),
       },
       {
-        title: '页面路由地址',
+        title: formatMessage({id: 'basic_000328', defaultMessage: '页面路由地址'}),
         dataIndex: 'groupCode',
         width: 380,
       },
@@ -230,7 +230,7 @@ class FeaturePage extends Component {
     return (
       <div className={cls(styles['feature-page-box'])}>
         <Card
-          title={<BannerTitle title={`${appModuleName} > ${name}`} subTitle="页面功能管理" />}
+          title={<BannerTitle title={`${appModuleName} > ${name}`} subTitle={formatMessage({id: 'basic_000332', defaultMessage: '页面功能管理'})} />}
           bordered={false}
         >
           <ExtTable {...extTableProps} />

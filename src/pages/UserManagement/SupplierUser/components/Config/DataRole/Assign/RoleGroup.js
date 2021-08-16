@@ -38,7 +38,7 @@ class RoleGroup extends PureComponent {
     <>
       <Search
         allowClear
-        placeholder="输入代码或名称关键字查询"
+        placeholder={formatMessage({id: 'basic_000030', defaultMessage: '输入代码或名称关键字查询'})}
         onChange={e => this.handlerSearchChange(e.target.value)}
         onSearch={this.handlerSearch}
         onPressEnter={this.handlerPressEnter}
@@ -50,7 +50,7 @@ class RoleGroup extends PureComponent {
   render() {
     const listCardProps = {
       className: 'left-content',
-      title: '角色组',
+      title: formatMessage({id: 'basic_000104', defaultMessage: '角色组'}),
       showSearch: false,
       onSelectChange: this.handlerGroupSelect,
       customTool: this.renderCustomTool,

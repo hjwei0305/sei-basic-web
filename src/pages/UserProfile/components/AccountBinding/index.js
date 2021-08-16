@@ -98,10 +98,10 @@ class AccountBinding extends Component {
         <Popconfirm
           title="是否解除绑定?"
           onConfirm={() => this.handleConfirm(item)}
-          okText="是"
-          cancelText="否"
+          okText={formatMessage({id: 'basic_000077', defaultMessage: '是'})}
+          cancelText={formatMessage({id: 'basic_000078', defaultMessage: '否'})}
         >
-          <Button type="link">解绑</Button>
+          <Button type="link">{formatMessage({id: 'basic_000079', defaultMessage: '解绑'})}</Button>
         </Popconfirm>
       );
     }
@@ -113,7 +113,7 @@ class AccountBinding extends Component {
           onClick={this.handleClick}
           loading={loading.effects['userProfile/authorizeData']}
         >
-          绑定
+          {formatMessage({id: 'basic_000080', defaultMessage: '绑定'})}
         </Button>
       );
     }
@@ -122,11 +122,11 @@ class AccountBinding extends Component {
       <React.Fragment>
         {unfolds[index] ? (
           <Button type="link" onClick={() => this.toggleUnfold(index, false)}>
-            收起
+            {formatMessage({id: 'basic_000081', defaultMessage: '收起'})}
           </Button>
         ) : (
           <Button type="link" onClick={() => this.toggleUnfold(index, true)}>
-            绑定
+            {formatMessage({id: 'basic_000080', defaultMessage: '绑定'})}
           </Button>
         )}
       </React.Fragment>
@@ -152,13 +152,13 @@ class AccountBinding extends Component {
             <span className="logo-warpper">
               <Icon type="appstore" />
             </span>
-            <span className={cls('item-title')}>平台帐号</span>
+            <span className={cls('item-title')}>{formatMessage({id: 'basic_000082', defaultMessage: '平台帐号'})}</span>
             <span className={cls('bind-status')}>
-              <span className={cls('title')}>已绑定</span>
+              <span className={cls('title')}>{formatMessage({id: 'basic_000083', defaultMessage: '已绑定'})}</span>
               {openId}
               {openId === account ? (
                 <Tag style={{ marginLeft: 8 }} color="green">
-                  主帐号
+                  {formatMessage({id: 'basic_000084', defaultMessage: '主帐号'})}
                 </Tag>
               ) : null}
             </span>
@@ -172,7 +172,7 @@ class AccountBinding extends Component {
                     });
                   }}
                 >
-                  收起
+                  {formatMessage({id: 'basic_000081', defaultMessage: '收起'})}
                 </Button>
               ) : (
                 <Button
@@ -183,7 +183,7 @@ class AccountBinding extends Component {
                     });
                   }}
                 >
-                  更新密码
+                  {formatMessage({id: 'basic_000070', defaultMessage: '更新密码'})}
                 </Button>
               )}
             </span>
@@ -235,9 +235,9 @@ class AccountBinding extends Component {
           <span className="logo-warpper">
             <Icon type="phone" />
           </span>
-          <span className={cls('item-title')}>绑定手机</span>
+          <span className={cls('item-title')}>{formatMessage({id: 'basic_000085', defaultMessage: '绑定手机'})}</span>
           <span className={cls('bind-status')}>
-            <span className={cls('title')}>{mobileBind ? '已绑定' : '未绑定'}</span>
+            <span className={cls('title')}>{mobileBind ? formatMessage({id: 'basic_000083', defaultMessage: '已绑定'}) : formatMessage({id: 'basic_000086', defaultMessage: '未绑定'})}</span>
             {mobileBind ? mobileBind.openId : null}
           </span>
           <span className={cls('item-extra')}>{this.getExtraCmp(0)}</span>
@@ -254,9 +254,9 @@ class AccountBinding extends Component {
           <span className="logo-warpper">
             <Icon type="mail" />
           </span>
-          <span className={cls('item-title')}>绑定邮箱</span>
+          <span className={cls('item-title')}>{formatMessage({id: 'basic_000087', defaultMessage: '绑定邮箱'})}</span>
           <span className={cls('bind-status')}>
-            <span className={cls('title')}>{emailBind ? '已绑定' : '未绑定'}</span>
+            <span className={cls('title')}>{emailBind ? formatMessage({id: 'basic_000083', defaultMessage: '已绑定'}) : formatMessage({id: 'basic_000086', defaultMessage: '未绑定'})}</span>
             {emailBind ? emailBind.openId : null}
           </span>
           <span className={cls('item-extra')}>{this.getExtraCmp(1)}</span>
@@ -268,15 +268,15 @@ class AccountBinding extends Component {
           <span className="logo-warpper">
             <Icon type="wechat" />
           </span>
-          <span className={cls('item-title')}>绑定企业微信</span>
+          <span className={cls('item-title')}>{formatMessage({id: 'basic_000088', defaultMessage: '绑定企业微信'})}</span>
           <span className={cls('bind-status')}>
-            <span className={cls('title')}>{weChatBind ? '已绑定' : '未绑定'}</span>
+            <span className={cls('title')}>{weChatBind ? formatMessage({id: 'basic_000083', defaultMessage: '已绑定'}) : formatMessage({id: 'basic_000086', defaultMessage: '未绑定'})}</span>
             {weChatBind ? weChatBind.openId : null}
           </span>
           <span className={cls('item-extra')}>
             {this.getExtraCmp(2)}
             {/* <Button type="link" disabled>
-              解绑
+              {formatMessage({id: 'basic_000079', defaultMessage: '解绑'})}
             </Button> */}
           </span>
         </li>
@@ -284,10 +284,10 @@ class AccountBinding extends Component {
           <span className="logo-warpper">
             <Icon type="dingding" />
           </span>
-          <span className={cls('item-title')}>绑定钉钉</span>
+          <span className={cls('item-title')}>{formatMessage({id: 'basic_000089', defaultMessage: '绑定钉钉'})}</span>
           <span className={cls('item-extra')}>
             <Button type="link" disabled>
-              绑定
+              {formatMessage({id: 'basic_000080', defaultMessage: '绑定'})}
             </Button>
           </span>
         </li>

@@ -59,7 +59,7 @@ class RoleGroupForm extends PureComponent {
     const { tenantCode } = this.state;
     const { form, groupData, saving } = this.props;
     const { getFieldDecorator } = form;
-    const title = groupData ? '编辑角色组' : '新建角色组';
+    const title = groupData ? formatMessage({id: 'basic_000377', defaultMessage: '编辑角色组'}) : formatMessage({id: 'basic_000378', defaultMessage: '新建角色组'});
     return (
       <div key="form-box" className={cls(styles['form-box'])}>
         <div className="base-view-body">
@@ -67,7 +67,7 @@ class RoleGroupForm extends PureComponent {
             <span className="title">{title}</span>
           </div>
           <Form {...formItemLayout}>
-            <FormItem label="代码">
+            <FormItem label={formatMessage({id: 'basic_000031', defaultMessage: '代码'})}>
               {getFieldDecorator('code', {
                 initialValue: this.getCode(),
                 rules: [

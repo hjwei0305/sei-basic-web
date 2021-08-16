@@ -76,7 +76,7 @@ class ResetFormModal extends PureComponent {
         centered
         confirmLoading={saving}
         maskClosable={false}
-        title={<BannerTitle title={get(currentEmployee, 'userName', '')} subTitle="重置密码" />}
+        title={<BannerTitle title={get(currentEmployee, 'userName', '')} subTitle={formatMessage({id: 'basic_000147', defaultMessage: '重置密码'})} />}
         onOk={this.handlerFormSubmit}
       >
         <Form {...formItemLayout} layout="horizontal">

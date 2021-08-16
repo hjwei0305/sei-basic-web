@@ -111,13 +111,13 @@ class FormModal extends PureComponent {
               />,
             )}
           </FormItem>
-          <FormItem label="页面路由地址">
+          <FormItem label={formatMessage({id: 'basic_000328', defaultMessage: '页面路由地址'})}>
             {getFieldDecorator('groupCode', {
               initialValue: currentPageRow ? currentPageRow.groupCode : '',
               rules: [
                 {
                   required: true,
-                  message: '页面路由地址不能为空',
+                  message: formatMessage({id: 'basic_000329', defaultMessage: '页面路由地址不能为空'}),
                 },
               ],
             })(<Input />)}

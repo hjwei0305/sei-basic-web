@@ -27,7 +27,7 @@ class MoveNodeDrawer extends Component {
           }}
           loading={saveing}
         >
-          确定
+          {formatMessage({id: 'basic_000194', defaultMessage: '确定'})}
         </Button>
       ),
     }

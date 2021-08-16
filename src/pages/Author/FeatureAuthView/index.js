@@ -42,7 +42,7 @@ class DataView extends PureComponent {
         },
       });
       message.destroy();
-      message.warning('请输入用户账号');
+      message.warning(formatMessage({id: 'basic_000395', defaultMessage: '请输入用户账号'}));
     }
   };
 
@@ -62,7 +62,7 @@ class DataView extends PureComponent {
     if (item.publicUserType && item.publicOrgId) {
       tag = (
         <Tag color="green" style={{ marginLeft: 8 }}>
-          公共角色
+          {formatMessage({id: 'basic_000103', defaultMessage: '公共角色'})}
         </Tag>
       );
     }
@@ -82,7 +82,7 @@ class DataView extends PureComponent {
     if (item.publicUserType) {
       pubUserType = (
         <div className="field-item info">
-          <span className="label">用户类型</span>
+          <span className="label">{formatMessage({id: 'basic_000058', defaultMessage: '用户类型'})}</span>
           <span className="value">{item.userTypeRemark}</span>
         </div>
       );
@@ -98,7 +98,7 @@ class DataView extends PureComponent {
     if (item.featureRoleGroupName) {
       roleGroup = (
         <div className="field-item info">
-          <span className="label">角色组</span>
+          <span className="label">{formatMessage({id: 'basic_000104', defaultMessage: '角色组'})}</span>
           <span className="value">{item.featureRoleGroupName}</span>
         </div>
       );
@@ -106,7 +106,7 @@ class DataView extends PureComponent {
     if (item.roleSourceType) {
       roleSource = (
         <div className="field-item info">
-          <span className="label">角色来源</span>
+          <span className="label">{formatMessage({id: 'basic_000105', defaultMessage: '角色来源'})}</span>
           <span className="value">{item.roleSourceTypeRemark}</span>
         </div>
       );
@@ -144,7 +144,7 @@ class DataView extends PureComponent {
         <div>
           <Search
             style={{ width: 180, marginRight: 8 }}
-            placeholder="请输入用户账号"
+            placeholder={formatMessage({id: 'basic_000395', defaultMessage: '请输入用户账号'})}
             onChange={e => this.handlerAccountChange(e.target.value)}
             onSearch={this.getRoleList}
             onPressEnter={this.getRoleList}
@@ -159,7 +159,7 @@ class DataView extends PureComponent {
     const { currentRoleId, currentRoleName, roleList } = featureView;
     const roleListLoading = loading.effects['featureView/getRoleList'];
     const roleListProps = {
-      title: '用户的功能角色列表',
+      title: formatMessage({id: 'basic_000396', defaultMessage: '用户的功能角色列表'}),
       dataSource: roleList,
       showSearch: false,
       loading: roleListLoading,
@@ -181,7 +181,7 @@ class DataView extends PureComponent {
             <AssignedFeature currentRoleName={currentRoleName} currentRoleId={currentRoleId} />
           ) : (
             <div className="blank-empty">
-              <Empty image={empty} description="选择相应的角色项显示权限" />
+              <Empty image={empty} description={formatMessage({id: 'basic_000107', defaultMessage: '选择相应的角色项显示权限'})} />
             </div>
           )}
         </Content>

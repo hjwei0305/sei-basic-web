@@ -70,7 +70,7 @@ class DataAuthorType extends Component {
         required: true,
       },
       {
-        title: '树形结构',
+        title: formatMessage({id: 'basic_000117', defaultMessage: '树形结构'}),
         dataIndex: 'beTree',
         width: 80,
         align: 'center',
@@ -83,7 +83,7 @@ class DataAuthorType extends Component {
         },
       },
       {
-        title: '应用模块',
+        title: formatMessage({id: 'basic_000108', defaultMessage: '应用模块'}),
         dataIndex: 'authorizeEntityTypeAppModuleName',
         width: 200,
       },
@@ -104,7 +104,7 @@ class DataAuthorType extends Component {
       toolBar: toolBarProps,
       columns,
       cascadeParams: { roleId: currentRoleId || null },
-      searchPlaceHolder: '可输入名称或应用模块关键字查询',
+      searchPlaceHolder: formatMessage({id: 'basic_000118', defaultMessage: '可输入名称或应用模块关键字查询'}),
       searchProperties: ['name', 'authorizeEntityTypeAppModuleName'],
       searchWidth: 260,
       onTableRef: ref => (this.dataAutorTypeTableRef = ref),
@@ -115,7 +115,7 @@ class DataAuthorType extends Component {
     return (
       <div className={cls(styles['data-author-type-box'])}>
         <Card
-          title={<BannerTitle title={currentRoleName} subTitle="数据权限类型" />}
+          title={<BannerTitle title={currentRoleName} subTitle={formatMessage({id: 'basic_000119', defaultMessage: '数据权限类型'})} />}
           bordered={false}
         >
           <ExtTable {...extTableProps} />

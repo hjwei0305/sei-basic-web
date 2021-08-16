@@ -34,7 +34,7 @@ class ListAssign extends PureComponent {
       <>
         <span style={{ marginRight: 8 }}>{`共 ${total} 项`}</span>
         <Search
-          placeholder="输入代码或名称关键字查询"
+          placeholder={formatMessage({id: 'basic_000030', defaultMessage: '输入代码或名称关键字查询'})}
           onChange={e => this.handlerSearchChange(e.target.value)}
           onSearch={this.handlerSearch}
           onPressEnter={this.handlerSearch}
@@ -71,7 +71,7 @@ class ListAssign extends PureComponent {
           <span>
             <BannerTitle
               title={get(currentDataAuthorType, 'name', '')}
-              subTitle="已配置的数据权限"
+              subTitle={formatMessage({id: 'basic_000114', defaultMessage: '已配置的数据权限'})}
             />
           </span>
         </div>

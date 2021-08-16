@@ -80,7 +80,7 @@ export default modelExtend(model, {
       const re = yield call(move, payload);
       message.destroy();
       if (re.success) {
-        message.success('移动成功');
+        message.success(formatMessage({id: 'basic_000213', defaultMessage: '移动成功'}));
         yield put({
           type: 'updateState',
           payload: {

@@ -52,7 +52,7 @@ class RoleSelect extends PureComponent {
     if (row.publicUserType && row.publicOrgId) {
       tag = (
         <Tag color="green" style={{ marginLeft: 8 }}>
-          公共角色
+          {formatMessage({id: 'basic_000103', defaultMessage: '公共角色'})}
         </Tag>
       );
     }
@@ -70,7 +70,7 @@ class RoleSelect extends PureComponent {
     if (row.publicUserType) {
       pubUserType = (
         <div className="field-item info">
-          <span className="label">用户类型</span>
+          <span className="label">{formatMessage({id: 'basic_000058', defaultMessage: '用户类型'})}</span>
           <span className="value">{row.userTypeRemark}</span>
         </div>
       );
@@ -101,12 +101,12 @@ class RoleSelect extends PureComponent {
     const { featureRoleSelectedKeys, dataRoleSelectedKeys, currentEmployee } = this.props;
     const currentEmployeeId = get(currentEmployee, 'id', null);
     const featureRoleProps = {
-      title: '功能角色',
+      title: formatMessage({id: 'basic_000165', defaultMessage: '功能角色'}),
       bordered: false,
       checkbox: true,
       pagination: false,
       selectedKeys: featureRoleSelectedKeys,
-      searchPlaceHolder: '输入代码或名称关键字',
+      searchPlaceHolder: formatMessage({id: 'basic_000166', defaultMessage: '输入代码或名称关键字'}),
       searchWidth: 190,
       itemField: {
         title: item => this.renderName(item),
@@ -123,12 +123,12 @@ class RoleSelect extends PureComponent {
       onSelectChange: this.handerFeatureRoleSelectChange,
     };
     const dataRoleProps = {
-      title: '数据角色',
+      title: formatMessage({id: 'basic_000167', defaultMessage: '数据角色'}),
       bordered: false,
       checkbox: true,
       pagination: false,
       selectedKeys: dataRoleSelectedKeys,
-      searchPlaceHolder: '输入代码或名称关键字',
+      searchPlaceHolder: formatMessage({id: 'basic_000166', defaultMessage: '输入代码或名称关键字'}),
       searchWidth: 190,
       itemField: {
         title: item => this.renderName(item),

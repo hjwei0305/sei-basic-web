@@ -229,7 +229,7 @@ class Corporation extends Component {
         width: 80,
         render: (_text, row) => {
           if (row.frozen) {
-            return <Tag color="red">已冻结</Tag>;
+            return <Tag color="red">{formatMessage({id: 'basic_000123', defaultMessage: '已冻结'})}</Tag>;
           }
           return null;
         },

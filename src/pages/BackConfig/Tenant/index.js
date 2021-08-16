@@ -286,11 +286,11 @@ class Tenant extends Component {
       <div className={cls(styles['container-box'])}>
         <Layout className="auto-height" style={{ display: configTenant ? 'none' : '' }}>
           <Sider width={320} className="auto-height" theme="light">
-            <Card title="租户列表" bordered={false} className="left-content">
+            <Card title={formatMessage({id: 'basic_000258', defaultMessage: '租户列表'})} bordered={false} className="left-content">
               <div className="header-tool-box">
                 <TenantAdd saving={saving} saveTenant={this.saveTenant} />
                 <Search
-                  placeholder="输入名称关键字查询"
+                  placeholder={formatMessage({id: 'basic_000112', defaultMessage: '输入名称关键字查询'})}
                   defaultValue={allValue}
                   onChange={e => this.handlerSearchChange(e.target.value)}
                   onSearch={this.handlerSearch}
@@ -325,7 +325,7 @@ class Tenant extends Component {
                             className={cls('action-item')}
                             type="setting"
                             tooltip={{
-                              title: '配置',
+                              title: formatMessage({id: 'basic_000259', defaultMessage: '配置'}),
                             }}
                             antd
                             onClick={e => {
@@ -368,7 +368,7 @@ class Tenant extends Component {
               <AssignedAppModuleItem {...assignedAppModuleItemProps} />
             ) : (
               <div className="blank-empty">
-                <Empty image={empty} description="选择左边的租户来配置相关要素" />
+                <Empty image={empty} description={formatMessage({id: 'basic_000260', defaultMessage: '选择左边的租户来配置相关要素'})} />
               </div>
             )}
           </Content>

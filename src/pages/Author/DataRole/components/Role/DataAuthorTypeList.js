@@ -51,7 +51,7 @@ class DataAuthorTypeList extends PureComponent {
             type="file-add"
             onClick={() => this.handlerShowDataAuthorAssign(record)}
             antd
-            tooltip={{ title: '配置权限' }}
+            tooltip={{ title: formatMessage({id: 'basic_000399', defaultMessage: '配置权限'}) }}
           />
         </span>
       </>
@@ -86,12 +86,12 @@ class DataAuthorTypeList extends PureComponent {
         required: true,
       },
       {
-        title: '应用模块',
+        title: formatMessage({id: 'basic_000108', defaultMessage: '应用模块'}),
         dataIndex: 'appModuleName',
         width: 200,
       },
       {
-        title: '树形结构',
+        title: formatMessage({id: 'basic_000117', defaultMessage: '树形结构'}),
         dataIndex: 'beTree',
         width: 120,
         align: 'center',
@@ -107,7 +107,7 @@ class DataAuthorTypeList extends PureComponent {
     const appModulePros = {
       style: { width: 220 },
       allowClear: true,
-      placeholder: '所有应用模块',
+      placeholder: formatMessage({id: 'basic_000400', defaultMessage: '所有应用模块'}),
       store: {
         url: `${SERVER_PATH}/sei-basic/tenantAppModule/getTenantAppModules`,
       },
@@ -134,7 +134,7 @@ class DataAuthorTypeList extends PureComponent {
       left: (
         <>
           <div className="app-module-box">
-            <span className="label">应用模块</span>
+            <span className="label">{formatMessage({id: 'basic_000108', defaultMessage: '应用模块'})}</span>
             <ComboList {...appModulePros} />
           </div>
           <Button onClick={this.reloadData}>
@@ -165,7 +165,7 @@ class DataAuthorTypeList extends PureComponent {
     return (
       <div className={cls(styles['data-author-type-box'])}>
         <Card
-          title={<BannerTitle title={currentRole.name} subTitle="数据权限类型" />}
+          title={<BannerTitle title={currentRole.name} subTitle={formatMessage({id: 'basic_000119', defaultMessage: '数据权限类型'})} />}
           bordered={false}
         >
           <ExtTable {...extTableProps} />

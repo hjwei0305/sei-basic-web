@@ -11,12 +11,12 @@ const { Item } = Menu;
 
 const menuData = () => [
   {
-    title: '配置功能角色',
+    title: formatMessage({id: 'basic_000126', defaultMessage: '配置功能角色'}),
     key: SUPPLIER_ACTION.FEATURE_ROLE,
     disabled: false,
   },
   {
-    title: '配置数据角色',
+    title: formatMessage({id: 'basic_000127', defaultMessage: '配置数据角色'}),
     key: SUPPLIER_ACTION.DATA_ROLE,
     disabled: false,
   },

@@ -53,14 +53,14 @@ class BindFormItem extends Component {
       payload: {
         reqId: getFieldValue('openId'),
         channel,
-        operation: '绑定账号',
+        operation: formatMessage({id: 'basic_000091', defaultMessage: '绑定账号'}),
       },
     });
   };
 
   checkEmail = (_, email, callback) => {
     if (email && !emailReg.test(email)) {
-      callback('邮箱格式不对');
+      callback(formatMessage({id: 'basic_000092', defaultMessage: '邮箱格式不对'}));
       return false;
     }
     callback();
@@ -68,7 +68,7 @@ class BindFormItem extends Component {
 
   checkMobile = (_, mobile, callback) => {
     if (mobile && !mobileReg.test(mobile)) {
-      callback('手机格式不对');
+      callback(formatMessage({id: 'basic_000093', defaultMessage: '手机格式不对'}));
       return false;
     }
     callback();
@@ -77,18 +77,18 @@ class BindFormItem extends Component {
   getLabel = () => {
     const { channel } = this.props;
     if (channel === 'EMAIL') {
-      return '绑定邮箱';
+      return formatMessage({id: 'basic_000087', defaultMessage: '绑定邮箱'});
     }
 
     if (channel === 'WeChat') {
-      return '绑定企业微信';
+      return formatMessage({id: 'basic_000088', defaultMessage: '绑定企业微信'});
     }
 
     if (channel === 'DingTalk') {
-      return '绑定钉钉';
+      return formatMessage({id: 'basic_000089', defaultMessage: '绑定钉钉'});
     }
 
-    return '绑定手机号';
+    return formatMessage({id: 'basic_000090', defaultMessage: '绑定手机号'});
   };
 
   getValidateRules = () => {
@@ -97,7 +97,7 @@ class BindFormItem extends Component {
       return [
         {
           required: true,
-          message: '邮箱不能为空',
+          message: formatMessage({id: 'basic_000094', defaultMessage: '邮箱不能为空'}),
         },
         {
           validator: this.checkEmail,
@@ -109,7 +109,7 @@ class BindFormItem extends Component {
       return [
         {
           required: true,
-          message: '企业微信号不能为空',
+          message: formatMessage({id: 'basic_000095', defaultMessage: '企业微信号不能为空'}),
         },
       ];
     }
@@ -118,7 +118,7 @@ class BindFormItem extends Component {
       return [
         {
           required: true,
-          message: '钉钉号不能为空',
+          message: formatMessage({id: 'basic_000096', defaultMessage: '钉钉号不能为空'}),
         },
       ];
     }
@@ -126,7 +126,7 @@ class BindFormItem extends Component {
     return [
       {
         required: true,
-        message: '手机号不能为空',
+        message: formatMessage({id: 'basic_000097', defaultMessage: '手机号不能为空'}),
       },
       {
         validator: this.checkMobile,
@@ -153,7 +153,7 @@ class BindFormItem extends Component {
     return (
       <div className={cls('binding-form')}>
         <Form {...formItemLayout}>
-          <FormItem label="类型" style={{ display: 'none' }}>
+          <FormItem label={formatMessage({id: 'basic_000098', defaultMessage: '类型'})} style={{ display: 'none' }}>
             {getFieldDecorator('channel', {
               initialValue: channel,
             })(<Input />)}
@@ -163,12 +163,12 @@ class BindFormItem extends Component {
               rules: this.getValidateRules(),
             })(<Input />)}
           </FormItem>
-          <FormItem label="验证码">
+          <FormItem label={formatMessage({id: 'basic_000099', defaultMessage: '验证码'})}>
             {getFieldDecorator('verifyCode', {
               rules: [
                 {
                   required: true,
-                  message: '验证码不能为空',
+                  message: formatMessage({id: 'basic_000100', defaultMessage: '验证码不能为空'}),
                 },
               ],
             })(
@@ -179,7 +179,7 @@ class BindFormItem extends Component {
                     beforeClick={this.validateOpenId}
                     onClick={this.handleSendVerifyCode}
                   >
-                    发送验证码
+                    {formatMessage({id: 'basic_000101', defaultMessage: '发送验证码'})}
                   </TimerButton>
                 }
               />,
@@ -187,7 +187,7 @@ class BindFormItem extends Component {
           </FormItem>
           <FormItem {...tailFormItemLayout}>
             <Button type="primary" onClick={this.handleBind}>
-              立即绑定
+              {formatMessage({id: 'basic_000102', defaultMessage: '立即绑定'})}
             </Button>
           </FormItem>
         </Form>

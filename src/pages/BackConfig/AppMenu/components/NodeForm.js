@@ -75,7 +75,7 @@ class NodeForm extends PureComponent {
     if (formData) {
       if (!this.formEditData.parentId) {
         if (!appIcon) {
-          message.error('应用的图标不能为空');
+          message.error(formatMessage({id: 'basic_000361', defaultMessage: '应用的图标不能为空'}));
           return false;
         }
         formData.iconFileData = appIcon;
@@ -133,24 +133,24 @@ class NodeForm extends PureComponent {
     if (editData && editData.id) {
       return (
         <>
-          <Button onClick={e => this.handlerAddChild(e, editData)}>新建子菜单</Button>
+          <Button onClick={e => this.handlerAddChild(e, editData)}>{formatMessage({id: 'basic_000362', defaultMessage: '新建子菜单'})}</Button>
           {editData.parentId ? (
             <Button
               loading={loading.effects['appMenu/move']}
               onClick={e => this.handlerMove(e, editData)}
             >
-              移动
+              {formatMessage({id: 'basic_000185', defaultMessage: '移动'})}
             </Button>
           ) : null}
           <Popconfirm
             overlayClassName={cls(styles['pop-confirm-box'])}
-            title={this.renderPopconfirmTitle('确定要删除吗？', '提示：删除后不能恢复')}
+            title={this.renderPopconfirmTitle(formatMessage({id: 'basic_000216', defaultMessage: '确定要删除吗？'}), formatMessage({id: 'basic_000217', defaultMessage: '提示：删除后不能恢复'}))}
             placement="top"
             icon={<ExtIcon type="question-circle" antd />}
             onConfirm={e => this.handlerDelete(e, editData.id)}
           >
             <Button type="danger" loading={loading.effects['appMenu/del']}>
-              删除
+              {formatMessage({id: 'basic_000186', defaultMessage: '删除'})}
             </Button>
           </Popconfirm>
         </>
@@ -159,12 +159,12 @@ class NodeForm extends PureComponent {
     return (
       <Popconfirm
         overlayClassName={cls(styles['pop-confirm-box'])}
-        title={this.renderPopconfirmTitle('确定要返回吗？', '提示：未保存的数据将会丢失')}
+        title={this.renderPopconfirmTitle(formatMessage({id: 'basic_000218', defaultMessage: '确定要返回吗？'}), formatMessage({id: 'basic_000219', defaultMessage: '提示：未保存的数据将会丢失'}))}
         placement="top"
         icon={<ExtIcon type="question-circle" antd />}
         onConfirm={e => this.handlerGoBackParent(e)}
       >
-        <Button type="danger">返回</Button>
+        <Button type="danger">{formatMessage({id: 'basic_000220', defaultMessage: '返回'})}</Button>
       </Popconfirm>
     );
   };
@@ -179,13 +179,13 @@ class NodeForm extends PureComponent {
         subTitle = formatMessage({id: 'basic_000020', defaultMessage: '编辑'});
       } else {
         title = editData.parentName;
-        subTitle = '新建子菜单';
+        subTitle ={formatMessage({id: 'basic_000362', defaultMessage: '新建子菜单'})};
       }
     } else if (editData.id) {
       title = editData.name;
       subTitle = formatMessage({id: 'basic_000020', defaultMessage: '编辑'});
     } else {
-      title = '新建应用';
+      title ={formatMessage({id: 'basic_000359', defaultMessage: '新建应用'})};
     }
     return <BannerTitle title={title} subTitle={subTitle} />;
   };
@@ -206,12 +206,12 @@ class NodeForm extends PureComponent {
   beforeUpload = file => {
     const isJpgOrPng = file.type === 'image/png';
     if (!isJpgOrPng) {
-      message.error('只能上传PNG文件!');
+      message.error(formatMessage({id: 'basic_000052', defaultMessage: '只能上传PNG文件!'}));
       return false;
     }
     const isLt10K = file.size / 1024 <= 10;
     if (!isLt10K) {
-      message.error('图片大小需小于10Kb!');
+      message.error(formatMessage({id: 'basic_000053', defaultMessage: '图片大小需小于10Kb!'}));
       return false;
     }
     return isJpgOrPng && isLt10K;
@@ -230,23 +230,23 @@ class NodeForm extends PureComponent {
       remotePaging: true,
       name: 'featureName',
       field: ['featureId', 'featureCode'],
-      searchPlaceHolder: '输入代码或名称关键字查询',
+      searchPlaceHolder: formatMessage({id: 'basic_000030', defaultMessage: '输入代码或名称关键字查询'}),
       searchProperties: ['name', 'code'],
       searchWidth: 220,
       width: 420,
       columns: [
         {
-          title: '代码',
+          title: formatMessage({id: 'basic_000031', defaultMessage: '代码'}),
           width: 120,
           dataIndex: 'code',
         },
         {
-          title: '名称',
+          title: formatMessage({id: 'basic_000032', defaultMessage: '名称'}),
           width: 220,
           dataIndex: 'name',
         },
         {
-          title: '应用模块',
+          title: formatMessage({id: 'basic_000108', defaultMessage: '应用模块'}),
           width: 180,
           dataIndex: 'appModuleName',
         },
@@ -290,7 +290,7 @@ class NodeForm extends PureComponent {
                 loading={loading.effects['appMenu/save']}
                 onClick={e => this.onFormSubmit(e)}
               >
-                保存
+                {formatMessage({id: 'basic_000034', defaultMessage: '保存'})}
               </Button>
               {this.getExtAction()}
             </div>
@@ -302,7 +302,7 @@ class NodeForm extends PureComponent {
                 {hasAppIcon ? (
                   <>
                     <div className="box-item">
-                      <div className="title">应用图标</div>
+                      <div className="title">{formatMessage({id: 'basic_000363', defaultMessage: '应用图标'})}</div>
                       <div className="app-icon-box horizontal">
                         <div className="row-start app-icon">
                           <img alt="" src={appIcon || defaultAppIcon} />
@@ -310,54 +310,54 @@ class NodeForm extends PureComponent {
                         <div className="tool-box vertical">
                           <Upload {...uploadProps}>
                             <Button type="primary" icon="upload" ghost>
-                              上传图标
+                              {formatMessage({id: 'basic_000364', defaultMessage: '上传图标'})}
                             </Button>
                           </Upload>
                           <div className="desc">
-                            请为应用上传图标,图片为png格式,图片长宽都为44px，大小在10Kb以内;
+                            {formatMessage({id: 'basic_000365', defaultMessage: '请为应用上传图标,图片为png格式,图片长宽都为44px，大小在10Kb以内'})};
                           </div>
                         </div>
                       </div>
                     </div>
-                    <FormItem label="应用名称">
+                    <FormItem label={formatMessage({id: 'basic_000366', defaultMessage: '应用名称'})}>
                       {getFieldDecorator('name', {
                         initialValue: this.getInitValueByFields('name'),
                         rules: [
                           {
                             required: true,
-                            message: '应用名称不能为空',
+                            message: formatMessage({id: 'basic_000367', defaultMessage: '应用名称不能为空'}),
                           },
                         ],
                       })(<Input />)}
                     </FormItem>
                   </>
                 ) : (
-                  <FormItem label="菜单名称">
+                  <FormItem label={formatMessage({id: 'basic_000368', defaultMessage: '菜单名称'})}>
                     {getFieldDecorator('name', {
                       initialValue: this.getInitValueByFields('name'),
                       rules: [
                         {
                           required: true,
-                          message: '菜单名称不能为空',
+                          message: formatMessage({id: 'basic_000369', defaultMessage: '菜单名称不能为空'}),
                         },
                       ],
                     })(<Input />)}
                   </FormItem>
                 )}
                 {hasIcon ? (
-                  <FormItem label="图标类名">
+                  <FormItem label={formatMessage({id: 'basic_000370', defaultMessage: '图标类名'})}>
                     {getFieldDecorator('iconCls', {
                       initialValue: this.getInitValueByFields('iconCls'),
                       rules: [
                         {
                           required: true,
-                          message: '图标类名不能为空',
+                          message: formatMessage({id: 'basic_000371', defaultMessage: '图标类名不能为空'}),
                         },
                       ],
                     })(<Input />)}
                   </FormItem>
                 ) : null}
-                <FormItem label="序号">
+                <FormItem label={formatMessage({id: 'basic_000224', defaultMessage: '序号'})}>
                   {getFieldDecorator('rank', {
                     initialValue: this.getInitValueByFields('rank'),
                     rules: [
@@ -372,13 +372,13 @@ class NodeForm extends PureComponent {
                   })(<InputNumber precision={0} min={0} style={{ width: '100%' }} />)}
                 </FormItem>
                 {editData.children && editData.children.length === 0 && editData.parentId ? (
-                  <FormItem label="菜单项">
+                  <FormItem label={formatMessage({id: 'basic_000372', defaultMessage: '菜单项'})}>
                     {getFieldDecorator('featureName', {
                       initialValue: this.getInitValueByFields('featureName'),
                       rules: [
                         {
                           required: false,
-                          message: '菜单项不能为空',
+                          message: formatMessage({id: 'basic_000373', defaultMessage: '菜单项不能为空'}),
                         },
                       ],
                     })(<ComboGrid {...featureProps} />)}

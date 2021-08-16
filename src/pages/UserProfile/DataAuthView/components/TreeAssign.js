@@ -33,7 +33,7 @@ class ListAssign extends PureComponent {
           <span>
             <BannerTitle
               title={get(currentDataAuthorType, 'name', '')}
-              subTitle="已配置的数据权限"
+              subTitle={formatMessage({id: 'basic_000114', defaultMessage: '已配置的数据权限'})}
             />
           </span>
         </div>

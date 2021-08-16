@@ -11,22 +11,22 @@ const { Item } = Menu;
 
 const menuData = () => [
   {
-    title: '配置用户',
+    title: formatMessage({id: 'basic_000200', defaultMessage: '配置用户'}),
     key: POSITION_ACTION.USER,
     disabled: false,
   },
   {
-    title: '配置功能角色',
+    title: formatMessage({id: 'basic_000126', defaultMessage: '配置功能角色'}),
     key: POSITION_ACTION.FEATURE_ROLE,
     disabled: false,
   },
   {
-    title: '配置数据角色',
+    title: formatMessage({id: 'basic_000127', defaultMessage: '配置数据角色'}),
     key: POSITION_ACTION.DATA_ROLE,
     disabled: false,
   },
   {
-    title: '复制岗位',
+    title: formatMessage({id: 'basic_000201', defaultMessage: '复制岗位'}),
     key: POSITION_ACTION.COPY,
     disabled: false,
   },

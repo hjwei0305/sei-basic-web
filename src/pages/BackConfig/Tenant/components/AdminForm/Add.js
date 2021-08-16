@@ -40,7 +40,7 @@ class TenantAdd extends Component {
         overlayClassName={cls(styles['form-popover-box'])}
         content={<Form {...popoverProps} />}
       >
-        <Tooltip title="设置管理员">
+        <Tooltip title={formatMessage({id: 'basic_000320', defaultMessage: '设置管理员'})}>
           <span className={cls('form-popover-box-trigger', 'action-item', 'admin-add')}>
             <ExtIcon type="user-add" antd />
           </span>
