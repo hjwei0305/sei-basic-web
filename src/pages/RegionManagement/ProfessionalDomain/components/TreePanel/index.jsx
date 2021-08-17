@@ -240,7 +240,7 @@ class TreePanel extends Component {
           <MoveTreeModal
             treeData={moveTreeData}
             visible={mTmVisible}
-            title={formatMessage({id: 'basic_000188', defaultMessage: '移动结点{node}到'}, {node: selectedTreeNode.name})}
+            title={formatMessage({id: 'basic_000188', defaultMessage: '移动结点【{node}】到'}, {node: selectedTreeNode.name})}
             onCancel={() => {
               this.handleCancel('move');
             }}

@@ -89,7 +89,7 @@ class index extends PureComponent {
           defaultActiveKey="watermark"
           onChange={this.handleActiveChange}
         >
-          <TabPane tab={formatMessage({id: 'basic_000270', defaultMessage: '租户{tenant}水印'}, {tenant: configTenant.name})} key="watermark">
+          <TabPane tab={formatMessage({id: 'basic_000270', defaultMessage: '租户【{tenant}】水印'}, {tenant: configTenant.name})} key="watermark">
             <Watermark
               key={watermarkObj && watermarkObj.id}
               opting={loading.global}
@@ -99,7 +99,7 @@ class index extends PureComponent {
               tenant={configTenant}
             />
           </TabPane>
-          <TabPane tab={formatMessage({id: 'basic_000271', defaultMessage: '租户{tenant}水印'}, {tenant: configTenant.name})} key="SystemLogo">
+          <TabPane tab={formatMessage({id: 'basic_000271', defaultMessage: '租户【{tenant}】水印'}, {tenant: configTenant.name})} key="SystemLogo">
             <SystemLogo
               key={logoObj && logoObj.id}
               opting={loading.global}
@@ -107,7 +107,7 @@ class index extends PureComponent {
               onSave={this.handleSaveLogo}
             />
           </TabPane>
-          <TabPane tab={formatMessage({id: 'basic_000272', defaultMessage: '租户{tenant}流程引擎代码'}, {tenant: configTenant.name})} key="flowEngineCode">
+          <TabPane tab={formatMessage({id: 'basic_000272', defaultMessage: '租户【{tenant}】流程引擎代码'}, {tenant: configTenant.name})} key="flowEngineCode">
             <FlowEngineCode
               key={flowEngineCode}
               opting={loading.global}
