@@ -122,7 +122,7 @@ class List extends PureComponent {
                 {formatMessage({id: 'basic_000133', defaultMessage: '批量移除'})}
               </Button>
             </Popconfirm>
-            <span className={cls('select')}>{`{formatMessage({id: 'basic_000134', defaultMessage: '已选择'})} ${selectedKeys.length} 项`}</span>
+            <span className={cls('select')}>{`${formatMessage({id: 'basic_000134', defaultMessage: '已选择'})} ${selectedKeys.length} ${formatMessage({id: 'basic_000405', defaultMessage: '项'})}`}</span>
           </Drawer>
         </span>
       </>

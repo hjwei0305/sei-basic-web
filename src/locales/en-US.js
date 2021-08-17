@@ -441,6 +441,7 @@ export default {
   "basic_000400":"all application modules",
   "basic_000401":"please select the data permission to add",
   "basic_000402":"Add Data permission",
-  "basic_000403":"user&apos;s data role list",
-  "basic_000404":"SEI basic application"
+  "basic_000403":"user's data role list",
+  "basic_000404":"SEI basic application",
+  "basic_000405":"Element"
 };

@@ -128,7 +128,7 @@ class DataView extends PureComponent {
   renderCustomTool = ({ total }) => {
     return (
       <>
-        <span style={{ marginLeft: 8 }}>{formatMessage({id:'basic_000115', defaultMessage:'共{total}项'}, {total: {total}})}</span>
+        <span style={{ marginLeft: 8 }}>{formatMessage({id:'basic_000115', defaultMessage:'共{total}项'}, {total: total})}</span>
         <div>
           <Search
             style={{ width: 180, marginRight: 8 }}
