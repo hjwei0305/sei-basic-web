@@ -380,7 +380,7 @@ class Organization extends Component {
     };
 
     const moveNodeProps = {
-      title: `移动节点【${currentNode && currentNode.name}】到`,
+      title: formatMessage({id: 'basic_000214', defaultMessage: '移动节点{current}到'}, {current: currentNode && currentNode.name}),
       treeData: this.excludeNode(treeData, currentNode && currentNode.id),
       visible: moveVisible,
       onClose: this.handleCloseMoveDrawer,

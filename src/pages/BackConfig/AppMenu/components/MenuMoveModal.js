@@ -3,6 +3,7 @@ import cls from 'classnames';
 import { cloneDeep, isEqual } from 'lodash';
 import { Tree } from 'antd';
 import { ScrollBar, ExtIcon, ExtModal } from 'suid';
+import { formatMessage } from 'umi-plugin-react/locale';
 import styles from './MenuMoveModal.less';
 
 const { TreeNode } = Tree;
@@ -111,7 +112,7 @@ class MenuMoveModal extends Component {
   render() {
     const { targetParentId, treeData } = this.state;
     const { showMove, currentNode, loading } = this.props;
-    const title = currentNode ? `将菜单【${currentNode.name}】移动到...` : '';
+    const title = currentNode ? formatMessage({id:'basic_000374', defaultMessage:'将菜单{menu}移动到...'}, {menu: currentNode.name}) : '';
     const modalProps = {
       destroyOnClose: true,
       onCancel: this.handlerCloseMenuMoveModal,

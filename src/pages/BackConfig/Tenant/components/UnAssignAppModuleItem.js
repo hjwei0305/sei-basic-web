@@ -214,7 +214,7 @@ class UnAssignAppModuleItem extends Component {
           >
             {formatMessage({id: 'basic_000262', defaultMessage: '全选'})}
           </Checkbox>
-          <span className="tool-desc">{`共 ${unAssignListData.length} 项`}</span>
+          <span className="tool-desc">{formatMessage({id:'basic_000115', defaultMessage:'共{total}项'}, {total: unAssignListData.length})}</span>
         </div>
         <div className="list-body">
           <ScrollBar>
