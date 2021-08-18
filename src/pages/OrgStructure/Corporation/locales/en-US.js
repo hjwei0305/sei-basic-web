@@ -9,7 +9,7 @@ export default {
   corporation: 'corporation',
   'corporation.shortName': 'Abbreviation',
   'corporation.erpCode': 'ERP company code',
-  'corporation.erpCode': 'ERP company code is required',
+  'corporation.erpCode.required': 'ERP company code is required',
   'corporation.baseCurrencyCode': 'functional currency currency code',
   'corporation.baseCurrencyName': 'name of functional currency',
   'corporation.defaultTradePartner': 'default trading partner code',
