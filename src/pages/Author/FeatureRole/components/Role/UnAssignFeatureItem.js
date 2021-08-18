@@ -328,7 +328,7 @@ class UnAssignFeatureItem extends Component {
     };
     return (
       <Drawer
-        width={520}
+        width={580}
         destroyOnClose
         getContainer={false}
         placement="right"
