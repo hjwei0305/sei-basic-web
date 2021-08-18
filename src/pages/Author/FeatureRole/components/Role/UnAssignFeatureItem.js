@@ -394,7 +394,7 @@ class UnAssignFeatureItem extends Component {
             >
               {`确定 (${checkCount})`}
             </Button>
-            <span className={cls('select')}>{`{formatMessage({id: 'basic_000134', defaultMessage: '已选择'})} ${checkedKeys.length} 项`}</span>
+            <span className={cls('select')}>{`${formatMessage({id: 'basic_000134', defaultMessage: '已选择'})} ${checkedKeys.length} 项`}</span>
           </Drawer>
         </div>
         <div className="unassigned-body">

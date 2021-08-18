@@ -421,7 +421,7 @@ class FeaturePage extends Component {
                   {formatMessage({id: 'basic_000133', defaultMessage: '批量移除'})}
                 </Button>
               </Popconfirm>
-              <span className={cls('select')}>{`{formatMessage({id: 'basic_000134', defaultMessage: '已选择'})} ${checkedKeys.length} 项`}</span>
+              <span className={cls('select')}>{`${formatMessage({id: 'basic_000134', defaultMessage: '已选择'})} ${checkedKeys.length} 项`}</span>
             </Drawer>
           </div>
           <div className="assigned-body">
