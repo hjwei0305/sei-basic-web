@@ -328,7 +328,7 @@ class UnAssignFeatureItem extends Component {
     };
     return (
       <Drawer
-        width={580}
+        width={520}
         destroyOnClose
         getContainer={false}
         placement="right"
@@ -394,7 +394,7 @@ class UnAssignFeatureItem extends Component {
             >
               {`${formatMessage({id: 'global.ok', defaultMessage: '确定'})} (${checkCount})`}
             </Button>
-            <span className={cls('select')}>{`${formatMessage({id: 'basic_000134', defaultMessage: '已选择'})} ${checkedKeys.length} 项`}</span>
+            <span className={cls('select')}>{`${formatMessage({id: 'basic_000134', defaultMessage: '已选择'})} ${checkedKeys.length} ${formatMessage({id: 'basic_000405', defaultMessage: '项'})}`}</span>
           </Drawer>
         </div>
         <div className="unassigned-body">
