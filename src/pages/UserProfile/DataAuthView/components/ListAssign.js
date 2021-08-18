@@ -37,7 +37,7 @@ class ListAssign extends PureComponent {
   renderCustomTool = ({ total }) => {
     return (
       <>
-        <span style={{ marginRight: 8 }}>{formatMessage({id:'basic_000115', defaultMessage:'共{total}项'}, {total: {total}})}</span>
+        <span style={{ marginRight: 8 }}>{formatMessage({id:'basic_000115', defaultMessage:'共{total}项'}, {total: total})}</span>
         <Search
           allowClear
           placeholder={formatMessage({id: 'basic_000030', defaultMessage: '输入代码或名称关键字查询'})}

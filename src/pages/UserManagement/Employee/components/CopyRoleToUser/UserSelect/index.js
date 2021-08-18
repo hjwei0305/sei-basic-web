@@ -88,7 +88,7 @@ class UserSelect extends PureComponent {
             style={{ width: 172 }}
           />
         </Tooltip>
-        <span style={{ marginLeft: 8 }}>{formatMessage({id:'basic_000115', defaultMessage:'共{total}项'}, {total: {total}})}</span>
+        <span style={{ marginLeft: 8 }}>{formatMessage({id:'basic_000115', defaultMessage:'共{total}项'}, {total: total})}</span>
       </>
     );
   };
