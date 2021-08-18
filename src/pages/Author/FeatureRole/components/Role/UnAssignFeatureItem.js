@@ -328,7 +328,7 @@ class UnAssignFeatureItem extends Component {
     };
     return (
       <Drawer
-        width={520}
+        width={580}
         destroyOnClose
         getContainer={false}
         placement="right"
@@ -392,7 +392,7 @@ class UnAssignFeatureItem extends Component {
               disabled={checkCount === 0}
               onClick={e => this.assignFeatureItem(e)}
             >
-              {`确定 (${checkCount})`}
+              {`${formatMessage({id: 'global.ok', defaultMessage: '确定'})} (${checkCount})`}
             </Button>
             <span className={cls('select')}>{`${formatMessage({id: 'basic_000134', defaultMessage: '已选择'})} ${checkedKeys.length} 项`}</span>
           </Drawer>
