@@ -86,7 +86,7 @@ class FormModal extends PureComponent {
                 {
                   required: true,
                   message: formatMessage({
-                    id: 'global.erpCode.required',
+                    id: 'corporation.erpCode.required',
                     defaultMessage: 'ERP公司代码不能为空',
                   }),
                 },
