@@ -194,7 +194,7 @@ class CopyAuthModal extends PureComponent {
       <ExtModal {...extModalProps}>
         <div className="step-box">
           <Steps current={step}>
-            <Step title={formatMessage({id: 'basic_000159', defaultMessage: '选择角色'})} description="{formatMessage({id: 'basic_000160', defaultMessage: '选择想复制的功能角色、数据角色'})}。" />
+            <Step title={formatMessage({id: 'basic_000159', defaultMessage: '选择角色'})} description={formatMessage({id: 'basic_000160', defaultMessage: '选择想复制的功能角色、数据角色'})} />
             <Step title={formatMessage({id: 'basic_000161', defaultMessage: '选择用户'})} description={formatMessage({id: 'basic_000162', defaultMessage: '选择想将角色复制给指定的用户'})} />
             <Step title={formatMessage({id: 'basic_000156', defaultMessage: '完成'})} description={formatMessage({id: 'basic_000163', defaultMessage: '保存选择的结果'})} />
           </Steps>
