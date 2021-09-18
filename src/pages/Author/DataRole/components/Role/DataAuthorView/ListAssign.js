@@ -1,11 +1,11 @@
 import React, { PureComponent } from 'react';
+import { formatMessage } from 'umi-plugin-react/locale';
 import cls from 'classnames';
 import { get } from 'lodash';
 import { Input } from 'antd';
 import { ListCard } from 'suid';
 import { BannerTitle } from '@/components';
 import { constants } from '@/utils';
-import { formatMessage } from 'umi-plugin-react/locale';
 import styles from './ListAssign.less';
 
 const { SERVER_PATH } = constants;
@@ -18,16 +18,12 @@ class ListAssign extends PureComponent {
     this.listCardRef.handlerSearchChange(v);
   };
 
-  handlerSearch = () => {
-    this.listCardRef.handlerSearch();
+  handlerSearch = v => {
+    this.listCardRef.handlerSearch(v);
   };
 
-  handlerSearchChange = v => {
-    this.listCardRef.handlerSearchChange(v);
-  };
-
-  handlerSearch = () => {
-    this.listCardRef.handlerSearch();
+  handlerPressEnter = () => {
+    this.listCardRef.handlerPressEnter();
   };
 
   renderCustomTool = ({ total }) => {
@@ -38,7 +34,7 @@ class ListAssign extends PureComponent {
           placeholder={formatMessage({id: 'basic_000030', defaultMessage: '输入代码或名称关键字查询'})}
           onChange={e => this.handlerSearchChange(e.target.value)}
           onSearch={this.handlerSearch}
-          onPressEnter={this.handlerSearch}
+          onPressEnter={this.handlerPressEnter}
           style={{ width: 220 }}
         />
       </>
