@@ -8,7 +8,7 @@ import styles from './index.less';
 
 const { SERVER_PATH } = constants;
 
-class LoginHistory extends Component {
+class VisitLog extends Component {
   static tablRef;
 
   reloadData = () => {
@@ -59,7 +59,7 @@ class LoginHistory extends Component {
       {
         title: '客户端代理',
         dataIndex: 'loginUserAgent',
-        width: 480,
+        width: 120,
       },
       {
         title: '租户代码',
@@ -99,4 +99,4 @@ class LoginHistory extends Component {
   }
 }
 
-export default LoginHistory;
+export default VisitLog;
