@@ -32,6 +32,10 @@ export default [
           { path: '/author/dataRole', component: './Author/DataRole' },
           { path: '/author/dataView', component: './Author/DataAuthView' },
           { path: '/author/featureView', component: './Author/FeatureAuthView' },
+          {
+            path: '/author/onlineUser',
+            component: './Author/OnLineUser',
+          },
         ],
       },
       {
