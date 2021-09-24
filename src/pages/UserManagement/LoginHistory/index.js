@@ -82,8 +82,8 @@ class LoginHistory extends Component {
       searchWidth: 260,
       lineNumber: false,
       allowCustomColumns: false,
-      searchPlaceHolder: '输入姓名关键字',
-      searchProperties: ['name'],
+      searchPlaceHolder: '输入登录账号关键字',
+      searchProperties: ['account'],
       remotePaging: true,
       onTableRef: ref => (this.tablRef = ref),
       store: {

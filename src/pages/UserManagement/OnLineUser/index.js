@@ -64,11 +64,11 @@ class OnLineUser extends Component {
     const tableProps = {
       toolBar: toolBarProps,
       columns,
-      searchWidth: 260,
+      searchWidth: 320,
       lineNumber: false,
       allowCustomColumns: false,
-      searchPlaceHolder: '输入姓名关键字',
-      searchProperties: ['name'],
+      searchPlaceHolder: '输入用户账号、用户名称关键字',
+      searchProperties: ['userAccount', 'userName'],
       remotePaging: true,
       onTableRef: ref => (this.tablRef = ref),
       store: {
