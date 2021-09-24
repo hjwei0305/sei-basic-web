@@ -77,6 +77,10 @@ export default [
             path: '/userManagement/onlineUser',
             component: './UserManagement/OnLineUser',
           },
+          {
+            path: '/userManagement/loginHistory',
+            component: './UserManagement/LoginHistory',
+          },
         ],
       },
       {

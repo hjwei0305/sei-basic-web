@@ -8,7 +8,7 @@ import styles from './index.less';
 
 const { SERVER_PATH } = constants;
 
-class OnLineUser extends Component {
+class LoginHistory extends Component {
   static tablRef;
 
   reloadData = () => {
@@ -20,15 +20,15 @@ class OnLineUser extends Component {
   render() {
     const columns = [
       {
-        title: '用户账号',
-        dataIndex: 'userAccount',
+        title: '登录账号',
+        dataIndex: 'account',
         width: 120,
         required: true,
       },
       {
-        title: '用户名称',
-        dataIndex: 'userName',
-        width: 100,
+        title: '登录时间',
+        dataIndex: 'loginDate',
+        width: 180,
         required: true,
       },
       {
@@ -37,9 +37,9 @@ class OnLineUser extends Component {
         width: 160,
       },
       {
-        title: '登录时间',
-        dataIndex: 'loginDate',
-        width: 180,
+        title: '登录日志',
+        dataIndex: 'loginLog',
+        width: 280,
       },
       {
         title: '浏览器',
@@ -50,6 +50,21 @@ class OnLineUser extends Component {
         title: '操作系统',
         dataIndex: 'osName',
         width: 120,
+      },
+      {
+        title: '登录结果',
+        dataIndex: 'loginStatus',
+        width: 100,
+      },
+      {
+        title: '客户端代理',
+        dataIndex: 'loginUserAgent',
+        width: 120,
+      },
+      {
+        title: '租户代码',
+        dataIndex: 'tenantCode',
+        width: 90,
       },
     ];
     const toolBarProps = {
@@ -73,7 +88,7 @@ class OnLineUser extends Component {
       onTableRef: ref => (this.tablRef = ref),
       store: {
         type: 'POST',
-        url: `${SERVER_PATH}/sei-auth/loginLog/getOnlineUserByPage`,
+        url: `${SERVER_PATH}/sei-auth/loginLog/getLoginLogByPage`,
       },
     };
     return (
@@ -84,4 +99,4 @@ class OnLineUser extends Component {
   }
 }
 
-export default OnLineUser;
+export default LoginHistory;
