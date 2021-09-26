@@ -44,6 +44,11 @@ const APP_MENU_BTN_KEY = {
   DELETE: `${APP_PREFIX}_DELETE`,
 };
 
+/** 应用菜单功能项 */
+const ONLINE_USER_BTN_KEY = {
+  FORCE_EXIT: `BASIC-YHGL-ONLINE-USER-FORCE-EXIT`,
+};
+
 const LOGIN_STATUS = {
   SUCCESS: 'success',
   MULTI_TENANT: 'multiTenant',
@@ -98,4 +103,5 @@ export default {
   POSITION_ACTION,
   EMPLOYEE_ACTION,
   SUPPLIER_ACTION,
+  ONLINE_USER_BTN_KEY,
 };

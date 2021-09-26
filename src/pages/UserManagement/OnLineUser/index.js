@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import cls from 'classnames';
-import { Button } from 'antd';
-import { FormattedMessage } from 'umi-plugin-react/locale';
-import { ExtTable } from 'suid';
+import { get } from 'lodash';
+import { connect } from 'dva';
+import { Button, Popconfirm } from 'antd';
+import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale';
+import { ExtTable, utils, ExtIcon } from 'suid';
 import { constants } from '@/utils';
 import styles from './index.less';
 
-const { SERVER_PATH } = constants;
+const { SERVER_PATH, ONLINE_USER_BTN_KEY } = constants;
+const { authAction } = utils;
 
+@connect(({ onlineUser, loading }) => ({ onlineUser, loading }))
 class OnLineUser extends Component {
   static tablRef;
 
@@ -15,6 +19,44 @@ class OnLineUser extends Component {
     if (this.tablRef) {
       this.tablRef.remoteDataRefresh();
     }
+  };
+
+  handlerForceExit = user => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'onlineUser/forceExit',
+      payload: {
+        rowId: get(user, 'id'),
+        sid: get(user, 'sid'),
+      },
+      callback: res => {
+        if (res.success) {
+          this.reloadData();
+        }
+      },
+    });
+  };
+
+  renderForceExitBtn = row => {
+    const {
+      loading,
+      onlineUser: { rowId },
+    } = this.props;
+    if (loading.effects['onlineUser/forceExit'] && rowId === row.id) {
+      return <ExtIcon className="loading" type="loading" antd />;
+    }
+    return (
+      <Popconfirm
+        placement="topRight"
+        title={formatMessage(
+          { id: 'basic_000407', defaultMessage: '确定要强制【{userName}】退出吗？' },
+          { userName: get(row, 'userName') },
+        )}
+        onConfirm={() => this.handlerForceExit(row)}
+      >
+        <ExtIcon className="del" type="logout" antd />
+      </Popconfirm>
+    );
   };
 
   render() {
@@ -52,6 +94,24 @@ class OnLineUser extends Component {
         width: 120,
       },
     ];
+    const oprCol = {
+      title: formatMessage({
+        id: 'global.operation',
+        defaultMessage: formatMessage({ id: 'basic_000019', defaultMessage: '操作' }),
+      }),
+      key: 'operation',
+      width: 80,
+      align: 'center',
+      dataIndex: 'id',
+      className: 'action',
+      required: true,
+      render: (_, record) => (
+        <span className={cls('action-box')}>{this.renderForceExitBtn(record)}</span>
+      ),
+    };
+    if (authAction(<span authCode={ONLINE_USER_BTN_KEY.FORCE_EXIT} />)) {
+      columns.splice(0, 0, oprCol);
+    }
     const toolBarProps = {
       left: (
         <>
