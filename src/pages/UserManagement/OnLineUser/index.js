@@ -135,6 +135,9 @@ class OnLineUser extends Component {
         type: 'POST',
         url: `${SERVER_PATH}/sei-auth/loginLog/getOnlineUserByPage`,
       },
+      sort: {
+        field: { loginDate: 'desc', userAccount: null, userName: null },
+      },
     };
     return (
       <div className={cls(styles['container-box'])}>

@@ -90,6 +90,9 @@ class LoginHistory extends Component {
         type: 'POST',
         url: `${SERVER_PATH}/sei-auth/loginLog/getLoginLogByPage`,
       },
+      sort: {
+        field: { loginDate: 'desc', account: null },
+      },
     };
     return (
       <div className={cls(styles['container-box'])}>
