@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import cls from 'classnames';
 import { get } from 'lodash';
 import { connect } from 'dva';
-import { Button, Popconfirm } from 'antd';
+import { Button, Popconfirm, Tag } from 'antd';
 import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale';
-import { ExtTable, utils, ExtIcon } from 'suid';
+import { ExtTable, utils, ExtIcon, Space } from 'suid';
 import { constants } from '@/utils';
 import styles from './index.less';
 
@@ -40,10 +40,20 @@ class OnLineUser extends Component {
   renderForceExitBtn = row => {
     const {
       loading,
-      onlineUser: { rowId },
+      onlineUser: { rowId, sid },
     } = this.props;
     if (loading.effects['onlineUser/forceExit'] && rowId === row.id) {
       return <ExtIcon className="loading" type="loading" antd />;
+    }
+    if (sid === row.sid) {
+      return (
+        <ExtIcon
+          className="del"
+          type="logout"
+          antd
+          style={{ cursor: 'not-allowed', color: 'rgba(0,0,0,0.25)' }}
+        />
+      );
     }
     return (
       <Popconfirm
@@ -60,17 +70,33 @@ class OnLineUser extends Component {
   };
 
   render() {
+    const {
+      onlineUser: { sid },
+    } = this.props;
     const columns = [
       {
         title: '用户账号',
         dataIndex: 'userAccount',
-        width: 120,
+        width: 160,
         required: true,
+        render: (t, r) => {
+          if (r.sid === sid) {
+            return (
+              <Space>
+                {t}
+                <Tag color="green" style={{ borderColor: 'transparent' }}>
+                  我
+                </Tag>
+              </Space>
+            );
+          }
+          return t;
+        },
       },
       {
         title: '用户名称',
         dataIndex: 'userName',
-        width: 100,
+        width: 180,
         required: true,
       },
       {
@@ -131,6 +157,12 @@ class OnLineUser extends Component {
       searchProperties: ['userAccount', 'userName'],
       remotePaging: true,
       onTableRef: ref => (this.tablRef = ref),
+      rowClassName: record => {
+        if (record.sid === sid) {
+          return 'me-item';
+        }
+        return '';
+      },
       store: {
         type: 'POST',
         url: `${SERVER_PATH}/sei-auth/loginLog/getOnlineUserByPage`,
