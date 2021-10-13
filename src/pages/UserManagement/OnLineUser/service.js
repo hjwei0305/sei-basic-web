@@ -12,5 +12,8 @@ export async function forceExit(data) {
     url,
     method: 'POST',
     data,
+    headers: {
+      'Content-Type': 'application/json',
+    },
   });
 }
