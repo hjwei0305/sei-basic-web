@@ -148,12 +148,12 @@ class PaymentInfo extends Component {
       },
       {
         title: formatMessage({id: 'basic_000024', defaultMessage: '银行代码'}),
-        dataIndex: 'bank.code',
+        dataIndex: 'bankCode',
         width: 200,
       },
       {
         title: formatMessage({id: 'basic_000025', defaultMessage: '银行名称'}),
-        dataIndex: 'bank.name',
+        dataIndex: 'bankName',
         width: 340,
       },
       {
@@ -185,12 +185,14 @@ class PaymentInfo extends Component {
       },
       columns,
       bordered: false,
-      searchProperties: ['bank.code', 'bank.name', 'bankAccountNumber'],
+      searchProperties: ['bankCode', 'bankName', 'bankAccountNumber'],
       store: {
         params: {
           receiverCode: basicInfo ? basicInfo.employeeCode : '',
+          receiverType: 'H',
+          useScope: 'CASH',
         },
-        url: `${SERVER_PATH}/sei-fim/personalPaymentInfo/findByReceiverCode`,
+        url: `${SERVER_PATH}/dms/paymentInfo/findByReceiverCode`,
       },
     };
   };
