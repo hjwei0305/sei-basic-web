@@ -59,12 +59,12 @@ class FormModal extends PureComponent {
         {
           title: formatMessage({id: 'basic_000033', defaultMessage: '银行类别'}),
           width: 180,
-          dataIndex: 'bankCategory.name',
+          dataIndex: 'bankCategoryName',
         },
       ],
       store: {
         type: 'POST',
-        url: `${SERVER_PATH}/sei-fim/personalPaymentInfo/findByPage`,
+        url: `${SERVER_PATH}/dms/bank/findByPage`,
       },
       reader: {
         name: 'name',

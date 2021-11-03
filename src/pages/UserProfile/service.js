@@ -1,8 +1,8 @@
 /*
  * @Author: zp
  * @Date:   2020-02-17 11:04:24
- * @Last Modified by:   zp
- * @Last Modified time: 2020-02-17 20:40:31
+ * @Last Modified by: zp
+ * @Last Modified time: 2021-11-03 14:48:16
  */
 import { utils } from 'suid';
 import { constants } from '@/utils';
@@ -129,7 +129,7 @@ export async function deletePayment({ id }) {
 export async function savePayment(data) {
   return request({
     method: 'POST',
-    url: `${SERVER_PATH}/sei-fim/personalPaymentInfo/save`,
+    url: `${SERVER_PATH}/dms/paymentInfo/save`,
     data,
   });
 }
