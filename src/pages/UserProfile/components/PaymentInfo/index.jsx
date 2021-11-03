@@ -190,6 +190,7 @@ class PaymentInfo extends Component {
         params: {
           receiverCode: basicInfo ? basicInfo.employeeCode : '',
           receiverType: 'H',
+          // test
           useScope: 'CASH',
         },
         url: `${SERVER_PATH}/dms/paymentInfo/findByReceiverCode`,
