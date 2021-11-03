@@ -142,7 +142,7 @@ class FormModal extends PureComponent {
           </FormItem>
           <FormItem label={formatMessage({id: 'basic_000041', defaultMessage: '银行'})}>
             {getFieldDecorator('bankName', {
-              initialValue: editData ? editData.bank.name : '',
+              initialValue: editData ? editData.bankName : '',
               rules: [
                 {
                   required: true,
