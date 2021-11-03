@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-02-17 11:04:24
  * @Last Modified by: zp
- * @Last Modified time: 2021-11-03 14:48:16
+ * @Last Modified time: 2021-11-03 15:02:06
  */
 import { utils } from 'suid';
 import { constants } from '@/utils';
@@ -112,7 +112,7 @@ export async function authorizeData(authType = 'weChat') {
 export async function findByReceiverCode(params) {
   return request({
     method: 'GET',
-    url: `${SERVER_PATH}/sei-fim/personalPaymentInfo/findByReceiverCode`,
+    url: `${SERVER_PATH}/dms/paymentInfo/findByReceiverCode`,
     params,
   });
 }
@@ -121,7 +121,7 @@ export async function findByReceiverCode(params) {
 export async function deletePayment({ id }) {
   return request({
     method: 'DELETE',
-    url: `${SERVER_PATH}/sei-fim/personalPaymentInfo/delete/${id}`,
+    url: `${SERVER_PATH}/dms/paymentInfo/delete/${id}`,
   });
 }
 
