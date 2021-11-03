@@ -445,4 +445,5 @@ export default {
   basic_000405: '项',
   basic_000406: '操作成功',
   basic_000407: '确定要强制【{userName}】退出吗？',
+  basic_000408: '账号绑定',
 };

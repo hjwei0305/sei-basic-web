@@ -41,8 +41,8 @@ class UserProfile extends React.Component {
               <BasicInfo />
             </Card>
           </TabPane>
-          <TabPane tab={formatMessage({id: 'basic_000000', defaultMessage: '基本信息'})} key="accountBinding">
-            <Card title={formatMessage({id: 'basic_000000', defaultMessage: '基本信息'})} bordered={false}>
+          <TabPane tab={formatMessage({id: 'basic_000408', defaultMessage: '帐号绑定'})} key="accountBinding">
+            <Card title={formatMessage({id: 'basic_000408', defaultMessage: '帐号绑定'})} bordered={false}>
               <ScrollBar>
                 <AccountBinding />
               </ScrollBar>
