@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Row, Col, Form, Input, InputNumber, Checkbox } from 'antd';
 import { formatMessage } from 'umi-plugin-react/locale';
-import { ExtModal, ComboTree } from 'suid';
+import { ExtModal, ComboTree, ComboList } from 'suid';
 import { get } from 'lodash';
 import { constants } from '@/utils';
 
