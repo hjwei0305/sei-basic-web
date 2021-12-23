@@ -71,6 +71,7 @@ class FormModal extends PureComponent {
       rowKey: 'id',
       reader: {
         name: 'name',
+        description: 'code',
         field: ['code'],
       },
       field: ['baseCurrencyCode'],
@@ -138,55 +139,27 @@ class FormModal extends PureComponent {
               initialValue: get(rowData, 'organization.name', ''),
             })(<ComboTree allowClear {...this.getComboTreeProps()} />)}
           </FormItem>
-          <FormItem
-            label={formatMessage({
-              id: 'corporation.baseCurrencyName',
-              defaultMessage: '本位币货币名称',
-            })}
-          >
-            {getFieldDecorator('baseCurrencyName', {
-              initialValue: get(rowData, 'baseCurrencyName', ''),
-
-              rules: [
-                {
-                  required: true,
-                  message: formatMessage({id: 'basic_000237', defaultMessage: '本位币货币名称不能为空'}),
-                },
-              ],
-            })(<ComboList {...this.getCurrencyListProps()} />)}
-          </FormItem>
           <Row>
             <Col span={12}>
               <FormItem
                 {...colFormItemLayout}
-                label={formatMessage({ id: 'corporation.shortName', defaultMessage: '简称' })}
-              >
-                {getFieldDecorator('shortName', {
-                  initialValue: rowData ? rowData.shortName : '',
-                })(<Input />)}
-              </FormItem>
-            </Col>
-            {/* <Col span={12}>
-              <FormItem
-                {...colFormItemLayout}
                 label={formatMessage({
-                  id: 'corporation.baseCurrencyCode',
-                  defaultMessage: '本位币货币代码',
+                  id: 'corporation.baseCurrencyName',
+                  defaultMessage: '本位币货币名称',
                 })}
               >
-                {getFieldDecorator('baseCurrencyCode', {
-                  initialValue: rowData ? rowData.baseCurrencyCode : '',
+                {getFieldDecorator('baseCurrencyName', {
+                  initialValue: get(rowData, 'baseCurrencyName', ''),
+
                   rules: [
                     {
                       required: true,
-                      message: formatMessage({id: 'basic_000236', defaultMessage: '本位币货币代码不能为空'}),
+                      message: formatMessage({id: 'basic_000237', defaultMessage: '本位币货币名称不能为空'}),
                     },
                   ],
-                })(<Input />)}
+                })(<ComboList {...this.getCurrencyListProps()} />)}
               </FormItem>
-            </Col>
-            <Col span={12}>
-              <FormItem
+              {/* <FormItem
                 {...colFormItemLayout}
                 label={formatMessage({
                   id: 'corporation.baseCurrencyName',
@@ -202,8 +175,31 @@ class FormModal extends PureComponent {
                     },
                   ],
                 })(<Input />)}
+              </FormItem> */}
+            </Col>
+            <Col span={12}>
+              <FormItem
+                {...colFormItemLayout}
+                label={formatMessage({
+                  id: 'corporation.baseCurrencyCode',
+                  defaultMessage: '本位币货币代码',
+                })}
+              >
+                {getFieldDecorator('baseCurrencyCode', {
+                  initialValue: rowData ? rowData.baseCurrencyCode : '',
+                })(<Input disabled />)}
               </FormItem>
-            </Col> */}
+            </Col>
+            <Col span={12}>
+              <FormItem
+                {...colFormItemLayout}
+                label={formatMessage({ id: 'corporation.shortName', defaultMessage: '简称' })}
+              >
+                {getFieldDecorator('shortName', {
+                  initialValue: rowData ? rowData.shortName : '',
+                })(<Input />)}
+              </FormItem>
+            </Col>
             <Col span={12}>
               <FormItem
                 {...colFormItemLayout}
