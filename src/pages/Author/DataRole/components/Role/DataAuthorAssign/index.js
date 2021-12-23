@@ -3,8 +3,8 @@ import { get } from 'lodash';
 import cls from 'classnames';
 import { connect } from 'dva';
 import { ExtModal, ExtIcon } from 'suid';
-import { BannerTitle } from '@/components';
 import { formatMessage } from 'umi-plugin-react/locale';
+import { BannerTitle } from '@/components';
 import Assinged from './Assigned';
 import Assign from './Assign';
 import styles from './index.less';
@@ -75,11 +75,22 @@ class DataAuthorAssignModal extends PureComponent {
       return (
         <>
           <ExtIcon onClick={this.handlerBackAssigned} type="left" className="trigger-back" antd />
-          <BannerTitle title={title} subTitle={formatMessage({id: 'basic_000401', defaultMessage: '请选择要添加的数据权限'})} />
+          <BannerTitle
+            title={title}
+            subTitle={formatMessage({
+              id: 'basic_000401',
+              defaultMessage: '请选择要添加的数据权限',
+            })}
+          />
         </>
       );
     }
-    return <BannerTitle title={title} subTitle={formatMessage({id: 'basic_000114', defaultMessage: '已配置的数据权限'})} />;
+    return (
+      <BannerTitle
+        title={title}
+        subTitle={formatMessage({ id: 'basic_000114', defaultMessage: '已配置的数据权限' })}
+      />
+    );
   };
 
   render() {
@@ -95,8 +106,8 @@ class DataAuthorAssignModal extends PureComponent {
       keyboard: !showAssign,
       visible: showDataAuthorAssign,
       centered: true,
-      width: 460,
-      bodyStyle: { padding: 0, height: 520, width: 460, overflow: 'hidden' },
+      width: 520,
+      bodyStyle: { padding: 0, height: 560, width: 520, overflow: 'hidden' },
       footer: null,
       title: this.renderTitle(currentRole),
     };

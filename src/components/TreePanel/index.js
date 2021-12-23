@@ -24,6 +24,7 @@ class TreePanel extends PureComponent {
     checkable: PropTypes.bool,
     checkStrictly: PropTypes.bool,
     showSearch: PropTypes.bool,
+    selectable: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -32,6 +33,7 @@ class TreePanel extends PureComponent {
     checkable: true,
     showSearch: true,
     checkStrictly: true,
+    selectable: true,
     selectedKeys: [],
   };
 
@@ -132,12 +134,12 @@ class TreePanel extends PureComponent {
     });
   };
 
-  handlerCheckedChange = checkedKeys => {
+  handlerCheckedChange = (checkedKeys, e) => {
     this.setState({ checkedKeys }, () => {
       const { onSelectChange } = this.props;
       if (onSelectChange) {
         const { checked } = checkedKeys;
-        onSelectChange(checked);
+        onSelectChange(checked, e);
       }
     });
   };
@@ -179,7 +181,7 @@ class TreePanel extends PureComponent {
 
   renderTree = () => {
     const { dataSource, autoExpandParent, checkedKeys, expandedKeys } = this.state;
-    const { checkable, checkStrictly } = this.props;
+    const { checkable, checkStrictly, selectable } = this.props;
     if (dataSource.length === 0) {
       return (
         <div className="blank-empty">
@@ -190,6 +192,7 @@ class TreePanel extends PureComponent {
     return (
       <Tree
         blockNode
+        selectable={selectable}
         checkable={checkable}
         checkStrictly={checkStrictly}
         autoExpandParent={autoExpandParent}
