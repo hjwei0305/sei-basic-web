@@ -56,6 +56,27 @@ class FormModal extends PureComponent {
     };
   };
 
+  getCurrencyListProps = () => {
+    const { form } = this.props;
+    return {
+      form,
+      searchPlaceHolder: '请输入代码或名称搜索',
+      remotePaging: true,
+      name: 'baseCurrencyName',
+      store: {
+        type: 'POST',
+        autoLoad: false,
+        url: `${SERVER_PATH}/dms/currency/findByPage`,
+      },
+      rowKey: 'id',
+      reader: {
+        name: 'name',
+        field: ['code'],
+      },
+      field: ['baseCurrencyCode'],
+    };
+  };
+
   render() {
     const { form, rowData, closeFormModal, saving, showModal } = this.props;
     const { getFieldDecorator } = form;
@@ -117,6 +138,23 @@ class FormModal extends PureComponent {
               initialValue: get(rowData, 'organization.name', ''),
             })(<ComboTree allowClear {...this.getComboTreeProps()} />)}
           </FormItem>
+          <FormItem
+            label={formatMessage({
+              id: 'corporation.baseCurrencyName',
+              defaultMessage: '本位币货币名称',
+            })}
+          >
+            {getFieldDecorator('baseCurrencyName', {
+              initialValue: get(rowData, 'baseCurrencyName', ''),
+
+              rules: [
+                {
+                  required: true,
+                  message: formatMessage({id: 'basic_000237', defaultMessage: '本位币货币名称不能为空'}),
+                },
+              ],
+            })(<ComboList {...this.getCurrencyListProps()} />)}
+          </FormItem>
           <Row>
             <Col span={12}>
               <FormItem
@@ -128,7 +166,7 @@ class FormModal extends PureComponent {
                 })(<Input />)}
               </FormItem>
             </Col>
-            <Col span={12}>
+            {/* <Col span={12}>
               <FormItem
                 {...colFormItemLayout}
                 label={formatMessage({
@@ -165,7 +203,7 @@ class FormModal extends PureComponent {
                   ],
                 })(<Input />)}
               </FormItem>
-            </Col>
+            </Col> */}
             <Col span={12}>
               <FormItem
                 {...colFormItemLayout}
