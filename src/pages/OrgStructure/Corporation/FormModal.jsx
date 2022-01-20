@@ -129,6 +129,11 @@ class FormModal extends PureComponent {
               ],
             })(<Input />)}
           </FormItem>
+          <FormItem label="纳税人识别号">
+            {getFieldDecorator('taxNo', {
+              initialValue: rowData ? rowData.taxNo : '',
+            })(<Input />)}
+          </FormItem>
           <FormItem label={formatMessage({id: 'basic_000235', defaultMessage: '组织机构id'})} hidden>
             {getFieldDecorator('organizationId', {
               initialValue: get(rowData, 'organizationId', undefined),
