@@ -237,7 +237,7 @@ export default {
   basic_000192: 'code cannot be empty',
   basic_000193: 'serial number cannot be empty',
   basic_000194: 'OK',
-  basic_000195: 'position category code cannot exceed 5 characters',
+  basic_000195: 'position category code cannot exceed 6 characters',
   basic_000196: 'are you sure you want to delete?',
   basic_000197: 'please enter code or name keyword query',
   basic_000198: 'position list',
@@ -450,4 +450,5 @@ export default {
   basic_000406: 'The operation was successful',
   basic_000407: 'Are you sure you want to force 【{userName}】 to quit？',
   basic_000408: 'Account Binding',
+  basic_000409: 'cannot exceed 6 characters',
 };
