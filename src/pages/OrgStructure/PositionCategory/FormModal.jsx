@@ -61,11 +61,11 @@ class FormModal extends PureComponent {
                   }),
                 },
                 {
-                  max: 5,
-                  message: formatMessage({id: 'basic_000195', defaultMessage: '岗位类别代码不能超过5个字符'}),
+                  max: 6,
+                  message: formatMessage({id: 'basic_000195', defaultMessage: '岗位类别代码不能超过6个字符'}),
                 },
               ],
-            })(<Input disabled={!!rowData} />)}
+            })(<Input disabled={!!rowData} placeholder={formatMessage({id: 'basic_000412', defaultMessage: '最大长度为6个字符'})}/>)}
           </FormItem>
           <FormItem label={formatMessage({ id: 'global.name', defaultMessage: '名称' })}>
             {getFieldDecorator('name', {

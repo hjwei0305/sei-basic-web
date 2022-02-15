@@ -237,7 +237,7 @@ export default {
   basic_000192: 'code cannot be empty',
   basic_000193: 'serial number cannot be empty',
   basic_000194: 'OK',
-  basic_000195: 'position category code cannot exceed 5 characters',
+  basic_000195: 'position category code cannot exceed 6 characters',
   basic_000196: 'are you sure you want to delete?',
   basic_000197: 'please enter code or name keyword query',
   basic_000198: 'position list',
@@ -453,4 +453,5 @@ export default {
   basic_000409: 'Account copy',
   basic_000410: 'TaxNo',
   basic_000411: 'Associated organization',
+  basic_000412: 'cannot exceed 6 characters',
 };

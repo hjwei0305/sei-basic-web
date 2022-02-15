@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Row, Col, Form, Input, InputNumber, Checkbox } from 'antd';
 import { formatMessage } from 'umi-plugin-react/locale';
-import { ExtModal, ComboTree } from 'suid';
+import { ExtModal, ComboTree, ComboList } from 'suid';
 import { get } from 'lodash';
 import { constants } from '@/utils';
 
@@ -56,6 +56,28 @@ class FormModal extends PureComponent {
     };
   };
 
+  getCurrencyListProps = () => {
+    const { form } = this.props;
+    return {
+      form,
+      searchPlaceHolder: '请输入代码或名称搜索',
+      remotePaging: true,
+      name: 'baseCurrencyName',
+      store: {
+        type: 'POST',
+        autoLoad: false,
+        url: `${SERVER_PATH}/dms/currency/findByPage`,
+      },
+      rowKey: 'id',
+      reader: {
+        name: 'name',
+        description: 'code',
+        field: ['code'],
+      },
+      field: ['baseCurrencyCode'],
+    };
+  };
+
   render() {
     const { form, rowData, closeFormModal, saving, showModal } = this.props;
     const { getFieldDecorator } = form;
@@ -107,6 +129,11 @@ class FormModal extends PureComponent {
               ],
             })(<Input />)}
           </FormItem>
+          <FormItem label="纳税人识别号">
+            {getFieldDecorator('taxNo', {
+              initialValue: rowData ? rowData.taxNo : '',
+            })(<Input />)}
+          </FormItem>
           <FormItem label={formatMessage({id: 'basic_000235', defaultMessage: '组织机构id'})} hidden>
             {getFieldDecorator('organizationId', {
               initialValue: get(rowData, 'organizationId', undefined),
@@ -121,34 +148,23 @@ class FormModal extends PureComponent {
             <Col span={12}>
               <FormItem
                 {...colFormItemLayout}
-                label={formatMessage({ id: 'corporation.shortName', defaultMessage: '简称' })}
-              >
-                {getFieldDecorator('shortName', {
-                  initialValue: rowData ? rowData.shortName : '',
-                })(<Input />)}
-              </FormItem>
-            </Col>
-            <Col span={12}>
-              <FormItem
-                {...colFormItemLayout}
                 label={formatMessage({
-                  id: 'corporation.baseCurrencyCode',
-                  defaultMessage: '本位币货币代码',
+                  id: 'corporation.baseCurrencyName',
+                  defaultMessage: '本位币货币名称',
                 })}
               >
-                {getFieldDecorator('baseCurrencyCode', {
-                  initialValue: rowData ? rowData.baseCurrencyCode : '',
+                {getFieldDecorator('baseCurrencyName', {
+                  initialValue: get(rowData, 'baseCurrencyName', ''),
+
                   rules: [
                     {
                       required: true,
-                      message: formatMessage({id: 'basic_000236', defaultMessage: '本位币货币代码不能为空'}),
+                      message: formatMessage({id: 'basic_000237', defaultMessage: '本位币货币名称不能为空'}),
                     },
                   ],
-                })(<Input />)}
+                })(<ComboList {...this.getCurrencyListProps()} />)}
               </FormItem>
-            </Col>
-            <Col span={12}>
-              <FormItem
+              {/* <FormItem
                 {...colFormItemLayout}
                 label={formatMessage({
                   id: 'corporation.baseCurrencyName',
@@ -163,6 +179,29 @@ class FormModal extends PureComponent {
                       message: formatMessage({id: 'basic_000237', defaultMessage: '本位币货币名称不能为空'}),
                     },
                   ],
+                })(<Input />)}
+              </FormItem> */}
+            </Col>
+            <Col span={12}>
+              <FormItem
+                {...colFormItemLayout}
+                label={formatMessage({
+                  id: 'corporation.baseCurrencyCode',
+                  defaultMessage: '本位币货币代码',
+                })}
+              >
+                {getFieldDecorator('baseCurrencyCode', {
+                  initialValue: rowData ? rowData.baseCurrencyCode : '',
+                })(<Input disabled />)}
+              </FormItem>
+            </Col>
+            <Col span={12}>
+              <FormItem
+                {...colFormItemLayout}
+                label={formatMessage({ id: 'corporation.shortName', defaultMessage: '简称' })}
+              >
+                {getFieldDecorator('shortName', {
+                  initialValue: rowData ? rowData.shortName : '',
                 })(<Input />)}
               </FormItem>
             </Col>
