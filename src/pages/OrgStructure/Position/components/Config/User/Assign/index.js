@@ -2,16 +2,16 @@
  * @Author: Eason
  * @Date: 2020-02-15 11:53:29
  * @Last Modified by: Eason
- * @Last Modified time: 2020-09-27 14:17:56
+ * @Last Modified time: 2022-02-15 17:41:41
  */
 import React, { Component } from 'react';
 import cls from 'classnames';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
-import { Layout, Button, Input, Tooltip } from 'antd';
-import { ListLoader, ListCard } from 'suid';
-import { constants } from '@/utils';
+import { Layout, Button, Input, Tooltip, Checkbox } from 'antd';
+import { ListLoader, ListCard, Space } from 'suid';
 import { formatMessage } from 'umi-plugin-react/locale';
+import { constants } from '@/utils';
 import Organization from './Organization';
 import styles from './index.less';
 
@@ -22,12 +22,15 @@ const { Search } = Input;
 class UserAssign extends Component {
   static listCardRef;
 
+  static currentPageData;
+
   static propTypes = {
     onBackAssigned: PropTypes.func,
   };
 
   constructor(props) {
     super(props);
+    this.currentPageData = {};
     this.state = {
       orgId: null,
       selectedKeys: [],
@@ -63,8 +66,8 @@ class UserAssign extends Component {
     const { save, onBackAssigned } = this.props;
     if (save) {
       save(selectedKeys, re => {
-        if (re.success) {
-          onBackAssigned && onBackAssigned();
+        if (re.success && onBackAssigned) {
+          onBackAssigned();
         }
       });
     }
@@ -74,23 +77,44 @@ class UserAssign extends Component {
     this.setState({ selectedKeys: [] });
   };
 
+  handlerSelectAll = e => {
+    if (e.target.checked) {
+      this.setState({ selectedKeys: Object.keys(this.currentPageData) });
+    } else {
+      this.setState({ selectedKeys: [] });
+    }
+  };
+
   renderCustomTool = () => {
     const { selectedKeys } = this.state;
     const { saving } = this.props;
     const hasSelected = selectedKeys.length > 0;
+    const pagingKeys = Object.keys(this.currentPageData);
+    const indeterminate = selectedKeys.length > 0 && selectedKeys.length < pagingKeys.length;
+    const checked = selectedKeys.length > 0 && selectedKeys.length === pagingKeys.length;
     return (
       <>
-        <Button type="danger" ghost disabled={!hasSelected} onClick={this.assignedCancel}>
-          {formatMessage({id: 'basic_000131', defaultMessage: '取消'})}
-        </Button>
-        <Button type="primary" disabled={!hasSelected} loading={saving} onClick={this.assignedSave}>
-          {`确定 (${selectedKeys.length})`}
-        </Button>
+        <Space>
+          <Checkbox
+            disabled={pagingKeys.length === 0}
+            checked={checked}
+            indeterminate={indeterminate}
+            onChange={this.handlerSelectAll}
+          >
+            本页全选
+          </Checkbox>
+          <Button type="danger" ghost disabled={!hasSelected} onClick={this.assignedCancel}>
+            {formatMessage({ id: 'basic_000131', defaultMessage: '取消' })}
+          </Button>
+          <Button type="primary" disabled={!hasSelected} loading={saving} onClick={this.assignedSave}>
+            {`确定 (${selectedKeys.length})`}
+          </Button>
+        </Space>
         <div>
-          <Tooltip title={formatMessage({id: 'basic_000112', defaultMessage: '输入名称关键字查询'})}>
+          <Tooltip title={formatMessage({ id: 'basic_000112', defaultMessage: '输入名称关键字查询' })}>
             <Search
               allowClear
-              placeholder={formatMessage({id: 'basic_000112', defaultMessage: '输入名称关键字查询'})}
+              placeholder={formatMessage({ id: 'basic_000112', defaultMessage: '输入名称关键字查询' })}
               onChange={e => this.handlerSearchChange(e.target.value)}
               onSearch={this.handlerSearch}
               onPressEnter={this.handlerPressEnter}
@@ -107,12 +131,13 @@ class UserAssign extends Component {
     const { currentPosition } = this.props;
     const listCardProps = {
       className: 'anyone-user-box',
-      title: formatMessage({id: 'basic_000212', defaultMessage: '可选择的用户'}),
+      title: formatMessage({ id: 'basic_000212', defaultMessage: '可选择的用户' }),
       bordered: false,
-      searchPlaceHolder: formatMessage({id: 'basic_000164', defaultMessage: '输入代码或姓名关键字查询'}),
+      searchPlaceHolder: formatMessage({ id: 'basic_000164', defaultMessage: '输入代码或姓名关键字查询' }),
       searchProperties: ['code', 'userName'],
       checkbox: true,
       selectedKeys,
+      simplePagination:false,
       itemField: {
         title: item => (
           <>
@@ -132,6 +157,14 @@ class UserAssign extends Component {
         type: 'POST',
         url: `${SERVER_PATH}/sei-basic/employee/queryEmployees`,
         params: { excludePositionId: get(currentPosition, 'id', null), includeSubNode: true },
+        loaded: res => {
+          this.currentPageData = {};
+          this.setState({ selectedKeys: [] });
+          const data = get(res, 'data.rows') || [];
+          data.forEach(d => {
+            this.currentPageData[d.id] = d;
+          });
+        },
       },
       onListCardRef: ref => (this.listCardRef = ref),
       onSelectChange: this.handerAssignUserSelectChange,

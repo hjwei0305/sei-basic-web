@@ -3,8 +3,8 @@ import { get } from 'lodash';
 import cls from 'classnames';
 import { connect } from 'dva';
 import { ExtModal, ExtIcon } from 'suid';
-import { BannerTitle } from '@/components';
 import { formatMessage } from 'umi-plugin-react/locale';
+import { BannerTitle } from '@/components';
 import Assign from './Assign';
 import Assinged from './Assigned';
 import styles from './index.less';
@@ -86,7 +86,7 @@ class UserModal extends PureComponent {
       keyboard: !showAssign,
       visible: showModal,
       centered: true,
-      width: 680,
+      width: 880,
       bodyStyle: { padding: 0, height: 560, overflow: 'hidden' },
       footer: null,
       title: this.renderTitle(currentPosition),

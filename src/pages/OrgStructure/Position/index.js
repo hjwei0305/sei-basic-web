@@ -4,8 +4,8 @@ import cls from 'classnames';
 import { isEqual, trim } from 'lodash';
 import { Card, Input, Tree, Empty, Layout } from 'antd';
 import { ScrollBar, ExtIcon, ListLoader } from 'suid';
-import empty from '@/assets/item_empty.svg';
 import { formatMessage } from 'umi-plugin-react/locale';
+import empty from '@/assets/item_empty.svg';
 import Postion from './components/Postion';
 import styles from './index.less';
 
