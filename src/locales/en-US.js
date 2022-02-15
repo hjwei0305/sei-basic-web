@@ -450,4 +450,7 @@ export default {
   basic_000406: 'The operation was successful',
   basic_000407: 'Are you sure you want to force 【{userName}】 to quit？',
   basic_000408: 'Account Binding',
+  basic_000409: 'Account copy',
+  basic_000410: 'TaxNo',
+  basic_000411: 'Associated organization',
 };

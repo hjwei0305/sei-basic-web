@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
+import { get } from 'lodash';
 import cls from 'classnames';
 import { Button, Popconfirm, Tag } from 'antd';
 import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale';
@@ -121,9 +122,12 @@ class Corporation extends Component {
     const { loading } = this.props;
     const columns = [
       {
-        title: formatMessage({ id: 'global.operation', defaultMessage: formatMessage({id: 'basic_000019', defaultMessage: '操作'}) }),
+        title: formatMessage({
+          id: 'global.operation',
+          defaultMessage: formatMessage({ id: 'basic_000019', defaultMessage: '操作' }),
+        }),
         key: 'operation',
-        width: 120,
+        width: 130,
         align: 'center',
         dataIndex: 'id',
         className: 'action',
@@ -145,7 +149,10 @@ class Corporation extends Component {
               placement="topLeft"
               title={formatMessage({
                 id: 'global.delete.confirm',
-                defaultMessage: formatMessage({id: 'basic_000021', defaultMessage: '确定要删除吗？提示：删除后不可恢复'}),
+                defaultMessage: formatMessage({
+                  id: 'basic_000021',
+                  defaultMessage: '确定要删除吗？提示：删除后不可恢复',
+                }),
               })}
               onConfirm={() => this.del(record)}
             >
@@ -177,6 +184,20 @@ class Corporation extends Component {
         dataIndex: 'shortName',
         width: 120,
         required: true,
+      },
+      {
+        title: formatMessage({ id: 'basic_000410', defaultMessage: '纳税人识别号' }),
+        dataIndex: 'taxNo',
+        width: 180,
+        required: true,
+        render: t => t || '-',
+      },
+      {
+        title: formatMessage({ id: 'basic_000411', defaultMessage: '关联的组织机构' }),
+        dataIndex: 'organizationName',
+        width: 260,
+        required: true,
+        render: (t, r) => get(r, 'organization.name') || '-',
       },
       {
         title: formatMessage({
@@ -229,7 +250,11 @@ class Corporation extends Component {
         width: 80,
         render: (_text, row) => {
           if (row.frozen) {
-            return <Tag color="red">{formatMessage({id: 'basic_000123', defaultMessage: '已冻结'})}</Tag>;
+            return (
+              <Tag color="red">
+                {formatMessage({ id: 'basic_000123', defaultMessage: '已冻结' })}
+              </Tag>
+            );
           }
           return null;
         },
@@ -251,6 +276,7 @@ class Corporation extends Component {
     };
     return {
       columns,
+      lineNumber: false,
       bordered: false,
       loading: loading.effects['corporation/queryList'],
       toolBar: toolBarProps,
