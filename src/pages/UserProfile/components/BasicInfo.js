@@ -60,6 +60,11 @@ class BasicInfo extends PureComponent {
             payload: {
               userId: user.userId,
             },
+            callback: data => {
+              setTimeout(() => {
+                form.setFieldsValue(data);
+              }, 200);
+            },
           });
         }
       });

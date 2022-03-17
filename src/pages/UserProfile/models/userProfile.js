@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-02-17 11:36:34
  * @Last Modified by: Eason
- * @Last Modified time: 2022-03-17 16:56:18
+ * @Last Modified time: 2022-03-17 20:44:56
  */
 import { utils, message } from 'suid';
 import { userUtils } from '@/utils';
@@ -89,7 +89,7 @@ export default modelExtend(model, {
 
       return res;
     },
-    *getUserInfo({ payload }, { call, put }) {
+    *getUserInfo({ payload, callback = () => {} }, { call, put }) {
       const res = yield call(getUserInfo, payload);
       if (res.success) {
         yield put({
@@ -98,11 +98,11 @@ export default modelExtend(model, {
             basicInfo: res.data,
           },
         });
+        callback(res.data);
       } else {
         message.destroy();
         message.error(res.message);
       }
-
       return res;
     },
     *saveEmailAlert({ payload }, { call, put }) {
