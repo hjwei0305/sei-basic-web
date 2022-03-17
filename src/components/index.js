@@ -9,6 +9,8 @@ import UserAssign from './UserAssign';
 import BannerTitle from './BannerTitle';
 import EffectDate from './EffectDate';
 import ColorPicker from './ColorPicker';
+import FilterView from './FilterView';
+import DropdownOption from './DropdownOption';
 
 export {
   Loader,
@@ -22,4 +24,6 @@ export {
   BannerTitle,
   EffectDate,
   ColorPicker,
+  FilterView,
+  DropdownOption,
 };

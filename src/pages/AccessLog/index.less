@@ -1,0 +1,26 @@
+@import '../../themes/vars.less';
+.container-box {
+  position: relative;
+  height: 100%;
+  padding: 0;
+  overflow: hidden;
+  background-color: @page-background-color;
+  :global {
+    .tool-box {
+      padding: 0 24px;
+      height: 42px;
+      line-height: 42px;
+      background-color: @white;
+      border-bottom: 4px solid #eee;
+      .label {
+        &::after {
+          content: ':';
+          padding: 0 4px;
+        }
+      }
+    }
+    .log-body {
+      height: calc(100% - 42px);
+    }
+  }
+}

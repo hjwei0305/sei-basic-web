@@ -1,0 +1,25 @@
+@import '../../../../themes/vars.less';
+.user-box {
+  height: 100%;
+  padding: 0;
+  overflow: hidden;
+  :global {
+    .ant-drawer-header {
+      border-color: transparent;
+    }
+    .ant-drawer-body {
+      height: calc(100% - 55px);
+      padding: 0;
+      .label {
+        &::after {
+          content: ':';
+          padding: 0 4px;
+        }
+      }
+      .count-tag {
+        font-size: 16px;
+        font-weight: 700;
+      }
+    }
+  }
+}

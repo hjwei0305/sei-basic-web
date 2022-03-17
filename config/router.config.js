@@ -93,6 +93,11 @@ export default [
           },
         ],
       },
+      {
+        path: '/accessLog',
+        name: 'accessLog',
+        component: './AccessLog',
+      },
     ],
   },
 ];
