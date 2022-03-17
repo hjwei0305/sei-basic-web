@@ -2,12 +2,12 @@
  * @Author: zp
  * @Date:   2020-02-17 11:36:34
  * @Last Modified by: Eason
- * @Last Modified time: 2020-08-10 09:13:22
+ * @Last Modified time: 2022-03-17 16:56:18
  */
 import { utils, message } from 'suid';
 import { userUtils } from '@/utils';
 import {
-  findByUserId,
+  getUserInfo,
   saveProfile,
   saveEmailAlert,
   findMyEmailAlert,
@@ -90,7 +90,7 @@ export default modelExtend(model, {
       return res;
     },
     *getUserInfo({ payload }, { call, put }) {
-      const res = yield call(findByUserId, payload);
+      const res = yield call(getUserInfo, payload);
       if (res.success) {
         yield put({
           type: 'updateState',

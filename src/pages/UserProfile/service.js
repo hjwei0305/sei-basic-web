@@ -1,8 +1,8 @@
 /*
  * @Author: zp
  * @Date:   2020-02-17 11:04:24
- * @Last Modified by: zp
- * @Last Modified time: 2021-11-03 15:02:06
+ * @Last Modified by: Eason
+ * @Last Modified time: 2022-03-17 16:56:25
  */
 import { utils } from 'suid';
 import { constants } from '@/utils';
@@ -11,11 +11,10 @@ const { request } = utils;
 const { SERVER_PATH } = constants;
 
 /** 查询一个用户配置 */
-export const findByUserId = (params = {}) =>
+export const getUserInfo = () =>
   request({
     method: 'GET',
-    url: `${SERVER_PATH}/sei-basic/userProfile/findByUserId`,
-    params,
+    url: `${SERVER_PATH}/sei-basic/userProfile/getUserInfo`,
   });
 
 /** 保存一个用户配置 */
