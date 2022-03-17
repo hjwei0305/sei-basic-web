@@ -2,7 +2,7 @@
  * @Author: zp
  * @Date:   2020-02-17 11:04:24
  * @Last Modified by: Eason
- * @Last Modified time: 2022-03-17 16:56:25
+ * @Last Modified time: 2022-03-17 19:24:01
  */
 import { utils } from 'suid';
 import { constants } from '@/utils';
@@ -21,7 +21,7 @@ export const getUserInfo = () =>
 export const saveProfile = data =>
   request({
     method: 'POST',
-    url: `${SERVER_PATH}/sei-basic/userProfile/save`,
+    url: `${SERVER_PATH}/sei-basic/userProfile/updateInfo`,
     data,
   });
 
